@@ -1,0 +1,1816 @@
+diaID = argument0
+if (diaState == 0)
+    scrPlaySoundExt(sndDrop, 0.8, 1, false)
+diaState = 1
+scrResetDiaVars()
+with (objPlayer)
+    frozen = 1
+global.inCutscene = 1
+switch diaID
+{
+    case 0:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 1, 2, 0, "I am a friendly sign!")
+        diaLine(1, 0, 0, 0, "That is, in fact, a friendly sign.")
+        diaLine(2, 1, 2, 0, "You should brush your teeth!")
+        diaLine(3, 0, 0, 0, "That's some good advice. You really should do that.")
+        break
+    case 1:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 1, 2, 0, "Welcome to The Great Beyond.")
+        diaLine(1, 1, 2, 0, "From now on, other than SOLVING a puzzle, you can also SALVAGE a door to influence the surrounding area.")
+        diaLine(2, 2, 3, 1, "No need to bust out the upper case, little sign! I already figured it was something like that.")
+        diaLine(3, 1, 2, 0, "The Great Beyond is split into four chapters. You access the next one by solving a metapuzzle in the hub.")
+        diaLine(4, 1, 2, 0, "ADDITIONALLY! When you SOLVE a puzzle, a copy of it opens up in a designated area, such as the one on the left here.")
+        diaLine(5, 1, 2, 0, "This is so you only need to solve a metapuzzle once to access the level it gatekeeps.")
+        diaLine(6, 2, 3, 2, "Oh. Huh! That actually sounds pretty important.")
+        break
+    case 2:
+        numLines = 3
+        endAction = 0
+        diaLine(0, 1, 2, 0, "If this is your first time here, know that some aspects of The Great Beyond aren't available to you yet.")
+        diaLine(1, 1, 2, 0, "Your primary focus should be locating and entering the next chapter.")
+        diaLine(2, 2, 4, 3, "...Interesting.")
+        break
+    case 3:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 1, 2, 0, "When you exit a level for any reason, you reappear at its entrance.")
+        diaLine(1, 1, 2, 0, "In case you ever get stuck behind a door, press [R] to reset yourself to the hub start location.")
+        diaLine(2, 2, 3, 4, "...Really, now? I always wondered why it worked like that!")
+        diaLine(3, 2, 3, 0, "Well, good to know, I suppose! Definitely wouldn't want to get stuck.")
+        diaLine(4, 2, 4, 5, "...Are there going to be puzzles about this???")
+        break
+    case 4:
+        numLines = 3
+        endAction = 0
+        diaLine(0, 1, 2, 0, "GG!")
+        diaLine(1, 1, 2, 0, "That's all the new content thus far!")
+        diaLine(2, 2, 3, 1, "Remember to report any bugs, cheese solutions, or lingering questions to the dev!")
+        break
+    case 4.5:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 1, 2, 0, "GG! This part is unfinished for now; an ending will be here eventually.")
+        diaLine(1, 1, 2, 0, "This isn't the end of the version, though! By solving the last puzzle here, a new world has temporarily opened up.")
+        diaLine(2, 1, 2, 0, "It has some one-of-a-kind hard puzzles, so prepare yourself!")
+        diaLine(3, 2, 3, 1, "Sounds like fun!")
+        break
+    case 5:
+        numLines = 3
+        endAction = 0
+        diaLine(0, 1, 2, 0, "Press [C] to use the camera in large rooms.")
+        diaLine(1, 2, 3, 3, "Oh.")
+        diaLine(2, 2, 4, 5, "OH.")
+        break
+    case 6:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 1, 2, 0, "Press [C] to use the camera in large rooms.")
+        diaLine(1, 1, 2, 0, "Don't forget about the PDA, either! Hold [A] to reference your key counts at any time.")
+        diaLine(2, 2, 3, 6, "Thanks for looking out for me, little sign.")
+        diaLine(3, 2, 4, 2, "This one's gonna be a DOOZY, huh.")
+        break
+    case 7:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 1, 2, 0, "From left to right and top to bottom, the stars guide you to what is right, and the void guides you to what isn't.")
+        diaLine(1, 2, 3, 4, "Well, yes, I do see those very out-of-place stars.")
+        diaLine(2, 2, 3, 4, "Is this telling me NOT to solve the puzzle the old-fashioned way?")
+        diaLine(3, 2, 4, 2, "...I guess I have the option.")
+        break
+    case 8:
+        numLines = 2
+        endAction = 0
+        diaLine(0, 1, 2, 0, "These are some quick warps to make navigation easier for testers.")
+        diaLine(1, 1, 2, 0, "They're intended to be used after you've reached their corresponding areas for the first time in actual gameplay.")
+        break
+    case 9:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 1, 2, 0, "Don't forget that this door has [-1] copies! Mouseover information always displays the base count of locks, so you must account for copies yourself.")
+        diaLine(1, 2, 3, 0, "I suppose things like that can be hard to notice sometimes.")
+        diaLine(2, 2, 4, 0, "There's a lot to keep track of now, so I suppose it's nice to be reminded how stuff works.")
+        diaLine(3, 2, 3, 0, "(...And that door is definitely the one blocking the next Chapter.)")
+        break
+    case 10:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 1, 2, 0, "Congratulations on making it this far! You've learned so much about the Salvage Points!")
+        diaLine(1, 1, 2, 1, "The gloves come off now. Get comfortable.")
+        diaLine(2, 2, 4, 5, "More like, congratulations on being the most ominous sign I've ever read.")
+        diaLine(3, 2, 4, 15, "Wild to think that all the Key and Door stuff ended up escalating to THIS.")
+        diaLine(4, 2, 3, 7, "But, then again, I *did* make it this far. Let's see if I can't do some damage!")
+        break
+    case 11:
+        numLines = 10
+        endAction = 2
+        diaLine(0, 3, 5, 0, "I'm just Kina, your friendly neighborhood God of Keys and Doors")
+        diaLine(1, 3, 5, 1, "You must have clonked your noggin pretty hard if you forgot that")
+        diaLine(2, 2, 3, 4, "I didn't forget or anything! It's just...")
+        diaLine(3, 3, 6, 2, "No worries I am just engaging in some old-fashioned Japery")
+        diaLine(4, 3, 5, 0, "We've both been here from the start, obviously")
+        diaLine(5, 2, 4, 2, "...Right.")
+        diaLine(6, 2, 4, 5, "This is a weird conversation.")
+        diaLine(7, 3, 5, 1, "You're the one who asked my name even though you clearly already know")
+        diaLine(8, 3, 6, 2, "That's another high-grade Jape of mine by the way")
+        diaLine(9, 3, 5, 0, "Nice to meet you")
+        break
+    case 12:
+        numLines = 11
+        endAction = 2
+        diaLine(0, 3, 5, 0, "Well, you came down here for the whole Enrichment Program thing right")
+        diaLine(1, 2, 3, 0, "Yeah. The Ambassador told me all about it.")
+        diaLine(2, 3, 5, 1, "Well you're here for a whole lotta Enrichening")
+        diaLine(3, 2, 4, 4, "And what substantiates that...enrichening?")
+        diaLine(4, 3, 6, 4, "A whole honkin lot of Puzzles")
+        diaLine(5, 2, 3, 1, "Right. Okay! I can probably handle puzzles.")
+        diaLine(6, 3, 5, 0, "Just take the staircase-shaped teleporter and get crackin")
+        diaLine(7, 3, 5, 0, "Solve puzzles and get Stone Keys for your efforts")
+        diaLine(8, 3, 5, 1, "Then open up a Stone Door and solve even more")
+        diaLine(9, 2, 3, 4, "Sounds like I'll be here a while, then.")
+        diaLine(10, 3, 6, 2, "Haha you bet")
+        break
+    case 13:
+        numLines = 4
+        endAction = 2
+        diaLine(0, 3, 5, 0, "Just solve whatever puzzles are available really")
+        diaLine(1, 3, 5, 5, "New stuff will open up later")
+        diaLine(2, 2, 3, 0, "Well, okay!")
+        diaLine(3, 3, 5, 0, "Feel free to ask again if you have any Nexts of the Questionable variety")
+        break
+    case 14:
+        numLines = 15
+        endAction = 2
+        diaLine(0, 3, 5, 0, "You're certainly in a fun spot")
+        diaLine(1, 3, 5, 0, "Nice job solving The Great Beyond by the way")
+        diaLine(2, 2, 3, 1, "Thanks!")
+        diaLine(3, 3, 5, 0, "If you truly insist, what is next will involve Shenanigans")
+        diaLine(4, 2, 3, 4, "Well, do continue!")
+        diaLine(5, 3, 5, 0, "You know how entering and leaving puzzles teleports you all Willy-Nilly")
+        diaLine(6, 2, 3, 0, "I'm well aware of it at this point.")
+        diaLine(7, 3, 5, 0, "Well what I'll say is this")
+        diaLine(8, 3, 5, 0, "It involves doing something Funny with the warping system")
+        diaLine(9, 3, 5, 1, "And by Funny I mean Trust Testing")
+        diaLine(10, 2, 4, 4, "Huh, okay. What about the weirdly shaped keys? They've been tantalizingly out of reach for a while now.")
+        diaLine(11, 3, 5, 0, "Those are not quite relevant yet")
+        diaLine(12, 3, 5, 0, "Definitely soon though")
+        diaLine(13, 3, 5, 1, "Anyways that is all I will say for now")
+        diaLine(14, 3, 5, 5, "Good luck")
+        break
+    case 15:
+        numLines = 16
+        endAction = 2
+        diaLine(0, 3, 5, 1, "Alright now the fun really begins")
+        diaLine(1, 2, 3, 4, "Meaning..?")
+        diaLine(2, 3, 5, 0, "You have to have seen the impossible-to-miss terminal with the wacky symbols right")
+        diaLine(3, 2, 3, 0, "I do think I have.")
+        diaLine(4, 3, 5, 0, "Well now it's time for you to start collecting the funny key things")
+        diaLine(5, 2, 3, 1, "Oh! Nice!")
+        diaLine(6, 3, 5, 0, "They are called Omega Keys by the way")
+        diaLine(7, 3, 5, 0, "That is what that symbol is")
+        diaLine(8, 2, 3, 4, "...Thanks for clarifying.")
+        diaLine(9, 2, 3, 3, "But, uh, *how* am I supposed to get them? They all look clearly impossible.")
+        diaLine(10, 3, 5, 0, "Once you get one, it'll all make sense")
+        diaLine(11, 3, 5, 0, "Start with the one that's most obviously impossible first")
+        diaLine(12, 2, 3, 3, "...That doesn't make sense.")
+        diaLine(13, 3, 5, 1, "Well they all have doors blocking them")
+        diaLine(14, 3, 5, 1, "Go for the most blatantly unopenable one first")
+        diaLine(15, 2, 4, 2, "I guess I'll try..?")
+        break
+    case 16:
+        numLines = 4
+        endAction = 2
+        diaLine(0, 3, 5, 0, "Well at this point in the process things start to get a bit more open")
+        diaLine(1, 3, 5, 0, "I guess the thing of most value right now would be getting more Omega Keys")
+        diaLine(2, 3, 5, 1, "You'll want quite a few of them for when stuff Gets Real")
+        diaLine(3, 2, 3, 0, "Fair enough.")
+        break
+    case 17:
+        numLines = 4
+        endAction = 2
+        diaLine(0, 3, 5, 0, "Now that you have some Omega Keys, you can unlock some Omega Perks as well")
+        diaLine(1, 3, 5, 0, "You'll need to manually unlock them with the terminal in the Secret Lab, so go do that")
+        diaLine(2, 2, 3, 13, "Why do I have to do it manually?")
+        diaLine(3, 3, 5, 3, "Because")
+        break
+    case 18:
+        numLines = 10
+        endAction = 2
+        diaLine(0, 3, 5, 6, "You got the first Omega Perk, that's nice")
+        diaLine(1, 2, 3, 4, "What did it... *do*, necessarily?")
+        diaLine(2, 3, 5, 0, "Opened up some fun Secret Passageways of course (the passageways in question being visible and not fake walls or anything)")
+        diaLine(3, 2, 4, 3, "...Where?")
+        diaLine(4, 3, 5, 1, "Well it's a Secret sillyhead")
+        diaLine(5, 3, 5, 0, "They're Open now so you can't really miss them")
+        diaLine(6, 2, 3, 2, "I guess I'll start looking, then?")
+        diaLine(7, 2, 3, 2, "What do I do *after* that, though?")
+        diaLine(8, 3, 5, 3, "Could be anything, use your imagination")
+        diaLine(9, 2, 3, 2, "...Knowing you, it's something really weird for sure.")
+        break
+    case 19:
+        numLines = 5
+        endAction = 2
+        diaLine(0, 3, 5, 0, "Well, basically everything is opened up for the time being")
+        diaLine(1, 3, 5, 1, "So go haywire I guess")
+        diaLine(2, 3, 5, 7, "Due to Prevailing Circumstances some areas are unavailable")
+        diaLine(3, 3, 5, 1, "So basically, Be Doing")
+        diaLine(4, 2, 3, 1, "Okay, then!")
+        break
+    case 20:
+        numLines = 5
+        endAction = 3
+        diaLine(0, 3, 5, 0, "Congratulations Lily you Opened my Heart")
+        diaLine(1, 2, 4, 4, "......")
+        diaLine(2, 3, 5, 0, "That was intended by the way")
+        diaLine(3, 2, 4, 4, "......")
+        diaLine(4, 3, 6, 1, "Have fun")
+        break
+    case 21:
+        numLines = 3
+        endAction = 3
+        diaLine(0, 2, 3, 4, "...No theatrics this time?")
+        diaLine(1, 3, 5, 0, "I only have one Heart, sorry")
+        diaLine(2, 2, 4, 2, "That's a shame.")
+        break
+    case 22:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 1, 2, 0, "Welcome to the Extra Chapter of The Great Beyond! For convenience purposes, this familiar terminal has been put here.")
+        diaLine(1, 2, 3, 8, "I have a feeling I know what's gonna be going on here.")
+        diaLine(2, 1, 2, 0, "The final four Omega Keys can be found here, although you can't get them immediately. If you don't have the rest of the Omega Keys up to this point, know that this area will not help you obtain them.")
+        diaLine(3, 1, 2, 0, "Additionally, you will need progressively more Omega Keys to solve each puzzle. It should be clear in most cases what each one requires.")
+        diaLine(4, 1, 2, 0, "And, if you're in need of 13 Stone Keys, check the Main Hub and the other four chapters of The Great Beyond for changes!")
+        diaLine(5, 1, 2, 0, "That's it from this lonely old sign. I wish you luck, dedicated participant of Kina's World!")
+        diaLine(6, 2, 3, 7, "Well, then... I suppose I should get started!")
+        break
+    case 23:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 1, 2, 0, "Welcome to World Omega! This is a bonus world intended for after you've completed everything else.")
+        diaLine(1, 2, 4, 4, "I see...")
+        diaLine(2, 1, 2, 0, "Everything beyond these three puzzles will only be accessible later, for reasons I cannot detail.")
+        diaLine(3, 1, 2, 0, "There is quite a variety to these puzzles, both in concepts and difficulty/quality. You shouldn't feel obligated to solve them.")
+        diaLine(4, 1, 2, 0, "However, do not let that deter you from trying to solve them anyway. Or, at least, trying to figure out what each one is all about.")
+        diaLine(5, 1, 2, 0, "Enjoy what remains, and be proud of how far you've come!")
+        diaLine(6, 2, 3, 1, "I sure will!")
+        break
+    case 24:
+        numLines = 27
+        endAction = 0
+        diaLine(0, 1, 2, 0, "This is the last puzzle Kina has set aside for you.")
+        diaLine(1, 2, 4, 8, "Oh dear.")
+        diaLine(2, 1, 2, 0, "You might be tempted to call it the hardest, or the most important one to solve.")
+        diaLine(3, 1, 2, 0, "But, in truth, it is merely one more puzzle that has been crafted with the utmost heart.")
+        diaLine(4, 1, 2, 0, "This is only speculation, of course, but I know for certain you can solve it.")
+        diaLine(5, 2, 3, 11, "Well, no pressure!")
+        diaLine(6, 1, 2, 0, "Are you ready? After all this time, it's finally about to end for real.")
+        diaLine(7, 1, 2, 0, "...Or, perhaps not.")
+        diaLine(8, 2, 3, 4, "Oh?")
+        diaLine(9, 1, 2, 0, "There is always something new to learn. Another angle to explore. Another trick to figure out.")
+        diaLine(10, 1, 2, 0, "A further place to go that could only have been reached by making it this far to begin with.")
+        diaLine(11, 1, 2, 0, "The world will continue, and so shall yours after you have moved on from here.")
+        diaLine(12, 1, 2, 0, "I hope you've enjoyed your time here. I know I have.")
+        diaLine(13, 1, 2, 0, "Anyways this sign is running out of space now so b")
+        diaLine(14, 2, 3, 4, "Oh. That's... Alrighty then.")
+        diaLine(15, 2, 3, 2, "Huh! Well, I'm certainly feeling a ways of sorts now.")
+        diaLine(16, 2, 3, 2, "Maybe I should talk to Kina when all this is done.")
+        diaLine(17, 2, 3, 0, "Well, goodbye, s-")
+        diaLine(18, 2, 3, 4, "There's text on the back.")
+        diaLine(19, 1, 2, 2, "ye hey look i can write on the back lol")
+        diaLine(20, 1, 2, 2, "it's like a metaphor cause i was talking about worlds continuing and stuff")
+        diaLine(21, 1, 2, 2, "nobody could have anticipated it, it's the sentimental sign comeback special")
+        diaLine(22, 1, 2, 2, "youre gonna wanna take a lot of notes for this puzzle btw its like way too hard so good l")
+        diaLine(23, 2, 11, 12, "")
+        diaLine(24, 2, 11, 13, "")
+        diaLine(25, 2, 11, 14, "")
+        diaLine(26, 2, 3, 14, "Okay.")
+        break
+    case 25:
+        numLines = 6
+        endAction = 2
+        diaLine(0, 3, 5, 0, "Congrats on the first Omega Key")
+        diaLine(1, 3, 5, 1, "Now the real fun begins")
+        diaLine(2, 2, 3, 1, "Yep! I think I see which one to go for next.")
+        diaLine(3, 2, 3, 4, "I'm...surprised I get to even do something like this.")
+        diaLine(4, 3, 5, 0, "It only gets wackier from here")
+        diaLine(5, 3, 5, 3, "Prepare yourself")
+        break
+    case 26:
+        numLines = 9
+        endAction = 2
+        diaLine(0, 2, 3, 0, "Getting the third Omega Key seems... really hard!")
+        diaLine(1, 3, 5, 7, "Yeah it is")
+        diaLine(2, 2, 4, 15, "Just analyzing my options, it feels like it could only be the purple one... it IS the purple one, right?")
+        diaLine(3, 3, 5, 0, "Correct")
+        diaLine(4, 2, 3, 13, "You sure made it hard to get, then!")
+        diaLine(5, 2, 3, 14, "Any hints on how I could try to get it? (Hints which I could SKIP if I didn't want to hear, that is...)")
+        diaLine(6, 3, 5, 1, "Well, you have two Omega Keys now")
+        diaLine(7, 3, 6, 2, "That's better than just having one, I'd think")
+        diaLine(8, 2, 3, 4, "Huh! ...I suppose that is a hint.")
+        break
+    case 27:
+        numLines = 5
+        endAction = 2
+        diaLine(0, 3, 5, 0, "You're basically on the home stretch now")
+        diaLine(1, 3, 5, 1, "All you really have left are the many places unlocked by the terminal")
+        diaLine(2, 3, 5, 0, "It's your choice at this point")
+        diaLine(3, 2, 3, 7, "I'll see what I can do, then!")
+        diaLine(4, 3, 6, 8, "Good Luck")
+        break
+    case 28:
+        numLines = 4
+        endAction = 2
+        diaLine(0, 2, 3, 1, "It took a lot out of me, but I finally solved that massive puzzle!")
+        diaLine(1, 3, 5, 6, "Good Job")
+        diaLine(2, 2, 3, 0, "")
+        diaLine(3, 2, 3, 1, "Yeah!")
+        break
+    case 29:
+        numLines = 7
+        endAction = 2
+        diaLine(0, 2, 3, 1, "I got myself that first Stone Key!")
+        diaLine(1, 3, 5, 6, "Nicely done")
+        diaLine(2, 2, 3, 0, "The idea seems pretty basic. Just keys and doors is fine by me!")
+        diaLine(3, 3, 5, 0, "Yeah it's gonna get a bit more complicated from here on out")
+        diaLine(4, 2, 3, 0, "Makes sense. Also, I don't mean to assume, but is it keys and doors because you're the God of Keys and Doors?")
+        diaLine(5, 3, 5, 2, "Maybe")
+        diaLine(6, 2, 3, 2, "That's... That's not really an answer...")
+        break
+    case 30:
+        numLines = 10
+        endAction = 2
+        diaLine(0, 2, 3, 4, "So, what's up with all these places I'm visiting, anyway?")
+        diaLine(1, 2, 3, 3, "Are they, like... Real?")
+        diaLine(2, 3, 5, 0, "Every world here is an artificial place created in collaboration with the God of Space")
+        diaLine(3, 2, 3, 4, "Oh! Does that include here, then?")
+        diaLine(4, 3, 5, 1, "Yep")
+        diaLine(5, 2, 3, 5, "I guess it makes sense why these staircases are actually teleporters, then.")
+        diaLine(6, 2, 3, 0, "Well, for artificial worlds, they certainly look nice.")
+        diaLine(7, 3, 5, 0, "Thank you")
+        diaLine(8, 3, 5, 0, "We put quite a lot of work into making every area shine")
+        diaLine(9, 2, 3, 1, "I can tell!")
+        break
+    case 31:
+        numLines = 13
+        endAction = 2
+        diaLine(0, 2, 3, 4, "So, how long am I gonna be here, anyhow?")
+        diaLine(1, 3, 5, 0, "You can technically leave anytime, but it's probably gonna be at least a few days")
+        diaLine(2, 2, 3, 8, "Oh, wow. I guess I'll be leaving Marilyn home alone for a while, then.")
+        diaLine(3, 3, 5, 0, "Let me guess")
+        diaLine(4, 3, 5, 3, "Partner in Shenanigans")
+        diaLine(5, 2, 3, 11, "Something like that.")
+        diaLine(6, 3, 5, 0, "Got it")
+        diaLine(7, 2, 3, 0, "We've lived together for quite some time. Normally I'm pretty rooted at home, but it's nice to explore every once in a while.")
+        diaLine(8, 2, 3, 1, "And then, as fate might have it, I got the Ambassador Society's notification, and this place was pretty nearby!")
+        diaLine(9, 3, 5, 1, "Big Neato")
+        diaLine(10, 2, 3, 4, "That is certainly a way you can put it.")
+        diaLine(11, 3, 5, 0, "Be sure to enjoy the amenities in the Guest Room")
+        diaLine(12, 2, 3, 1, "I shall!")
+        break
+    case 32:
+        numLines = 16
+        endAction = 2
+        diaLine(0, 2, 3, 2, "So, I've really gotta ask... These auras are pretty different from everything else.")
+        diaLine(1, 2, 3, 4, "What's up with them? And also, the uh, 1-3-5 thing.")
+        diaLine(2, 3, 5, 5, "Yeah they're a little arbitrary huh")
+        diaLine(3, 3, 5, 1, "I figure I should try to explain the niche they fill")
+        diaLine(4, 3, 5, 0, "The main point is that they are good for enforcing certain rules on how to traverse a puzzle")
+        diaLine(5, 3, 5, 0, "The 1-3-5 thing is good for being able to split a requirement across more than one path")
+        diaLine(6, 3, 5, 0, "Oh and also they ignore Master Keys so yeah")
+        diaLine(7, 2, 3, 2, "I suppose that makes more sense. It seems like you did also use the 1-3-5 for some weirder stuff, though.")
+        diaLine(8, 3, 5, 0, "Can't help it")
+        diaLine(9, 2, 3, 1, "Well, thanks for the explanation, I suppose!")
+        diaLine(10, 3, 5, 0, "However")
+        diaLine(11, 2, 3, 3, "Uh... Yeah?")
+        diaLine(12, 3, 5, 0, "I was trying to make a joke by putting a different word at the start of 'Whenever'")
+        diaLine(13, 3, 6, 7, "Unfortunately 'how' is not a good word to do that with")
+        diaLine(14, 2, 4, 9, "Oh.")
+        diaLine(15, 2, 4, 13, "Okay.")
+        break
+    case 33:
+        numLines = 7
+        endAction = 2
+        diaLine(0, 2, 3, 4, "Y'know...")
+        diaLine(1, 2, 3, 5, "These puzzles are kinda starting to actually get a little bit hard now.")
+        diaLine(2, 3, 5, 0, "That might be a trend that continues a bit")
+        diaLine(3, 3, 5, 2, "I believe it is referred to as a 'Difficulty Curve'")
+        diaLine(4, 2, 3, 1, "I see. Well, let's hope this difficulty curve has some troughs alongside its peaks!")
+        diaLine(5, 3, 6, 0, "Let's hope this difficulty curve is also continuous and does not diverge")
+        diaLine(6, 2, 3, 5, "I... think I agree???")
+        break
+    case 34:
+        numLines = 13
+        endAction = 2
+        diaLine(0, 2, 3, 7, "I wasn't expecting Negative Keys! They're quite the concept.")
+        diaLine(1, 3, 5, 8, "yea")
+        diaLine(2, 2, 3, 4, "So, how exactly does having Negative Keys work? ...I mean, on the behind-the-scenes side.")
+        diaLine(3, 3, 5, 0, "Touching them just subtracts from your count, simple as that")
+        diaLine(4, 3, 5, 0, "The key count isn't physical or anything")
+        diaLine(5, 3, 5, 2, "Same reason you don't have to carry 100 actual physical keys on your person when solving these puzzles")
+        diaLine(6, 2, 3, 4, "I guess that makes sense, in a sorta abstract kind of way!")
+        diaLine(7, 2, 3, 0, "Well, I'll consider that a mystery solved.")
+        diaLine(8, 2, 3, 15, "Now for the real question: where to go next...")
+        diaLine(9, 3, 5, 0, "There's some new places to find if you look around for a bit")
+        diaLine(10, 3, 5, 0, "Just continue as normal")
+        diaLine(11, 2, 3, 1, "I see! Guess I'll do that.")
+        diaLine(12, 2, 3, 7, "(Places... plural? Guess I better get looking.)")
+        break
+    case 35:
+        numLines = 22
+        endAction = 2
+        diaLine(0, 2, 3, 5, "It's just now starting to hit me.")
+        diaLine(1, 3, 6, 1, "Well tell it to stop because that is rude")
+        diaLine(2, 2, 4, 3, "N-     no.")
+        diaLine(3, 3, 5, 0, "So what were you gonna say")
+        diaLine(4, 2, 3, 4, "Right. Well...")
+        diaLine(5, 2, 3, 4, "World 7 is already introducing some of the strangest concepts I've seen.")
+        diaLine(6, 2, 3, 15, "And I can't help but notice there's still 4 or 5 more worlds to go???")
+        diaLine(7, 3, 5, 0, "What of it")
+        diaLine(8, 2, 3, 8, "How'd you even come up with this stuff?")
+        diaLine(9, 2, 3, 8, "It's hard for me to even imagine what could follow that up.")
+        diaLine(10, 3, 5, 0, "I just took the fundamental mechanics of keys and doors and kinda")
+        diaLine(11, 3, 5, 2, "Generalized them a bit")
+        diaLine(12, 2, 3, 4, "I guess so? The Bicolored Doors work the same as normal, at least.")
+        diaLine(13, 2, 3, 4, "The color that's spent is the only difference. And I guess Normal Doors are just, like, a Bicolored Door with matching colors???")
+        diaLine(14, 3, 5, 0, "Your noggin's really joggin' to expouse such jargon")
+        diaLine(15, 3, 5, 0, "It means you're getting it")
+        diaLine(16, 2, 3, 4, "Well, I hope it doesn't get TOO complicated for me down the line...")
+        diaLine(17, 3, 5, 0, "Well hey")
+        diaLine(18, 3, 5, 0, "Nothing's stopped you yet")
+        diaLine(19, 3, 5, 4, "Just keep on goin' and you might even reach the end")
+        diaLine(20, 2, 3, 1, "Might.")
+        diaLine(21, 2, 3, 0, "Fun.")
+        break
+    case 36:
+        numLines = 16
+        endAction = 2
+        diaLine(0, 2, 3, 4, "These puzzles are starting to look a lot like math problems now.")
+        diaLine(1, 3, 5, 0, "Well you've been working with numbers since the very start so that makes sense")
+        diaLine(2, 2, 3, 9, "Well, I mean, they're starting to look like MATH math problems.")
+        diaLine(3, 2, 3, 13, "Am I gonna need some serious math knowledge to solve these puzzles going forward?")
+        diaLine(4, 3, 5, 5, "Unlikely but it would certainly help with a few")
+        diaLine(5, 3, 5, 0, "I tried to not make every single puzzle a math puzzle")
+        diaLine(6, 3, 6, 3, "Even if the temptation was there")
+        diaLine(7, 2, 3, 0, "Well, I guess that's fine.")
+        diaLine(8, 2, 3, 2, "As long as I don't have to pull out a computer, I should be okay.")
+        diaLine(9, 3, 5, 0, "Well let's not be reductive here")
+        diaLine(10, 3, 6, 1, "Wouldn't it be funny if you did have to use a computer for something")
+        diaLine(11, 2, 4, 13, "I don't know, and I am scared to find out.")
+        diaLine(12, 3, 5, 1, "Well even if you don't like a puzzle")
+        diaLine(13, 3, 5, 0, "There's always the ability to skip them")
+        diaLine(14, 3, 5, 1, "It's there for a reason")
+        diaLine(15, 2, 4, 15, "I guess.")
+        break
+    case 37:
+        numLines = 25
+        endAction = 2
+        diaLine(0, 2, 3, 6, "I'm a little sad now.")
+        diaLine(1, 2, 3, 6, "I tried grabbing some of the books in the library, but they're all fake.")
+        diaLine(2, 2, 4, 2, "Like, 'not even made of paper' fake.")
+        diaLine(3, 3, 5, 1, "It's a lot of work to make these artificial worlds")
+        diaLine(4, 3, 5, 1, "Filling out a library is hard, and copy pasting blocks is way easier")
+        diaLine(5, 2, 3, 4, "Does your magic not allow you to just make a bunch of books?")
+        diaLine(6, 3, 5, 0, "Generally magic requires a lot of thought and specification to actually work")
+        diaLine(7, 3, 5, 1, "Best I could do is probably grab a dozen or so real books and just make a bunch of copies")
+        diaLine(8, 3, 5, 5, "But you might be able to tell I was a bit more focused on the puzzles")
+        diaLine(9, 2, 4, 2, "That's a shame.")
+        diaLine(10, 2, 3, 15, "I guess there isn't really any 'story' for these worlds either, then?")
+        diaLine(11, 3, 5, 0, "Not really")
+        diaLine(12, 2, 3, 15, "Dang. And they're all so beautiful, too.")
+        diaLine(13, 2, 3, 4, "I'm sure you could at least make something up.")
+        diaLine(14, 2, 3, 8, "Heck, 'I' could probably make something up.")
+        diaLine(15, 3, 5, 0, "The concept just kinda strikes me as weird")
+        diaLine(16, 3, 5, 0, "As in, where do you even draw the line when going for immersion")
+        diaLine(17, 3, 5, 0, "I'd probably feel compelled to go all-out if I went for it")
+        diaLine(18, 3, 5, 7, "Making a little flavor text story isn't really my thing")
+        diaLine(19, 2, 3, 4, "I'm sure that someone would appreciate it!")
+        diaLine(20, 2, 3, 0, "A little bit of depth can go a long way. I think.")
+        diaLine(21, 3, 5, 0, "You're probably right")
+        diaLine(22, 3, 5, 1, "Either way it's not really a priority of mine at the moment")
+        diaLine(23, 2, 3, 4, "Fair enough.")
+        diaLine(24, 2, 3, 15, "Maybe I'll think about it a bit more.")
+        break
+    case 38:
+        numLines = 16
+        endAction = 2
+        diaLine(0, 2, 3, 15, "It occurred to me to ask you something a little important.")
+        diaLine(1, 3, 5, 0, "Uh huh")
+        diaLine(2, 2, 3, 15, "So, all the different artificial worlds are connected by these warping staircases.")
+        diaLine(3, 2, 3, 14, "What would necessarily happen if they glitched out or something?")
+        diaLine(4, 2, 3, 12, "Could I be teleported into a void? Or halfway inside a block or something?")
+        diaLine(5, 3, 5, 0, "The teleportation is under the direct supervision of the God of Space")
+        diaLine(6, 3, 5, 0, "The arrangement we made was that any warp errors would bring you to an 'Error Handling Saferoom' of sorts")
+        diaLine(7, 3, 5, 1, "And if that wasn't safe either then you'd just get plonked somewhere safe on the surface")
+        diaLine(8, 2, 3, 1, "Well, that's good to know.")
+        diaLine(9, 2, 3, 1, "Certainly a load off my mind...")
+        diaLine(10, 3, 5, 0, "We wouldn't be doing this if it wasn't safe")
+        diaLine(11, 2, 3, 0, "I know, I know. Just feels better to know exactly how it works.")
+        diaLine(12, 2, 3, 1, "Well, thanks, Kina.")
+        diaLine(13, 3, 5, 0, "Problemn't")
+        diaLine(14, 2, 3, 15, "(Although, now I'm curious.)")
+        diaLine(15, 2, 3, 4, "(I kinda wanna know what that safe room looks like now...)")
+        break
+    case 39:
+        numLines = 13
+        endAction = 2
+        diaLine(0, 2, 3, 5, "I-imaginary keys..?")
+        diaLine(1, 3, 6, 2, "The real keys were the friends we made along the way")
+        diaLine(2, 2, 3, 10, "But what does that make the imaginary keys???")
+        diaLine(3, 3, 5, 5, "The friends we may or may not have made along the way")
+        diaLine(4, 2, 3, 9, "If you say so.")
+        diaLine(5, 2, 3, 15, "Y'know, I knew what imaginary numbers were before.")
+        diaLine(6, 2, 3, 4, "It doesn't make it any less wild that they're ACTUALLY a thing here.")
+        diaLine(7, 3, 5, 0, "They are neat")
+        diaLine(8, 2, 3, 14, "Maybe. Although, I feel like I'm about to get thrusted into one of those aforementioned serious math problems...")
+        diaLine(9, 3, 5, 1, "You'll be fine")
+        diaLine(10, 2, 3, 2, "I hope so.")
+        diaLine(11, 2, 3, 8, "And I'm not even at the end yet...")
+        diaLine(12, 3, 6, 3, "That is a good observation")
+        break
+    case 40:
+        numLines = 11
+        endAction = 2
+        diaLine(0, 2, 3, 4, "Wow, this place goes on for a while, huh?")
+        diaLine(1, 3, 5, 2, "I might have had more than a couple ideas")
+        diaLine(2, 2, 3, 4, "If I'm looking at it correct, I guess I'm only halfway done?")
+        diaLine(3, 3, 5, 0, "Solid observation")
+        diaLine(4, 3, 5, 5, "On a completely unrelated note do you know what dramatic irony is")
+        diaLine(5, 2, 4, 13, "...")
+        diaLine(6, 2, 3, 13, "Yes?")
+        diaLine(7, 3, 5, 6, "Cool")
+        diaLine(8, 3, 5, 0, "Anyways have fun")
+        diaLine(9, 2, 3, 1, "Well, with this much stuff left, I probably will!")
+        diaLine(10, 2, 3, 7, "(I'm certainly not terrified of being on the receiving end of dramatic irony or anything! Nope! Not at all!)")
+        break
+    case 41:
+        numLines = 14
+        endAction = 2
+        diaLine(0, 2, 3, 4, "I think I might be coming up on an ending soon.")
+        diaLine(1, 2, 3, 5, "It's... certainly got a big puzzle gatekeeping it.")
+        diaLine(2, 3, 5, 1, "Nothing you're unprepared for I'd say")
+        diaLine(3, 2, 3, 1, "Maybe. But, it did make something else come to mind.")
+        diaLine(4, 2, 3, 15, "After I complete that puzzle, will that be it?")
+        diaLine(5, 2, 3, 4, "As in, will I be able to come back, or...")
+        diaLine(6, 3, 5, 0, "If you solve that puzzle you will indeed be teleported back outside")
+        diaLine(7, 3, 5, 5, "You're free to come back right after though")
+        diaLine(8, 3, 5, 1, "Just maybe decide whether you wanna stay or not when you're done")
+        diaLine(9, 3, 5, 7, "Or if anything comes up you can just ask to leave, that too")
+        diaLine(10, 2, 3, 0, "I don't think I've got any pressing reason to return home at the moment.")
+        diaLine(11, 2, 3, 7, "So I'll probably stay.")
+        diaLine(12, 3, 5, 0, "Well enjoy your time")
+        diaLine(13, 2, 3, 0, "As always.")
+        break
+    case 42:
+        numLines = 10
+        endAction = 2
+        diaLine(0, 3, 5, 0, "Welcome back")
+        diaLine(1, 2, 3, 0, "It was nice to get some fresh air for a bit.")
+        diaLine(2, 2, 3, 1, "Feels good to have solved that puzzle, too!")
+        diaLine(3, 3, 5, 3, "I'm glad")
+        diaLine(4, 2, 3, 7, "So, I guess I'll just... get back to it?")
+        diaLine(5, 3, 6, 1, "It's your choice")
+        diaLine(6, 2, 3, 0, "Cool. I caught up with Marilyn, and I should be good to stay here for quite a while.")
+        diaLine(7, 2, 3, 15, "Which might be needed, since this place is really large.")
+        diaLine(8, 3, 5, 0, "Feel free to take in the scenery")
+        diaLine(9, 2, 3, 0, "Mhm.")
+        break
+    case 43:
+        numLines = 17
+        endAction = 2
+        diaLine(0, 2, 3, 4, "You've certainly made quite the imposing puzzle, Kina.")
+        diaLine(1, 3, 6, 0, "Tell me about it")
+        diaLine(2, 2, 3, 15, "I'm tempted to get that item, although I don't doubt for a second that it'll be really difficult.")
+        diaLine(3, 3, 5, 1, "Follow your heart")
+        diaLine(4, 3, 5, 0, "In this case you don't need to worry too much about if or when you solve that one")
+        diaLine(5, 2, 3, 4, "Oh?")
+        diaLine(6, 3, 5, 5, "Solving that puzzle doesn't unlock anything new for you")
+        diaLine(7, 2, 3, 0, "I see.")
+        diaLine(8, 2, 3, 1, "It's a nice place to relax, at least. The scenery is beautiful.")
+        diaLine(9, 3, 5, 3, "Thanks a Bundle")
+        diaLine(10, 2, 3, 1, "It's nice to have that for such a really large puzzle.")
+        diaLine(11, 2, 3, 1, "I like being able to appreciate the piece of work I'm dealing with before I actually, y'know, solve it.")
+        diaLine(12, 3, 5, 0, "Thanks a Bundle 2: Double Bundle")
+        diaLine(13, 2, 3, 0, "...Sure.")
+        diaLine(14, 2, 3, 0, "...I dunno what else to say, so I guess that'll be it?")
+        diaLine(15, 3, 5, 2, "Cool beans")
+        diaLine(16, 2, 3, 1, "Beans which are cool.")
+        break
+    case 44:
+        numLines = 12
+        endAction = 2
+        diaLine(0, 2, 3, 1, "Guess what I did!")
+        diaLine(1, 3, 5, 0, "Congraduations")
+        diaLine(2, 3, 5, 5, "You gratulated")
+        diaLine(3, 2, 3, 1, "I did! It was one heck of a puzzle.")
+        diaLine(4, 2, 3, 1, "Pretty fun, too!")
+        diaLine(5, 3, 5, 0, "Appreciated")
+        diaLine(6, 3, 5, 0, "So what'll you do now with your new diploma in uhh whatever a key-based subject would be called")
+        diaLine(7, 2, 3, 0, "I dunno.")
+        diaLine(8, 2, 3, 0, "Guess I'll get back to exploring for now.")
+        diaLine(9, 3, 5, 0, "Have fun in The Great Beyond")
+        diaLine(10, 2, 3, 7, "I shall!")
+        diaLine(11, 2, 3, 7, "(That would certainly be quite the thing to say to someone out of context.)")
+        break
+    case 45:
+        numLines = 13
+        endAction = 2
+        diaLine(0, 2, 3, 8, "I'm starting to think that I might STILL be nowhere near finished with this.")
+        diaLine(1, 3, 5, 4, "Let's drop the pretense and just say that you are correct")
+        diaLine(2, 3, 5, 5, "Welcome to the second part of this engagement")
+        diaLine(3, 2, 3, 4, "Which is to say that everything I've done up til now was just the FIRST part?")
+        diaLine(4, 3, 5, 1, "More or less")
+        diaLine(5, 2, 3, 4, "Looks like I've got my work cut out for me, then!")
+        diaLine(6, 3, 5, 0, "I'd hope it's more fun than it is work but sure")
+        diaLine(7, 3, 5, 2, "The new Salvage stuff is gonna change things up a bit so have fun")
+        diaLine(8, 2, 3, 0, "I think I already have some ideas of where it might be going.")
+        diaLine(9, 2, 3, 7, "I'm excited!")
+        diaLine(10, 3, 5, 5, "That's the spirit")
+        diaLine(11, 3, 5, 2, "Go knock em' gently into a pleasant sleep")
+        diaLine(12, 2, 3, 1, "Yeah, that!")
+        break
+    case 46:
+        numLines = 18
+        endAction = 2
+        diaLine(0, 2, 3, 0, "This new world in The Great Beyond is so mesmerising to be in.")
+        diaLine(1, 2, 3, 1, "Being able to explore this more expansive world is really fun!")
+        diaLine(2, 3, 5, 0, "Sounds like you're having a good time")
+        diaLine(3, 2, 3, 0, "Indeed. And puzzles affecting the world itself is a super neat idea.")
+        diaLine(4, 3, 5, 0, "There's a term for that nowadays")
+        diaLine(5, 3, 5, 5, "It's called a 'meta puzzle'")
+        diaLine(6, 2, 3, 1, "I see! It makes sense that there would be other experiences like this.")
+        diaLine(7, 2, 3, 0, "I don't normally do puzzles, so that's new to me.")
+        diaLine(8, 3, 5, 6, "Glad that this can be your first taste with the concept then")
+        diaLine(9, 2, 3, 1, "Mhm! It's a real breath of fresh air to change up the format, too.")
+        diaLine(10, 2, 3, 0, "Still don't know what's up with the weird W-keys, but-")
+        diaLine(11, 3, 5, 0, "Omega Keys")
+        diaLine(12, 2, 3, 1, "Oh! But, yeah, I'm having a good time.")
+        diaLine(13, 3, 5, 7, "Go frolic in the fields of fkeys and fdoors some fmore")
+        diaLine(14, 2, 3, 0, "You don't have to force that flitteration-")
+        diaLine(15, 2, 4, 12, "....fl.... Alliteration.")
+        diaLine(16, 3, 6, 8, "Alliteration")
+        diaLine(17, 2, 3, 9, "Right.")
+        break
+    case 47:
+        numLines = 15
+        endAction = 2
+        diaLine(0, 2, 3, 1, "I know that these worlds are artificial and all, but it's especially funny to feel warm while standing in snow.")
+        diaLine(1, 3, 5, 1, "It's important to make sure every immersive world is perfectly air conditioned")
+        diaLine(2, 2, 3, 15, "By the way, what is this snow made of? It's... definitely not water.")
+        diaLine(3, 3, 5, 0, "I advise against tasting the snow")
+        diaLine(4, 2, 4, 9, "...Too late.")
+        diaLine(5, 3, 5, 0, "")
+        diaLine(6, 2, 4, 12, "...It tasted like candy.")
+        diaLine(7, 2, 3, 14, "...It's not poisonous, right?")
+        diaLine(8, 3, 5, 5, "No I just don't want people eating everything")
+        diaLine(9, 2, 4, 8, "Oh.")
+        diaLine(10, 2, 3, 8, "Well, just a few snowflakes should be fine, right?")
+        diaLine(11, 3, 5, 0, "Sure")
+        diaLine(12, 3, 5, 1, "They might be prone to suddenly disappearing from existence though")
+        diaLine(13, 3, 5, 0, "Definitely don't supplant your diet with magic snowflakes")
+        diaLine(14, 2, 3, 0, "Noted for future endeavors.")
+        break
+    case 48:
+        numLines = 23
+        endAction = 2
+        diaLine(0, 2, 3, 1, "I've probably said it before, but it's a real joy to explore these worlds.")
+        diaLine(1, 3, 5, 0, "Thanks")
+        diaLine(2, 2, 3, 0, "Mhm. So, I was wondering.")
+        diaLine(3, 2, 3, 4, "What exactly happens when I leave this place for real? Will you just set it up for someone new?")
+        diaLine(4, 2, 3, 4, "It seems like a rather private engagement, all things considered...")
+        diaLine(5, 3, 5, 1, "I'm still figuring that one out")
+        diaLine(6, 3, 5, 1, "Maybe I'll reopen it for someone else, who knows")
+        diaLine(7, 2, 3, 4, "Hmm. And what if someone left and then came back way later?")
+        diaLine(8, 2, 3, 4, "Would they have to redo everything from the start, or...")
+        diaLine(9, 3, 5, 0, "Well the magic that runs this place already has something like a 'save file'")
+        diaLine(10, 3, 5, 1, "I figure it wouldn't be too hard to hold onto that and set everything back as it was")
+        diaLine(11, 2, 3, 0, "I see. That's fun to know.")
+        diaLine(12, 2, 3, 0, "It's sort of weird, in a way, to be the first person doing all this.")
+        diaLine(13, 2, 3, 0, "I'd like to see more people be able to try this out and see everything here.")
+        diaLine(14, 3, 5, 0, "That is very nice of you")
+        diaLine(15, 3, 5, 0, "Maybe I'll talk more about my thoughts about this place later but for now just know that your time here is appreciated")
+        diaLine(16, 2, 3, 1, "Cool!")
+        diaLine(17, 2, 3, 1, "Y'know, on-- On an unrelated note, I just realized how much I use phrases like 'Y'know' or 'I see' when responding to people.")
+        diaLine(18, 2, 3, 0, "Not sure where I'm going with this, but... Y'know.")
+        diaLine(19, 3, 5, 7, "M'know")
+        diaLine(20, 2, 3, 0, "Yeah. I mean, it makes things sound nicer. I guess it's just weird when I'm aware of it.")
+        diaLine(21, 3, 5, 0, "I don't really have much to add to this but talk the way you want to y'know")
+        diaLine(22, 2, 3, 11, "Yeah, I know. Just a little bit of silliness.")
+        break
+    case 49:
+        numLines = 23
+        endAction = 2
+        diaLine(0, 2, 3, 5, "This fourth 'chapter', so to speak... It's already looking VERY complex.")
+        diaLine(1, 3, 5, 0, "Our old pal the difficulty curve returns once more")
+        diaLine(2, 3, 5, 0, "Although I guess it's more like a conceptual curve")
+        diaLine(3, 3, 5, 2, "Which happens to also be correlated to the difficulty curve")
+        diaLine(4, 2, 3, 1, "You'd know more about it than me, being the designer and all.")
+        diaLine(5, 2, 3, 4, "I gotta say, though.")
+        diaLine(6, 2, 3, 4, "Do I *really* have to solve a math puzzle to even reach the first puzzle?")
+        diaLine(7, 2, 3, 4, "It's certainly not something I was expecting. It feels different, but in kind of a strange way.")
+        diaLine(8, 3, 5, 0, "The whole traversal situation isn't really ideal but I tried to play around those quirks")
+        diaLine(9, 3, 5, 5, "Chapter 4 does have some weird spots in that regard though")
+        diaLine(10, 2, 3, 2, "I don't see why entering a puzzle once shouldn't unlock an easier entrance or something.")
+        diaLine(11, 3, 5, 1, "As weird as it sounds I kinda just like it more that way")
+        diaLine(12, 3, 5, 0, "I made an exception with some of the fast travel world portals but for the basic puzzles I couldn't be bothered")
+        diaLine(13, 2, 4, 1, "...If you say so.")
+        diaLine(14, 2, 3, 4, "There's... a lot of stuff in this chapter. It certainly feels like all the Salvage stuff is being pushed to the limit!")
+        diaLine(15, 3, 5, 5, "Leave the stones non'tated, or so they say")
+        diaLine(16, 2, 3, 1, "Hold on, let me try and unpack that one.")
+        diaLine(17, 2, 3, 0, "(...So they're not unturned, and... Right, non't is a double negative. Right. Okay.)")
+        diaLine(18, 2, 3, 7, "Okay, I think I get it.")
+        diaLine(19, 3, 5, 0, "Glad to exchange some waves with you")
+        diaLine(20, 2, 3, 7, "I think I'll hold off on unpacking more for now.")
+        diaLine(21, 3, 5, 0, "Fair enough and enjoy the puzzles")
+        diaLine(22, 2, 3, 0, "As always!")
+        break
+    case 50:
+        numLines = 19
+        endAction = 2
+        diaLine(0, 2, 3, 15, "Well.")
+        diaLine(1, 2, 3, 15, "I think I found that error handling room.")
+        diaLine(2, 3, 5, 6, "Great work")
+        diaLine(3, 2, 3, 4, "So there's, uh... Still more, huh?")
+        diaLine(4, 2, 3, 8, "At this point you could convince me that this just actually never ends.")
+        diaLine(5, 3, 5, 4, "Welcome to Part 3 of your journey")
+        diaLine(6, 2, 3, 3, "Okay, well, calling it THAT feels... Actually, I dunno.")
+        diaLine(7, 2, 3, 13, "If Part 2 was just those 4 chapters of The Great Beyond, then that'd be pretty short, wouldn't it?")
+        diaLine(8, 3, 5, 1, "Nothing wrong with a short part right")
+        diaLine(9, 3, 5, 5, "How about we compromise and call it Part 2.5")
+        diaLine(10, 2, 4, 15, "Well, a part is a part.")
+        diaLine(11, 2, 4, 15, "You can't just say it's a half.")
+        diaLine(12, 3, 5, 1, "Explain your reasoning")
+        diaLine(13, 2, 3, 15, "If you call it half a part, that's basically like calling it a part of a part.")
+        diaLine(14, 2, 3, 4, "At that point, I'd just acknowledge that there were more parts than initially assumed.")
+        diaLine(15, 3, 5, 8, "So it's Part 3 then")
+        diaLine(16, 2, 3, 14, "2.5 it is.")
+        diaLine(17, 3, 5, 2, "Deal")
+        diaLine(18, 3, 5, 0, "Have fun")
+        break
+    case 51:
+        numLines = 24
+        endAction = 2
+        diaLine(0, 2, 3, 15, "Uhh...")
+        diaLine(1, 2, 3, 15, "Real question.")
+        diaLine(2, 2, 3, 15, "Does World 0 count as a world?")
+        diaLine(3, 3, 5, 0, "Yes and enjoy the Stone Key")
+        diaLine(4, 2, 3, 2, "...It feels at least a little weird to call some of the levels there puzzles.")
+        diaLine(5, 2, 3, 13, "And they count towards the puzzle completion counter too, which feels kinda silly?")
+        diaLine(6, 3, 5, 1, "Who cares about the clear counter anyway")
+        diaLine(7, 3, 5, 2, "It's just a number that goes up")
+        diaLine(8, 2, 3, 15, "I suppose that's one way to look at it.")
+        diaLine(9, 3, 5, 5, "The clear counter is already kinda off anyways since none of the meta puzzle stuff technically counts")
+        diaLine(10, 2, 3, 2, "That's... a fairer point, actually.")
+        diaLine(11, 2, 3, 2, "And, I guess it was nice to have a weird little set of distractions as a breather from all the meta puzzle solving.")
+        diaLine(12, 2, 3, 14, "Even if I had to hit my hands against the doors in that Millionaire puzzle a bunch of times.")
+        diaLine(13, 3, 5, 0, "You know there's an optimal way to solve that one right")
+        diaLine(14, 2, 4, 2, "I know.")
+        diaLine(15, 3, 5, 6, "Cool")
+        diaLine(16, 2, 3, 4, "Also, what was up with that puzzle with the really thin gap?")
+        diaLine(17, 2, 3, 4, "I was able to squeeze through, but I'm not necessarily sure if others could.")
+        diaLine(18, 3, 6, 0, "Oh that gap is magically attuned to be the perfect size for whoever's solving it")
+        diaLine(19, 2, 4, 9, "...")
+        diaLine(20, 2, 3, 12, "Somehow, that's more shocking than any of the artificial worlds or magical keys and doors.")
+        diaLine(21, 2, 3, 13, "Don't ask me why.")
+        diaLine(22, 3, 5, 0, "I won't")
+        diaLine(23, 2, 3, 2, "I guess I'll just move on now.")
+        break
+    case 52:
+        numLines = 9
+        endAction = 2
+        diaLine(0, 2, 3, 4, "I certainly wasn't expecting a new ability like this!")
+        diaLine(1, 3, 5, 0, "Congrats on discovering part of why The Great Beyond took so much work to design")
+        diaLine(2, 2, 3, 4, "I can figure! I was wondering what the Omega Keys were about for a while, but this is quite the way for them to make an entrance.")
+        diaLine(3, 2, 3, 1, "Seems like it'll be a ton of fun to go back through everything and see what I can break now!")
+        diaLine(4, 2, 3, 5, "Although changing Salvage colors is quite the concept to try and reason about.")
+        diaLine(5, 3, 5, 0, "Well you won't have to worry too much about door colors the more you progress")
+        diaLine(6, 3, 5, 1, "It becomes more of a question of what the doors do to the key count")
+        diaLine(7, 2, 3, 0, "Something like that. I'll figure it out as I go along, I'm sure.")
+        diaLine(8, 3, 5, 0, "Have fun")
+        break
+    case 53:
+        numLines = 21
+        endAction = 2
+        diaLine(0, 2, 3, 15, "So, after falling for one of the longest cons of my life, I've really gotta ask.")
+        diaLine(1, 2, 3, 13, "Did you make and wear that dress *just* for the sake of disguising that lock?")
+        diaLine(2, 3, 5, 0, "Nah this dress is cool and I like wearing it every now and then")
+        diaLine(3, 3, 5, 1, "The lock is the only artificial part")
+        diaLine(4, 2, 3, 4, "Ah.")
+        diaLine(5, 2, 3, 4, "I guess I assumed otherwise, since you just take on the form of a floating key.")
+        diaLine(6, 3, 5, 0, "We can take on any physical form, but cosmetics are still cool")
+        diaLine(7, 2, 3, 0, "I guess that's not too different from how it is for humans, then.")
+        diaLine(8, 2, 3, 1, "There's all sorts of things the God of Shape can turn folks into.")
+        diaLine(9, 3, 6, 2, "I'm aware")
+        diaLine(10, 3, 5, 0, "In our case it's even more freeform since our minds and bodies are separate")
+        diaLine(11, 2, 3, 0, "Right. I remember reading something like that.")
+        diaLine(12, 2, 3, 0, "Cool to know, either way.")
+        diaLine(13, 2, 3, 1, "And, for the record, your dress looks awesome.")
+        diaLine(14, 3, 5, 0, "Now that is a compliment to write home about")
+        diaLine(15, 3, 5, 5, "Home")
+        diaLine(16, 2, 4, 13, "You said it, though.")
+        diaLine(17, 3, 5, 2, "Remember that dramatic irony thing")
+        diaLine(18, 2, 3, 4, "...Kina, that is a DANGEROUS amount of layers to be adding to this joke.")
+        diaLine(19, 2, 3, 4, "We should probably stop before a neighboring galaxy explodes or something.")
+        diaLine(20, 3, 5, 8, "Sure")
+        break
+    case 54:
+        numLines = 12
+        endAction = 2
+        diaLine(0, 2, 3, 7, "World 12 was something else.")
+        diaLine(1, 3, 5, 0, "Sounds like you had a good time")
+        diaLine(2, 2, 3, 7, "It's... quite something to experience a return to form after all this meta stuff.")
+        diaLine(3, 2, 3, 1, "I wasn't expecting to feel nostalgic for the first world, but you managed it.")
+        diaLine(4, 3, 6, 2, "But will you feel nostalgic for feeling nostalgic for World 1 is the real question")
+        diaLine(5, 2, 3, 1, "Maybe, I dunno.")
+        diaLine(6, 2, 3, 4, "I can't believe there were still more mechanics you kept hidden, either!")
+        diaLine(7, 3, 5, 5, "I saved the best for close to last")
+        diaLine(8, 2, 3, 1, "Knowing you, there's probably a World 13 somewhere down the line, too.")
+        diaLine(9, 3, 5, 1, "Uhhhhhh")
+        diaLine(10, 3, 5, 7, "Hard to say whether yes or no fits more there")
+        diaLine(11, 2, 3, 1, "I guess I'll find out for myself, then.")
+        break
+    case 55:
+        numLines = 17
+        endAction = 2
+        diaLine(0, 2, 3, 15, "I get the feeling that I'm really coming up on an ending now.")
+        diaLine(1, 3, 5, 0, "Truth be told, you actually are")
+        diaLine(2, 2, 3, 4, "It's funny, y'know.")
+        diaLine(3, 2, 3, 4, "It started out so simple. Just keys and doors.")
+        diaLine(4, 2, 3, 4, "And, somehow, it's just kept on going, far longer than I could have possibly imagined.")
+        diaLine(5, 3, 5, 0, "I'm thankful that you enjoyed it enough to make it this far")
+        diaLine(6, 3, 5, 0, "Although I should remind you")
+        diaLine(7, 3, 5, 0, "Even everything here only scratches the surface of what Keys and Doors are capable of")
+        diaLine(8, 2, 3, 8, "I'm not sure I'm mentally ready for another paradigm shift this late in the game.")
+        diaLine(9, 3, 5, 1, "Oh, not anything I've actually made")
+        diaLine(10, 3, 5, 0, "I'm simply referring to the potential of the concept")
+        diaLine(11, 3, 5, 0, "Even if this experience will be over soon, nothing says it has to be the only exploration of the subject")
+        diaLine(12, 3, 5, 0, "It's my hope that someone will be inspired by it")
+        diaLine(13, 2, 3, 1, "Well, it's certainly inspired me!")
+        diaLine(14, 3, 5, 0, "I'm glad to hear it")
+        diaLine(15, 3, 5, 0, "So, are you ready to really push for the end")
+        diaLine(16, 2, 3, 7, "I think I am!")
+        break
+    case 56:
+        numLines = 26
+        endAction = 2
+        diaLine(0, 2, 4, 0, "Well, now.")
+        diaLine(1, 2, 3, 1, "I had almost forgotten what it felt like to be staring down such a titanic puzzle.")
+        diaLine(2, 3, 5, 0, "A pleasant trip down memory lane")
+        diaLine(3, 2, 3, 0, "I'll see if I can give it a fair shake, at least.")
+        diaLine(4, 2, 4, 0, "Although, I am curious.")
+        diaLine(5, 2, 3, 1, "How'd you go about designing these things, anyway?")
+        diaLine(6, 2, 3, 4, "They're already hard enough to solve. I have no clue how you'd create them.")
+        diaLine(7, 3, 5, 0, "Well, to put it briefly")
+        diaLine(8, 3, 5, 0, "I basically came up with the smallest but most important stuff first")
+        diaLine(9, 3, 5, 1, "Things like essential tricks to the solution, or assigning special roles to each key color")
+        diaLine(10, 3, 5, 0, "Sometimes I'd come up with a neat structural idea, too")
+        diaLine(11, 3, 5, 0, "Like the Pure Key situation in Chromatic Monolith")
+        diaLine(12, 3, 5, 0, "And then, after coming up with all the smaller pieces, I'd try to weave them together")
+        diaLine(13, 3, 5, 5, "Fill in some more details along the way, too")
+        diaLine(14, 3, 5, 0, "As a fun fact, the actual key and door counts were typically one of the last things I filled in for these puzzles")
+        diaLine(15, 3, 5, 0, "The emphasis was typically always more on the logic, or what the keys and doors were functionally meant to accomplish")
+        diaLine(16, 3, 6, 3, "It's certainly a lot of work")
+        diaLine(17, 3, 5, 1, "And I filled out more than just a few pages of notes in the process")
+        diaLine(18, 3, 5, 0, "So that's what that is like, in a nutshell")
+        diaLine(19, 2, 3, 1, "Wow.")
+        diaLine(20, 2, 3, 1, "Well, great work!")
+        diaLine(21, 3, 5, 0, "Thanks, as always")
+        diaLine(22, 3, 5, 0, "And good luck if you actually try that puzzle")
+        diaLine(23, 3, 5, 2, "As far as I know it could genuinely take you weeks")
+        diaLine(24, 2, 3, 4, "Well now.")
+        diaLine(25, 2, 3, 7, "Guess I better start while I can, then!")
+        break
+    case 57:
+        numLines = 20
+        endAction = 2
+        diaLine(0, 2, 3, 1, "I read all the stuff in your diaries.")
+        diaLine(1, 3, 5, 0, "So, what did you think")
+        diaLine(2, 2, 3, 1, "It was a good time.")
+        diaLine(3, 3, 5, 0, "That's nice")
+        diaLine(4, 2, 3, 1, "It feels strangely bittersweet, knowing that I've truly seen all there is to see now.")
+        diaLine(5, 3, 5, 0, "It was bound to happen eventually")
+        diaLine(6, 3, 5, 0, "I hope you enjoyed your stay")
+        diaLine(7, 2, 3, 0, "I did.")
+        diaLine(8, 2, 3, 1, "Thanks for having me, Kina.")
+        diaLine(9, 3, 6, 2, "I see I've been promoted to You Haver")
+        diaLine(10, 3, 5, 0, "In all seriousness, though, thank you as well")
+        diaLine(11, 3, 5, 0, "It's been fun to watch you keep pace with my unusual ideas")
+        diaLine(12, 3, 5, 0, "It was well worth it")
+        diaLine(13, 2, 3, 1, "Absolutely.")
+        diaLine(14, 5, 8, 1, "...")
+        diaLine(15, 5, 8, 1, "...Say.")
+        diaLine(16, 5, 8, 1, "Since you've put in the work to read this far, I think I know something you might like.")
+        diaLine(17, 5, 8, 1, "When you have the time, stop by Kina's Diary for a moment.")
+        diaLine(18, 5, 8, 1, "Something a little special will have opened up.")
+        diaLine(19, 5, 8, 1, "See you there.")
+        break
+    case 58:
+        numLines = 16
+        endAction = 0
+        diaLine(0, 2, 3, 0, "Let's see what all this fridge has...")
+        diaLine(1, 2, 3, 4, "...Well, now.")
+        diaLine(2, 2, 3, 4, "This thing is just full of curiosities.")
+        diaLine(3, 2, 3, 1, "Oh! There are some beautiful star-shaped cookies in here.")
+        diaLine(4, 2, 3, 1, "And a bunch of canned tea... I haven't even heard of half of these flavors!")
+        diaLine(5, 2, 3, 0, "Guess I know what my picks are.")
+        diaLine(6, 2, 3, 0, "I wonder what's in the freezer?")
+        diaLine(7, 2, 3, 8, "...")
+        diaLine(8, 2, 3, 3, "This is the strangest gadget I've ever seen in my life.")
+        diaLine(9, 2, 3, 12, "Wait, it's dispensing something.")
+        diaLine(10, 2, 3, 13, "...")
+        diaLine(11, 2, 4, 14, "Oh.")
+        diaLine(12, 2, 3, 14, "It's an ice maker maker.")
+        diaLine(13, 2, 3, 14, "And they come with ice already inside.")
+        diaLine(14, 2, 3, 4, "Oh! Well, hello there, ice cream cones! Didn't see you there!")
+        diaLine(15, 2, 3, 7, "I think I am warming up to this fridge.")
+        break
+    case 58.125:
+        numLines = 10
+        endAction = 0
+        diaLine(0, 2, 3, 0, "Guess I'll check out some books.")
+        diaLine(1, 2, 3, 0, "...Yep.")
+        diaLine(2, 2, 3, 0, "I sure am looking at a bunch of book covers.")
+        diaLine(3, 2, 3, 0, "Guess I should actually check one out.")
+        diaLine(4, 2, 3, 13, "What's this called..?")
+        diaLine(5, 2, 3, 4, "'Land of the Godless, Volume 1.' Looks pretty thick.")
+        diaLine(6, 2, 3, 0, "How about the back cover?")
+        diaLine(7, 2, 4, 15, "'In a universe where humans have to fend for themselves...' ...mhm...mmmmmhm...")
+        diaLine(8, 2, 3, 0, "That's a fun concept. Fiction is full of wonderful things.")
+        diaLine(9, 2, 3, 1, "This one's looking like a candidate for future bean bag buddy!")
+        break
+    case 58.25:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 2, 3, 4, "...I spy a textbook on this shelf!")
+        diaLine(1, 2, 3, 0, "...'Modular Arithmetic: The Language of Clocks.'")
+        diaLine(2, 2, 3, 1, "This cover is classic textbook fare, too. An infinite void of clocks, all with different amounts of hours on them.")
+        diaLine(3, 2, 3, 2, "I mean, I wouldn't want to spend too much of my time here just reading a textbook, so this is probably a no-go.")
+        diaLine(4, 2, 3, 15, "...")
+        diaLine(5, 2, 4, 15, "I'm tempted to, though.")
+        diaLine(6, 2, 4, 15, "Tempted.")
+        break
+    case 58.375:
+        numLines = 13
+        endAction = 0
+        diaLine(0, 2, 3, 1, "Oh, this is a nice cover.")
+        diaLine(1, 2, 3, 0, "'Wonders of the Heavenly Garden.'")
+        diaLine(2, 2, 3, 0, "Ah, it's a plant catalog.")
+        diaLine(3, 2, 3, 1, "Wow. I forgot just how colorful plants can be...")
+        diaLine(4, 2, 3, 4, "...Wait, I recognize that tree!")
+        diaLine(5, 2, 3, 15, "Oh, and there's a sticky note, too...")
+        diaLine(6, 2, 4, 15, "'Definitely this one.'")
+        diaLine(7, 2, 3, 0, "Kina's got a good eye for plants!")
+        diaLine(8, 2, 3, 15, "Wait, does a tree count as a plant?")
+        diaLine(9, 2, 3, 13, "...No, yeah, it does.")
+        diaLine(10, 2, 4, 14, "It's just not a house plant.")
+        diaLine(11, 2, 3, 15, "Although, does it count as a house plant if you grow it in a greenhouse..?")
+        diaLine(12, 2, 3, 7, "...I'm going to choose to believe it does. Even if it's annoying.")
+        break
+    case 58.5:
+        numLines = 9
+        endAction = 0
+        diaLine(0, 2, 3, 0, "Any good books on this shelf?")
+        diaLine(1, 2, 3, 1, "Oh! I spy a really really thin one.")
+        diaLine(2, 2, 3, 4, "...Like, REALLY thin.")
+        diaLine(3, 2, 4, 8, "Wait, it doesn't even have pages.")
+        diaLine(4, 2, 4, 12, "'Writing Flavor Text for Dummies.'")
+        diaLine(5, 2, 4, 12, "...Alright, I'll bite. What's inside?")
+        diaLine(6, 2, 3, 3, "...")
+        diaLine(7, 2, 3, 3, "A mirror???")
+        diaLine(8, 2, 3, 14, "I don't know who put this here, but the joke is lost on me.")
+        break
+    case 58.625:
+        numLines = 8
+        endAction = 0
+        diaLine(0, 2, 3, 0, "This is a beautiful tree.")
+        diaLine(1, 2, 3, 0, "I can almost imagine sleeping under it...")
+        diaLine(2, 2, 3, 2, "Although, it probably wouldn't be that comfortable.")
+        diaLine(3, 2, 3, 1, "I could certainly sleep on the grass, though!")
+        diaLine(4, 2, 3, 0, "And then an apple would fall on my head.")
+        diaLine(5, 2, 3, 4, "Wait, nevermind. This tree doesn't have apples.")
+        diaLine(6, 2, 3, 7, "Best it could do is probably just a bunch of leaves.")
+        diaLine(7, 2, 3, 7, "I'm pretty sure I could handle the cosmic hand of fate pelting me with a bunch of leaves.")
+        break
+    case 58.75:
+        numLines = 3
+        endAction = 0
+        diaLine(0, 2, 4, 7, "I am bearing witness to a wonderful mountain of bean bags.")
+        diaLine(1, 2, 4, 7, "It's the perfect size to dive into and forget about the finer points of everyday life.")
+        diaLine(2, 2, 4, 7, "I'll definitely be doing my reading here.")
+        break
+    case 58.875:
+        numLines = 6
+        endAction = 0
+        diaLine(0, 2, 3, 1, "Ooh, nice. There's a bunch of bread and sandwich stuff in here.")
+        diaLine(1, 2, 3, 0, "Several flavors of chips as well. Those will be good while I'm on the go.")
+        diaLine(2, 2, 3, 4, "Oh, and some hot pepper chips, too.")
+        diaLine(3, 2, 4, 5, "REALLY hot pepper chips.")
+        diaLine(4, 2, 4, 13, "...When they're just right there, it makes me wanna try one...")
+        diaLine(5, 2, 4, 15, "Maybe I should save an experience like that for when I'm back home, though.")
+        break
+    case 58.0625:
+        numLines = 6
+        endAction = 0
+        diaLine(0, 2, 3, 1, "This is such a stylish bed!")
+        diaLine(1, 2, 3, 0, "It'll be great to snooze under such an inviting blanket. Little 'Z's could comically rise from me in my slumber.")
+        diaLine(2, 2, 3, 0, "And then every time I wake up, I'll be greeted to the sight of that super cool constellation thing.")
+        diaLine(3, 2, 3, 0, "I could probably even take my shoes off and dive onto the blankets and just sit there for a while if I wanted to.")
+        diaLine(4, 2, 3, 0, "Honestly, everything about this bedroom lends itself to an immaculate naptime.")
+        diaLine(5, 2, 3, 7, "It's incredible just how much this bed invites the imagination without me currently using it in any capacity.")
+        break
+    case 59:
+        numLines = 6
+        endAction = 0
+        diaLine(0, 2, 3, 0, "This is a cute photograph.")
+        diaLine(1, 2, 3, 0, "Looks like it's Kina and her friends.")
+        diaLine(2, 2, 3, 1, "And it looks like they're having a good time!")
+        diaLine(3, 2, 3, 4, "I recognize those trees from the hub room, too. Looks like it was taken there.")
+        diaLine(4, 2, 3, 0, "Makes sense. Some of these worlds would be great hangout spots.")
+        diaLine(5, 2, 3, 7, "Even though I don't have the full context for this photo, I think I can still appreciate it.")
+        break
+    case 60:
+        numLines = 7
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Was playing some video games today and had a funny idea.")
+        diaLine(1, 4, 7, 0, "Matching colored keys and doors honestly isn't that new, but I wonder what a game of just that would look like.")
+        diaLine(2, 4, 7, 0, "Puzzles are nice, so I wonder if there's anything silly I can do with the idea.")
+        diaLine(3, 4, 7, 0, "I know it's a little silly, given I'm the God of Keys and Doors and all, but the thought won't get out of my head.")
+        diaLine(4, 4, 7, 0, "Instead of a video game, I'd like to get a bit ambitious and see if I can get the Ambassador Program in on it.")
+        diaLine(5, 4, 7, 0, "It's certainly a larger ask, but working in the physical realm is fun, and I figure I could use the fresh air.")
+        diaLine(6, 4, 7, 0, "I'll brainstorm some stuff for now, but no way am I doing this without friends.")
+        break
+    case 61:
+        numLines = 6
+        endAction = 2
+        diaLine(0, 4, 7, 0, "I'm thinking of something like an escape room. That should be a fun way to present it.")
+        diaLine(1, 4, 7, 0, "I'll probably need the God of Space to get the basic stuff set up. It's what all the others say, anyway.")
+        diaLine(2, 4, 7, 0, "As for the actual mechanics of everything... Having to actually carry keys and unlock doors sounds way too cumbersome.")
+        diaLine(3, 4, 7, 0, "What I have in mind runs on video game logic anyway, so I guess I'll need some really complex, video game-ish magic...")
+        diaLine(4, 4, 7, 0, "Guess I'll see if I can contact Spindles and get them in on this. It'll certainly help to have someone to bounce ideas off of, too.")
+        diaLine(5, 4, 7, 0, "As for testing, the God of Truth has a ton of acolytes. I figure someone in that space will inevitably be down to give it a try.")
+        break
+    case 62:
+        numLines = 5
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Took a while, but I arranged our first meetup. Decided against seeking a tester, since I'd rather wait until I have things to test first.")
+        diaLine(1, 4, 7, 0, "We've been labbing it out in a classic gray void, basic God of Space fare.")
+        diaLine(2, 4, 7, 0, "I made a decent enough template key and door with Spindles's help. Got the colors set up, too.")
+        diaLine(3, 4, 7, 0, "It was a fair bit of work to set up the basic systems, but I was able to make a test puzzle. Seems like it's in working order now.")
+        diaLine(4, 4, 7, 0, "Already seeing plenty of things I should probably do next before anything else.")
+        break
+    case 63:
+        numLines = 5
+        endAction = 2
+        diaLine(0, 4, 7, 0, "It was quite the struggle, but I made larger keys and doors work. It's all parameterized, so I'll be able to make all sorts of things on demand.")
+        diaLine(1, 4, 7, 0, "Worst part was having to explain to Spindles how I wanted to place and align the numbers. Who'da thunk text could be so hard???")
+        diaLine(2, 4, 7, 0, "Luckily, magic is really handy, in that magic spells are able to cast other magic spells with specific parameters.")
+        diaLine(3, 4, 7, 0, "Seems like the more I can take advantage of that, the easier it'll be to make everything else going forward. Spindles agrees, too.")
+        diaLine(4, 4, 7, 0, "Anyways, I'm taking a break after that.")
+        break
+    case 64:
+        numLines = 4
+        endAction = 2
+        diaLine(0, 4, 7, 0, "As it turns out, basic puzzles with keys and doors are... kind of hard to make.")
+        diaLine(1, 4, 7, 0, "Like, once the fundamentals are done, the only puzzles I can think of are basic logic puzzles and more messy algorithmic puzzles.")
+        diaLine(2, 4, 7, 0, "So, I'm brainstorming some neat ideas to see if I can expand the concept a little bit.")
+        diaLine(3, 4, 7, 0, "The scope of things is certainly getting bigger now, but I wanna see if I can take this somewhere.")
+        break
+    case 65:
+        numLines = 8
+        endAction = 2
+        diaLine(0, 4, 7, 0, "It's been a while, and so many more ideas keep coming to mind.")
+        diaLine(1, 4, 7, 0, "It's gotten to the point of splitting all the puzzles into worlds. I suppose I'm in for the long haul now.")
+        diaLine(2, 4, 7, 0, "Thinking it's time to maybe get a tester now. Spindles technically suffices, but I'd like someone who isn't in the know.")
+        diaLine(3, 4, 7, 0, "Although, it certainly brings an important question to mind.")
+        diaLine(4, 4, 7, 0, "Should I try to hold onto surprises for everyone I might end up working with, or keep them up to date as the going continues?")
+        diaLine(5, 4, 7, 0, "My intuition says I should get a friend for sharing, and a friend for surprising.")
+        diaLine(6, 4, 7, 0, "I still need to find folks to fill those roles, but it'll probably be the best for both progress and my mental wellbeing in the long run.")
+        diaLine(7, 4, 7, 0, "Making this stuff is a lot.")
+        break
+    case 66:
+        numLines = 9
+        endAction = 2
+        diaLine(0, 4, 7, 0, "A while longer yet, but I came back into contact with my old friend, Intrica.")
+        diaLine(1, 4, 7, 0, "It felt nice to have a chat over tea with her, like the old old times.")
+        diaLine(2, 4, 7, 0, "I hope to keep that up, although I can't promise I'll abandon the hermit lifestyle anytime soon.")
+        diaLine(3, 4, 7, 0, "As for a tester, I finally found someone who's alright. Just a guy named Crane.")
+        diaLine(4, 4, 7, 0, "All I had to do was ask the group of acolytes if anyone liked puzzles, and it only took like a second.")
+        diaLine(5, 4, 7, 0, "I've got a few testers on reserve now, too.")
+        diaLine(6, 4, 7, 0, "Crane is a fun fellow. Definitely has more than a handful of things to talk about when it comes to puzzles, too.")
+        diaLine(7, 4, 7, 0, "On a different note, it feels weird to sort of become the de facto organizer of a group like this.")
+        diaLine(8, 4, 7, 0, "While the temptation to onboard a ton of people is there, I think I know better than to let things get out of control...")
+        break
+    case 67:
+        numLines = 8
+        endAction = 2
+        diaLine(0, 4, 7, 0, "It's getting hard to tell exactly what I should write about in here, since there's so much.")
+        diaLine(1, 4, 7, 0, "Progress is seemingly speeding up, at least. I've come up with some really fun ideas, and it's fun to watch Crane bear witness to everything.")
+        diaLine(2, 4, 7, 0, "Although, I suppose I should mention something that could be a bit more alarming.")
+        diaLine(3, 4, 7, 0, "I've got... a LOT of ideas now. Enough to realistically be able to turn this into, well... a whole Thing, to put it contemporarily.")
+        diaLine(4, 4, 7, 0, "At the very least, I've got a decent idea of which concepts are safe bets to try making a reality.")
+        diaLine(5, 4, 7, 0, "Shocker: It's the simplest ones, and the ones which are just straightforward extensions of the pre-existing concepts. Who'da thunk it.")
+        diaLine(6, 4, 7, 0, "It certainly feels less restricting being able to work with these new ideas in my puzzles as well.")
+        diaLine(7, 4, 7, 0, "The more I fill out my toolkit, the more involved the puzzles can actually get. It almost feels like I'm only just getting started.")
+        break
+    case 68:
+        numLines = 7
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Gonna need a good long rest after designing that one. But, I did learn a lot of new important stuff.")
+        diaLine(1, 4, 7, 0, "Instead of having vague big ideas about a big puzzle, it seems to work better for me to connect a bunch of smaller, more solid ideas together.")
+        diaLine(2, 4, 7, 0, "In the recent case, I basically gave every key color its own special role and set of deductions.")
+        diaLine(3, 4, 7, 0, "I even managed to implement some more abstract logical concepts, mainly to do with dependency chains.")
+        diaLine(4, 4, 7, 0, "I think, for my next big puzzle, I'd like to see if I can put a more surprising and memorable deduction in it.")
+        diaLine(5, 4, 7, 0, "Either way, though, can't wait to see Crane take a look at that one for the first time.")
+        diaLine(6, 4, 7, 0, "Hopefully he should be able to solve it. If not... well, I'll think of it later. I'm exhausted. Good night.")
+        break
+    case 69:
+        numLines = 10
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Y'know, I was always kind of aware of this, but there's a lot of math in these puzzles.")
+        diaLine(1, 4, 7, 0, "Taking a second to really think about it, though? There's a LOT of math here. Like, way more than I think I'm used to seeing.")
+        diaLine(2, 4, 7, 0, "It makes sense, since I've been pretty explicitly using a ton of numbers for all these puzzles anyway.")
+        diaLine(3, 4, 7, 0, "The thought does occur to me, though. I wonder if I could take it a step even further.")
+        diaLine(4, 4, 7, 0, "To sort of lay a foundation, usually puzzles are about one of a few things. New mechanics or interactions, a specific logical deduction, a tricky move, or a well-hidden secret.")
+        diaLine(5, 4, 7, 0, "The type of puzzle I'm thinking of... I suppose I'd call it an abstraction puzzle. A puzzle which uses the stuff here to represent a more abstract or complex problem.")
+        diaLine(6, 4, 7, 0, "As it turns out, math pops up even more when abstract thinking gets involved.")
+        diaLine(7, 4, 7, 0, "I figure I'll toss in a few funny ones. Only rarely, though. Knowledge gating someone with a mean math problem would just be rude.")
+        diaLine(8, 4, 7, 0, "But if completing the puzzle doesn't matter, *then* it's more just kinda Funny.")
+        diaLine(9, 4, 7, 0, "I bet Crane'll love em'.")
+        break
+    case 70:
+        numLines = 8
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Crane told me about something very interesting today.")
+        diaLine(1, 4, 7, 0, "It's called a 'meta puzzle', which is basically a puzzle which interacts with the space outside of the normal play area.")
+        diaLine(2, 4, 7, 0, "The one Crane showed me was interesting. It was about abstraction and clue finding, which is cool.")
+        diaLine(3, 4, 7, 0, "Perhaps it's becoming a habit, but I really want to see if I can make something like that now.")
+        diaLine(4, 4, 7, 0, "What I have in mind is... I suppose it's more like a regular puzzle, but with a new 'meta-action' instead?")
+        diaLine(5, 4, 7, 0, "It seems that, just like there are many different types of puzzle, there are also many different types of meta puzzle.")
+        diaLine(6, 4, 7, 0, "It's fascinating to think about.")
+        diaLine(7, 4, 7, 0, "But... What on earth do you even design for a meta puzzle? It's very different from what I'm used to.")
+        break
+    case 71:
+        numLines = 9
+        endAction = 2
+        diaLine(0, 4, 7, 0, "I've been thinking nonstop for days now.")
+        diaLine(1, 4, 7, 0, "There are so many ideas for all sorts of cool meta puzzles and meta actions and meta mechanics I want to make.")
+        diaLine(2, 4, 7, 0, "However, as fun as it is to think about, the fundamental issue remains that they are still extremely hard to actually wrap my head around.")
+        diaLine(3, 4, 7, 0, "I've been trying to keep everything organized and formulate some basic strategies and rules, but even then, it's so much to keep track of.")
+        diaLine(4, 4, 7, 0, "Maybe I should be trying to approach these meta puzzles with the same type of mindset as the big puzzles from earlier.")
+        diaLine(5, 4, 7, 0, "I get the feeling there is no singular working strategy for doing it, so I might have a better chance stringing together a puzzle using smaller, easier pieces to rationalize.")
+        diaLine(6, 4, 7, 0, "It can be really overwhelming, though...")
+        diaLine(7, 4, 7, 0, "At least I'm still able to bounce stuff with my pals.")
+        diaLine(8, 4, 7, 0, "Gotta remember to take breaks and all that. Maybe a walk outside to clear my mind.")
+        break
+    case 72:
+        numLines = 8
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Crane's been busy the past few days, so I'm thinking about onboarding some more testers for this thing.")
+        diaLine(1, 4, 7, 0, "It'll probably take a while for them to catch up to where Crane is, but it's important that they go through the same motions.")
+        diaLine(2, 4, 7, 0, "Spindles says that a lot of problems can slip though testing, so having more testers is a good measure to take.")
+        diaLine(3, 4, 7, 0, "I figure testing this must be a lot of work, though...")
+        diaLine(4, 4, 7, 0, "I already put a decent amount of work into organizing sessions and feedback outlets. It can't be easy to actually construct and keep track of all the feedback they have in mind.")
+        diaLine(5, 4, 7, 0, "Maybe it'd be a good idea to make a room where everyone can just hang out and cool off from work.")
+        diaLine(6, 4, 7, 0, "We've just been returning to the real world for stuff, but since I'm already making artificial worlds, why not get creative?")
+        diaLine(7, 4, 7, 0, "Anyways, back to work.")
+        break
+    case 73:
+        numLines = 7
+        endAction = 2
+        diaLine(0, 4, 7, 0, "It's both very fun and humbling to watch more people experience this for the first time.")
+        diaLine(1, 4, 7, 0, "Even though working on this is getting very hard, I'm glad people are (mostly) getting to experience all the cool ideas we've had since this started.")
+        diaLine(2, 4, 7, 0, "Maybe, after feedback is collected, I'll just take a break for a while.")
+        diaLine(3, 4, 7, 0, "I've got other things in my day-to-day life, as well as other personal projects.")
+        diaLine(4, 4, 7, 0, "Everyone here is understanding and patient. They should be okay with it, and I can always ring them if the need arises.")
+        diaLine(5, 4, 7, 0, "For now, though, I can tell that what my mind really wants to do is just sit back and relax.")
+        diaLine(6, 4, 7, 0, "So I guess I'll do that now. Bye.")
+        break
+    case 74:
+        numLines = 8
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Just taking a quick moment to write about another quirk with designing meta puzzles.")
+        diaLine(1, 4, 7, 0, "Specifically, that changing or adding even tiny new things can have dramatic consequences.")
+        diaLine(2, 4, 7, 0, "It can be hard to remember all the 'rules' I laid out when starting the design, which means it's easy to forget and then accidentally break them.")
+        diaLine(3, 4, 7, 0, "Luckily, I was able to (eventually) come up with a fix for the instances of that which cropped up.")
+        diaLine(4, 4, 7, 0, "That also means that you really have to know what you're doing on a topdown level *before* you dedicate to making it a reality.")
+        diaLine(5, 4, 7, 0, "Because, uh... Once you're in the thick of designing something like this, you're 'locked in' until it's either done or you have to scrap something major.")
+        diaLine(6, 4, 7, 0, "I ended up doing the latter just now. Wasn't the best, but I really couldn't do the alternative.")
+        diaLine(7, 4, 7, 0, "Meta puzzles are hard!!! Enough said.")
+        break
+    case 75:
+        numLines = 6
+        endAction = 2
+        diaLine(0, 4, 7, 0, "Phew. I'm mostly done with all that meta stuff now.")
+        diaLine(1, 4, 7, 0, "Now I can take a break with some smaller, simple puzzles.")
+        diaLine(2, 4, 7, 0, "I forgot what that could feel like.")
+        diaLine(3, 4, 7, 0, "It feels nice to be able to just freely add some new small things to the mix.")
+        diaLine(4, 4, 7, 0, "Maybe gigantic, interconnected puzzles aren't always what they're cracked up to be.")
+        diaLine(5, 4, 7, 0, "Well, they're still cool if done well. Just a godly pain to work on sometimes.")
+        break
+    case 76:
+        numLines = 9
+        endAction = 2
+        diaLine(0, 4, 7, 0, "So, something funny happened today.")
+        diaLine(1, 4, 7, 0, "Someone from the Ambassador Program showed up and gave me an invitation to a party.")
+        diaLine(2, 4, 7, 0, "It was quite the event. A bunch of other Gods were there. Even some ancient ones.")
+        diaLine(3, 4, 7, 0, "We mostly just camped out in the woods and did random strange activities.")
+        diaLine(4, 4, 7, 0, "I'm not really the type to impress upon others, but there were a few nice folks just hanging out amongst the trees.")
+        diaLine(5, 4, 7, 0, "Though, I've gotta say. The person who catered this party has... quite a sense of humor.")
+        diaLine(6, 4, 7, 0, "If there's anything I'll remember about this night, it was seeing that polka dot mat roll out in front of an audience of largely non-humanoid beings.")
+        diaLine(7, 4, 7, 0, "Good times.")
+        diaLine(8, 4, 7, 0, "Makes me remember when I was just a human, too.")
+        break
+    case 77:
+        numLines = 8
+        endAction = 2
+        diaLine(0, 4, 7, 0, "I'm nearly done with all the puzzles now. Which sounds kind of wild to actually dedicate to words.")
+        diaLine(1, 4, 7, 0, "I still have a bunch of ideas that I could theoretically make, but... I think I'm ready to wrap things up now.")
+        diaLine(2, 4, 7, 0, "Knowing that an end is actually approaching has kind of made me allergic to the idea of extending things out even further.")
+        diaLine(3, 4, 7, 0, "Maybe one day I'll come back to this, but for now, I think what I have made is sufficient. It all works. It's all good.")
+        diaLine(4, 4, 7, 0, "There are still a few loose ends, but I think I'm fine leaving them as such.")
+        diaLine(5, 4, 7, 0, "After all, my obligation was never to tie up the loose ends. It was just to make the things I wanted to make.")
+        diaLine(6, 4, 7, 0, "So, I'll just continue checking things off the to-do list, and before I know it, suddenly there won't be anything left to work on.")
+        diaLine(7, 4, 7, 0, "What a thought.")
+        break
+    case 78:
+        numLines = 9
+        endAction = 2
+        diaLine(0, 4, 7, 0, "It's almost time to contact the Ambassador Program about this whole thing.")
+        diaLine(1, 4, 7, 0, "Feels good to be here.")
+        diaLine(2, 4, 7, 0, "I went and did one last round of testing, just to be absolutely sure.")
+        diaLine(3, 4, 7, 0, "There are still some last little adjustments I want to make, just to make the place more presentable and the experience more accessible.")
+        diaLine(4, 4, 7, 0, "One such addition probably being this diary. It feels... Relevant to include in all this.")
+        diaLine(5, 4, 7, 0, "I think I'll go ahead and make an abridged copy of it, and put it at the very end.")
+        diaLine(6, 4, 7, 0, "I figure that, if someone would truly do everything to reach this point, they're probably the type of person who would enjoy reading something like this.")
+        diaLine(7, 4, 7, 0, "Hopefully there's some good stuff to learn in here... If not, then... Sorry, I guess?")
+        diaLine(8, 4, 7, 0, "Hello, by the way. Thanks for reading.")
+        break
+    case 79:
+        numLines = 10
+        endAction = 2
+        diaLine(0, 4, 7, 0, "It's time to get this thing started. Time really flies by.")
+        diaLine(1, 4, 7, 0, "I'm not sure I can manage a large number of participants, so for now I'm just opening for one person.")
+        diaLine(2, 4, 7, 0, "They asked me if I had any preference for who to invite, and I thought about it a bit.")
+        diaLine(3, 4, 7, 0, "Someone who's good at puzzles would probably makes sense to invite, but I had something else in mind.")
+        diaLine(4, 4, 7, 0, "I'd like to see if I could inspire someone who may not have had a prior interest in things like this.")
+        diaLine(5, 4, 7, 0, "So I just told them to find someone nearby who happens to be looking for something to do.")
+        diaLine(6, 4, 7, 0, "They'll be arriving in a few hours. All I can really do now is wait.")
+        diaLine(7, 4, 7, 0, "No matter who they are, though, I hope that they will enjoy this strange thing I've made.")
+        diaLine(8, 4, 7, 0, "I suppose that's really the best I can ask for, right?")
+        diaLine(9, 4, 7, 0, "Guess I'll leave it at that. Thanks for reading. ~Kina")
+        break
+    case 80:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These are Action Keys, an unused key type.")
+        diaLine(1, 5, 8, 1, "They sort of worked like a turn counter, either going up or down by 1 whenever you did something like open a door.")
+        diaLine(2, 5, 8, 1, "The concept was scrapped for several reasons, but turn counts managed to be implemented (in a sense) with Infinite Keys.")
+        diaLine(3, 5, 8, 1, "To provide some context, any special key colors needed to be accounted for in the undo code, as well as have special sprite variants made for every key type, glitch key sprite, and glitch combo lock sprite.")
+        diaLine(4, 5, 8, 1, "Really, Glitch Keys were the true killer, but I don't feel too bad about scrapping this one.")
+        break
+    case 80.125:
+        numLines = 6
+        endAction = 0
+        diaLine(0, 5, 8, 1, "I called this one the Swarm Key, I think. Although 'Virus Key' might have also worked. They were originally a new mechanic in Chapter EX.")
+        diaLine(1, 5, 8, 1, "It had an aura similar to Brown Keys, but turned other keys into Virus Keys, and ignored doors.")
+        diaLine(2, 5, 8, 1, "I'm sure you could do something neat with them, but maybe it's for the best they never saw the light of day.")
+        diaLine(3, 5, 8, 1, "You can also tell I really had no idea how to visually stylize it.")
+        diaLine(4, 5, 8, 1, "For the record, all the sprites here are mockup art, and don't necessarily reflect how they'd look ingame.")
+        diaLine(5, 5, 8, 1, "I hope you like the fancy artwork I did... I think it makes these nonexistent mechanics at least feel a bit more real.")
+        break
+    case 80.25:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These are Void Keys. They were the original mechanic of World 12.")
+        diaLine(1, 5, 8, 1, "Basically, whenever you picked up a different key color, your Void Keys would 'annihilate' them, and both counts would get reduced.")
+        diaLine(2, 5, 8, 1, "Obviously, negatives and imaginary numbers complicated things a bit, but I had an idea of how to handle that, too.")
+        diaLine(3, 5, 8, 1, "The most interesting thing about this color is how it would have interacted with Star Keys.")
+        diaLine(4, 5, 8, 1, "The internal logic of how key counts are changed is a bit more complex than just addition, but I figured Starred Void Keys would subtract from every subsequent key pickup.")
+        diaLine(5, 5, 8, 1, "Either that, or they would nullify key pickups entirely.")
+        diaLine(6, 5, 8, 1, "Ultimately, I probably wouldn't have implemented them anyway, because I wanted a cool scrolling star field effect for the graphics which would have been very difficult to make.")
+        break
+    case 80.375:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 5, 8, 1, "You can see right through this one. It's a Ghost Key, which would have been a new mechanic in Chapter EX.")
+        diaLine(1, 5, 8, 1, "How they work is that they switch from tangible to intangible (and slightly transparent) every time you do something like open a door.")
+        diaLine(2, 5, 8, 1, "They would have been pretty silly.")
+        diaLine(3, 5, 8, 1, "Again, this is a color that's too hard to make graphically.")
+        diaLine(4, 5, 8, 1, "The Keys and Doors are actually composites of a whole bunch of sprites, and drawing that many parts with transparency doesn't look how a non-programmer might expect.")
+        diaLine(5, 5, 8, 1, "I did have one very specific idea in mind with these.")
+        diaLine(6, 5, 8, 1, "Specifically, before you'd unlock the Master Omega Key, you'd be forced to salvage an impossible door, and then recolor it to have Ghost Locks to pass through it. Before EX became what it was, that would have capped off the game.")
+        break
+    case 80.5:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These are Gray Keys. They would have emitted an aura similar to Brown Keys, which would invert the lock count of doors instead of changing their color.")
+        diaLine(1, 5, 8, 1, "I actually made some graphics for these, too. I think they were going to be a World 6 mechanic.")
+        diaLine(2, 5, 8, 1, "They got scrapped because, even for someone non-colorblind like me, their color contrast was absolutely terrible.")
+        diaLine(3, 5, 8, 1, "Additionally, I couldn't actually... think of any puzzles involving the concept. Still don't think I ever did, actually.")
+        diaLine(4, 5, 8, 1, "Either way, a similar niche got filled with negative and imaginary Door Copies, so all's well that ends well, I guess.")
+        break
+    case 80.625:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 5, 8, 1, "This funky thing is called a Locket.")
+        diaLine(1, 5, 8, 1, "To put it simply, they were sort of like a Master Key, but for destroying keys instead of doors.")
+        diaLine(2, 5, 8, 1, "I think the concept could have probably worked in a similar regard to how Infinite Keys worked.")
+        diaLine(3, 5, 8, 1, "However, similar to the other key types, it was just a bit too much effort for me to want to make.")
+        diaLine(4, 5, 8, 1, "Graphically, I still don't really know what I would have done for it. How would you make a Locket Door???")
+        break
+    case 80.75:
+        numLines = 8
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These are all Operation Keys.")
+        diaLine(1, 5, 8, 1, "They basically use one key color to affect another one.")
+        diaLine(2, 5, 8, 1, "For instance, adding Purple Keys to Cyan Keys, or setting/swapping colors. Stuff like that.")
+        diaLine(3, 5, 8, 1, "Division was on the table, too, and it was kind of wild. Complex division was actually planned, if you can believe it or not. (That's real, by the way. It's as wacky as it sounds.)")
+        diaLine(4, 5, 8, 1, "If a division failed, then it would set your key count to 'ERROR'. That meant it would be unable to open *any* door, even Blank or =.")
+        diaLine(5, 5, 8, 1, "Honestly, I think these are all still very neat ideas, and very much in the realm of possibility to implement.")
+        diaLine(6, 5, 8, 1, "I just never wanted to put in the work, and was very much occupied with other things to make every step of the way.")
+        diaLine(7, 5, 8, 1, "If someone ever expands upon this game, I hope they make room for these.")
+        break
+    case 80.875:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 5, 8, 1, "This one's a doozy. So, originally, Omega Keys weren't unlockables for the Terminal, but rather were a mechanic called Ordinal Keys.")
+        diaLine(1, 5, 8, 1, "Before complex keys existed, I wanted World 11 to have 'infinite keys', so to speak. Original infinity was fun, but I figured I could take it a step further, and programmed a more robust type of infinite, called Countable Ordinals.")
+        diaLine(2, 5, 8, 1, "The bottom line is that all sorts of additions and even subtractions (sorta) of infinities were possible. I actually did program all of it into the game, too.")
+        diaLine(3, 5, 8, 1, "The main reason they were scrapped was that the rules of addition and subtraction were hard to intuit, and it got even worse with Combo Doors. The reason why being that ordinal addition/subtraction is noncommutative, but Combo Doors have to sum up every lock to know what to spend.")
+        diaLine(4, 5, 8, 1, "Ultimately, the concept was scrapped and replaced with Complex Keys, which one of the testers once predicted as a joke. It was funny to surprise them.")
+        diaLine(5, 5, 8, 1, "The graphic ended up being reused for Omega Keys, and shortly after Ordinal Keys were scrapped, I came up with Star Keys, which functioned similarly but had even more cool applications and interactions.")
+        diaLine(6, 5, 8, 1, "So, cheers to the wildest mechanic you never got to see.")
+        break
+    case 81:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 5, 8, 1, "Originally, Keys were going to be able to have Aura effects applied, too.")
+        diaLine(1, 5, 8, 1, "You'd just pass through them unless you had the correct aura to disable the effect.")
+        diaLine(2, 5, 8, 1, "Actually, the very first iteration of Brown Keys recolored keys as well as doors! But it ended up destroying every puzzle idea I threw at it, so I tossed the idea shortly afterwards.")
+        diaLine(3, 5, 8, 1, "Anyways, part of the reason I didn't add these was because I didn't want to make aura graphics for every key variant (including Master).")
+        diaLine(4, 5, 8, 1, "I made this one mockup sprite though, so now you can appreciate it in all its cursed glory.")
+        break
+    case 81.125:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 5, 8, 1, "So, you know how Star Keys are a thing? Well, originally I had plans for Star Doors, too.")
+        diaLine(1, 5, 8, 1, "The idea is obvious enough. If a door had a Star, then you couldn't change its amount of copies. You can still 'open' it, but you can't destroy it.")
+        diaLine(2, 5, 8, 1, "This is another idea that was pretty realistic to implement, all things considered. But for a mixture of weird reasons that are hard to explain, I didn't.")
+        diaLine(3, 5, 8, 1, "I think they are cool and worth consideration, though. Future designers take note.")
+        break
+    case 81.25:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 5, 8, 1, "The empty space in this door doesn't deceive you! I called these Empty Doors, although Glass Doors or Nothing Doors could also work.")
+        diaLine(1, 5, 8, 1, "Basically, if a Lock was empty, then you would only need to meet the requirement with *some* color, and not a specific one.")
+        diaLine(2, 5, 8, 1, "And, if the Spend Color was empty, then none of your key counts would be affected.")
+        diaLine(3, 5, 8, 1, "I think I scrapped this one because of the poor visuals. Not only does drawing a transparent lock over an opaque color not work for obvious reasons, but the empty frames also just kind of... look bad.")
+        diaLine(4, 5, 8, 1, "Maybe a neat concept, although Gates and the Glitch color can express similar interactions.")
+        break
+    case 81.325:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These are Rainbow Doors, a prototype concept I had in store for a hypothetical World 12 (before The Great Beyond), and then World 10, before being replaced by Glitch Keys.")
+        diaLine(1, 5, 8, 1, "Basically, they corresponded to not just one key color, but *every* nonzero key color you had.")
+        diaLine(2, 5, 8, 1, "The thing about that was that a Rainbow Lock, in order to make sense, had to 'increase' its cost with every valid color. It was kind of ridiculous.")
+        diaLine(3, 5, 8, 1, "Combined with Glitch, it would have been an utter nightmare. I say good riddance.")
+        break
+    case 81.5:
+        numLines = 5
+        endAction = 0
+        diaLine(0, 5, 8, 1, "This mechanic was... similar to the Rainbow color, but slightly different.")
+        diaLine(1, 5, 8, 1, "Basically, by touching colored sigils, you would add a key color to a 'group' of sorts.")
+        diaLine(2, 5, 8, 1, "Then, anything that happened to a key count in the group would happen to all the other group members as well.")
+        diaLine(3, 5, 8, 1, "It's intuitive, at least, but probably a bit cumbersome.")
+        diaLine(4, 5, 8, 1, "I never got that far in even thinking about this one, so that's as good an explanation as you'll get.")
+        break
+    case 81.625:
+        numLines = 9
+        endAction = 0
+        diaLine(0, 5, 8, 1, "You can already tell what this one would have been about.")
+        diaLine(1, 5, 8, 1, "Fractional key counts are technically, but not completely, supported by the game's engine.")
+        diaLine(2, 5, 8, 1, "For the most obvious instances, fractional keys/doors work how you'd expect them to.")
+        diaLine(3, 5, 8, 1, "However, Master Keys make things very very weird.")
+        diaLine(4, 5, 8, 1, "How the game currently handles them, which is mostly just an accident, is that using a Master Key removes a copy and subtracts 1 from the count.")
+        diaLine(5, 5, 8, 1, "That means that a count like 0.75 would decrease to -0.25, at which point it'd use negative Master Key logic, and then flip back to positive.")
+        diaLine(6, 5, 8, 1, "The wackier idea I had was that fractional door copies would be possible, and would multiply the lock value for the 'last' copy of a door, so to speak.")
+        diaLine(7, 5, 8, 1, "I never ended up really finding a justification to make puzzles with fractions, though. You can just multiply by the greatest common denominator and then it's a puzzle with normal numbers again.")
+        diaLine(8, 5, 8, 1, "Not to mention, the technical difficulties of implementing all these things are...more insurmountable than the layman might assume.")
+        break
+    case 81.75:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 5, 8, 1, "Here's a fun one. This was a more general planned mechanic, called Entanglement.")
+        diaLine(1, 5, 8, 1, "Basically, if a set of keys or doors were Entangled, then removing one would also remove the others.")
+        diaLine(2, 5, 8, 1, "It would certainly make for some interesting setups and choices, but was far too big a deal to actually implement.")
+        diaLine(3, 5, 8, 1, "Setting up entangled objects into groups is one thing, but I had absolutely no idea what to do for a visual design.")
+        diaLine(4, 5, 8, 1, "Knowing what I know now, I'd probably have just made some sort of colored bubbly particle effect around entangled objects, but I still don't think it's the best solution.")
+        diaLine(5, 5, 8, 1, "Either way, I'm well past the point of adding it to the game.")
+        diaLine(6, 5, 8, 1, "Although, think of how Entangled Doors might have been able to interact with Salvages... Gets your noggin joggin', doesn't it?")
+        break
+    case 81.875:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These things are Paintballs. They are directly inspired by SlimePark, which is a game by the same creator as I Wanna KeyPick 100, this game's inspiration.")
+        diaLine(1, 5, 8, 1, "When you picked up a Paintball, you'd be able to shoot it at a door and recolor its locks to match that of the Paintball.")
+        diaLine(2, 5, 8, 1, "It was certainly neat, but both on the code side and mechanical complexity side, it was a bit much. It'd have needed another button, and this game already has enough of those as is.")
+        diaLine(3, 5, 8, 1, "Regardless, I think this one certainly had potential.")
+        break
+    case 82:
+        numLines = 7
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These are Sigils, which are another type of interactible that wasn't a Key or Door. Also please recall that this is mockup art.")
+        diaLine(1, 5, 8, 1, "They'd basically do something with a global effect once when you touched them.")
+        diaLine(2, 5, 8, 1, "To go through them all: Addition Sigils would have added to the count of every Key or Door, something like that.")
+        diaLine(3, 5, 8, 1, "Copy Sigils would have added a certain number of copies to Keys or Doors. Pretend Key Copies exist for that description to work.")
+        diaLine(4, 5, 8, 1, "Destruction Sigils would destroy certain objects, most likely Keys/Doors which had a specific color.")
+        diaLine(5, 5, 8, 1, "Finally, Jammer Sigils would prevent the Glitch Color from changing.")
+        diaLine(6, 5, 8, 1, "Some of these could probably become real, but I never found a place for them. Regardless, they are fun ideas to tinker with.")
+        break
+    case 82.125:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 5, 8, 1, "These are Pop Tiles, which are directly based on the mechanic with the same name from the game 'Tactical Nexus'.")
+        diaLine(1, 5, 8, 1, "Basically, you can cross over them once, but then they pop out, and you can't pass through anymore.")
+        diaLine(2, 5, 8, 1, "A mechanic like this probably would have been nice for certain puzzle constructions. I ended up using the game's physics to emulate one-ways instead of adding an actual one-way mechanic. Ironically, for simplicity's sake.")
+        diaLine(3, 5, 8, 1, "Ignoring the hellscape of platforming puzzles you could make with these, they certainly would have been a nice tool to have.")
+        break
+    case 82.25:
+        numLines = 11
+        endAction = 0
+        diaLine(0, 5, 8, 1, "So, here's something that might look familiar if you happened to have played the demo version of the game.")
+        diaLine(1, 5, 8, 1, "In every world's hub, if you used the Lens of Truth, you'd be able to see one of these warps. They'd lead to what I call the Omega Puzzles.")
+        diaLine(2, 5, 8, 1, "Basically, the Omega Puzzles were originally a core part of The Great Beyond's progression, and whenever you picked up an Omega Key, an Omega Puzzle would also unlock.")
+        diaLine(3, 5, 8, 1, "The reason this got scrapped was because of what the Omega Puzzles actually entailed. To put it simply, I don't think I went back and forth on ideas for anything in the game more than these puzzles.")
+        diaLine(4, 5, 8, 1, "At one point, I thought I'd make them super large puzzles which only used that world's specific mechanics.")
+        diaLine(5, 5, 8, 1, "Then, I thought about giving them their own special mechanics. In fact, a ton of the other things in this room would have been Omega Puzzle mechanics. That's part of why a few seemingly OK ideas got scrapped.")
+        diaLine(6, 5, 8, 1, "Then, I thought about making them a different type of 'meta puzzle' than the Salvage stuff. Basically, actual meta puzzles about finding overworld hints or even constructing puzzles themselves.")
+        diaLine(7, 5, 8, 1, "If you can believe it, at one point I even thought about making the Omega Puzzles into 'Omega Worlds', which would introduce and flesh out a new mechanic even beyond just a single puzzle.")
+        diaLine(8, 5, 8, 1, "The common factor here, and the reason these never got made, was because it was just far too much work, plain and simple.")
+        diaLine(9, 5, 8, 1, "I am slightly sad that some of the scrapped mechanics never got to see the light of day, but ultimately I think it was the best possible move for development to just REMOVE Omega Puzzles from the game.")
+        diaLine(10, 5, 8, 1, "So, uh, if you were wondering what happened to these things... Yeah. Sorry about that.")
+        break
+    case 82.375:
+        numLines = 16
+        endAction = 0
+        diaLine(0, 5, 8, 1, "Last, but certainly not least, I'll explain some new types of Salvages.")
+        diaLine(1, 5, 8, 1, "These are Colored Input and Output Points. You might guess what they do, but I figure I'll explain with more nuance.")
+        diaLine(2, 5, 8, 1, "A Colored Input would 'recolor' the door you Salvaged, and would also prevent you from recoloring it by using the Terminal.")
+        diaLine(3, 5, 8, 1, "Colored Outputs, on the other hand, could create recolored versions of 'any' of your Salvaged Doors. So, you could make a rainbow of doors which all have SID 30's locks, for instance.")
+        diaLine(4, 5, 8, 1, "However, there's one more mechanic, even wilder than those, which isn't depicted here.")
+        diaLine(5, 5, 8, 1, "Let's talk about Supersalvages.")
+        diaLine(6, 5, 8, 1, "Basically, they have Inputs and Outputs, similar to normal Salvage Points. However, what they save and load is even more meta.")
+        diaLine(7, 5, 8, 1, "By Supersalvaging a Door, its lock costs would basically get converted into a Salvage ID, and THAT would get saved.")
+        diaLine(8, 5, 8, 1, "Then, the Supersalvage Output would recreate the Salvage whose SID matched the value saved.")
+        diaLine(9, 5, 8, 1, "Yes, that means that Colored Supersalvage Outputs were also a thing.")
+        diaLine(10, 5, 8, 1, "I was really close to adding these at the very end, but I decided against it at basically the last second.")
+        diaLine(11, 5, 8, 1, "If you're wondering why there are still a few empty spaces in the Salvage list, this is why.")
+        diaLine(12, 5, 8, 1, "For such a cool idea, I figure it's especially a bummer to think you probably won't be seeing them from me. I even had puzzle ideas already laid out to explore these mechanics.")
+        diaLine(13, 5, 8, 1, "At the end of the day, though, I had a lot of work to do to finish this game to begin with, and I couldn't bring myself to add something new to the pile. That's just how it is.")
+        diaLine(14, 5, 8, 1, "Either way, though, I hope you've been inspired by the idea. I know it's not the same as actually putting these in the game, but I think that at least telling you about them counts for something.")
+        diaLine(15, 5, 8, 1, "Thanks for reading all these, by the way. Which is fitting if you read from left to right, but if you looked at the interesting ones first, then this might be kind of awkwardly timed.")
+        break
+    case 83:
+        numLines = 7
+        endAction = 2
+        diaLine(0, 6, 9, 0, "Heya. Thanks for coming. I figure you already know what's going on by now, but let's make sure everything's clarified first.")
+        diaLine(1, 6, 9, 0, "Firstly: Hello! My name is Lucas Watson, and I'm the creator of I Wanna Lockpick. In case you've been paying attention to the story, consider this a liminal space with no connection or consequences to the rest of the experience.")
+        diaLine(2, 6, 9, 0, "You probably just got done reading Kina's Diary, and presumably have read all the normal dialog as well as all of the stuff in the Museum. That was quite a lot of text, right?")
+        diaLine(3, 6, 9, 0, "Well, there's more where that came from. A lot, actually. Consider this a warning before you triple your reading homework.")
+        diaLine(4, 6, 9, 0, "And, yes, I've programmed it so that you will have to read everything in order this time. Just so that everything I say will flow and that this conversation will feel a bit more real, really. Not the biggest reason.")
+        diaLine(5, 6, 9, 0, "However, if you've managed to read this out of order anyways by skimming a copy of the text that was in a video or on a wiki, then congratulations on facilitating the funniest possible outcome for this bit.")
+        diaLine(6, 6, 9, 0, "Anyways, when you're ready to chat, let's chat. Feel free to look around a bit or check back in later, but once you've got some time, get strapped in.")
+        break
+    case 84:
+        numLines = 18
+        endAction = 2
+        diaLine(0, 6, 9, 0, "Alright! Let's get started. For the record, I do have a list of talking points, but all my writing for this is very much improvisational. Since I don't have to worry about the consistency of what I'm presenting anymore, you're basically about to get a bunch of me speaking as myself.")
+        diaLine(1, 6, 9, 0, "To start: Thanks for playing! You already saw everything the game had to offer by reaching this far, and there aren't any layers of secrets deeper than this. Yeah, things can come to an end? What a shocker, am I right.")
+        diaLine(2, 6, 9, 0, "While there are probably questions you'd like answered, the first thing I have lined up is a preamble about how this game came to be in the first place.")
+        diaLine(3, 6, 9, 0, "Back in 2013 or so, I got into fangames of I Wanna Be the Guy. Specifically fangames. As in, people have been using that game's engine to create their own experiences for over like 15 years now.")
+        diaLine(4, 6, 9, 0, "I won't regale you with stories of my time, but being there got me into two other things specifically: Puzzles, and game development itself.")
+        diaLine(5, 6, 9, 0, "I started out game development by getting Game Maker 8.1, downloading an IWBTG engine, and making bizarre and sometimes awful fangames in that. As the years passed, I got a knack for how everything worked, and could actually sorta program things which were more complicated than the usual fangames of the time.")
+        diaLine(6, 6, 9, 0, "Then, by pure chance, I saw a friend in the community play a game called 'Jelly no Puzzle', which was basically my entry point into legit puzzle games. It's a wonderful experience, so I recommend you try it.")
+        diaLine(7, 6, 9, 0, "So, I developed my skills in programming and design for a few years, and then saw a cool-looking new fangame called 'I Wanna KeyPick 100'. You can download and try that, too. You probably already know, but that basically directly inspired this game.")
+        diaLine(8, 6, 9, 0, "The thought that started it all was, probably, 'I wanna see if I can make my own puzzle with those mechanics.' Then, I decompiled that game, copy pasted the sprites and sounds, and redid the code to be much more flexible.")
+        diaLine(9, 6, 9, 0, "Just FYI, in the original KeyPick, every single variant of key, door, and counter was basically its own object, with its own hardcoded properties and handmade sprites. For my intents and purposes, that was unconscionable, so I changed the code to 'interpret' a set of parameters and automatically handle the hard parts.")
+        diaLine(10, 6, 9, 0, "The draw code was quite a nightmare. Lots of sprites, colors to keep track of and draw them with, and properly place and scale with the door's size, not to mention the nightmares introduced by Glitch Keys/Doors. I'll leave it at that, though.")
+        diaLine(11, 6, 9, 0, "I think the first ways Lockpick deviated from KeyPick arose very naturally from the mere existence of that generalized code, and checking for clear absences in KeyPick's mechanics.")
+        diaLine(12, 6, 9, 0, "One of the biggest observations was that KeyPick never had Negative Master Keys. I did have to brainstorm on my own what they would even do, but once I came up with the way they work now, THAT was the moment I was locked into developing this game for real. On the reread: pun not intended, genuinely.")
+        diaLine(13, 6, 9, 0, "It's hard to overstate just how much that concept changed things. The fundamental mechanic was so cool that I effectively considered it this game's 'secret', what set it apart from KeyPick. I even loved it enough to make a Negative Master Key the icon for both the game and its eventual testing server.")
+        diaLine(14, 6, 9, 0, "That aside, though, there were plenty of other, smaller gaps to fill in. Things like Blast Doors and Signflip Keys. I didn't come up with everything at once, and there were a decent number of scrapped early mechanics which you probably saw, but eventually I had enough material to structure the game into worlds.")
+        diaLine(15, 6, 9, 0, "On that note, now's a good time to mention my other primary inspiration for this game: 'Baba is You'. Yes, I put punctuation both inside and outside the quotes, deal with it. Anyways, that game was fresh in my mind, and I basically yoinked its 'world structure' wholesale, including how puzzle unlocking and area clearance worked.")
+        diaLine(16, 6, 9, 0, "Combining my ideas with the original mechanics, I eventually outlined enough material for 12 worlds. Yes, it was originally going to end at 12. I do think 12 was always intended to be a 'meta world', although at the time I couldn't have known just how much of a big deal it would turn out to be.")
+        diaLine(17, 6, 9, 0, "For the record, I did eventually contact KeyPick's author to see if I could make this game (I did it kind of late), and they gave me their blessing. So, with all that laid out, we can start talking about the game for realsies.")
+        break
+    case 85:
+        numLines = 18
+        endAction = 2
+        diaLine(0, 6, 9, 0, "I figure I'll talk about what actually designing the puzzles was like. Which is to say, it was a nightmarishly grueling process.")
+        diaLine(1, 6, 9, 0, "The first issue was coming up with ideas for actual PUZZLES with something as basic as Keys and Doors. One principle which I had internalized prior to this game was that every puzzle should have its 'deal', its 'essence', its 'trick', something that gave it life beyond just being a 'puzzle'.")
+        diaLine(2, 6, 9, 0, "I doubt you've ever tried making a custom level for basic Sokoban, but imagine you did. Just pushing blocks onto targets and nothing else. Very quickly, after establishing some basic principles, you'd realize: 'What else is there to even make a puzzle about?' That is similar to the situation I found myself in.")
+        diaLine(3, 6, 9, 0, "Now, in my case, I did have a bunch of mechanics to work with. And, mechanic introduction and interaction puzzles do count as 'new' puzzles, at least in my book. However, I had to get creative to think about how to get more puzzles out of just the basics. So, I downloaded Notepad++, and for each world, I did the following:")
+        diaLine(4, 6, 9, 0, "I basically wrote down a bullet point list of puzzle ideas, usually single phrases like 'Use X mechanic in this way' or 'Has a trick where you think X, but actually Y'. It was a good way to gauge the number of puzzles I could expect to make. Then, I took to actually designing them.")
+        diaLine(5, 6, 9, 0, "This leads into the second issue: Actually placing puzzle elements and testing the puzzles. GameMaker's room editor... Leaves things to be desired. How it works is, basically, I have to manually place every key and door, and then add unique code to all of them to assign them their properties.")
+        diaLine(6, 6, 9, 0, "Then, I had to wait for the game to compile and load into the level to see what the puzzle looked like and if its solution was how I expected, assuming I even remembered to make the puzzle accessible ingame. It was a REALLY cumbersome process.")
+        diaLine(7, 6, 9, 0, "So, it eventually got to a point where I decided I wanted to make a fast and quick level editor for the game, which could save, load, and play puzzles nearly instantly, as well as display the outcome of the code I added to objects in real time.")
+        diaLine(8, 6, 9, 0, "And, luckily, there was actually already a tool which had most of that covered: a fangame level editor named JTool, made by one Patrick Traynor. Yes, THAT Patrick. Since that tool was open source, I managed to mod in the Lockpick mechanics and wrangle it to save/load code using cursed methods undeserving of a description.")
+        diaLine(9, 6, 9, 0, "With that, I was now able to assign a tangible form to my puzzle 'ideas' far more expeditiously.")
+        diaLine(10, 6, 9, 0, "Back to actual design, sometimes there ended up being ideas in my bullet point lists which I couldn't find out how to turn into decent actual puzzles, no matter how hard I tried. Sometimes I just had to give up on some ideas, but other times I managed to combine several tricks or revelations at once into a single puzzle.")
+        diaLine(11, 6, 9, 0, "A good example of a 'bullet point puzzle' that gave me trouble was the World 3 puzzle about using a Master Key on a Blast Door. I genuinely didn't know how to make that work in a nonobvious, puzzling way for the longest time. In fact, in the Part 1 demo, I *still* hadn't managed it yet!")
+        diaLine(12, 6, 9, 0, "But, little by little, I did manage to chip away at all the puzzles I had in mind. I think the hardest worlds to design puzzles for were the early worlds, on behalf of being so simple, and World 10, where I went back and forth MANY times on how the mechanics of Glitch Keys/Doors should work. Lots of scrapped bullet points there.")
+        diaLine(13, 6, 9, 0, "With every new mechanic I added, though, I felt a lot more 'freedom' in what I could try to design. Perhaps the best example of this is, funnily enough, the math puzzles in World 7 and 8. I think it's around that point where I was really able to spread my wings and make silly puzzle ideas.")
+        diaLine(14, 6, 9, 0, "I think the only real shuffle that happened was the replacement of Ordinal Keys with Complex Keys in World 11, the removal of the Rainbow mechanic in World 10, and the introduction of Star Keys in World 7, all of which happened at around the same time.")
+        diaLine(15, 6, 9, 0, "I'm not sure if I'll go into the genuine puzzle design process in detail, but to sum it up: All my attempts to make 'vaguely complex' puzzles failed, but most of my attempts to make 'puzzles about a specific well-defined thing or deduction' usually succeeded. That applies to the big puzzles and meta puzzles, too.")
+        diaLine(16, 6, 9, 0, "Eventually though, it was time for World 12, where I would introduce Salvages to cap off the game. That was genuinely how I planned for it to be at the time.")
+        diaLine(17, 6, 9, 0, "Obviously, as you already know, it ended up being a bit more than that.")
+        break
+    case 86:
+        numLines = 19
+        endAction = 2
+        diaLine(0, 6, 9, 0, "Part 2 of the game, as even the phrase itself implies, was scope creep incarnate.")
+        diaLine(1, 6, 9, 0, "I don't think I've EVER owned myself harder as a developer than when I decided to actually dedicate to the whole concept of Salvages. Even back then, I hadn't really written out any plans for what I'd do with them, but just that the mechanics would exist and that meta puzzles would be a thing.")
+        diaLine(2, 6, 9, 0, "Once I started doing my normal bullet point fare, I quickly realized there were a lot more dimensions to the concept than previously anticipated. Enough to, say... Dedicate whole sub-worlds to puzzle sets which explored different aspects of Salvages. You already know where this is going.")
+        diaLine(3, 6, 9, 0, "The ideas just kept on piling, and I even continued to set it up to be worse for myself down the line. When I realized that Salvages could be used to platform to unreachable locations, I decided I wanted that revelation to be necessary to reach, get this: A SECRET.")
+        diaLine(4, 6, 9, 0, "Additionally, while I forget how exactly it started, I had also decided that using the Lens of Truth to uncover hidden level entrances would be cool, and so I basically pre-placed secret doors for 'Omega Puzzles' in every hub room. If you're a vigilant reader, you already know how *that* went.")
+        diaLine(5, 6, 9, 0, "My thoughts still continued though, even further beyond reason. Eventually I decided that it would make sense for the culmination of the Salvage mechanic to be the activation of a new meta puzzle in the main hub. I was very much also borrowing from my inspirations on that one.")
+        diaLine(6, 6, 9, 0, "But, when thinking about that puzzle idea, I naturally felt inclined to try and hide it, to make it a grand reveal. And, through some freak accident of neural connections, I came up with the idea of hiding that hub metapuzzle by putting the lock for it on an unassuming guide character. A character you now know to be Kina.")
+        diaLine(7, 6, 9, 0, "Now, when I say this, I mean it with no exaggeration whatsoever. Adding Kina to the game is both the best and worst choice I have ever made as a solo game developer.")
+        diaLine(8, 6, 9, 0, "Like... Do I even need to put it to words? Do I even need to convey just how much dedicating to that ridiculous concept completely exploded the scope of this game? Because it did, and for some reason, the me of the time decided it was worth it.")
+        diaLine(9, 6, 9, 0, "And, in hindsight, it was. But I think that was the precise point in development I realized that, despite initially seeming so close to the end, if I was to go through with everything I had on paper, the game was suddenly about to take several more years to finish.")
+        diaLine(10, 6, 9, 0, "So, I made the executive decision at that moment to split I Wanna Lockpick into 2 parts. The first part, the demo, was the foundation, so to speak. Everything which wasn't Salvages, and everything I had already made. Part 2, on the other hand, was me somehow building practically a second whole game on top of that.")
+        diaLine(11, 6, 9, 0, "I do think that was the right move to make. Part 1 really was practically a full game on its own. And I think that sentiment was reflected by its reception on release: People enjoyed it, despite how unfinished it was. Well, for the most part, anyway.")
+        diaLine(12, 6, 9, 0, "I do wish I could have gone back and changed some things about that demo version. I don't think I can even count anymore how many times someone asked me why pressing ESC quit the game, or why they couldn't rebind controls. And, the original sprite for Lily in the pause menu was... my second attempt at drawing a character ever.")
+        diaLine(13, 6, 9, 0, "That being said, I am very thankful for all the kindness I received from people who enjoyed the demo's puzzles. I specify puzzles because that's one of the few things I personally made for this game. There are many other people this game should be attributed to, and I'll dedicate that to another section.")
+        diaLine(14, 6, 9, 0, "Back to Part 2, though. So, despite everything I've described so far, I was STILL continuing to add more ideas to the pile. The Kina Puzzle, the Omega Keys, and, for some godforsaken reason, I had already decided I wanted the Kina Puzzle to lead to ANOTHER main hub full of worlds, plus everything involving the Secret Lab.")
+        diaLine(15, 6, 9, 0, "Before I even made the first room of The Great Beyond, I already decided that the 4 chapters would be a complex tangle involving the meta puzzles AND the Secret Lab stuff AND the Kina Puzzle, all planned out in intricate detail. I think that was, bar none, the single greatest design challenge in the game.")
+        diaLine(16, 6, 9, 0, "The only reason I think it even managed to function in the end was because of the actual MONTHS of prep work and planning I did. Like, I had figured out door type/color restrictions, Omega Key progression, and puzzle specifics ALL before making a single one, and I think that was the only way it was ever going to happen.")
+        diaLine(17, 6, 9, 0, "I think I've tooted my own horn about the scope of Part 2 for long enough, though. You can be the judge of how all that stuff actually performed in the end.")
+        diaLine(18, 6, 9, 0, "Now, let's move onto the other reason this game took so long to make: the story.")
+        break
+    case 87:
+        numLines = 17
+        endAction = 2
+        diaLine(0, 6, 9, 0, "It's funny. The demo already kind of had an ambiguous sort of meta setting and tone without Kina present. When I decided to add Kina to the game, though, a bunch of other questions came with her. The big one being how I would justify her existence beyond just facilitating that silly meta puzzle.")
+        diaLine(1, 6, 9, 0, "I guess I should admit that I kind of have a perfectionist streak when it comes to creative works. Perhaps that was why I decided that the best idea to make Kina fit in was to give the game a proper story, featuring her and Lily as the main characters.")
+        diaLine(2, 6, 9, 0, "Though, obviously, even more gaps had to be filled in from there. Things like what the world in the game even was, why and how Kina made all these puzzles, and what sort of circumstances would have lead Lily to such a seemingly strange engagement.")
+        diaLine(3, 6, 9, 0, "Now, I promise I didn't do this on purpose. But, since Kina was already the creator of the world in-universe, the gears in my head were pre-placed to start pondering what type of story could be told with that setup.")
+        diaLine(4, 6, 9, 0, "If you're the type to read into things a layer deeper than what's necessary, you probably realized this ages ago, but I decided to make the story of I Wanna Lockpick a metatextual parallel to the creation of the game itself.")
+        diaLine(5, 6, 9, 0, "It's at least what I intended, although I will note that there are a number of places where the ingame story doesn't fully map onto reality. I figure I shouldn't really specify where that's the case, though. You can use your imagination like a normal media literate individual.")
+        diaLine(6, 6, 9, 0, "You've probably also figured at this point that Lily is a reflection of the player, and that Kina is a reflection of myself. And, while that is sorta what I was going for, I did try to make them their own characters with lives and desires of their own. Of course, though, everything I write will inevitably have pieces of me in it.")
+        diaLine(7, 6, 9, 0, "I suppose the next subject regarding the story is its bizarre setting. And, honestly, I just kinda operated by feel in most places. I do have a bunch of personal notes on the details of the greater world of Lockpick, but I don't think I'd really want to share them.")
+        diaLine(8, 6, 9, 0, "So, while you can take my word for it that I have 'explanations' for everything, you should feel free to imagine for yourself what living in Lily's and Kina's world is like, and what the themes I might have briefly touched upon could be analogous to in reality. But, I'm more of a mechanical writer than a thematic one.")
+        diaLine(9, 6, 9, 0, "For the record, I do think basing your creative works around themes rather than mechanics is cool, and in fact, really helpful if you want to keep your story focused. At least, that's my understanding of it. I'm not actually a professional writer...")
+        diaLine(10, 6, 9, 0, "Before I move onto the next subject, though, I figure it'd be fun to have a lightning round to iron out some story/meta details to reinforce or reshape your understanding of everything.")
+        diaLine(11, 6, 9, 0, "The game you are playing is basically my 'presentation' of a similar game, 'I Wanna Lockpick', made by Lily with the help of some unknown friends, to retell the story of her trip to the Enrichment Program and her interactions with Kina, which are the 'base' of everything, so to speak. Yay for run-on sentences.")
+        diaLine(12, 6, 9, 0, "Kina was the one who designed all the puzzles, but Lily was the one who wrote all the room comments and explained all the mechanics and wrote witty flavor text for your reading pleasure.")
+        diaLine(13, 6, 9, 0, "All the brief points where I'm present aren't there in Lily's version of the game, but you can assume there were a few other fundamental differences 'lost in translation' so to speak. A funny example of this being Lily's inconsistent character designs across basically every time I tried to draw her.")
+        diaLine(14, 6, 9, 0, "As for whether I'm connected to Lily or not: I try to tread carefully and treat 'characters' with the same respect as real people, so to put up a layer of abstraction once more, let's say that we're just long-distance friends across worlds, and that I got her permission to show you my version of her neat game.")
+        diaLine(15, 6, 9, 0, "That being said, you probably won't be seeing her or her world again in the future... That's just my decision informed by my current set of priorities. Sorry if that bums you out a bit.")
+        diaLine(16, 6, 9, 0, "I think that's all I have to say about the story. And, for that matter, the game itself, for the most part. However, there is one last thing related to I Wanna Lockpick I figure I should talk about.")
+        break
+    case 88:
+        numLines = 13
+        endAction = 2
+        diaLine(0, 6, 9, 0, "I think the fact that I'm the creative lead, game/level designer, writer, AND main spriter for this game, might lead some to forget that I am by no means the only person responsible for this game's existence, and that without many other people's work, this game wouldn't have even been possible.")
+        diaLine(1, 6, 9, 0, "To start with something simple, the testers for this game were all extremely important. Not only did they actually put my designs to the test and offer tons of extensive and useful feedback (Thank one of them for the undo feature!), watching them play everything was also a huge morale boost.")
+        diaLine(2, 6, 9, 0, "I have various friends to thank as well. I won't name names, but there have been a good many people whom I opened up about the game to and talked about the creative process in private, and having folks to be able to talk to about the game was very good for my mental health.")
+        diaLine(3, 6, 9, 0, "Furthermore, and rather obviously, I've got my family to thank as well. I'm glad to be blessed with a family that supports my hobbyist game development, even if I'm not making a wage off of it. Truthfully, this game probably wouldn't have ever finished if I had to dedicate time to an actual job...")
+        diaLine(4, 6, 9, 0, "I am eternally grateful to all of them and their company, even if I'm not typically vocal about it. Who knows, maybe they're reading this right now! That'd be funny. But, either way, I love them very much, even if none of them really know this game the way I do. Their support is enough.")
+        diaLine(5, 6, 9, 0, "We're not quite done with credits yet, though. Now I figure I'll talk about something a bit more fringe, but which I feel is necessary to properly address in sincerity. Which is to say, all the games and authors whose music (and occasionally sprites) I stole and reused in this game.")
+        diaLine(6, 6, 9, 0, "It's something fangames of IWBTG are known for, and when I did it for this game, it was partly because I couldn't compose or hire composers, partly because I liked the songs, and partly because I wanted to make cool visuals that could recontextualize the songs I picked.")
+        diaLine(7, 6, 9, 0, "Of course, that still doesn't mean that I had permission to use them. At least, not all of them. While I do believe I succeeded in artfully reusing things, I think it's important that the original artists get the full extent of the credit and proper attributions where they are due.")
+        diaLine(8, 6, 9, 0, "To that end, I tried to provide attributions in the credits file for the game as best I could, and I also added a display for the music credits everywhere you go, so that you will always know exactly who is responsible for everything in this game.")
+        diaLine(9, 6, 9, 0, "It's not the most I could do, more like the bare minimum. So, again, I implore you to read the credits for the game and send any support you would have given me to all the other artists instead. I tried to provide support links where I could, but I might have missed a few while researching.")
+        diaLine(10, 6, 9, 0, "If nothing else, I hope their inclusion in this game made you aware of the existence of these artists, and that you'll be able to experience their work in the same way I did. Although, I do hope I could manage more than just exposing you to these artists...")
+        diaLine(11, 6, 9, 0, "I have a lot more to say about reusing and recontextualizing work, but I think I'll just sum it up as such: It's OK to reuse or iterate on other people's work in your art, but try to respect the authors' wishes, and ALWAYS give credit so people will be able to find where everything came from.")
+        diaLine(12, 6, 9, 0, "...I suppose I have one more thing left to talk about.")
+        break
+    case 89:
+        numLines = 19
+        endAction = 2
+        diaLine(0, 6, 9, 0, "Thanks for sticking it out this long. We're close to done for real now, but to cap it off, I think I'd like to talk about the things I'd like to make going forward, as well as my hopes as a creative.")
+        diaLine(1, 6, 9, 0, "My creative philosophy for a while has been, essentially, to take something someone else made and see what ideas I could personally contribute to it. It's how many of my early and even current projects came to fruition, and I think it's a good mindset to have.")
+        diaLine(2, 6, 9, 0, "When you're surrounded by the creative works of so many other people, it inevitably permeates your mindscape. It's our nature to think about things that engage us, and sometimes that leads to us expanding on those ideas, combining them, and even evolving and reimagining them.")
+        diaLine(3, 6, 9, 0, "I Wanna Lockpick probably wouldn't have existed if not for 'I Wanna KeyPick 100'. Believe it or not, before that game, I hadn't really thought a lot about the concept of puzzles about keys and doors.")
+        diaLine(4, 6, 9, 0, "In the end, I made so, so much for this game, and despite how fleshed out it is now, I still do not believe for a second that it is the best that could be done with the concept.")
+        diaLine(5, 6, 9, 0, "You saw the stuff in the Museum. The gaps in the Salvages. The places where things could have been that weren't there. The game jokes about the final hub being a 'Part 2.5', but in all honesty, there probably was enough material to constitute a Part 3 of this game, if I truly wanted to make it.")
+        diaLine(6, 6, 9, 0, "But I think I'm past that point now. I'm ready to move onto my other projects, and if someone would like to see this game do something they wanted to see, the task falls on them now to make that vision a reality. But I think that's more plausible than it sounds.")
+        diaLine(7, 6, 9, 0, "If there are enough people who enjoyed this game, a community will inevitably form around it, and from there a new pool of creatives will be primed to build on everything this game had to offer and add their own personal spice to it.")
+        diaLine(8, 6, 9, 0, "And I give anyone who's up to that task full permission to do that. Make Part 3, or Lockpick 2, or Lockpick Kaizo Edition. As long as your heart's in it, that's good enough for me.")
+        diaLine(9, 6, 9, 0, "Now, though, I suppose I'll end by talking about what I intend to work on after this is out in the public.")
+        diaLine(10, 6, 9, 0, "I've got more projects than I can really keep track of, so I'll just bring up my current passion project, which goes by the title 'Same-Day Story.'")
+        diaLine(11, 6, 9, 0, "It started as a simple Touhou-inspired game which I started thinking about in my last year of high school, and similarly to how Lockpick gets more complicated over time, it somehow blew up into a ridiculously involved game with a massive story. It's my main writing project.")
+        diaLine(12, 6, 9, 0, "I'll share what it's actually about elsewhere, but if it ever reaches the light of day, you can probably expect one of the most complicated gameplay systems and metanarratives that I currently know of in all my limited knowledge of contemporary media.")
+        diaLine(13, 6, 9, 0, "Just in general, I've been developing my art and music skills recently, and over the past 2 years I think I've reached a decent baseline for both. Despite how much work it is, I really would like to master every discipline of game development in order to make my visions a reality.")
+        diaLine(14, 6, 9, 0, "Who knows what I'll make next, but I hope that you'll be there to enjoy it, just as you enjoyed this.")
+        diaLine(15, 6, 9, 0, "I suppose it's almost time to wrap everything up now.")
+        diaLine(16, 6, 9, 0, "Again, thanks for playing my game. Unless you left some puzzles unfinished, you've probably seen everything there is to see now.")
+        diaLine(17, 6, 9, 0, "I'm not leaving this room anytime soon, but you'll be moving on from this game eventually, no matter what that actually entails. So, do well out there, OK?")
+        diaLine(18, 6, 9, 0, "It was nice to chat with you. Thanks for having me.")
+        break
+    case 90:
+        numLines = 13
+        endAction = 4
+        diaLine(0, 0, 0, 0, "Hello, and welcome! You'll be thrust into the options soon, but first, press SPACE to advance this text box.")
+        diaLine(1, 0, 0, 0, "Thanks for playing I Wanna Lockpick! Before you begin, here's some things worth knowing.")
+        diaLine(2, 0, 0, 0, "Firstly, once you enter the game proper, press [Escape] to access the Pause and Options menu at any time. There are plenty of handy options in both menus.")
+        diaLine(3, 0, 0, 0, "Secondly, this game autosaves after basically everything you do. So, whether you've just solved a puzzle or did some wandering around, take solace in the fact that your progress has been saved.")
+        diaLine(4, 0, 0, 0, "Next up, a statement regarding the music.")
+        diaLine(5, 0, 0, 0, "This game reuses music from other artists and games. While I reused the things I did artfully and with care and attention, obviously the subject of reuse is more complicated than that.")
+        diaLine(6, 0, 0, 0, "Check the 'CREDITS' file to find attributions to every source I could recall using for this game. PLEASE read it, and support the creators and artists for everything featured! Links to do so will be provided where I could find them.")
+        diaLine(7, 0, 0, 0, "Additionally, an ingame credit will show up every time a song plays.")
+        diaLine(8, 0, 0, 0, "If you're a content creator or streamer who is cautious about things like this, use the options menu or the [Ctrl+M] hotkey to mute the music at a moment's notice.")
+        diaLine(9, 0, 0, 0, "And, if you're an artist whose stuff was used and you don't like its presence in this game or need me to change the details of how it was credited, please notify me and I will remedy it in a timely fashion.")
+        diaLine(10, 0, 0, 0, "This game is not and will never be available for purchase, but please do send any support you can to the featured artists.")
+        diaLine(11, 0, 0, 0, "With that out of the way, I hope you enjoy this game! It's frankly a bit bizarre, even as far as puzzle games are concerned, so I hope you are able to enjoy it despite any potential shortcomings it may have.")
+        diaLine(12, 0, 0, 0, "Now, it's time to set your options. I advise you look through all of them carefully, and remember that you will be able to change them ingame at any time within the pause menu.")
+        break
+    case 91:
+        numLines = 7
+        endAction = 5
+        diaLine(0, 7, 10, 3, "Hello! Today I'd like to tell you a story about someone's journey to someplace special.")
+        diaLine(1, 7, 10, 3, "That someone is this pleasant girl named Lily, who is currently waving at you. Say hi!")
+        diaLine(2, 7, 10, 3, "Recently, she's been wanting to get out of the house for a bit and do something fun.")
+        diaLine(3, 7, 10, 3, "And, on this day, that something has made itself known!")
+        diaLine(4, 7, 10, 3, "Today she received an invitation from the Ambassador Society, which organizes events to unite normal people with the many gods which inhabit the world!")
+        diaLine(5, 7, 10, 3, "A local god by the name of Kina apparently just opened up an 'Enrichment Program' of sorts, and Lily, who had recently signed up for the Ambassador Society's waitlist (and who lived nearby), was chosen to try it out!")
+        diaLine(6, 7, 10, 3, "So, she waves goodbye to her wonderful housemate, Marilyn, and sets off to see what this is all about!")
+        break
+    case 92:
+        numLines = 1
+        endAction = 0
+        diaLine(0, 2, 3, 1, "I think I see it up ahead! Looks like the map they gave me was indeed functional.")
+        break
+    case 93:
+        numLines = 2
+        endAction = 0
+        diaLine(0, 2, 3, 0, "This is a fun-looking building.")
+        diaLine(1, 2, 3, 0, "I like the stars.")
+        break
+    case 94:
+        numLines = 39
+        endAction = 6
+        diaLine(0, 2, 3, 1, "...Hi!")
+        diaLine(1, 2, 11, 0, "...")
+        diaLine(2, 2, 4, 4, "...Hi? I'm here for the-")
+        diaLine(3, 3, 5, 0, "Oh whoops was dilating time for a second there I am here now hello")
+        diaLine(4, 2, 3, 4, "Oh! Hello.")
+        diaLine(5, 3, 5, 0, "So, welcome and stuff")
+        diaLine(6, 3, 5, 1, "My name is Kina, although my title is the God of Keys and Doors")
+        diaLine(7, 3, 5, 0, "I will be your guide for the next Insert Ambiguously Long Time Period Here")
+        diaLine(8, 2, 11, 0, "Nice to meet you! I'm Lily.")
+        diaLine(9, 3, 5, 1, "You from around here")
+        diaLine(10, 2, 3, 1, "Yeah! It was only about a 30 minute walk. It was nice to see the trees.")
+        diaLine(11, 3, 5, 6, "I can vibe with a Nature Appreciator")
+        diaLine(12, 3, 5, 1, "So")
+        diaLine(13, 3, 5, 0, "Do you know what we are gonna be doing here")
+        diaLine(14, 2, 3, 4, "I dunno! The Ambassador said something about an 'Enrichment Program', but that's about it.")
+        diaLine(15, 3, 5, 1, "Alright so here's the long and short of it")
+        diaLine(16, 3, 5, 0, "Are you familiar with the notion of using keys to unlock doors")
+        diaLine(17, 2, 3, 4, "...Yeah?")
+        diaLine(18, 3, 6, 2, "OK good that's the hard part covered then")
+        diaLine(19, 3, 5, 0, "Today you will be solving puzzles based around that concept")
+        diaLine(20, 2, 3, 15, "...I feel like I should have seen that coming.")
+        diaLine(21, 3, 5, 0, "This whole engagement will basically be split into different 'Worlds' which you will travel between")
+        diaLine(22, 3, 5, 5, "When you solve enough puzzles in one world you will get a special Stone Key to open up the next")
+        diaLine(23, 2, 3, 0, "Oh, so it's like a video game.")
+        diaLine(24, 3, 5, 1, "Actually that was probably the harder part to explain but seems like you got that covered so we're all good now")
+        diaLine(25, 2, 3, 0, "Seems pretty reasonable to me. So, how long will it take?")
+        diaLine(26, 3, 5, 1, "Uhhhhhhhhhhh")
+        diaLine(27, 3, 5, 3, "That is a hard question to answer for more reasons than may seem initially obvious")
+        diaLine(28, 3, 5, 2, "I dunno baseline estimate is probably a few days")
+        diaLine(29, 2, 3, 4, "To solve every puzzle?")
+        diaLine(30, 3, 5, 0, "To solve enough to reach an 'ending' of sorts")
+        diaLine(31, 2, 3, 8, "Sounds like this is gonna be quite a thing.")
+        diaLine(32, 3, 5, 1, "It is certainly abundant in thingness")
+        diaLine(33, 3, 5, 0, "Anyways a special room has been prepared for you to eat, sleep, and relax while you spend time here")
+        diaLine(34, 2, 3, 1, "Oh, well, that's good.")
+        diaLine(35, 3, 5, 0, "Obviously I would appreciate the outcome where you do reach the end, but if you need to go for emergency reasons or because you stopped feeling it then you can just do that")
+        diaLine(36, 2, 3, 0, "Good to know.")
+        diaLine(37, 2, 3, 1, "Well, I think everything is fine on my end. I'm ready to start!")
+        diaLine(38, 3, 5, 4, "OK cool I will initiate the warp sequence now")
+        break
+    case 95:
+        numLines = 5
+        endAction = 7
+        diaLine(0, 7, 10, 3, "Having demonstrated her logical prowess by solving The Labyrinth, Lily had officially completed Kina's Enrichment Program!")
+        diaLine(1, 7, 10, 3, "Of course, that didn't mean she had to leave for good. Should she want to continue exploring further, all she had to do was ask!")
+        diaLine(2, 7, 10, 3, "For now, though, she rested on the grass outside, basked in the sun, and enjoyed the fresh summer breeze.")
+        diaLine(3, 7, 10, 3, "Lily felt the satisfaction of her difficult achievement, and hopefully you did, too!")
+        diaLine(4, 7, 10, 3, "Until next time! Thanks for playing I Wanna Lockpick!")
+        break
+    case 96:
+        numLines = 83
+        endAction = 8
+        diaLine(0, 2, 3, 4, "Oh, hello again.")
+        diaLine(1, 3, 5, 0, "Hiya")
+        diaLine(2, 3, 5, 0, "Not much to do here so feel free to take a seat")
+        diaLine(3, 2, 3, 0, "Mm. Sure, why not.")
+        diaLine(4, 2, 3, 4, "So... is this the end?")
+        diaLine(5, 3, 5, 0, "Yep")
+        diaLine(6, 2, 3, 4, "Like, the real end. No last minute super duper secrets left to find? Cause I'm sorta used to that.")
+        diaLine(7, 3, 5, 0, "As hard as it may be to believe this is indeed the intended ending of the experience")
+        diaLine(8, 2, 3, 2, "...Guess I'll just let that simmer for a moment.")
+        diaLine(9, 2, 3, 2, "...")
+        diaLine(10, 2, 3, 2, "...It's funny, too.")
+        diaLine(11, 2, 3, 4, "Honestly, at some point, I was getting the feeling that this really could just go on forever.")
+        diaLine(12, 3, 5, 0, "I do not blame you for thinking that")
+        diaLine(13, 3, 5, 1, "In a sense I have that feeling too")
+        diaLine(14, 3, 5, 1, "But my part in it had to end eventually")
+        diaLine(15, 2, 3, 4, "Your part?")
+        diaLine(16, 3, 5, 5, "Do you mind a brief tangent")
+        diaLine(17, 2, 3, 0, "Feel free!")
+        diaLine(18, 3, 5, 0, "I had many more ideas for this world than just the ones you saw")
+        diaLine(19, 3, 5, 0, "Some of them were really good ideas as well")
+        diaLine(20, 3, 5, 0, "With enough effort this world could have continued for a very long time")
+        diaLine(21, 3, 5, 1, "But the simple fact of the matter is that trying to continuously add stuff like that is pretty demanding")
+        diaLine(22, 3, 5, 0, "I decided at some point that I would just let go of some things and be proud of what I had already made")
+        diaLine(23, 3, 5, 2, "It was a pretty good choice methinks")
+        diaLine(24, 2, 3, 0, "I see.")
+        diaLine(25, 2, 3, 4, "So, I guess you're committed to that decision?")
+        diaLine(26, 3, 5, 0, "More or less")
+        diaLine(27, 3, 5, 3, "I would certainly be fine with someone building off of my ideas further though")
+        diaLine(28, 3, 5, 1, "I've got a whole bucket list of things people could try already prepared should the opportunity present itself")
+        diaLine(29, 2, 3, 0, "Huh.")
+        diaLine(30, 3, 5, 0, "While I was working on this, that sense of being a pioneer of new ideas was quite fun")
+        diaLine(31, 3, 5, 0, "I wanted to try and be as creative as I could in my endeavors involving this whole concept of keys and doors")
+        diaLine(32, 3, 5, 1, "I think I succeeded in some ways")
+        diaLine(33, 3, 5, 0, "Pretty proud of the more abstract or mathy puzzles, as well as the meta stuff")
+        diaLine(34, 3, 5, 0, "I wanted puzzles like that to open people up to the possibilities and maybe spur them to make their own spins on the idea")
+        diaLine(35, 2, 3, 0, "I see.")
+        diaLine(36, 2, 3, 1, "There were many incredible things I got to take in while I was here, at least.")
+        diaLine(37, 2, 3, 2, "I do wonder, though.")
+        diaLine(38, 2, 3, 2, "With this whole engagement as private as it is, it feels like the people you could reach with this are few and far between.")
+        diaLine(39, 3, 5, 1, "I am aware of that")
+        diaLine(40, 2, 3, 4, "I think even at the start, I noted how the things here feel right out of a video game.")
+        diaLine(41, 2, 3, 4, "So, I have to ask. Any reason in particular you chose not to do that, and make it physical instead?")
+        diaLine(42, 3, 5, 0, "Mostly it had to do with the aspect of immersion")
+        diaLine(43, 3, 5, 0, "I like to enjoy the wonderful brief moments this world has to offer")
+        diaLine(44, 3, 5, 0, "So it was my hope that making everything I envisioned real would allow that sense of wonder to really sink in")
+        diaLine(45, 3, 5, 0, "Additionally, I wanted to be able to interact with the participants directly")
+        diaLine(46, 3, 5, 1, "Just a personal desire")
+        diaLine(47, 2, 3, 0, "I think I get it.")
+        diaLine(48, 3, 5, 0, "As for the video game angle")
+        diaLine(49, 3, 5, 1, "It would be nice, but I am unsure of how I would adapt the aforementioned things to that medium")
+        diaLine(50, 3, 5, 1, "Especially in terms of trying to hold convincing dialogues with an ambiguous player entity")
+        diaLine(51, 2, 3, 4, "Is that so.")
+        diaLine(52, 2, 11, 15, "...")
+        diaLine(53, 2, 4, 15, "Hmm.")
+        diaLine(54, 2, 4, 13, "Hmmhmhmhmhmmmmmmmmhm. Hmmmmmm.")
+        diaLine(55, 2, 4, 14, "Mm.")
+        diaLine(56, 3, 5, 0, "Sounds like you have an idea but think it might sound silly")
+        diaLine(57, 3, 5, 0, "Feel free to let it out because frankly if you thought of something I'd love to hear it")
+        diaLine(58, 2, 3, 4, "Well, instead of making it about a general experience, how about just making it about one?")
+        diaLine(59, 3, 6, 0, "Uh huh")
+        diaLine(60, 2, 3, 4, "I figure... I made it this far, and it's been nice talking with you. Do you suppose my time here would make for a fun game?")
+        diaLine(61, 3, 5, 0, "Maybe")
+        diaLine(62, 3, 6, 1, "You okay with being in a video game though")
+        diaLine(63, 2, 3, 7, "I figure as long as I don't divulge anything too personal, it should be fine.")
+        diaLine(64, 2, 3, 7, "Heck, I can change some details and even make stuff up if necessary.")
+        diaLine(65, 3, 6, 0, "If you say so")
+        diaLine(66, 3, 5, 0, "But that does leave the question of the game making part itself")
+        diaLine(67, 2, 3, 0, "I don't know too much about all that. Although, I do have some friends online who could probably help.")
+        diaLine(68, 3, 5, 1, "Truthfully it might be a better idea to get the Ambassador Society involved")
+        diaLine(69, 3, 5, 0, "They already have the people and resources for things of that nature")
+        diaLine(70, 3, 5, 2, "Do what you want though, I figure I'd just make your options known")
+        diaLine(71, 3, 5, 1, "And please don't feel inclined to make something on my behalf, just stay true to yourself")
+        diaLine(72, 3, 5, 0, "I am satisfied with what I have here at the end of the day")
+        diaLine(73, 2, 3, 1, "True. I'd like to think about it, at least, since I really enjoyed my time here.")
+        diaLine(74, 2, 3, 0, "...Mm.")
+        diaLine(75, 2, 3, 0, "I think I'll enjoy this view for a while.")
+        diaLine(76, 3, 5, 0, "Same")
+        diaLine(77, 2, 3, 1, "I hope whoever comes after me can enjoy all this stuff just as much as I did.")
+        diaLine(78, 3, 5, 0, "That'd be the dream")
+        diaLine(79, 2, 3, 1, "Thanks for making this, Kina.")
+        diaLine(80, 3, 5, 5, "Well thank you too for humoring all my antics and seeing all the stuff I wanted you to find")
+        diaLine(81, 3, 5, 0, "It's been a good run")
+        diaLine(82, 2, 3, 0, "Mhm.")
+        break
+    case 97:
+        numLines = 4
+        endAction = 0
+        diaLine(0, 2, 3, 3, "I... don't think this was here before.")
+        diaLine(1, 2, 3, 2, "It seems mostly decorative. I don't think there's anything I can do with it.")
+        diaLine(2, 2, 3, 13, "I think I've seen several things similar to it before, though...")
+        diaLine(3, 2, 3, 13, "There's gotta be something special I can only do in this room, even if I'm not sure what it is just yet...")
+        break
+    case 97.5:
+        numLines = 2
+        endAction = 0
+        diaLine(0, 2, 3, 4, "Well, I guess I know what this is all about now!")
+        diaLine(1, 2, 3, 15, "And now that I know, it's already kind of... had its moment pass.")
+        break
+    default:
+        numLines = 3
+        endAction = 0
+        diaLine(0, 0, 1, 2, "Uh oh! You weren't supposed to see this dialog!")
+        diaLine(1, 0, 0, 1, "I dunno what exactly happened, but congrats on seeing the error handler message, I guess?")
+        diaLine(2, 0, 0, 1, "I'd appreciate if you could report this to the developer.")
+        break
+}
+
+scrSetSpeaker(diaSpeak[0])
+speakerIndex = diaPortrait[0]

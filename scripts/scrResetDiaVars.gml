@@ -1,0 +1,11 @@
+diaPos = 0
+readString = ""
+charMax = 0
+numLines = 1
+doScroll = 0
+curString = ""
+curChar = 0
+scrollWait = 2
+scrollCount = 0
+soundWait = 2
+soundCount = 0

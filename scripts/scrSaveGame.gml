@@ -1,0 +1,58 @@
+var savePosition, saveMap, i, f;
+if global.file2Detected
+{
+}
+global.newSavefile = 1
+savePosition = argument0
+if savePosition
+{
+    global.saveRoom = room_get_name(room)
+    global.savePlayerX = objPlayer.x
+    global.savePlayerY = objPlayer.y
+    global.saveGrav = global.grav
+    with (objPlayer)
+    {
+        if (!place_free(floor(global.savePlayerX), global.savePlayerY))
+            global.savePlayerX += 1
+        if (!place_free(global.savePlayerX, floor(global.savePlayerY)))
+            global.savePlayerY += 1
+        if (!place_free(floor(global.savePlayerX), floor(global.savePlayerY)))
+        {
+            global.savePlayerX += 1
+            global.savePlayerY += 1
+        }
+    }
+    global.savePlayerX = floor(global.savePlayerX)
+    global.savePlayerY = floor(global.savePlayerY)
+    global.saveGameClear = global.gameClear
+}
+saveMap = ds_map_create()
+ds_map_add(saveMap, "death", global.death)
+ds_map_add(saveMap, "time", global.time)
+ds_map_add(saveMap, "timeMicro", global.timeMicro)
+ds_map_add(saveMap, "difficulty", global.difficulty)
+ds_map_add(saveMap, "saveRoom", global.saveRoom)
+ds_map_add(saveMap, "savePlayerX", global.savePlayerX)
+ds_map_add(saveMap, "savePlayerY", global.savePlayerY)
+ds_map_add(saveMap, "saveGrav", global.saveGrav)
+for (i = 0; i < 250; i += 1)
+    ds_map_add(saveMap, (("saveRoomClear[" + string(i)) + "]"), global.roomClear[i])
+for (i = 0; i < 15; i += 1)
+{
+    ds_map_add(saveMap, (("saveClear[" + string(i)) + "]"), global.areaClear[i])
+    ds_map_add(saveMap, (("saveComplete[" + string(i)) + "]"), global.areaComplete[i])
+}
+for (i = 0; i < 3; i += 1)
+    ds_map_add(saveMap, (("saveObject[" + string(i)) + "]"), global.object[i])
+ds_map_add(saveMap, "saveGameClear", global.saveGameClear)
+ds_map_add(saveMap, "mapMd5", md5_string_unicode((json_encode(saveMap) + global.md5StrAdd)))
+if global.extraSaveProtection
+    ds_map_secure_save(saveMap, ("Data\save" + string(global.savenum)))
+else
+{
+    f = file_text_open_write(("Data\save" + string(global.savenum)))
+    file_text_write_string(f, base64_encode(json_encode(saveMap)))
+    file_text_close(f)
+}
+ds_map_destroy(saveMap)
+scrSavePart2()
