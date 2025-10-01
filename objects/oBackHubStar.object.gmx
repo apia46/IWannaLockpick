@@ -25,15 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrSpringSet(0, 0.04, 0.25, 80)
-image_xscale = springVal[0]
-image_yscale = springVal[0]
-image_blend = make_color_rgb(150, 150, 80)
-circR = 8
-circSpd = 2
-circA = 1
-t = 0
-rotSpd = choose(-2, 2)
+            <string>scrSpringSet(0,.04,.25,80);//First usage of this cool code I yoinked from ED2
+image_xscale = springVal[0];
+image_yscale = springVal[0];
+//image_blend = make_color_rgb(80,80,150);
+image_blend = make_color_rgb(150,150,80);
+circR = 8;
+circSpd = 2;
+circA = 1;
+t = 0;
+rotSpd = choose(-2,2);
 </string>
           </argument>
         </arguments>
@@ -56,20 +57,19 @@ rotSpd = choose(-2, 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrSpringUpdate(0)
-image_xscale = springVal[0]
-image_yscale = springVal[0]
-image_angle += rotSpd
-circR += circSpd
-circSpd = max((circSpd - 0.02), 0)
-t += 1
-if (t &gt; 40)
-    circA = max((circA - 0.0125), 0)
-if (t &gt; 75)
-{
-    image_alpha = max((image_alpha - 0.02), 0)
-    if (image_alpha == 0)
-        instance_destroy()
+            <string>scrSpringUpdate(0);
+image_xscale = springVal[0];
+image_yscale = springVal[0];
+image_angle += rotSpd;
+circR += circSpd;
+circSpd = max(circSpd - 2/100, 0);
+t += 1;
+if t &gt; 40{
+    circA = max(circA - 1/80, 0);
+}
+if t &gt; 75{
+    image_alpha = max(image_alpha - 1/50, 0);
+    if image_alpha == 0{instance_destroy();}
 }
 </string>
           </argument>
@@ -93,15 +93,15 @@ if (t &gt; 75)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(1)
-draw_set_alpha(circA)
-draw_set_color(image_blend)
-draw_circle(x, y, circR, 1)
-draw_set_color(c_white)
-draw_set_alpha(1)
-draw_sprite_ext(sprOrbPart, 0, x, y, (image_xscale * 2.5), (image_yscale * 2.5), 0, image_blend, (0.2 * image_alpha))
-draw_self()
-draw_set_blend_mode(0)
+            <string>draw_set_blend_mode(bm_add);
+draw_set_alpha(circA);
+draw_set_color(image_blend);
+draw_circle(x,y,circR,1);
+draw_set_color(c_white);
+draw_set_alpha(1);
+draw_sprite_ext(sprOrbPart,0,x,y,image_xscale*2.5,image_yscale*2.5,0,image_blend,.2*image_alpha);
+draw_self();
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

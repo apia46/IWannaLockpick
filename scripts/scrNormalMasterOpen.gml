@@ -1,124 +1,98 @@
-if ((objPlayer.masterMode == 1) && (global.key[0] > 0))
-{
-    objPlayer.masterMode = 0
-    if (!global.star[0])
-        addComplexKeys(0, 0, -1, 0, 0)
-    copies -= 1
-    if ((copies == 0) && (icopies == 0))
-    {
-        visible = 0
-        solid = 0
-        active = 0
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        if global.salvageActive
-        {
-            event_user(5)
-            scrSaveSalvage(global.salvageID, id)
+///scrNormalMasterOpen();
+if objPlayer.masterMode == 1 && global.key[key_MASTER] > 0{//Positive Master Spending
+    objPlayer.masterMode = 0;
+    if !global.star[key_MASTER]{
+        addComplexKeys(key_MASTER,0,-1,0,0);
+    }
+    copies -= 1;
+    if copies == 0 && icopies == 0{//DESTROY OBJECT
+        visible=0;solid=0;active=0;
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        if global.salvageActive{
+            event_user(5);
+            scrSaveSalvage(global.salvageID,id);
+        }else{
+            event_user(0);
         }
-        else
-            event_user(0)
+    }else if copies >= 0{//Still has + copies or 0 and imaginary copies
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        event_user(2);
+    }else{//(Now) has negative copies
+        scrPlaySoundExt(sndMasterRelock,1,1,false);
+        event_user(1);
     }
-    else if (copies >= 0)
-    {
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        event_user(2)
+}else if objPlayer.masterMode == -1 && global.key[key_MASTER] < 0{
+    objPlayer.masterMode = 0;
+    if !global.star[key_MASTER]{
+        addComplexKeys(key_MASTER,0,1,0,0);
     }
-    else
-    {
-        scrPlaySoundExt(sndMasterRelock, 1, 1, false)
-        event_user(1)
-    }
-}
-else if ((objPlayer.masterMode == -1) && (global.key[0] < 0))
-{
-    objPlayer.masterMode = 0
-    if (!global.star[0])
-        addComplexKeys(0, 0, 1, 0, 0)
-    copies += 1
-    if ((copies == 0) && (icopies == 0))
-    {
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        if global.salvageActive
-        {
-            event_user(5)
-            scrSaveSalvage(global.salvageID, id)
+    copies += 1;
+    if copies == 0 && icopies == 0{
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        if global.salvageActive{
+            event_user(5);
+            scrSaveSalvage(global.salvageID,id);
+        }else{
+            event_user(0);
         }
-        else
-            event_user(0)
-        visible = 0
-        solid = 0
-        active = 0
+        visible=0;solid=0;active=0;
+    }else if copies <= 0{//Still has - copies or 0 and imaginary copies
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        event_user(2);
+    }else{//(Now) has positive copies
+        scrPlaySoundExt(sndMasterRelock,1,1,false);
+        event_user(1);
     }
-    else if (copies <= 0)
-    {
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        event_user(2)
+}else if objPlayer.masterMode == 2 && global.ikey[key_MASTER] > 0{//Positive IMaster Spending
+    objPlayer.masterMode = 0;
+    if !global.star[key_MASTER]{
+        addComplexKeys(key_MASTER,0,0,-1,0);
     }
-    else
-    {
-        scrPlaySoundExt(sndMasterRelock, 1, 1, false)
-        event_user(1)
-    }
-}
-else if ((objPlayer.masterMode == 2) && (global.ikey[0] > 0))
-{
-    objPlayer.masterMode = 0
-    if (!global.star[0])
-        addComplexKeys(0, 0, 0, -1, 0)
-    icopies -= 1
-    if ((copies == 0) && (icopies == 0))
-    {
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        if global.salvageActive
-        {
-            event_user(5)
-            scrSaveSalvage(global.salvageID, id)
+    icopies -= 1;
+    if copies == 0 && icopies == 0{
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        if global.salvageActive{
+            event_user(5);
+            scrSaveSalvage(global.salvageID,id);
+        }else{
+            event_user(0);
         }
-        else
-            event_user(0)
-        visible = 0
-        solid = 0
-        active = 0
+        visible=0;solid=0;active=0;
+    }else if icopies >= 0{//Still has + icopies or 0 and real copies
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        event_user(2);
+    }else{//(Now) has negative icopies
+        scrPlaySoundExt(sndMasterRelock,1,1,false);
+        event_user(1);
     }
-    else if (icopies >= 0)
-    {
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        event_user(2)
+}else if objPlayer.masterMode == -2 && global.ikey[key_MASTER] < 0{
+    objPlayer.masterMode = 0;
+    if !global.star[key_MASTER]{
+        addComplexKeys(key_MASTER,0,0,1,0);
     }
-    else
-    {
-        scrPlaySoundExt(sndMasterRelock, 1, 1, false)
-        event_user(1)
-    }
-}
-else if ((objPlayer.masterMode == -2) && (global.ikey[0] < 0))
-{
-    objPlayer.masterMode = 0
-    if (!global.star[0])
-        addComplexKeys(0, 0, 0, 1, 0)
-    icopies += 1
-    if ((copies == 0) && (icopies == 0))
-    {
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        if global.salvageActive
-        {
-            event_user(5)
-            scrSaveSalvage(global.salvageID, id)
+    icopies += 1;
+    if copies == 0 && icopies == 0{
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        if global.salvageActive{
+            event_user(5);
+            scrSaveSalvage(global.salvageID,id);
+        }else{
+            event_user(0);
         }
-        else
-            event_user(0)
-        visible = 0
-        solid = 0
-        active = 0
-    }
-    else if (icopies <= 0)
-    {
-        scrPlaySoundExt(sndMasterUnlock, 1, 1, false)
-        event_user(2)
-    }
-    else
-    {
-        scrPlaySoundExt(sndMasterRelock, 1, 1, false)
-        event_user(1)
+        visible=0;solid=0;active=0;
+    }else if icopies <= 0{//Still has - icopies or 0 and real copies
+        scrPlaySoundExt(sndMasterUnlock,1,1,false);
+        //scrBroadcastCopy(tempSpend,colorCopy);
+        event_user(2);
+    }else{//(Now) has positive icopies
+        scrPlaySoundExt(sndMasterRelock,1,1,false);
+        event_user(1);
     }
 }

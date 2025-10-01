@@ -25,23 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = 0
-r = 0
-rX = 0
-rY = 0
-xS = xstart
-yS = ystart
-angle = 0
-sinA = 0
-cosA = 1
-hue = 0
-sat = 50
-rSpd = 0
-image_blend = make_color_hsv(hue, sat, 255)
-scaleAdd = 0
-scale = 0
-image_xscale = scale
-image_yscale = scale
+            <string>state = 0;//0 = Slow go out, 1 = Fast go out, 2 = Go In
+r = 0;
+rX = 0; rY = 0;//Arranged in a circle
+xS = xstart; yS = ystart;//"Changes" at enter state 2
+angle = 0; sinA = 0; cosA = 1;//Angle/rotmat variables
+hue = 0;
+sat = 50;
+rSpd = 0;
+image_blend = make_color_hsv(hue,sat,255);
+scaleAdd = 0;
+scale = 0;//Image scale
+image_xscale = scale;
+image_yscale = scale;
 </string>
           </argument>
         </arguments>
@@ -64,13 +60,13 @@ image_yscale = scale
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var p;
-alarm[0] = 2
-p = instance_create(x, y, oKHCutStarPart)
-p.image_angle = image_angle
-p.image_blend = image_blend
-p.image_xscale = (scale * 0.8)
-p.image_yscale = (scale * 0.8)
+            <string>///Star particle
+alarm[0] = 2;
+var p = instance_create(x,y,oKHCutStarPart);
+p.image_angle = image_angle;
+p.image_blend = image_blend;
+p.image_xscale = scale*.8;
+p.image_yscale = scale*.8;
 </string>
           </argument>
         </arguments>
@@ -93,32 +89,31 @@ p.image_yscale = (scale * 0.8)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 0:
-        r += ((0.03 - r) * 0.05)
-        break
-    case 1:
-        rSpd += ((0.02 - rSpd) * 0.2)
-        r = min((r + rSpd), 1)
-        sat = min((sat + 10), 190)
-        break
-    case 2:
-        r = max(((r * 0.95) - 0.00666666666666667), 0)
-        break
+            <string>switch state{
+    case 0://out (slow)
+        r += (.03-r)*.05;
+    break;
+    case 1://out (fast)
+        rSpd += (1/50 - rSpd) * .2;
+        r = min(r+rSpd,1);
+        sat = min(sat+10,190);
+    break;
+    case 2://in
+        r = max(r*.95-1/150,0);
+    break;
 }
-
-angle += (r * 8)
-image_angle += (r * 8)
-sinA = sin(degtorad(angle))
-cosA = cos(degtorad(angle))
-x = (xS + (r * ((rX * cosA) - (rY * sinA))))
-y = (yS + (r * ((rX * sinA) + (rY * cosA))))
-scaleAdd += ((0.25 - scaleAdd) * 0.2)
-scale = (r + scaleAdd)
-image_xscale = scale
-image_yscale = scale
-image_blend = make_color_hsv(hue, sat, 255)
+//Position/drawvar tweaking
+angle += r*8;
+image_angle += r*8;
+sinA = sin(degtorad(angle));
+cosA = cos(degtorad(angle));
+x = xS + r * (rX * cosA - rY * sinA);
+y = yS + r * (rX * sinA + rY * cosA);
+scaleAdd += (.25-scaleAdd) * .2;
+scale = r+scaleAdd;
+image_xscale = scale;
+image_yscale = scale;
+image_blend = make_color_hsv(hue,sat,255);
 </string>
           </argument>
         </arguments>
@@ -141,10 +136,10 @@ image_blend = make_color_hsv(hue, sat, 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(1)
-draw_sprite_ext(sprite_index, image_index, x, y, (scale * 0.6), (scale * 0.6), image_angle, image_blend, image_alpha)
-draw_self()
-draw_set_blend_mode(0)
+            <string>draw_set_blend_mode(bm_add);
+draw_sprite_ext(sprite_index,image_index,x,y,scale*.6,scale*.6,image_angle,image_blend,image_alpha);
+draw_self();
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

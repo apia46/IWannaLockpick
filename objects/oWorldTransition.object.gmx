@@ -25,14 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>color = global.roomTransitionColor
-alpha = 0
-state = 0
-roomTo = 17
-timer = 0
-telePlayer = 0
-teleX = 0
-teleY = 0
+            <string>color = global.roomTransitionColor;
+alpha = 0;
+state = 0;
+roomTo = rMainHub;
+timer = 0;
+
+telePlayer = 0;
+teleX = 0;
+teleY = 0;
 </string>
           </argument>
         </arguments>
@@ -55,40 +56,33 @@ teleY = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 0:
-        timer = min((timer + 1), 25)
-        alpha = (timer / 25)
-        if (timer == 25)
-        {
-            timer = 0
-            state = 1
+            <string>switch state{
+    case 0://fade in
+        timer = min(timer+1,25);
+        alpha = timer/25;
+        if timer == 25{
+            timer = 0;
+            state = 1;
         }
-        break
-    case 1:
-        timer = min((timer + 1), 25)
-        if (timer == 25)
-        {
-            timer = 0
-            state = 2
-            if telePlayer
-            {
-                with (objPlayer)
-                    instance_destroy()
-                instance_create(teleX, teleY, objPlayer)
+    break;
+    case 1://stay
+        timer = min(timer+1, 25);
+        if timer == 25{
+            timer = 0;
+            state = 2;
+            if telePlayer{
+                with objPlayer{instance_destroy();}
+                instance_create(teleX,teleY,objPlayer);
             }
-            room_goto(roomTo)
+            room_goto(roomTo);
         }
-        break
-    case 2:
-        timer = min((timer + 1), 25)
-        alpha = (1 - (timer / 25))
-        if (timer == 25)
-            instance_destroy()
-        break
+    break;
+    case 2://fade out
+        timer = min(timer+1, 25);
+        alpha = 1 - (timer/25);
+        if timer == 25{instance_destroy();}
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -111,11 +105,11 @@ teleY = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(color)
-draw_set_alpha(alpha)
-draw_rectangle(-1, -1, 800, 608, 0)
-draw_set_color(c_white)
-draw_set_alpha(1)
+            <string>draw_set_color(color);
+draw_set_alpha(alpha);
+draw_rectangle(-1,-1,800,608,0);
+draw_set_color(c_white);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

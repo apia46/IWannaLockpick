@@ -1,8 +1,6 @@
-switch argument0
-{
+///scrDoDiaEvent(evIndex);
+switch argument0{
     case 0:
-        break
-    default:
-    
+        
+    break;
 }
-

@@ -25,12 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>trg = 0
-v = 0
-h = 0
-dir = 0
-spd = 0
-triggered = 0
+            <string>//set these in creation code
+trg = 0;
+
+v = 0;      //vspeed
+h = 0;      //hspeed
+
+dir = 0;    //direction
+spd = 0;    //speed
+            
+
+triggered = false;
 </string>
           </argument>
         </arguments>
@@ -53,19 +58,20 @@ triggered = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((!triggered) &amp;&amp; global.trigger[trg])
+            <string>if (!triggered &amp;&amp; global.trigger[trg])
 {
-    if ((v != 0) || (h != 0))
+    if (v != 0 || h != 0)
     {
-        vspeed = v
-        hspeed = h
+        vspeed = v;
+        hspeed = h;
     }
     else if (spd != 0)
     {
-        direction = dir
-        speed = spd
+        direction = dir;
+        speed = spd;
     }
-    triggered = 1
+    
+    triggered = true;
 }
 </string>
           </argument>

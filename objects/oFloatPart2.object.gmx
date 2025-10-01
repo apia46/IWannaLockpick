@@ -25,13 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_angle = random(360)
-ispd = choose(-1, 1)
-direction = (0 + random_range(-10, 10))
-speed = random_range(0.6, 1.2)
-image_xscale = (speed / 1.2)
-image_yscale = image_xscale
-image_alpha = (0.6 * image_xscale)
+            <string>image_angle = random(360);
+ispd = choose(-1,1);
+
+direction=0+random_range(-10,10);
+speed = random_range(.6,1.2);
+image_xscale = speed/1.2;
+image_yscale = image_xscale;
+image_alpha = .6*image_xscale;
 </string>
           </argument>
         </arguments>
@@ -54,9 +55,8 @@ image_alpha = (0.6 * image_xscale)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (x &gt; 832)
-    instance_destroy()
-image_angle += ispd
+            <string>if x &gt; 832{instance_destroy();}
+image_angle += ispd;
 </string>
           </argument>
         </arguments>
@@ -79,8 +79,8 @@ image_angle += ispd
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, 0, (x + 2), (y + 2), image_xscale, image_yscale, image_angle, c_black, (image_alpha * 0.35))
-draw_self()
+            <string>draw_sprite_ext(sprite_index,0,x+2,y+2,image_xscale,image_yscale,image_angle,c_black,image_alpha*.35);
+draw_self();
 </string>
           </argument>
         </arguments>

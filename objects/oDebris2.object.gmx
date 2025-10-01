@@ -25,12 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>speed = 0.8
-direction = random(360)
-c1 = 16777215
-c2 = 16777215
-c3 = 16777215
-image_speed = 0
+            <string>speed = 0.8;
+direction = random(360);
+
+c1 = c_white;
+c2 = c_white;
+c3 = c_white;
+image_speed = 0;
 </string>
           </argument>
         </arguments>
@@ -53,9 +54,10 @@ image_speed = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_alpha -= 0.03
-if (image_alpha &lt;= 0.03)
-    instance_destroy()
+            <string>image_alpha-=0.03;
+if(image_alpha&lt;=0.03){
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -78,13 +80,13 @@ if (image_alpha &lt;= 0.03)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprDebris, 0, x, y, 1, 1, 0, c_white, image_alpha)
-antic1 = make_color_rgb((255 - color_get_red(c1)), (255 - color_get_green(c1)), (255 - color_get_blue(c1)))
-antic2 = make_color_rgb((255 - color_get_red(c2)), (255 - color_get_green(c2)), (255 - color_get_blue(c2)))
-antic3 = make_color_rgb((255 - color_get_red(c3)), (255 - color_get_green(c3)), (255 - color_get_blue(c3)))
-draw_sprite_ext(sprDebris, 1, x, y, 1, 1, 0, antic1, image_alpha)
-draw_sprite_ext(sprDebris, 2, x, y, 1, 1, 0, antic2, image_alpha)
-draw_sprite_ext(sprDebris, 3, x, y, 1, 1, 0, antic3, image_alpha)
+            <string>draw_sprite_ext(sprDebris,0,x,y,1,1,0,c_white,image_alpha);
+antic1 = make_color_rgb(255-color_get_red(c1),255-color_get_green(c1),255-color_get_blue(c1));
+antic2 = make_color_rgb(255-color_get_red(c2),255-color_get_green(c2),255-color_get_blue(c2));
+antic3 = make_color_rgb(255-color_get_red(c3),255-color_get_green(c3),255-color_get_blue(c3));
+draw_sprite_ext(sprDebris,1,x,y,1,1,0,antic1,image_alpha);
+draw_sprite_ext(sprDebris,2,x,y,1,1,0,antic2,image_alpha);
+draw_sprite_ext(sprDebris,3,x,y,1,1,0,antic3,image_alpha);
 </string>
           </argument>
         </arguments>

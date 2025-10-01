@@ -1,9 +1,10 @@
-oButX[argument0, argument1] = argument2
-oButY[argument0, argument1] = argument3
-oButW[argument0, argument1] = argument4
-oButH[argument0, argument1] = argument5
-oButSpr[argument0, argument1] = argument6
-oButInd[argument0, argument1] = argument7
-oButName[argument0, argument1] = argument8
-oButDesc[argument0, argument1] = argument9
-tabButtons[argument0] += 1
+///defOptionButton(tabID,ID,x,y,w,h,spr,ind,name,desc);
+oButX[argument0,argument1] = argument2;
+oButY[argument0,argument1] = argument3;
+oButW[argument0,argument1] = argument4;
+oButH[argument0,argument1] = argument5;
+oButSpr[argument0,argument1] = argument6;
+oButInd[argument0,argument1] = argument7;
+oButName[argument0,argument1] = argument8;
+oButDesc[argument0,argument1] = argument9;
+tabButtons[argument0] += 1;

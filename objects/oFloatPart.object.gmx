@@ -25,13 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0.03
-image_index = choose(0, 1, 2)
-image_blend = make_color_hsv(irandom_range(130, 160), 100, 255)
-direction = (90 + random_range(-10, 10))
-speed = random_range(1, 2)
-image_xscale = (speed / 2)
-image_yscale = image_xscale
+            <string>image_speed = 3/100;
+image_index = choose(0,1,2);
+image_blend = make_color_hsv(irandom_range(130,160),100,255);
+
+direction=90+random_range(-10,10);
+speed = random_range(1,2);
+image_xscale = speed/2;
+image_yscale = image_xscale;
 </string>
           </argument>
         </arguments>
@@ -54,8 +55,7 @@ image_yscale = image_xscale
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (y &lt; -32)
-    instance_destroy()
+            <string>if y &lt; -32{instance_destroy();}
 </string>
           </argument>
         </arguments>

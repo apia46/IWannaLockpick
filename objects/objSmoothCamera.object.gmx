@@ -25,11 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>snapDiv = 10
-if instance_exists(objPlayer)
+            <string>//place this object next to where player starts in the room and set the view to follow this object
+
+snapDiv = 10; //determines how fast the camera snaps to the player (higher numbers follow the player slower), can be changed in creation code
+
+if (instance_exists(objPlayer))
 {
-    x = objPlayer.x
-    y = objPlayer.y
+    x = objPlayer.x;
+    y = objPlayer.y;
 }
 </string>
           </argument>
@@ -53,15 +56,15 @@ if instance_exists(objPlayer)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if instance_exists(objPlayer)
+            <string>if (instance_exists(objPlayer))
 {
-    targetX = objPlayer.x
-    targetY = objPlayer.y
-    x += ((targetX - x) / snapDiv)
-    y += ((targetY - y) / snapDiv)
+    targetX = objPlayer.x;
+    targetY = objPlayer.y;
+    x += (targetX - x) / snapDiv;
+    y += (targetY - y) / snapDiv;
 }
-view_xview[0] = clamp((x - 400), 0, (room_width - 800))
-view_yview[0] = clamp((y - 304), 0, (room_height - 608))
+view_xview[0] = clamp(x-400,0,room_width-800);
+view_yview[0] = clamp(y-304,0,room_height-608);
 </string>
           </argument>
         </arguments>

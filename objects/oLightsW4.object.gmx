@@ -25,14 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>lightA = 0
-lightMult = 1
-s = surface_create(800, 608)
-ambTop = make_color_rgb(160, 160, 200)
-ambBot = make_color_rgb(130, 130, 200)
-surface_set_target(s)
-draw_rectangle_color(0, 0, 799, 607, ambTop, ambTop, ambBot, ambBot, 0)
-surface_reset_target()
+            <string>///is also the bg object
+//sets an alarm for the door particle effect + inits light wave variable
+lightA = 0;
+lightMult = 1;
+
+//surface stuff
+s = surface_create(800,608);
+ambTop = make_color_rgb(160,160,200);
+ambBot = make_color_rgb(130,130,200);
+surface_set_target(s);
+draw_rectangle_color(0,0,799,607,ambTop,ambTop,ambBot,ambBot,0);
+surface_reset_target();
 </string>
           </argument>
         </arguments>
@@ -55,7 +59,7 @@ surface_reset_target()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s)
+            <string>surface_free(s);
 </string>
           </argument>
         </arguments>
@@ -78,32 +82,32 @@ surface_reset_target()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>lightA = ((lightA + 2) % 360)
-lightMult = (1.33 * ((1 + (0.15 * sin(degtorad(lightA)))) + (0.015 * random_range(-1, 1))))
-if surface_exists(s)
-{
-    surface_set_target(s)
-    draw_rectangle_color(0, 0, 799, 607, ambTop, ambTop, ambBot, ambBot, 0)
-    draw_set_blend_mode(1)
-    with (oLight)
-    {
-        if draw
-            draw_sprite_ext(sprLightSpot, 0, (x - view_xview[0]), (y - view_yview[0]), (image_xscale * other.lightMult), (image_yscale * other.lightMult), 0, image_blend, image_alpha)
+            <string>//light surface stuff
+
+lightA = (lightA + 2) mod 360;
+lightMult = 1.33 * (1 + .15*sin(degtorad(lightA)) + .015 * random_range(-1,1));
+
+if surface_exists(s){
+    surface_set_target(s);
+    draw_rectangle_color(0,0,799,607,ambTop,ambTop,ambBot,ambBot,0);
+    draw_set_blend_mode(bm_add);
+    with oLight{
+        if draw{
+            draw_sprite_ext(sprLightSpot,0,x-view_xview,y-view_yview,image_xscale*other.lightMult,image_yscale*other.lightMult,0,image_blend,image_alpha);
+        }
     }
-    if instance_exists(objPlayer)
-    {
-        with (objPlayer)
-            draw_sprite_ext(sprLightSpot, 0, (x - view_xview[0]), (y - view_yview[0]), (0.24 * other.lightMult), (0.24 * other.lightMult), 0, c_white, 1)
+    if instance_exists(objPlayer){
+        with objPlayer{
+            draw_sprite_ext(sprLightSpot,0,x-view_xview,y-view_yview,.24*other.lightMult,.24*other.lightMult,0,c_white,1);
+        }
     }
-    draw_set_blend_mode(0)
-    surface_reset_target()
-}
-else
-{
-    s = surface_create(800, 608)
-    surface_set_target(s)
-    draw_rectangle_color(0, 0, 799, 607, ambTop, ambTop, ambBot, ambBot, 0)
-    surface_reset_target()
+    draw_set_blend_mode(bm_normal);
+    surface_reset_target();
+}else{
+    s = surface_create(800,608);
+    surface_set_target(s);
+    draw_rectangle_color(0,0,799,607,ambTop,ambTop,ambBot,ambBot,0);
+    surface_reset_target();
 }
 </string>
           </argument>
@@ -127,7 +131,7 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s)
+            <string>surface_free(s);
 </string>
           </argument>
         </arguments>
@@ -150,11 +154,10 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if surface_exists(s)
-{
-    draw_set_blend_mode_ext(9, 1)
-    draw_surface(s, 0, 0)
-    draw_set_blend_mode(0)
+            <string>if surface_exists(s){
+    draw_set_blend_mode_ext(bm_dest_color,bm_zero);
+    draw_surface(s,0,0);
+    draw_set_blend_mode(bm_normal);
 }
 </string>
           </argument>

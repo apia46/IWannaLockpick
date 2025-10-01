@@ -25,32 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, p;
-rayA = 0
-waveA = 0
-waveS = 0
-upA = 0
-upAmt = 0
-imgA = 90
-drawScale = 1
-scale = 0.01
-for (i = 0; i &lt; 40; i += 1)
-{
-    p = instance_create((x + random_range(-4, 4)), (y + random_range(-4, 4)), oKHCutSparkle)
-    p.direction = ((360 * i) / 40)
-    p.speed = p.scale
-    p.image_blend = make_color_hsv(((p.direction * 255) / 360), 30, 255)
+            <string>rayA = 0;
+waveA = 0;
+waveS = 0;
+upA = 0;
+upAmt = 0;
+imgA = 90;
+drawScale = 1;
+scale = 0.01;
+
+for(var i = 0; i &lt; 40; i += 1){
+    var p = instance_create(x+random_range(-4,4),y+random_range(-4,4),oKHCutSparkle);
+    p.direction = 360*i/40;
+    p.speed = p.scale;
+    p.image_blend = make_color_hsv(p.direction*255/360,30,255);
 }
-for (i = 0; i &lt; 16; i += 1)
-{
-    p = instance_create(x, y, oKHSquishPart)
-    p.direction = ((360 * i) / 16)
-    p.image_angle = p.direction
-    p.speed = random_range(6, 10)
-    p.spdStart = p.speed
+for(var i = 0; i &lt; 16; i += 1){
+    var p = instance_create(x,y,oKHSquishPart);
+    p.direction = 360*i/16; p.image_angle = p.direction;
+    p.speed = random_range(6,10);
+    p.spdStart = p.speed;
 }
-active = 0
-image_speed = 0
+
+active = 0;
+image_speed = 0;
 </string>
           </argument>
         </arguments>
@@ -73,21 +71,20 @@ image_speed = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>waveA = ((waveA + 3) % 360)
-waveS = sin(degtorad(waveA))
-scale += ((1 - scale) * 0.1)
-if (scale &gt; 0.99)
-    scale = 1
-if active
-{
-    image_alpha *= 0.9
-    if (image_alpha &lt; 0.005)
-    {
-        box = instance_create(x, y, oItemGet)
-        box.itemID = 4
-        with (box)
-            event_user(0)
-        instance_destroy()
+            <string>waveA = (waveA + 3) mod 360;
+waveS = sin(degtorad(waveA));
+
+scale += (1-scale) * .1;
+if scale &gt; .99{scale = 1;}
+
+if active{
+    image_alpha *= .9;
+    if image_alpha &lt; .005{
+        //Make cutscene object
+        box = instance_create(x,y,oItemGet);
+        box.itemID = 4;
+        with box{event_user(0);}
+        instance_destroy();
     }
 }
 </string>
@@ -112,33 +109,29 @@ if active
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, p;
-if (active == 0)
-{
-    active = 1
-    image_index = 1
-    global.kinaHeart = 1
-    global.inCutscene = 1
-    with (objPlayer)
-        frozen = 1
-    for (i = 0; i &lt; 25; i += 1)
-    {
-        p = instance_create((x + random_range(-4, 4)), (y + random_range(-4, 4)), oKHCutSparkle)
-        p.direction = ((360 * i) / 25)
-        p.speed = p.scale
-        p.image_blend = make_color_hsv(((p.direction * 255) / 360), 30, 255)
+            <string>if active == 0{
+    active = 1;
+    image_index = 1;
+    global.kinaHeart = 1;
+    global.inCutscene = 1;
+    with objPlayer{
+        frozen = 1;
     }
-    for (i = 0; i &lt; 16; i += 1)
-    {
-        p = instance_create(x, y, oKHSquishPart)
-        p.direction = ((360 * i) / 16)
-        p.image_angle = p.direction
-        p.speed = random_range(6, 10)
-        p.spdStart = p.speed
+    for(var i = 0; i &lt; 25; i += 1){
+        var p = instance_create(x+random_range(-4,4),y+random_range(-4,4),oKHCutSparkle);
+        p.direction = 360*i/25;
+        p.speed = p.scale;
+        p.image_blend = make_color_hsv(p.direction*255/360,30,255);
     }
-    scrPlaySoundExt(sndDeltaShine, 1, 1, false)
-    scrPlaySoundExt(sndHeartPickup, 1, 1, false)
-    scrSaveGame(0)
+    for(var i = 0; i &lt; 16; i += 1){
+        var p = instance_create(x,y,oKHSquishPart);
+        p.direction = 360*i/16; p.image_angle = p.direction;
+        p.speed = random_range(6,10);
+        p.spdStart = p.speed;
+    }
+    scrPlaySoundExt(sndDeltaShine,1,1,false);
+    scrPlaySoundExt(sndHeartPickup,1,1,false);
+    scrSaveGame(false);
 }
 </string>
           </argument>
@@ -162,23 +155,21 @@ if (active == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>rayA = ((rayA + 2) % 360)
-draw_set_color(c_white)
-r = 20
-draw_set_blend_mode(1)
-for (i = 0; i &lt; 5; i += 1)
-{
-    a1 = (rayA + (72 * i))
-    a2 = (a1 + 36)
-    x1 = (r * sin(degtorad(a1)))
-    y1 = (r * cos(degtorad(a1)))
-    x2 = (r * sin(degtorad(a2)))
-    y2 = (r * cos(degtorad(a2)))
-    draw_triangle_color(x, y, (x + x1), (y + y1), (x + x2), (y + y2), merge_color(c_black, c_white, image_alpha), 0, 0, 0)
+            <string>///Rays + Lens
+rayA = (rayA + 2) mod 360;
+draw_set_color(c_white);
+r = 20;
+draw_set_blend_mode(bm_add);
+for(i=0;i&lt;5;i+=1){
+    a1 = rayA + 360/5*i;
+    a2 = a1 + 360/10;
+    x1 = r*sin(degtorad(a1)); y1 = r*cos(degtorad(a1));
+    x2 = r*sin(degtorad(a2)); y2 = r*cos(degtorad(a2));
+    draw_triangle_color(x,y,x+x1,y+y1,x+x2,y+y2,merge_color(c_black,c_white,image_alpha),c_black,c_black,0);
 }
-draw_set_blend_mode(0)
-draw_sprite_ext(sprite_index, image_index, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, c_white, image_alpha)
-draw_sprite_ext(sprite_index, 1, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, c_white, (image_alpha * (1 - scale)))
+draw_set_blend_mode(bm_normal);
+draw_sprite_ext(sprite_index,image_index,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha);
+draw_sprite_ext(sprite_index,1,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha*(1-scale));
 </string>
           </argument>
         </arguments>

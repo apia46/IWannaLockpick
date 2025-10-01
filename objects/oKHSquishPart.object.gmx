@@ -25,14 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scale = 1
-image_xscale = (scale * 0.2)
-image_yscale = (scale * 0.2)
-squishX = (scale * 0.2)
-squishY = ((scale * 0.2) * 0.1)
-spdFactor = 1
-spdStart = 1
-speed = 1
+            <string>scale = 1;
+image_xscale = scale*.2;
+image_yscale = scale*.2;
+squishX = scale*.2;
+squishY = scale*.2*.1;//Immensely vertically stretched
+spdFactor = 1;//Exponentially decreases, squishing x scale along the way
+spdStart = 1;//Starting speed
+speed = 1;
 </string>
           </argument>
         </arguments>
@@ -55,17 +55,15 @@ speed = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>spdFactor *= 0.95
-speed = (spdStart * spdFactor)
-squishX = ((scale * 0.2) * lerp(0.1, 1, spdFactor))
-squishY = ((scale * 0.2) * 0.1)
-image_xscale += ((squishX - image_xscale) * 0.3)
-image_yscale += ((squishY - image_yscale) * 0.3)
-if (spdFactor &lt; 0.1)
-{
-    image_alpha *= 0.9
-    if (image_alpha &lt; 0.005)
-        instance_destroy()
+            <string>spdFactor *= .95;
+speed = spdStart * spdFactor;
+squishX = scale*.2*lerp(.1,1,spdFactor);
+squishY = scale*.2*.1;//Immensely vertically stretched
+image_xscale += (squishX-image_xscale)*.3;
+image_yscale += (squishY-image_yscale)*.3;
+if spdFactor &lt; .1{
+    image_alpha *= .9;
+    if image_alpha &lt; .005{instance_destroy();}
 }
 </string>
           </argument>

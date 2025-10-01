@@ -25,16 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>floatA = 0
-floatY = 0
-starA = 0
-image_speed = 0
-alarm[0] = 6
-instance_create((x + 16), (y + 16), oGoalParticle)
-winA = 0
-hasWon = 0
-type = 0
-omegaID = -1
+            <string>floatA = 0;
+floatY = 0;
+starA = 0;
+image_speed = 0;
+alarm[0] = 6;
+instance_create(x+16,y+16,oGoalParticle);
+winA = 0;
+hasWon = 0;
+
+type = 0;
+omegaID = -1;
+//Types: 0 = Normal, 1 = Omega, 2 = Omega2, 3 = Clear1, 4 = Clear2
 </string>
           </argument>
         </arguments>
@@ -57,17 +59,13 @@ omegaID = -1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 6
-part = instance_create((x + 16), (y + 16), oGoalParticle)
-if ((instance_exists(oLevelWin) &amp;&amp; (!instance_exists(oLevelOmega))) || (type &gt;= 3))
-{
-    with (oGoalParticle)
-        hue = 50
+            <string>alarm[0] = 6;
+part = instance_create(x+16,y+16,oGoalParticle);
+if (instance_exists(oLevelWin) &amp;&amp; !instance_exists(oLevelOmega)) || type &gt;= 3{
+    with oGoalParticle{hue = 50;}
 }
-if (type == 1)
-{
-    with (oGoalParticle)
-        hue = 195
+if type == 1{
+    with oGoalParticle{hue = 195;}
 }
 </string>
           </argument>
@@ -91,62 +89,54 @@ if (type == 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var iPart;
-hasWon = 1
-winA = 1
-if (type == 1)
-{
-    scrPlaySoundExt(sndDeltaShine, 1.2, 0.8, false)
-    scrPlaySoundExt(sndOmegaKey2, 1, 1, false)
+            <string>//audio_play_sound(sndWin,0,false);
+hasWon = 1; winA = 1;
+if type == 1{
+    scrPlaySoundExt(sndDeltaShine,1.2,.8,0);
+    scrPlaySoundExt(sndOmegaKey2,1,1,false);
+}else{
+    scrPlaySoundExt(sndTitleStart,.9,1.4,0);
 }
-else
-    scrPlaySoundExt(sndTitleStart, 0.9, 1.4, false)
-global.roomClear[global.roomNum] = 1
-if (omegaID != -1)
-{
+global.roomClear[global.roomNum] = 1;
+if omegaID != -1{//Cleared an Omega Puzzle
+    //global.omegaPuzzle[omegaID] = 1;
 }
-scrSaveGame(1)
-with (other.id)
-{
-    for (iPart = 0; iPart &lt; 80; iPart += 1)
-    {
-        p = instance_create((x + random_range(-8, 8)), (y + random_range(-8, 8)), oKeyPart)
-        p.direction = (iPart * 222.48)
+scrSaveGame(true);
+with other{
+    for(var iPart = 0; iPart &lt; 80; iPart += 1){
+        p = instance_create(x+random_range(-8,8),y+random_range(-8,8),oKeyPart);
+        p.direction = iPart*(360*.618);
     }
-    for (iPart = 0; iPart &lt; 60; iPart += 1)
-    {
-        p = instance_create((x + random_range(-8, 8)), (y + random_range(-8, 8)), oKeyPart)
-        p.direction = (iPart * 222.48)
-        p.speed *= 0.6
-        p.image_blend = make_color_rgb(255, 255, 180)
+    for(var iPart = 0; iPart &lt; 60; iPart += 1){
+        p = instance_create(x+random_range(-8,8),y+random_range(-8,8),oKeyPart);
+        p.direction = iPart*(360*.618);
+        p.speed *= .6;
+        p.image_blend = make_color_rgb(255,255,180);
     }
-    instance_destroy()
+    instance_destroy();
 }
-if ((type == 0) || (type == 5))
-{
-    t = instance_create(0, 0, oLevelWin)
-    t.roomTo = global.roomOuter
-    if global.outerLevelTele
-    {
-        t.telePlayer = 1
-        t.teleX = global.levelEnteredX
-        t.teleY = global.levelEnteredY
-        global.outerLevelTele = 0
+if type == 0 || type == 5{
+    t = instance_create(0,0,oLevelWin);
+    t.roomTo = global.roomOuter;
+    if global.outerLevelTele{
+        t.telePlayer = 1;
+        t.teleX = global.levelEnteredX;
+        t.teleY = global.levelEnteredY;
+        global.outerLevelTele = 0;
     }
 }
-if (type == 1)
-    instance_create(0, 0, oLevelWinOmega)
-if (type == 3)
-{
-    instance_create(0, 0, oLevelWinClear)
-    global.tempClear = 0
-    global.inCutscene = 1
+if type == 1{
+    instance_create(0,0,oLevelWinOmega);
 }
-if (type == 4)
-{
-    instance_create(0, 0, oLevelWinClear)
-    global.tempClear = 1
-    global.inCutscene = 1
+if type == 3{
+    instance_create(0,0,oLevelWinClear);
+    global.tempClear = 0;
+    global.inCutscene = 1;
+}
+if type == 4{
+    instance_create(0,0,oLevelWinClear);
+    global.tempClear = 1;
+    global.inCutscene = 1;
 }
 </string>
           </argument>
@@ -170,14 +160,13 @@ if (type == 4)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>myLight = self
-if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exists(oLightsW6) || (instance_exists(oBGW7) || (instance_exists(oLightsW9) || instance_exists(oBGW12))))))
-{
-    myLight = instance_create((x + 16), (y + 16), oLight)
-    myLight.parent = id
-    myLight.image_xscale = 0.25
-    myLight.image_yscale = 0.25
-    myLight.image_blend = c_white
+            <string>myLight = -1;
+if instance_exists(oLightsW5) || instance_exists(oLightsW4) || instance_exists(oLightsW6) || instance_exists(oBGW7) || instance_exists(oLightsW9) || instance_exists(oBGW12){
+    myLight = instance_create(x+16,y+16,oLight);
+    myLight.parent = id;
+    myLight.image_xscale = .25;
+    myLight.image_yscale = .25;
+    myLight.image_blend = c_white;
 }
 </string>
           </argument>
@@ -201,38 +190,34 @@ if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exist
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>floatA = ((floatA + 2.5) % 360)
-floatY = (3 * sin(degtorad(floatA)))
-starA = ((starA + 1) % 360)
-winA *= 0.95
-if hasWon
-{
-    if (type != 1)
-    {
-        draw_sprite(sprite_index, 2, x, (y + floatY))
-        draw_sprite_ext(sprite_index, 3, x, (y + floatY), 1, 1, 0, c_white, winA)
+            <string>floatA = (floatA + 2.5) mod 360;
+floatY = 3*sin(degtorad(floatA));
+starA = (starA + 1) mod 360;
+winA *= .95;
+if hasWon{
+    if type != 1{
+        draw_sprite(sprite_index,2,x,y+floatY);
+        draw_sprite_ext(sprite_index,3,x,y+floatY,1,1,0,c_white,winA);
+    }else{
+        draw_sprite(sprite_index,5,x,y+floatY);
+        draw_sprite_ext(sprite_index,6,x,y+floatY,1,1,0,c_white,winA);
     }
-    else
-    {
-        draw_sprite(sprite_index, 5, x, (y + floatY))
-        draw_sprite_ext(sprite_index, 6, x, (y + floatY), 1, 1, 0, c_white, winA)
+    draw_set_blend_mode(bm_add);
+    draw_sprite_ext(sprOrbPart,0,x+16,y+16,2*(1-winA),2*(1-winA),0,c_white,winA/2);
+    draw_set_blend_mode(bm_normal);
+}else{
+    if type == 0{
+        draw_sprite(sprite_index,1,x,y+floatY);
+    }else if type &gt;= 3{
+        draw_sprite(sprite_index,2,x,y+floatY);
+        draw_set_blend_mode(bm_add);
+        draw_sprite_ext(sprStarOutline,0,x+16,y+16,.5,.5,-starA,make_color_rgb(120,120,40),1);
+        draw_sprite_ext(sprStarOutline,0,x+16,y+16,.3,.3,-starA,make_color_rgb(120,120,40),.5);
+        draw_set_blend_mode(bm_normal);
+    }else if type == 1{//Omega
+        draw_sprite(sprite_index,4,x,y+floatY);
     }
-    draw_set_blend_mode(1)
-    draw_sprite_ext(sprOrbPart, 0, (x + 16), (y + 16), (2 * (1 - winA)), (2 * (1 - winA)), 0, c_white, (winA / 2))
-    draw_set_blend_mode(0)
 }
-else if (type == 0)
-    draw_sprite(sprite_index, 1, x, (y + floatY))
-else if (type &gt;= 3)
-{
-    draw_sprite(sprite_index, 2, x, (y + floatY))
-    draw_set_blend_mode(1)
-    draw_sprite_ext(sprStarOutline, 0, (x + 16), (y + 16), 0.5, 0.5, (-starA), make_color_rgb(120, 120, 40), 1)
-    draw_sprite_ext(sprStarOutline, 0, (x + 16), (y + 16), 0.3, 0.3, (-starA), make_color_rgb(120, 120, 40), 0.5)
-    draw_set_blend_mode(0)
-}
-else if (type == 1)
-    draw_sprite(sprite_index, 4, x, (y + floatY))
 </string>
           </argument>
         </arguments>

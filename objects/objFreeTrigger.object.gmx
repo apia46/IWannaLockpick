@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>trg = 0
+            <string>//set trg in creation code
+
+trg = 0;
 </string>
           </argument>
         </arguments>
@@ -48,7 +50,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.trigger[trg] = 1
+            <string>global.trigger[trg] = true;    //set trigger when touched by player
 </string>
           </argument>
         </arguments>
@@ -71,7 +73,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.trigger[trg] = 0
+            <string>global.trigger[trg] = false;    //reset the trigger
 </string>
           </argument>
         </arguments>

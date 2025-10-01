@@ -25,15 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>cycloidA = random(360)
-cycloidSpd = choose(1, 2, 4)
-cycloidHS = 0
-cycloidVS = 0.5
-scale = choose(0.4, 0.6, 0.8)
-image_xscale = scale
-image_yscale = scale
-direction = -30
-speed = 2
+            <string>cycloidA = random(360);
+cycloidSpd = choose(1,2,4);
+cycloidHS = 0;
+cycloidVS = .5;
+scale = choose(.4,.6,.8);
+image_xscale = scale;
+image_yscale = scale;
+direction = -30;
+speed = 2;
+
+//image_blend = make_color_rgb(255,210,230);
 </string>
           </argument>
         </arguments>
@@ -56,14 +58,14 @@ speed = 2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((x &gt; (room_width + 32)) || (y &gt; (room_height + 32)))
-    instance_destroy()
-cycloidA = ((cycloidA + cycloidSpd) % 360)
-cycloidHS = sin(degtorad(cycloidA))
-cycloidVS = cos(degtorad(cycloidA))
-x += (cycloidHS * scale)
-y += (cycloidVS * scale)
-image_angle += (2 + (0.5 * cycloidHS))
+            <string>if x &gt; (room_width + 32) || y &gt; (room_height + 32){instance_destroy();}
+cycloidA = (cycloidA + cycloidSpd) mod 360;
+cycloidHS = sin(degtorad(cycloidA));
+cycloidVS = cos(degtorad(cycloidA));
+x += cycloidHS * scale;
+y += cycloidVS * scale;
+
+image_angle += 2 + .5 * cycloidHS;
 </string>
           </argument>
         </arguments>
@@ -86,10 +88,9 @@ image_angle += (2 + (0.5 * cycloidHS))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.lowFX
-    exit
-draw_sprite_ext(sprite_index, 0, (x + 2), (y + 2), image_xscale, image_yscale, image_angle, make_color_rgb(255, 128, 200), 1)
-draw_self()
+            <string>if global.lowFX{exit;}
+draw_sprite_ext(sprite_index,0,x+2,y+2,image_xscale,image_yscale,image_angle,make_color_rgb(255,128,200),1);
+draw_self();
 </string>
           </argument>
         </arguments>

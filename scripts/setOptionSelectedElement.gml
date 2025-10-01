@@ -1,16 +1,15 @@
-curButton = -1
-curSlider = -1
-curIcon = -1
-switch argument1
-{
-    case 0:
-        curButton = argument0
-        break
-    case 1:
-        curSlider = argument0
-        break
-    case 2:
-        curIcon = argument0
-        break
+///setOptionSelectedElement(ID,type);
+curButton = -1;
+curSlider = -1;
+curIcon = -1;
+switch argument1{
+    case 0://Button
+        curButton = argument0;
+    break;
+    case 1://Slider
+        curSlider = argument0;
+    break;
+    case 2://Icon
+        curIcon = argument0;
+    break;
 }
-

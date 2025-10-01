@@ -25,46 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>lightArray[0] = make_color_hsv(165, 60, 255)
-lightArray[1] = 16777215
-lightArray[2] = make_color_hsv(30, 60, 255)
-lightArray[3] = 12632256
-waterArray[0] = make_color_hsv(170, 255, 140)
-waterArray[1] = make_color_hsv(130, 200, 200)
-waterArray[2] = make_color_hsv(170, 220, 100)
-waterArray[3] = make_color_hsv(170, 255, 60)
-surfArray[0] = make_color_hsv(150, 150, 170)
-surfArray[1] = make_color_hsv(110, 100, 240)
-surfArray[2] = make_color_hsv(40, 180, 140)
-surfArray[3] = make_color_hsv(160, 150, 90)
-bgArray[0] = make_color_hsv(165, 200, 150)
-bgArray[1] = make_color_hsv(140, 200, 255)
-bgArray[2] = make_color_hsv(220, 255, 120)
-bgArray[3] = make_color_hsv(190, 180, 60)
-bg2Array[0] = make_color_hsv(150, 170, 180)
-bg2Array[1] = make_color_hsv(100, 170, 220)
-bg2Array[2] = make_color_hsv(30, 220, 150)
-bg2Array[3] = make_color_hsv(170, 255, 30)
-cloudArray[0] = make_color_hsv(170, 255, 100)
-cloudArray[1] = make_color_hsv(110, 60, 255)
-cloudArray[2] = make_color_hsv(0, 255, 120)
-cloudArray[3] = 4210752
-cpArray[0] = make_color_hsv(170, 60, 255)
-cpArray[1] = make_color_hsv(130, 40, 255)
-cpArray[2] = make_color_hsv(30, 70, 255)
-cpArray[3] = 16777215
-lightCol = lightArray[1]
-waterCol = waterArray[1]
-surfaceCol = surfArray[1]
-bgCol = bgArray[1]
-bg2Col = bg2Array[1]
-cloudCol = cloudArray[1]
-cpCol = cpArray[1]
-colFade = 1
-colDark = make_color_rgb(80, 13, 131)
-colBright = make_color_rgb(238, 175, 97)
-fade = 0
-alarm[2] = irandom_range(300, 500)
+            <string>//Simpler W7 background
+
+//Colors, two variables per color; the "current value", and an array to lerp between.
+//0 = Early Morning, 1 = Noon, 2 = Dusk, 3 = Nighttime
+lightArray[0] = make_color_hsv(165,60,255);lightArray[1] = c_white;lightArray[2] = make_color_hsv(30,60,255);lightArray[3] = c_ltgray;
+waterArray[0] = make_color_hsv(170,255,140);waterArray[1] = make_color_hsv(130,200,200);waterArray[2] = make_color_hsv(170,220,100);waterArray[3] = make_color_hsv(170,255,60);
+surfArray[0] = make_color_hsv(150,150,170);surfArray[1] = make_color_hsv(110,100,240);surfArray[2] = make_color_hsv(40,180,140);surfArray[3] = make_color_hsv(160,150,90);
+bgArray[0] = make_color_hsv(165,200,150);bgArray[1] = make_color_hsv(140,200,255);bgArray[2] = make_color_hsv(220,255,120);bgArray[3] = make_color_hsv(190,180,60);
+bg2Array[0] = make_color_hsv(150,170,180);bg2Array[1] = make_color_hsv(100,170,220);bg2Array[2] = make_color_hsv(30,220,150);bg2Array[3] = make_color_hsv(170,255,30);
+cloudArray[0] = make_color_hsv(170,255,100);cloudArray[1] = make_color_hsv(110,60,255);cloudArray[2] = make_color_hsv(0,255,120);cloudArray[3] = c_dkgray;
+cpArray[0] = make_color_hsv(170,60,255);cpArray[1] = make_color_hsv(130,40,255);cpArray[2] = make_color_hsv(30,70,255);cpArray[3] = c_white;
+lightCol = lightArray[1];//Ambient lighting, depends on time of day
+waterCol = waterArray[1];//Color of the ocean
+surfaceCol = surfArray[1];//Color of the bars on top of the ocean, as well as reflections
+bgCol = bgArray[1];//Background TOP color
+bg2Col = bg2Array[1];//Background BOTTOM color
+cloudCol = cloudArray[1];//Background clouds
+cpCol = cpArray[1];//Foreground "walkable" clouds
+
+colFade = 1;
+colDark = make_color_rgb(80,13,131);
+colBright = make_color_rgb(238,175,97);
+fade = 0;
+alarm[2] = irandom_range(300,500);
 </string>
           </argument>
         </arguments>
@@ -87,8 +71,8 @@ alarm[2] = irandom_range(300, 500)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[2] = irandom_range(300, 500)
-fade = (!fade)
+            <string>alarm[2] = irandom_range(300,500);
+fade = !fade;
 </string>
           </argument>
         </arguments>
@@ -111,8 +95,9 @@ fade = (!fade)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(-200, random_range(0, 480), oWindPart)
-alarm[1] = 25
+            <string>///Windpart gen
+instance_create(-200,random_range(0,480),oWindPart);
+alarm[1] = 25;
 </string>
           </argument>
         </arguments>
@@ -135,8 +120,9 @@ alarm[1] = 25
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 400
-instance_create(-400, random_range(-150, 0), oCloud)
+            <string>///Cloud gen
+alarm[0] = 50*8;
+instance_create(-400,random_range(-150,0),oCloud);
 </string>
           </argument>
         </arguments>
@@ -159,27 +145,21 @@ instance_create(-400, random_range(-150, 0), oCloud)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>background_blend[0] = bgCol
-background_color = bg2Col
-with (oCloud)
-    image_blend = other.cloudCol
-with (oWindPart)
-    image_blend = merge_color(c_white, other.cloudCol, 0.5)
-with (oCloudPart)
-    image_blend = other.cpCol
-with (oW7Ocean)
-{
-    waterCol = other.waterCol
-    surfaceCol = other.surfaceCol
+            <string>///Colors
+background_blend[0] = bgCol;
+background_color = bg2Col;
+with oCloud{image_blend = other.cloudCol;}
+with oWindPart{image_blend = merge_color(c_white,other.cloudCol,.5);}
+with oCloudPart{image_blend = other.cpCol;}
+with oW7Ocean{waterCol = other.waterCol; surfaceCol = other.surfaceCol;}
+with oW7Reflection{color = other.surfaceCol;}
+with oLightsW7{ambCol = other.lightCol;}
+
+if fade == 0{
+    colFade = min(colFade + 0.007, 1);
+}else{
+    colFade = max(colFade - 0.007, 0.1);
 }
-with (oW7Reflection)
-    color = other.surfaceCol
-with (oLightsW7)
-    ambCol = other.lightCol
-if (fade == 0)
-    colFade = min((colFade + 0.007), 1)
-else
-    colFade = max((colFade - 0.007), 0.1)
 </string>
           </argument>
         </arguments>
@@ -202,77 +182,77 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _col, iy, ix, _x, _y, _p;
-with (instance_create(0, 0, oW7Ocean))
-{
-    waterCol = other.waterCol
-    surfaceCol = other.surfaceCol
-}
-for (t = 0; t &lt; 4000; t += 400)
-{
-    with (instance_create(-400, random_range(-150, 0), oCloud))
-    {
-        x += (hspeed * other.t)
-        y += (vspeed * other.t)
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Clouds, particles, etc
+//Ocean
+with(instance_create(0,0,oW7Ocean)){waterCol = other.waterCol; surfaceCol = other.surfaceCol;}
+//Cloud gen
+for(t=0;t&lt;50*80;t+=50*8){
+    with(instance_create(-400,random_range(-150,0),oCloud)){
+        x += hspeed * other.t;
+        y += vspeed * other.t;
     }
 }
-alarm[0] = 200
-for (t = 0; t &lt; 1000; t += 25)
-{
-    with (instance_create(-200, random_range(0, 480), oWindPart))
-    {
-        x += (hspeed * other.t)
-        y += (vspeed * other.t)
+alarm[0] = 50*4;
+//Windpart gen
+for(t=0;t&lt;50*20;t+=25){
+    with(instance_create(-200,random_range(0,480),oWindPart)){
+        x += hspeed * other.t;
+        y += vspeed * other.t;
     }
 }
-alarm[1] = 25
-_col = 16777215
-iy = 512
-for (ix = 0; ix &lt; 832; ix += 40)
-{
-    _x = (ix + random_range(-4, 4))
-    _y = (iy + random_range(-4, 4))
-    _p = instance_create(_x, _y, oGRCloudPart)
-    _p.col = _col
-    _p.depth = (depth - 10)
+alarm[1] = 25;
+//Row of background cloud bubbles low to the water
+var _col = c_white; var iy = 512;
+for(var ix = 0; ix &lt; 832; ix += 40){
+    var _x = ix + random_range(-4,4);
+    var _y = iy + random_range(-4,4);
+    var _p = instance_create(_x,_y,oGRCloudPart);
+    _p.col = _col; _p.depth = depth - 10;
 }
-_col = make_color_rgb(200, 255, 255)
-iy -= 32
-for (ix = 6; ix &lt; 832; ix += 40)
-{
-    _x = (ix + random_range(-4, 4))
-    _y = (iy + random_range(-4, 4))
-    _p = instance_create(_x, _y, oGRCloudPart)
-    _p.col = _col
-    _p.depth = (depth - 9)
+_col = make_color_rgb(200,255,255); iy -= 32;
+for(var ix = 6; ix &lt; 832; ix += 40){
+    var _x = ix + random_range(-4,4);
+    var _y = iy + random_range(-4,4);
+    var _p = instance_create(_x,_y,oGRCloudPart);
+    _p.col = _col; _p.depth = depth - 9;
 }
-_col = make_color_rgb(170, 255, 210)
-iy -= 26
-for (ix = 12; ix &lt; 832; ix += 40)
-{
-    _x = (ix + random_range(-4, 4))
-    _y = (iy + random_range(-4, 4))
-    _p = instance_create(_x, _y, oGRCloudPart)
-    _p.col = _col
-    _p.depth = (depth - 8)
+_col = make_color_rgb(170,255,210); iy -= 26;
+for(var ix = 12; ix &lt; 832; ix += 40){
+    var _x = ix + random_range(-4,4);
+    var _y = iy + random_range(-4,4);
+    var _p = instance_create(_x,_y,oGRCloudPart);
+    _p.col = _col; _p.depth = depth - 8;
 }
-background_blend[0] = bgCol
-background_color = bg2Col
-with (oCloud)
-    image_blend = other.cloudCol
-with (oWindPart)
-    image_blend = merge_color(c_white, other.cloudCol, 0.5)
-with (oCloudPart)
-    image_blend = other.cpCol
-with (oW7Ocean)
-{
-    waterCol = other.waterCol
-    surfaceCol = other.surfaceCol
-}
-with (oW7Reflection)
-    color = other.surfaceCol
-with (oLightsW7)
-    ambCol = other.lightCol
+
+//Copypasted that step event...
+background_blend[0] = bgCol;
+background_color = bg2Col;
+with oCloud{image_blend = other.cloudCol;}
+with oWindPart{image_blend = merge_color(c_white,other.cloudCol,.5);}
+with oCloudPart{image_blend = other.cpCol;}
+with oW7Ocean{waterCol = other.waterCol; surfaceCol = other.surfaceCol;}
+with oW7Reflection{color = other.surfaceCol;}
+with oLightsW7{ambCol = other.lightCol;}
 </string>
           </argument>
         </arguments>
@@ -295,16 +275,18 @@ with (oLightsW7)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(((1 - colFade) * 0.1))
-draw_set_color(colDark)
-draw_rectangle(0, 0, 800, 608, 0)
-draw_set_alpha((colFade * 0.15))
-draw_set_color(colBright)
-draw_set_blend_mode(1)
-draw_rectangle(0, 0, 800, 608, 0)
-draw_set_color(c_white)
-draw_set_blend_mode(0)
-draw_set_alpha(1)
+            <string>draw_set_alpha((1 - colFade) * 0.1);
+draw_set_color(colDark);
+draw_rectangle(0,0,800,608,0);
+
+draw_set_alpha(colFade * 0.15);
+draw_set_color(colBright);
+draw_set_blend_mode(bm_add);
+draw_rectangle(0,0,800,608,0);
+
+draw_set_color(c_white);
+draw_set_blend_mode(bm_normal);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

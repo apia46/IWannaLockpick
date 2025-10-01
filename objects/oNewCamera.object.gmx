@@ -25,30 +25,33 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>expFactor = 0.1
-xmin = 0
-xmax = (room_width - 800)
-ymin = 0
-ymax = (room_height - 608)
-xLowest = 0
-xHighest = 0
-yLowest = 0
-yHighest = 0
-zoomLevel = 1
-zoomTarget = 1
-zoomW = 800
-zoomH = 608
-clampW = 400
-clampH = 304
-freeCam = 0
-boxAmt = 0
-shakeAmt = 0
-if instance_exists(objPlayer)
+            <string>//place this object next to where player starts in the room and set the view to follow this object
+
+expFactor = .1; //determines how fast the camera snaps to the player (higher numbers follow the player slower), can be changed in creation code
+xmin = 0;
+xmax = room_width - 800;
+ymin = 0;
+ymax = room_height - 608;
+xLowest = 0;
+xHighest = 0;
+yLowest = 0;
+yHighest = 0;
+
+zoomLevel = 1;//Zoom
+zoomTarget = 1;//Zoom target
+zoomW = 800; zoomH = 608;//Dimensions of zoomed view
+clampW = 400; clampH = 304;
+
+freeCam = 0;//Free camera mode
+boxAmt = 0;//Camera box and text alpha
+shakeAmt = 0;//Screenshake
+
+if (instance_exists(objPlayer))
 {
-    x = objPlayer.x
-    y = objPlayer.y
-    x = clamp(x, (xmin + 400), (xmax + 400))
-    y = clamp(y, (ymin + 304), (ymax + 304))
+    x = objPlayer.x;
+    y = objPlayer.y;
+    x = clamp(x,xmin+400,xmax+400);
+    y = clamp(y,ymin+304,ymax+304);
 }
 </string>
           </argument>
@@ -73,108 +76,95 @@ if instance_exists(objPlayer)
           <argument>
             <kind>1</kind>
             <string>var check2;
-if instance_exists(oMouseover)
-    check2 = (!oMouseover.warpMode)
-else
-    check2 = 1
-if (scrButtonCheckPressed(global.camButton) &amp;&amp; (check2 &amp;&amp; ((!global.inCutscene) &amp;&amp; ((!instance_exists(oIntroTransition)) &amp;&amp; (instance_exists(objPlayer) &amp;&amp; (global.pmState == 0))))))
-{
-    if ((xmax != xmin) || (ymax != ymin))
-    {
-        freeCam = (!freeCam)
-        if (freeCam == 0)
-        {
-            zoomTarget = 1
-            with (objPlayer)
-                frozen = 0
+if instance_exists(oMouseover){
+    check2 = !oMouseover.warpMode;
+}else{
+    check2 = 1;
+}
+if scrButtonCheckPressed(global.camButton) &amp;&amp; check2 &amp;&amp; !global.inCutscene &amp;&amp; !instance_exists(oIntroTransition) &amp;&amp; instance_exists(objPlayer) &amp;&amp; global.pmState == 0{
+    if xmax != xmin || ymax != ymin{//Don't have camera toggle if it doesnt do anything
+        freeCam = !freeCam;
+        if freeCam == 0{
+            zoomTarget = 1;
+            with objPlayer{frozen = 0;}
         }
-        if (freeCam == 1)
-        {
-            targetX = x
-            targetY = y
-            with (objPlayer)
-                frozen = 1
+        if freeCam == 1{
+            targetX = x; targetY = y;
+            with objPlayer{frozen = 1;}
         }
-        scrPlaySoundExt(sndCamera, 1, 1, false)
-    }
-    else
-    {
-        freeCam = 0
-        zoomTarget = 1
+        scrPlaySoundExt(sndCamera,1,1,false);
+    }else{
+        freeCam = 0;
+        zoomTarget = 1;
     }
 }
-if global.inCutscene
-{
-    freeCam = 0
-    zoomTarget = 1
+
+if global.inCutscene{
+    freeCam = 0;
+    zoomTarget = 1;
 }
-xLowest = min(xLowest, xmin)
-xHighest = max(xHighest, xmax)
-yLowest = min(yLowest, ymin)
-yHighest = max(yHighest, ymax)
-zoomLevel += ((zoomTarget - zoomLevel) * 0.1)
-if (abs((zoomLevel - zoomTarget)) &lt; 0.00125)
-    zoomLevel = zoomTarget
-zoomW = (800 * zoomLevel)
-zoomH = (608 * zoomLevel)
-clampW = (zoomW / 2)
-clampH = (zoomH / 2)
-if (!freeCam)
-{
-    boxAmt += ((0 - boxAmt) * 0.1)
-    if (boxAmt &lt; 0.01)
-        boxAmt = 0
-    if instance_exists(objPlayer)
+
+xLowest = min(xLowest,xmin);
+xHighest = max(xHighest,xmax);
+yLowest = min(yLowest,ymin);
+yHighest = max(yHighest,ymax);
+
+zoomLevel += (zoomTarget - zoomLevel) * .1;
+if abs(zoomLevel-zoomTarget) &lt; 1/800{zoomLevel = zoomTarget;}
+zoomW = 800*zoomLevel;
+zoomH = 608*zoomLevel;
+clampW = zoomW/2;
+clampH = zoomH/2;
+
+if !freeCam{
+    boxAmt += (0-boxAmt) * .1; if boxAmt &lt; .01{boxAmt = 0;}
+    if (instance_exists(objPlayer))
     {
-        targetX = objPlayer.x
-        targetY = objPlayer.y
-        targetX = clamp(targetX, (xmin + clampW), ((xmax + 800) - clampW))
-        targetY = clamp(targetY, (ymin + clampH), ((ymax + 608) - clampH))
-        x += ((targetX - x) * expFactor)
-        y += ((targetY - y) * expFactor)
+        targetX = objPlayer.x;
+        targetY = objPlayer.y;
+        //The camera itself is the "center point", but the x/y maxes are for the view x/y
+        targetX = clamp(targetX,xmin+clampW,xmax+800-clampW);
+        targetY = clamp(targetY,ymin+clampH,ymax+608-clampH);
+        x += (targetX - x) * expFactor;
+        y += (targetY - y) * expFactor;
     }
-}
-else
-{
-    boxAmt += ((1 - boxAmt) * 0.1)
-    if (boxAmt &gt; 0.99)
-        boxAmt = 1
-    if (scrButtonCheckPressed(global.masButton) &amp;&amp; (global.pmState == 0))
-    {
-        if (zoomTarget == 1)
-        {
-            zoomTarget = min((((800 + xmax) - xmin) / 800), (((608 + ymax) - ymin) / 608))
-            if (zoomTarget &gt; 1)
-                scrPlaySoundExt(sndCamera, 1, 1.5, false)
-        }
-        else
-        {
-            zoomTarget = 1
-            scrPlaySoundExt(sndCamera, 1, 0.75, false)
+}else{
+    boxAmt += (1-boxAmt) * .1; if boxAmt &gt; .99{boxAmt = 1;}
+    if scrButtonCheckPressed(global.masButton) &amp;&amp; global.pmState == 0{
+        if zoomTarget == 1{
+            zoomTarget = min((800+xmax-xmin)/800,(608+ymax-ymin)/608);
+            if zoomTarget &gt; 1{
+                scrPlaySoundExt(sndCamera,1,1.5,0);
+            }
+        }else{
+            zoomTarget = 1;
+            scrPlaySoundExt(sndCamera,1,.75,0);
         }
     }
-    if (scrButtonCheck(global.upButton) &amp;&amp; (global.pmState == 0))
-        targetY -= (6 * zoomLevel)
-    else if (scrButtonCheck(global.downButton) &amp;&amp; (global.pmState == 0))
-        targetY += (6 * zoomLevel)
-    if (scrButtonCheck(global.rightButton) &amp;&amp; (global.pmState == 0))
-        targetX += (6 * zoomLevel)
-    else if (scrButtonCheck(global.leftButton) &amp;&amp; (global.pmState == 0))
-        targetX -= (6 * zoomLevel)
-    targetX = clamp(targetX, (xmin + clampW), ((xmax + 800) - clampW))
-    targetY = clamp(targetY, (ymin + clampH), ((ymax + 608) - clampH))
-    x += ((targetX - x) * expFactor)
-    y += ((targetY - y) * expFactor)
+    if scrButtonCheck(global.upButton) &amp;&amp; global.pmState == 0{
+        targetY -= 6*zoomLevel;
+    }else if scrButtonCheck(global.downButton) &amp;&amp; global.pmState == 0{
+        targetY += 6*zoomLevel;
+    }
+    if scrButtonCheck(global.rightButton) &amp;&amp; global.pmState == 0{
+        targetX += 6*zoomLevel;
+    }else if scrButtonCheck(global.leftButton) &amp;&amp; global.pmState == 0{
+        targetX -= 6*zoomLevel;
+    }
+    targetX = clamp(targetX,xmin+clampW,xmax+800-clampW);
+    targetY = clamp(targetY,ymin+clampH,ymax+608-clampH);
+    x += (targetX - x) * expFactor;
+    y += (targetY - y) * expFactor;
 }
-view_xview[0] = clamp(round((x - clampW)), min(xLowest, 0), max(((xHighest + 800) - (800 * zoomLevel)), (room_width - (800 * zoomLevel))))
-view_yview[0] = clamp(round((y - clampH)), min(yLowest, 0), max(((yHighest + 608) - (608 * zoomLevel)), (room_height - (608 * zoomLevel))))
-view_wview[0] = (zoomLevel * 800)
-view_hview[0] = (zoomLevel * 608)
-shakeAmt = max((shakeAmt - 0.1), 0)
-if (shakeAmt != 0)
-{
-    view_xview[0] += random_range((-shakeAmt), shakeAmt)
-    view_yview[0] += random_range((-shakeAmt), shakeAmt)
+view_xview[0] = clamp(round(x-clampW),min(xLowest,0),max(xHighest+800-800*zoomLevel,room_width-800*zoomLevel));//clamp(x-400,xmin,xmax);
+view_yview[0] = clamp(round(y-clampH),min(yLowest,0),max(yHighest+608-608*zoomLevel,room_height-608*zoomLevel));//clamp(y-304,ymin,ymax);
+view_wview[0] = zoomLevel*800;
+view_hview[0] = zoomLevel*608;
+
+shakeAmt = max(shakeAmt - 0.1,0);
+if shakeAmt != 0{
+    view_xview[0] += random_range(-shakeAmt,shakeAmt);
+    view_yview[0] += random_range(-shakeAmt,shakeAmt);
 }
 </string>
           </argument>
@@ -198,22 +188,20 @@ if (shakeAmt != 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_place(x, y, oCameraTrg) != -1)
-{
-    with (instance_place(x, y, oCameraTrg))
-    {
-        other.xmin = xmin
-        other.xmax = xmax
-        other.ymin = ymin
-        other.ymax = ymax
+            <string>if instance_place(x,y,oCameraTrg) != -1{
+    with instance_place(x,y,oCameraTrg){
+        other.xmin = xmin;
+        other.xmax = xmax;
+        other.ymin = ymin;
+        other.ymax = ymax;
     }
 }
-if instance_exists(objPlayer)
+if (instance_exists(objPlayer))
 {
-    x = objPlayer.x
-    y = objPlayer.y
-    x = clamp(x, (xmin + 400), (xmax + 400))
-    y = clamp(y, (ymin + 304), (ymax + 304))
+    x = objPlayer.x;
+    y = objPlayer.y;
+    x = clamp(x,xmin+400,xmax+400);
+    y = clamp(y,ymin+304,ymax+304);
 }
 </string>
           </argument>
@@ -237,22 +225,20 @@ if instance_exists(objPlayer)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_place(x, y, oCameraTrg) != -1)
-{
-    with (instance_place(x, y, oCameraTrg))
-    {
-        other.xmin = xmin
-        other.xmax = xmax
-        other.ymin = ymin
-        other.ymax = ymax
+            <string>if instance_place(x,y,oCameraTrg) != -1{
+    with instance_place(x,y,oCameraTrg){
+        other.xmin = xmin;
+        other.xmax = xmax;
+        other.ymin = ymin;
+        other.ymax = ymax;
     }
 }
-if instance_exists(objPlayer)
+if (instance_exists(objPlayer))
 {
-    x = objPlayer.x
-    y = objPlayer.y
-    x = clamp(x, (xmin + 400), (xmax + 400))
-    y = clamp(y, (ymin + 304), (ymax + 304))
+    x = objPlayer.x;
+    y = objPlayer.y;
+    x = clamp(x,xmin+400,xmax+400);
+    y = clamp(y,ymin+304,ymax+304);
 }
 </string>
           </argument>
@@ -276,22 +262,23 @@ if instance_exists(objPlayer)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _l;
-draw_set_color(c_black)
-_l = (1 - boxAmt)
-draw_rectangle((8 - (16 * _l)), (8 - (16 * _l)), (792 + (16 * _l)), (600 + (16 * _l)), 1)
-draw_rectangle((4 - (16 * _l)), (4 - (16 * _l)), (796 + (16 * _l)), (604 + (16 * _l)), 1)
-draw_set_color(c_white)
-draw_set_font(fPresents)
-draw_set_alpha(boxAmt)
-draw_set_halign(fa_left)
-draw_set_valign(fa_bottom)
-scrDrawTextOutline(12, 596, (("[" + getBindStr(global.masButton, global.usingController)) + "] to zoom"), c_white, c_black)
-draw_set_halign(fa_right)
-scrDrawTextOutline(788, 596, (("[" + getBindStr(global.camButton, global.usingController)) + "] to exit"), c_white, c_black)
-draw_set_halign(fa_left)
-draw_set_valign(fa_middle)
-draw_set_alpha(1)
+            <string>///Rectangles n' text
+draw_set_color(c_black);
+var _l = 1-boxAmt;
+draw_rectangle(8-16*_l,8-16*_l,792+16*_l,600+16*_l,1);
+draw_rectangle(4-16*_l,4-16*_l,796+16*_l,604+16*_l,1);
+draw_set_color(c_white);
+
+draw_set_font(fPresents);
+draw_set_alpha(boxAmt);
+draw_set_halign(fa_left);
+draw_set_valign(fa_bottom);
+scrDrawTextOutline(12,596,"["+getBindStr(global.masButton,global.usingController)+"] to zoom",c_white,c_black);
+draw_set_halign(fa_right);
+scrDrawTextOutline(788,596,"["+getBindStr(global.camButton,global.usingController)+"] to exit",c_white,c_black);
+draw_set_halign(fa_left);
+draw_set_valign(fa_center);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>
@@ -314,7 +301,8 @@ draw_set_alpha(1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>///nothing
+</string>
           </argument>
         </arguments>
       </action>

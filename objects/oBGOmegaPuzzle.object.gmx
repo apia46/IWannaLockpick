@@ -25,10 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bgBlend = background_color
-gradBlend = 16777215
-mistBlend = 16777215
-cloudBlend = 16777215
+            <string>bgBlend = background_color;
+gradBlend = c_white;
+mistBlend = c_white;
+cloudBlend = c_white;
 </string>
           </argument>
         </arguments>
@@ -51,58 +51,74 @@ cloudBlend = 16777215
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch ID
-{
-    case 0:
-        break
-    case 1:
-        break
-    case 2:
-        break
-    case 3:
-        break
-    case 4:
-        break
-    case 5:
-        break
-    case 6:
-        break
-    case 7:
-        break
-    case 8:
-        break
-    case 9:
-        break
-    case 10:
-        break
-    case 11:
-        break
-    case 12:
-        break
-    default:
-    
+            <string>switch ID{//Set background vars
+    case 0://Doorhaven
+        
+    break;
+    case 1://Rainy Vista
+        
+    break;
+    case 2://The Infrastructure
+        
+    break;
+    case 3://Starlit Temple
+        
+    break;
+    case 4://Haunted Attic
+        
+    break;
+    case 5://Negative Garden
+        
+    break;
+    case 6://Mooncloud Lake
+        
+    break;
+    case 7://Etchstone Cliff
+        
+    break;
+    case 8://Lockpick Library
+        
+    break;
+    case 9://Mechanical Nexus
+        
+    break;
+    case 10://Miracle Tower
+        
+    break;
+    case 11://The Cool Place
+        
+    break;
+    case 12://Return to Doorhaven
+        
+    break;
 }
-
-if (ID == 13)
-{
-    background_color = bgBlend
-    background_blend[0] = gradBlend
-    background_blend[1] = mistBlend
-    background_alpha[1] = 0.4
-    background_xscale[2] = (room_width / 800)
-    background_alpha[2] = 0.5
-    background_y[3] = room_height
-    background_yscale[3] = -1
-    background_hspeed[3] = 0.25
-    background_y[4] = room_height
-    background_yscale[4] = -1
-    background_hspeed[4] = 0.5
-    background_y[5] = room_height
-    background_yscale[5] = -1
-    background_hspeed[5] = 1
-    background_blend[3] = merge_color(bgBlend, mistBlend, 0.25)
-    background_blend[4] = merge_color(bgBlend, mistBlend, 0.5)
-    background_blend[5] = merge_color(bgBlend, mistBlend, 0.75)
+if ID == 13{
+    background_color = bgBlend;
+    background_blend[0] = gradBlend;
+    background_blend[1] = mistBlend;
+    background_alpha[1] = .4;
+    //Rainbow
+    background_xscale[2] = room_width/800;
+    background_alpha[2] = .5;
+    //Cloud background
+    background_y[3] = room_height; background_yscale[3] = -1; background_hspeed[3] = .25;
+    background_y[4] = room_height; background_yscale[4] = -1; background_hspeed[4] = .5;
+    background_y[5] = room_height; background_yscale[5] = -1; background_hspeed[5] = 1;
+    background_blend[3] = merge_color(bgBlend,mistBlend,.25);
+    background_blend[4] = merge_color(bgBlend,mistBlend,.5);
+    background_blend[5] = merge_color(bgBlend,mistBlend,.75);
+    //Cloud particles
+    /*with objBlock{
+        if object_index == objBlock{
+            //Cloud particles
+            for (var ix = 0; ix &lt; 2*image_xscale; ix += 1){
+                for (var iy = 0; iy &lt; 2*image_yscale; iy += 1){
+                    var p = instance_create(x+16*ix+8,y+16*iy+8,oCloudPart);
+                    p.image_blend = other.cloudBlend;
+                }
+            }
+        }
+    }*/
 }
 </string>
           </argument>

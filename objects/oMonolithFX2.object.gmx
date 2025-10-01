@@ -25,20 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 200
-for (t = 0; t &lt; 12000; t += 200)
-{
-    for (i = 0; i &lt; 12; i += 1)
-    {
-        with (instance_create(room_width, ((200 * i) + random(200)), oCloud3))
-        {
-            x += (hspeed * other.t)
-            depth += round(y)
+            <string>//Clouds
+alarm[0] = 200;
+for(t=0;t&lt;400*30;t+=200){
+    for(i=0;i&lt;12;i+=1){
+        with instance_create(room_width,200*i+random(200),oCloud3){
+            x += hspeed * other.t;
+            depth += round(y);
         }
     }
 }
-background_blend[0] = make_color_rgb(152, 227, 252)
-background_color = make_color_rgb(120, 180, 242)
+//BG color
+background_blend[0] = make_color_rgb(152,227,252);
+background_color = make_color_rgb(120,180,242);
 </string>
           </argument>
         </arguments>
@@ -61,11 +60,11 @@ background_color = make_color_rgb(120, 180, 242)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 200
-for (i = 0; i &lt; 12; i += 1)
-{
-    a = instance_create(room_width, ((200 * i) + random(200)), oCloud3)
-    a.depth += round(a.y)
+            <string>///Cloud gen
+alarm[0] = 200;
+for(i=0;i&lt;12;i+=1){
+    a = instance_create(room_width,200*i+random(200),oCloud3);
+    a.depth += round(a.y);
 }
 </string>
           </argument>

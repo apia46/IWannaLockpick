@@ -25,10 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xmin = 0
-ymin = 0
-xmax = 0
-ymax = 0
+            <string>xmin = 0;
+ymin = 0;
+xmax = 0;
+ymax = 0;
 </string>
           </argument>
         </arguments>
@@ -51,23 +51,19 @@ ymax = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (oNewCamera)
-{
-    if ((!(xmin == other.xmin)) || ((!(xmax == other.xmax)) || ((!(ymin == other.ymin)) || (!(ymax == other.ymax)))))
-    {
-        if (freeCam == 1)
-        {
-            freeCam = 0
-            zoomTarget = 1
-            with (objPlayer)
-                frozen = 0
-            scrPlaySoundExt(sndCamera, 1, 1, false)
-        }
+            <string>with oNewCamera{
+    if !(xmin == other.xmin) || !(xmax == other.xmax) || !(ymin == other.ymin) || !(ymax == other.ymax){
+        if freeCam == 1{
+            freeCam = 0;
+            zoomTarget = 1;
+            with objPlayer{frozen = 0;}
+            scrPlaySoundExt(sndCamera,1,1,false);
+        } 
     }
-    xmin = other.xmin
-    xmax = other.xmax
-    ymin = other.ymin
-    ymax = other.ymax
+    xmin = other.xmin;
+    xmax = other.xmax;
+    ymin = other.ymin;
+    ymax = other.ymax;
 }
 </string>
           </argument>

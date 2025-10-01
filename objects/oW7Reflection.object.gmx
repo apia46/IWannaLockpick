@@ -25,10 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xRadius = (((y - 496) * 32) / 112)
-angle = ((xRadius * 720) / 32)
-xOff = (xRadius * sin(degtorad(angle)))
-color = 16777215
+            <string>xRadius = (y - 496) * 32/112;//496 = ocean surface, 8 = max radius, 112 = bottom - ocean
+angle = xRadius * 720 / 32;//Nothing like a good old fashioned mapping!
+xOff = xRadius * sin(degtorad(angle));
+color = c_white;
 </string>
           </argument>
         </arguments>
@@ -51,8 +51,8 @@ color = 16777215
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>angle = ((angle + 1.5) % 360)
-xOff = (xRadius * sin(degtorad(angle)))
+            <string>angle = (angle + 1.5) mod 360;
+xOff = xRadius * sin(degtorad(angle));
 </string>
           </argument>
         </arguments>
@@ -75,9 +75,9 @@ xOff = (xRadius * sin(degtorad(angle)))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(color)
-draw_line_width((x + xOff), y, ((x + (32 * image_xscale)) + xOff), y, 2)
-draw_set_color(c_white)
+            <string>draw_set_color(color);
+draw_line_width(x+xOff,y,x+32*image_xscale+xOff,y,2);
+draw_set_color(c_white);
 </string>
           </argument>
         </arguments>

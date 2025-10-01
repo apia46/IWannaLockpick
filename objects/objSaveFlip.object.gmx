@@ -25,11 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
-canSave = 1
-grav = -1
-if (global.difficulty &gt; 1)
-    instance_destroy()
+            <string>image_speed = 0;
+canSave = true;
+grav = -1;       //sets which player gravity this save works with
+
+if (global.difficulty &gt; 1)  //destroy if on a higher difficulty than hard
+    instance_destroy();
 </string>
           </argument>
         </arguments>

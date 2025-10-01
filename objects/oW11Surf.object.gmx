@@ -25,19 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>s = surface_create(800, 608)
-bgX = 0
-surface_set_target(s)
-draw_clear_alpha(c_black, 0)
-with (objBlock)
-{
-    if (object_index == objBlock)
-        draw_sprite_ext(sprBlockWhite, 0, x, y, image_xscale, image_yscale, 0, c_white, 1)
+            <string>s = surface_create(800,608);
+bgX = 0;
+
+surface_set_target(s);
+draw_clear_alpha(c_black,0);
+with objBlock{
+    if object_index == objBlock{
+        draw_sprite_ext(sprBlockWhite,0,x,y,image_xscale,image_yscale,0,c_white,1);
+    }
 }
-draw_set_blend_mode_ext(9, 1)
-draw_background_tiled_ext(bMist, bgX, 0, 1, 1, make_color_rgb(255, 225, 200), 0.2)
-draw_set_blend_mode(0)
-surface_reset_target()
+draw_set_blend_mode_ext(bm_dest_color,bm_zero);
+draw_background_tiled_ext(bMist,bgX,0,1,1,make_color_rgb(255,225,200),.2);
+draw_set_blend_mode(bm_normal);
+surface_reset_target();
 </string>
           </argument>
         </arguments>
@@ -60,7 +61,7 @@ surface_reset_target()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s)
+            <string>surface_free(s);
 </string>
           </argument>
         </arguments>
@@ -83,20 +84,23 @@ surface_reset_target()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!surface_exists(s))
-    s = surface_create(800, 608)
-bgX -= 1
-surface_set_target(s)
-draw_clear_alpha(c_black, 0)
-with (objBlock)
-{
-    if (object_index == objBlock)
-        draw_sprite_ext(sprBlockWhite, 0, x, y, image_xscale, image_yscale, 0, c_white, 1)
+            <string>if !surface_exists(s){
+    s = surface_create(800,608);
 }
-draw_set_blend_mode_ext(9, 1)
-draw_background_tiled_ext(bMist, bgX, 0, 1, 1, make_color_rgb(255, 225, 200), 0.2)
-draw_set_blend_mode(0)
-surface_reset_target()
+
+bgX -= 1;
+
+surface_set_target(s);
+draw_clear_alpha(c_black,0);
+with objBlock{
+    if object_index == objBlock{
+        draw_sprite_ext(sprBlockWhite,0,x,y,image_xscale,image_yscale,0,c_white,1);
+    }
+}
+draw_set_blend_mode_ext(bm_dest_color,bm_zero);
+draw_background_tiled_ext(bMist,bgX,0,1,1,make_color_rgb(255,225,200),.2);
+draw_set_blend_mode(bm_normal);
+surface_reset_target();
 </string>
           </argument>
         </arguments>
@@ -119,7 +123,7 @@ surface_reset_target()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s)
+            <string>surface_free(s);
 </string>
           </argument>
         </arguments>
@@ -142,13 +146,12 @@ surface_reset_target()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if surface_exists(s)
-{
-    draw_set_blend_mode(1)
-    shader_set(shdRainbowHor)
-    draw_surface(s, 0, 0)
-    shader_reset()
-    draw_set_blend_mode(0)
+            <string>if surface_exists(s){
+    draw_set_blend_mode(bm_add);
+    shader_set(shdRainbowHor);
+    draw_surface(s,0,0);
+    shader_reset();
+    draw_set_blend_mode(bm_normal);
 }
 </string>
           </argument>

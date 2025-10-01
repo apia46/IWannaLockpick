@@ -25,10 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.gameClear)
+            <string>///set game to clear and autosave when touched
+
+if (!global.gameClear)
 {
-    global.gameClear = 1
-    scrSaveGame(1)
+    global.gameClear = true;
+    scrSaveGame(true);
 }
 </string>
           </argument>

@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>itemNum = 0
+            <string>//set in creation code
+itemNum = 0;
 </string>
           </argument>
         </arguments>
@@ -48,8 +49,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.bossItem[itemNum]
-    instance_destroy()
+            <string>if (global.bossItem[itemNum])    //destroy self if item already obtained
+    instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -72,9 +73,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.bossItem[itemNum] = 1
-scrPlaySoundExt(sndBlockChange, 1, 1, false)
-instance_destroy()
+            <string>global.bossItem[itemNum] = true;
+scrPlaySoundExt(sndBlockChange,1,1,false);
+instance_destroy();
 </string>
           </argument>
         </arguments>

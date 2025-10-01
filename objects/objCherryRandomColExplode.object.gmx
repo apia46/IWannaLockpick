@@ -25,12 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited()
-image_xscale = 2
-image_yscale = 2
-direction = random_range(90, 270)
-speed = 3
-alarm[0] = 17
+            <string>event_inherited();
+
+image_xscale = 2;
+image_yscale = 2;
+
+direction = random_range(90,270);
+speed = 3;
+
+alarm[0] = 17;  //set an alarm to make this explode
 </string>
           </argument>
         </arguments>
@@ -53,8 +56,11 @@ alarm[0] = 17
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrMakeCircle(x, y, random(360), 12, choose(6, 7, 8), objCherryRandomCol)
-instance_destroy()
+            <string>//explode into a circle
+
+scrMakeCircle(x,y,random(360),12,choose(6,7,8),objCherryRandomCol);
+
+instance_destroy();
 </string>
           </argument>
         </arguments>

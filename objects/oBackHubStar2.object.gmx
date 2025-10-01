@@ -25,15 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>oldSeed = random_get_seed()
-random_set_seed((x + (800 * y)))
-scale = choose(0.4, 0.6, 0.8, 1)
-image_xscale = scale
-image_yscale = scale
-rotA = random(360)
-image_angle = random(360)
-random_set_seed(oldSeed)
-image_blend = make_color_rgb(200, 200, 150)
+            <string>oldSeed = random_get_seed();
+random_set_seed(x+800*y);
+scale = choose(.4,.6,.8,1);
+image_xscale = scale;
+image_yscale = scale;
+rotA = random(360);
+image_angle = random(360);
+random_set_seed(oldSeed);
+
+image_blend = make_color_rgb(200,200,150);
 </string>
           </argument>
         </arguments>
@@ -56,8 +57,8 @@ image_blend = make_color_rgb(200, 200, 150)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>rotA = ((rotA + 1.5) % 360)
-image_angle = (10 * sin(degtorad(rotA)))
+            <string>rotA = (rotA + 1.5) mod 360;
+image_angle = 10*sin(degtorad(rotA));
 </string>
           </argument>
         </arguments>
@@ -80,11 +81,11 @@ image_angle = (10 * sin(degtorad(rotA)))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>texture_set_interpolation(1)
-draw_set_blend_mode(1)
-draw_self()
-draw_set_blend_mode(0)
-texture_set_interpolation(global.smoothingMode)
+            <string>texture_set_interpolation(1);
+draw_set_blend_mode(bm_add);
+draw_self();
+draw_set_blend_mode(bm_normal);
+texture_set_interpolation(global.smoothingMode);
 </string>
           </argument>
         </arguments>

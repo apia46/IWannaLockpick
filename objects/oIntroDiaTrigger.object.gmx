@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>convoID = 0
-prepDelete = 0
+            <string>convoID = 0;
+prepDelete = 0;
 </string>
           </argument>
         </arguments>
@@ -49,25 +49,18 @@ prepDelete = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _id;
-if prepDelete
-{
-    if instance_exists(objPlayer)
-    {
-        _id = convoID
-        with (objPlayer)
-        {
-            if place_meeting(x, (y + 1), objBlock)
-            {
-                with (oDialogHandle)
-                    diaStart(_id)
-                with (other.id)
-                    instance_destroy()
+            <string>if prepDelete{
+    if instance_exists(objPlayer){
+        var _id = convoID;
+        with objPlayer{
+            if place_meeting(x,y+1,objBlock){
+                with oDialogHandle{diaStart(_id);}
+                with other{instance_destroy();}
             }
         }
+    }else{
+        global.inCutscene = 0;
     }
-    else
-        global.inCutscene = 0
 }
 </string>
           </argument>
@@ -91,9 +84,8 @@ if prepDelete
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>prepDelete = 1
-with (objPlayer)
-    frozen = 1
+            <string>prepDelete = 1;
+with objPlayer{frozen = 1;}
 </string>
           </argument>
         </arguments>

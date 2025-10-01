@@ -25,9 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.roomID &gt;= 0)
-    global.roomClear[global.roomID] = 1
-event_inherited()
+            <string>if global.roomID &gt;= 0{
+    global.roomClear[global.roomID] = 1;
+}
+event_inherited();
 </string>
           </argument>
         </arguments>

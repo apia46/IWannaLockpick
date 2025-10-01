@@ -25,13 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_xscale = 0.1
-image_yscale = 0.1
-mode = 0
-sat = 30
-hue = 85
-direction = random(360)
-speed = 0.1
+            <string>image_xscale = .1;
+image_yscale = .1;
+mode = 0;
+sat = 30;
+hue = 85;
+direction = random(360);
+speed = .1;
 </string>
           </argument>
         </arguments>
@@ -54,25 +54,17 @@ speed = 0.1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mode == 0)
-{
-    image_xscale += ((1 - image_xscale) * 0.2)
-    image_yscale = image_xscale
-    if (image_xscale &gt;= 0.98)
-    {
-        mode = 1
-        speed = 0.4
-    }
+            <string>if mode == 0{
+    image_xscale += (1-image_xscale)*.2;
+    image_yscale = image_xscale;
+    if image_xscale &gt;= .98{mode = 1; speed = .4;}
+}else{
+    image_xscale = max(image_xscale - .025, 0);
+    image_yscale = image_xscale;
+    if image_xscale == 0{instance_destroy();}
 }
-else
-{
-    image_xscale = max((image_xscale - 0.025), 0)
-    image_yscale = image_xscale
-    if (image_xscale == 0)
-        instance_destroy()
-}
-sat = min((sat + 3), 255)
-image_blend = make_color_hsv((hue - (sat / 12)), sat, 255)
+sat = min(sat+3,255);
+image_blend = make_color_hsv(hue-sat/12,sat,255);
 </string>
           </argument>
         </arguments>
@@ -95,7 +87,7 @@ image_blend = make_color_hsv((hue - (sat / 12)), sat, 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, image_index, x, y, (image_xscale / 2.5), (image_yscale / 2.5), 0, image_blend, 1)
+            <string>draw_sprite_ext(sprite_index,image_index,x,y,image_xscale/2.5,image_yscale/2.5,0,image_blend,1);
 </string>
           </argument>
         </arguments>

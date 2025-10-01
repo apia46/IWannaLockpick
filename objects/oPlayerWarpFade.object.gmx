@@ -25,18 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
-x = round(x)
-y = round(y)
-xOff = 0
-mode = 0
-sat = 0
-hue = 0
-val = 80
-blend = make_color_hsv(hue, sat, val)
-a = 0
-s = 0
-c = 1
+            <string>image_speed = 0;
+x = round(x);
+y = round(y);
+xOff = 0;
+mode = 0;
+sat = 0;
+hue = 0;
+val = 80;
+blend = make_color_hsv(hue,sat,val);
+a = 0;
+s = 0;
+c = 1;
 </string>
           </argument>
         </arguments>
@@ -59,17 +59,17 @@ c = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = min((a + 4.5), 90)
-s = sin(degtorad(a))
-c = cos(degtorad(a))
-xOff = (12 * s)
-image_alpha = c
-val = min((val + 63.75), 255)
-sat = min((sat + 6.375), 255)
-hue += 10
-blend = make_color_hsv(hue, sat, val)
-if (a == 90)
-    instance_destroy()
+            <string>a = min(a+90/20,90);
+s = sin(degtorad(a));
+c = cos(degtorad(a));
+
+xOff = 12*s;
+image_alpha = c;
+val = min(val+255/4,255);
+sat = min(sat+255/40,255);
+hue += 10;
+blend = make_color_hsv(hue,sat,val);
+if a == 90{instance_destroy();}
 </string>
           </argument>
         </arguments>
@@ -92,29 +92,23 @@ if (a == 90)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _sw, _sh, _sxo, _syo;
-shader_set(shdVertexColor)
-_sw = sprite_get_width(sprite_index)
-_sh = sprite_get_height(sprite_index)
-_sxo = sprite_get_xoffset(sprite_index)
-_syo = sprite_get_yoffset(sprite_index)
-if (image_xscale == 1)
-{
-    for (i = 0; i &lt; _sh; i += 2)
-    {
-        draw_sprite_part_ext(sprite_index, image_index, 0, i, _sw, 1, ((x + xOff) - _sxo), ((y + i) - _syo), 1, 1, blend, image_alpha)
-        draw_sprite_part_ext(sprite_index, image_index, 0, (i + 1), _sw, 1, ((x - xOff) - _sxo), (((y + i) + 1) - _syo), 1, 1, blend, image_alpha)
+            <string>shader_set(shdVertexColor);
+var _sw = sprite_get_width(sprite_index);
+var _sh = sprite_get_height(sprite_index);
+var _sxo = sprite_get_xoffset(sprite_index);
+var _syo = sprite_get_yoffset(sprite_index);
+if image_xscale == 1{
+    for(i=0;i&lt;_sh;i+=2){
+        draw_sprite_part_ext(sprite_index,image_index,0,i,_sw,1,x+xOff-_sxo,y+i-_syo,1,1,blend,image_alpha);
+        draw_sprite_part_ext(sprite_index,image_index,0,i+1,_sw,1,x-xOff-_sxo,y+i+1-_syo,1,1,blend,image_alpha);
+    }
+}else{
+    for(i=0;i&lt;_sh;i+=2){
+        draw_sprite_part_ext(sprite_index,image_index,0,i,_sw,1,x+xOff+_sxo-2,y+i-_syo,-1,1,blend,image_alpha);
+        draw_sprite_part_ext(sprite_index,image_index,0,i+1,_sw,1,x-xOff+_sxo-2,y+i+1-_syo,-1,1,blend,image_alpha);
     }
 }
-else
-{
-    for (i = 0; i &lt; _sh; i += 2)
-    {
-        draw_sprite_part_ext(sprite_index, image_index, 0, i, _sw, 1, (((x + xOff) + _sxo) - 2), ((y + i) - _syo), -1, 1, blend, image_alpha)
-        draw_sprite_part_ext(sprite_index, image_index, 0, (i + 1), _sw, 1, (((x - xOff) + _sxo) - 2), (((y + i) + 1) - _syo), -1, 1, blend, image_alpha)
-    }
-}
-shader_reset()
+shader_reset();
 </string>
           </argument>
         </arguments>

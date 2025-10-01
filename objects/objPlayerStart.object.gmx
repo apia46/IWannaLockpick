@@ -27,15 +27,11 @@
             <kind>1</kind>
             <string>if (!instance_exists(objPlayer))
 {
-    if (global.inload &amp;&amp; (room == rGuestRoom))
-    {
-        x = 592
-        y = 512
-        global.inload = 0
+    if global.inload &amp;&amp; room == rGuestRoom{x = 592; y = 512; global.inload = 0;}//Guest Room only
+    instance_create(x+17,y+23,objPlayer);
+    if room == rMainHub || room == rBackHub || room == rGuestRoom{
+        scrSaveGame(true);
     }
-    instance_create((x + 17), (y + 23), objPlayer)
-    if ((room == rMainHub) || ((room == rBackHub) || (room == rGuestRoom)))
-        scrSaveGame(1)
 }
 </string>
           </argument>

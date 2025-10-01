@@ -25,23 +25,22 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>background_blend[0] = make_color_rgb(140, 100, 244)
-background_alpha[1] = 0.25
-background_blend[1] = make_color_rgb(128, 255, 255)
-background_visible[1] = 0
-if (room == rEXZ)
-    exit
-for (t = 0; t &lt; 200; t += 2)
-{
-    repeat (3)
-    {
-        p = instance_create(random_range(-100, (room_width + 100)), -32, oRainPart)
-        p.image_alpha = 0.5
-        p.x += (p.hspeed * t)
-        p.y += (p.vspeed * t)
+            <string>background_blend[0] = make_color_rgb(140,100,244);
+background_alpha[1] = .25;
+background_blend[1] = make_color_rgb(128,255,255);
+background_visible[1] = false;
+
+//Rain
+if room == rEXZ{exit;}
+for(t=0;t&lt;200;t+=2){
+    repeat(3){
+        p=instance_create(random_range(-100,room_width+100),-32,oRainPart);
+        p.image_alpha = .5;
+        p.x += p.hspeed*t;
+        p.y += p.vspeed*t;
     }
 }
-alarm[1] = 2
+alarm[1] = 2;
 </string>
           </argument>
         </arguments>
@@ -64,12 +63,12 @@ alarm[1] = 2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>repeat (3)
-{
-    p = instance_create(random_range(-100, (room_width + 100)), -32, oRainPart)
-    p.image_alpha = 0.5
+            <string>///rain part
+repeat(3){
+    p = instance_create(random_range(-100,room_width+100),-32,oRainPart);
+    p.image_alpha = .5
 }
-alarm[1] = 2
+alarm[1] = 2;
 </string>
           </argument>
         </arguments>
@@ -92,15 +91,18 @@ alarm[1] = 2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(1)
-draw_background_tiled_ext(bMist, background_x[1], background_y[1], background_xscale[1], background_yscale[1], background_blend[1], background_alpha[1])
-if (room == rEXZ)
-    draw_sprite_ext(sprOrbPart, 0, (room_width * 0.5), (room_height * 1.5), 12, 12, 0, background_blend[0], 0.3)
-draw_set_blend_mode(0)
-with (oStarTwinkle)
-    draw_self()
-with (oRainPart)
-    draw_self()
+            <string>draw_set_blend_mode(bm_add);
+draw_background_tiled_ext(bMist,background_x[1],background_y[1],background_xscale[1],background_yscale[1],background_blend[1],background_alpha[1]);
+if room == rEXZ{//Sunset sphere
+    draw_sprite_ext(sprOrbPart,0,room_width*.5,room_height*1.5,12,12,0,background_blend[0],.3);
+}
+draw_set_blend_mode(bm_normal);
+with oStarTwinkle{
+    draw_self();
+}
+with oRainPart{
+    draw_self();
+}
 </string>
           </argument>
         </arguments>

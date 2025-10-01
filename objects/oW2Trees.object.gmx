@@ -25,14 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>oldSeed = random_get_seed()
-random_set_seed(room)
-angle = random(360)
-x1 = random_range(-0.5, 0.5)
-x2 = random_range(-0.5, 0.5)
-x3 = random_range(-0.5, 0.5)
-x4 = random_range(-0.5, 0.5)
-random_set_seed(oldSeed)
+            <string>oldSeed = random_get_seed();
+random_set_seed(room);
+angle = random(360);
+x1 = random_range(-.5,.5);
+x2 = random_range(-.5,.5);
+x3 = random_range(-.5,.5);
+x4 = random_range(-.5,.5);
+random_set_seed(oldSeed);
 </string>
           </argument>
         </arguments>
@@ -55,63 +55,63 @@ random_set_seed(oldSeed)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>backX = (-400 + (400 * x1))
-backY = 352
-backCol = make_color_rgb(120, 170, 80)
-draw_primitive_begin_texture(5, background_get_texture(bCloudW2))
-draw_vertex_texture_color(backX, backY, 0, 1, backCol, 1)
-draw_vertex_texture_color((backX + 1600), backY, 1, 1, backCol, 1)
-draw_vertex_texture_color(backX, (backY + 152), 0, 0, backCol, 1)
-draw_vertex_texture_color((backX + 1600), (backY + 152), 1, 0, backCol, 1)
-draw_primitive_end()
-for (i = 64; i &lt; room_width; i += 110)
-{
-    a1 = sin(degtorad((i + angle)))
-    a2 = cos(degtorad(((i + angle) * 2)))
-    treeY = (backY + 80)
-    draw_sprite_ext(sprW2Tree, 0, i, treeY, 0.6, 0.6, (5 * a1), c_white, 1)
+            <string>backX = -400+400*x1;
+backY = 608-256;
+backCol = make_color_rgb(120,170,80);
+draw_primitive_begin_texture(pr_trianglestrip,background_get_texture(bCloudW2));
+draw_vertex_texture_color(backX,backY,0,1,backCol,1);
+draw_vertex_texture_color(backX+1600,backY,1,1,backCol,1);
+draw_vertex_texture_color(backX,backY+152,0,0,backCol,1);
+draw_vertex_texture_color(backX+1600,backY+152,1,0,backCol,1);
+draw_primitive_end();
+for(i=64;i&lt;room_width;i+=110){
+    a1 = sin(degtorad(i+angle));
+    a2 = cos(degtorad((i+angle)*2));
+    treeY = backY+80;
+    draw_sprite_ext(sprW2Tree,0,i,treeY,.6,.6,5*a1,c_white,1);
 }
-backX = (-400 + (400 * x2))
-backY += 32
-backCol = make_color_rgb(110, 155, 70)
-draw_primitive_begin_texture(5, background_get_texture(bCloudW2))
-draw_vertex_texture_color(backX, backY, 0, 1, backCol, 1)
-draw_vertex_texture_color((backX + 1600), backY, 1, 1, backCol, 1)
-draw_vertex_texture_color(backX, (backY + 152), 0, 0, backCol, 1)
-draw_vertex_texture_color((backX + 1600), (backY + 152), 1, 0, backCol, 1)
-draw_primitive_end()
-for (i = 32; i &lt; room_width; i += 155)
-{
-    a1 = sin(degtorad((i + angle)))
-    a2 = cos(degtorad(((i + angle) * 2)))
-    treeY = (backY + 100)
-    draw_sprite_ext(sprW2Tree, 1, i, treeY, 0.7, 0.7, (5 * a1), c_white, 1)
+backX = -400+400*x2;
+backY += 32;
+//backCol = make_color_rgb(97,140,60);
+backCol = make_color_rgb(110,155,70);
+draw_primitive_begin_texture(pr_trianglestrip,background_get_texture(bCloudW2));
+draw_vertex_texture_color(backX,backY,0,1,backCol,1);
+draw_vertex_texture_color(backX+1600,backY,1,1,backCol,1);
+draw_vertex_texture_color(backX,backY+152,0,0,backCol,1);
+draw_vertex_texture_color(backX+1600,backY+152,1,0,backCol,1);
+draw_primitive_end();
+for(i=32;i&lt;room_width;i+=155){
+    a1 = sin(degtorad(i+angle));
+    a2 = cos(degtorad((i+angle)*2));
+    treeY = backY+100;
+    draw_sprite_ext(sprW2Tree,1,i,treeY,.7,.7,5*a1,c_white,1);
 }
-backX = (-400 + (400 * x3))
-backY += 32
-backCol = make_color_rgb(97, 140, 60)
-draw_primitive_begin_texture(5, background_get_texture(bCloudW2))
-draw_vertex_texture_color(backX, backY, 0, 1, backCol, 1)
-draw_vertex_texture_color((backX + 1600), backY, 1, 1, backCol, 1)
-draw_vertex_texture_color(backX, (backY + 152), 0, 0, backCol, 1)
-draw_vertex_texture_color((backX + 1600), (backY + 152), 1, 0, backCol, 1)
-draw_primitive_end()
-for (i = 16; i &lt; room_width; i += 200)
-{
-    a1 = sin(degtorad((i + angle)))
-    a2 = cos(degtorad(((i + angle) * 2)))
-    treeY = (backY + 120)
-    draw_sprite_ext(sprW2Tree, 2, i, treeY, 0.8, 0.8, (5 * a1), c_white, 1)
+backX = -400+400*x3;
+backY += 32;
+//backCol = make_color_rgb(79,120,36);
+backCol = make_color_rgb(97,140,60);
+draw_primitive_begin_texture(pr_trianglestrip,background_get_texture(bCloudW2));
+draw_vertex_texture_color(backX,backY,0,1,backCol,1);
+draw_vertex_texture_color(backX+1600,backY,1,1,backCol,1);
+draw_vertex_texture_color(backX,backY+152,0,0,backCol,1);
+draw_vertex_texture_color(backX+1600,backY+152,1,0,backCol,1);
+draw_primitive_end();
+for(i=16;i&lt;room_width;i+=200){
+    a1 = sin(degtorad(i+angle));
+    a2 = cos(degtorad((i+angle)*2));
+    treeY = backY+120;
+    draw_sprite_ext(sprW2Tree,2,i,treeY,.8,.8,5*a1,c_white,1);
 }
-backX = (-400 + (400 * x4))
-backY += 32
-backCol = make_color_rgb(79, 125, 50)
-draw_primitive_begin_texture(5, background_get_texture(bCloudW2))
-draw_vertex_texture_color(backX, backY, 0, 1, backCol, 1)
-draw_vertex_texture_color((backX + 1600), backY, 1, 1, backCol, 1)
-draw_vertex_texture_color(backX, (backY + 152), 0, 0, backCol, 1)
-draw_vertex_texture_color((backX + 1600), (backY + 152), 1, 0, backCol, 1)
-draw_primitive_end()
+backX = -400+400*x4;
+backY += 32;
+//backCol = make_color_rgb(56,100,13);
+backCol = make_color_rgb(79,125,50);
+draw_primitive_begin_texture(pr_trianglestrip,background_get_texture(bCloudW2));
+draw_vertex_texture_color(backX,backY,0,1,backCol,1);
+draw_vertex_texture_color(backX+1600,backY,1,1,backCol,1);
+draw_vertex_texture_color(backX,backY+152,0,0,backCol,1);
+draw_vertex_texture_color(backX+1600,backY+152,1,0,backCol,1);
+draw_primitive_end();
 </string>
           </argument>
         </arguments>

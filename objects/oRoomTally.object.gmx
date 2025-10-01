@@ -25,11 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>areaID = 0
-level[0] = -1
-levelsTotal = 1
-levelsClear = 0
-levelsGoal = 0
+            <string>areaID = 0;
+level[0] = -1;
+levelsTotal = 1;
+levelsClear = 0;
+levelsGoal = 0;
 </string>
           </argument>
         </arguments>
@@ -52,23 +52,24 @@ levelsGoal = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var iLevel;
-if ((levelsGoal != 0) &amp;&amp; (level[0] != -1))
-{
-    for (iLevel = 0; iLevel &lt; levelsTotal; iLevel += 1)
-    {
-        if (global.roomClear[level[iLevel]] == 1)
-            levelsClear += 1
+            <string>///area clear/complete
+if levelsGoal != 0 &amp;&amp; level[0] != -1{
+    for(var iLevel = 0; iLevel &lt; levelsTotal; iLevel += 1){
+        if global.roomClear[level[iLevel]] == 1{
+            levelsClear += 1;
+        }
     }
-    if (levelsClear &gt;= levelsGoal)
-        global.areaClear[areaID] = 1
-    else
-        global.areaClear[areaID] = 0
-    if (levelsClear == levelsTotal)
-        global.areaComplete[areaID] = 1
-    else
-        global.areaComplete[areaID] = 0
-    scrSaveGame(0)
+    if levelsClear &gt;= levelsGoal{
+        global.areaClear[areaID] = 1;
+    }else{
+        global.areaClear[areaID] = 0;
+    }
+    if levelsClear == levelsTotal{
+        global.areaComplete[areaID] = 1;
+    }else{
+        global.areaComplete[areaID] = 0;
+    }
+    scrSaveGame(false);
 }
 </string>
           </argument>
@@ -92,14 +93,31 @@ if ((levelsGoal != 0) &amp;&amp; (level[0] != -1))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_halign(fa_right)
-draw_set_valign(fa_middle)
-draw_set_font(fRoomTally)
-s = ((("Cleared: " + string(levelsClear)) + "/") + string(levelsGoal))
-draw_set_color(c_black)
-drawTextOutline(((view_xview[0] + 800) - 16), (view_yview[0] + 24), s, 1, 1)
-draw_set_color(c_white)
-draw_text(((view_xview[0] + 800) - 16), (view_yview[0] + 24), s)
+            <string>draw_set_halign(fa_right);
+draw_set_valign(fa_center);
+draw_set_font(fRoomTally);
+s = "Cleared: "+string(levelsClear)+"/"+string(levelsGoal);
+//l = string_width(s);
+//box
+/*draw_set_color(c_white);
+draw_rectangle(view_xview+800-32-l,view_yview,view_xview+799,view_yview+47,0);
+draw_set_color(c_black);
+draw_rectangle(view_xview+800-32-l,view_yview,view_xview+799,view_yview+47,1);*/
+//edge
+/*draw_text(view_xview+800-15,view_yview+24,s);
+draw_text(view_xview+800-17,view_yview+24,s);
+draw_text(view_xview+800-16,view_yview+23,s);
+draw_text(view_xview+800-16,view_yview+25,s);
+//corner
+draw_text(view_xview+800-15,view_yview+25,s);
+draw_text(view_xview+800-17,view_yview+23,s);
+draw_text(view_xview+800-15,view_yview+23,s);
+draw_text(view_xview+800-17,view_yview+25,s);*/
+//main
+draw_set_color(c_black);
+drawTextOutline(view_xview+800-16,view_yview+24,s,1,1);
+draw_set_color(c_white);
+draw_text(view_xview+800-16,view_yview+24,s);
 </string>
           </argument>
         </arguments>

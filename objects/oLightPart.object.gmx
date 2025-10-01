@@ -25,21 +25,22 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>direction = random(360)
-changedDirectionsYet = 0
-xS = xstart
-yS = ystart
-xLast = x
-yLast = y
-maxDist = 32
-maxLastDist = 14
-maxSpd = 1
-gravity = 0
-gravity_direction = 0
-image_speed = 0
-image_alpha = random_range(0.5, 0.8)
-hue = (212 - (40 * ((y - 200) / 400)))
-image_blend = make_color_hsv(hue, 180, 255)
+            <string>direction=random(360);
+changedDirectionsYet=0;
+xS=xstart;
+yS=ystart;
+xLast=x;
+yLast=y;
+maxDist=32;
+maxLastDist=14;
+maxSpd=1;
+gravity=0;
+gravity_direction=0;
+image_speed=0;
+image_alpha=random_range(0.5,0.8);
+
+hue = 212-40*((y-200)/400);
+image_blend = make_color_hsv(hue,180,255);
 </string>
           </argument>
         </arguments>
@@ -62,14 +63,13 @@ image_blend = make_color_hsv(hue, 180, 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((point_distance(x, y, xS, yS) &gt; maxDist) &amp;&amp; ((changedDirectionsYet == 0) || ((changedDirectionsYet == 1) &amp;&amp; (point_distance(x, y, xLast, yLast) &gt; maxLastDist))))
-{
-    gravity_direction = (point_direction(x, y, xS, yS) + random_range(-40, 40))
-    xLast = x
-    yLast = y
-    changedDirectionsYet = 1
+            <string>if point_distance(x,y,xS,yS)&gt;maxDist &amp;&amp; (changedDirectionsYet==0 || (changedDirectionsYet==1 &amp;&amp; point_distance(x,y,xLast,yLast)&gt;maxLastDist)){
+    gravity_direction=point_direction(x,y,xS,yS)+random_range(-40,40);
+    xLast=x;
+    yLast=y;
+    changedDirectionsYet=1;
 }
-speed = min(speed, maxSpd)
+speed=min(speed,maxSpd);
 </string>
           </argument>
         </arguments>
@@ -92,24 +92,22 @@ speed = min(speed, maxSpd)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>gravity_direction = direction
-if (type == 0)
-{
-    speed = random_range(0, 0.2)
-    gravity = 0.01
-    maxDist = 32
-    maxLastDist = 14
-    maxSpd = 0.3
-}
-else
-{
-    speed = random_range(0, 0.2)
-    gravity = 0.004
-    image_xscale *= 0.7
-    image_yscale *= 0.7
-    maxDist = 24
-    maxLastDist = 8
-    maxSpd = 0.15
+            <string>gravity_direction=direction;
+if type=0{
+    speed=random_range(0,0.2);
+    gravity=0.01;
+    maxDist=32;
+    maxLastDist=14;
+    maxSpd=0.3;
+}else{
+    speed=random_range(0,0.2);
+    gravity=0.004;
+    image_xscale *= 0.7;
+    image_yscale *= 0.7;
+    //myLight.s *= 0.7;
+    maxDist=24;
+    maxLastDist=8;
+    maxSpd=0.15;
 }
 </string>
           </argument>

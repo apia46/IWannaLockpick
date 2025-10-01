@@ -25,9 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sprite_index = sprLightSpot
-parent = -1
-draw = 1
+            <string>sprite_index = sprLightSpot;
+parent = -1;
+draw = 1;
 </string>
           </argument>
         </arguments>
@@ -50,12 +50,12 @@ draw = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (parent != self)
-{
-    if parent.visible
-        draw = 1
-    else
-        draw = 0
+            <string>if parent != -1{
+    if parent.visible{
+        draw = 1;
+    }else{
+        draw = 0;
+    }
 }
 </string>
           </argument>

@@ -1,4 +1,5 @@
-pairA[numPairs] = argument0
-pairB[numPairs] = argument1
-pairVis[numPairs] = 0
-numPairs += 1
+///defWarpPair(nodeA,nodeB);
+pairA[numPairs] = argument0;
+pairB[numPairs] = argument1;
+pairVis[numPairs] = 0;
+numPairs += 1;

@@ -25,13 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>angle = random(360)
-aspd = 0.15
-petals = 12
-radius = 32
-size = 1
-color = make_color_rgb(255, 0, 0)
-rainbow = 0
+            <string>angle = random(360);
+aspd = .15;
+petals = 12;
+radius = 32;
+size = 1;
+color = make_color_rgb(255,0,0);
+rainbow = 0;
 </string>
           </argument>
         </arguments>
@@ -54,18 +54,17 @@ rainbow = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (i = 0; i &lt; petals; i += 1)
-{
-    if ((irandom(10000) / 10000) &lt; (0.005 / petals))
-    {
-        boost[i] = (radius * 0.5)
-        spd[i] = 0
+            <string>///petal boost code
+for(i = 0; i &lt; petals; i += 1){
+    if irandom(10000)/10000 &lt; (.005/petals){//it's hacky but whatever
+        boost[i] = radius*.5;
+        spd[i] = 0;
     }
-    petalR[i] += (((radius + boost[i]) - petalR[i]) * 0.02)
-    spd[i] -= 0.004
-    boost[i] = max((boost[i] + spd[i]), 0)
+    petalR[i] += ((radius+boost[i]) - petalR[i]) * .02;
+    spd[i] -= .004;
+    boost[i] = max(boost[i] + spd[i], 0);
 }
-angle += aspd
+angle += aspd;
 </string>
           </argument>
         </arguments>
@@ -88,11 +87,10 @@ angle += aspd
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (i = 0; i &lt; petals; i += 1)
-{
-    boost[i] = 0
-    spd[i] = 0
-    petalR[i] = radius
+            <string>for(i = 0; i &lt; petals; i += 1){
+    boost[i] = 0;
+    spd[i] = 0;
+    petalR[i] = radius;
 }
 </string>
           </argument>
@@ -116,17 +114,17 @@ angle += aspd
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var petalX, petalY;
-draw_set_blend_mode(1)
-for (i = 0; i &lt; petals; i += 1)
-{
-    petalX = (x + lengthdir_x(petalR[i], ((angle + ((360 / petals) * i)) - 45)))
-    petalY = (y + lengthdir_y(petalR[i], ((angle + ((360 / petals) * i)) - 45)))
-    if rainbow
-        color = make_color_hsv(((i * 255) / petals), 255, 120)
-    draw_sprite_ext(sprFlowerPetal, 0, petalX, petalY, size, size, (angle + ((360 / petals) * i)), color, 0.5)
+            <string>///Yay Flowers
+draw_set_blend_mode(bm_add);
+for(i=0; i&lt;petals; i+=1){
+    var petalX = x + lengthdir_x(petalR[i],angle+360/petals*i - 45);
+    var petalY = y + lengthdir_y(petalR[i],angle+360/petals*i - 45);
+    if rainbow{
+        color = make_color_hsv(i*255/petals,255,120);
+    }
+    draw_sprite_ext(sprFlowerPetal,0,petalX,petalY,size,size,angle+360/petals*i,color,.5);
 }
-draw_set_blend_mode(0)
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

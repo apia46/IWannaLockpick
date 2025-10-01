@@ -25,19 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>convInd = 0
-gearA = 0
-for (t = 0; t &lt; 300; t += 32)
-{
-    with (instance_create(random(768), 608, oFloatPart3))
-    {
-        x += (hspeed * other.t)
-        y += (vspeed * other.t)
+            <string>convInd = 0;
+gearA = 0;
+
+for(t=0;t&lt;300;t+=32){
+    with instance_create(random(800-32),608,oFloatPart3){
+        x += hspeed*other.t;
+        y += vspeed*other.t;
     }
 }
-alarm[0] = 32
-background_color = make_color_rgb(60, 80, 60)
-background_blend[0] = make_color_rgb(150, 190, 150)
+alarm[0] = 32;
+
+background_color = make_color_rgb(60,80,60);
+background_blend[0] = make_color_rgb(150,190,150);
 </string>
           </argument>
         </arguments>
@@ -60,8 +60,9 @@ background_blend[0] = make_color_rgb(150, 190, 150)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 32
-instance_create(random(768), 608, oFloatPart3)
+            <string>///floating door parts
+alarm[0] = 32;
+instance_create(random(800-32),608,oFloatPart3);
 </string>
           </argument>
         </arguments>
@@ -84,23 +85,34 @@ instance_create(random(768), 608, oFloatPart3)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(1)
-draw_sprite_ext(sprLightSpot, 0, 400, 304, 4, 4, 0, c_white, 0.25)
-draw_set_blend_mode(0)
-convInd = ((convInd + 0.5) % 8)
-for (z = 8; z &gt;= 5; z -= 1)
-{
-    drawScale = (5 / z)
-    shadowOff = (3 * drawScale)
-    if (z == 5)
-        drawScale = 1
-    drawAlpha = (1 - drawScale)
-    drawY = (128 + (352 * drawScale))
-    for (drawX = -32; drawX &lt; 800; drawX += (32 * drawScale))
-    {
-        draw_sprite_ext(sprConveyor, convInd, (drawX + shadowOff), (drawY + shadowOff), drawScale, drawScale, 0, c_black, (0.35 * drawScale))
-        draw_sprite_ext(sprConveyor, convInd, drawX, drawY, drawScale, drawScale, 0, c_white, 1)
-        draw_sprite_ext(sprConveyorWhite, convInd, drawX, drawY, drawScale, drawScale, 0, c_silver, drawAlpha)
+            <string>///Big fat circle
+draw_set_blend_mode(bm_add);
+draw_sprite_ext(sprLightSpot,0,400,304,4,4,0,c_white,.25);
+draw_set_blend_mode(bm_normal);
+//Pistons
+/*pistonT = (pistonT + .5) mod 360;
+for(drawX = -64; drawX &lt; 800; drawX += 64){
+    drawY = 32 * sin(degtorad(pistonT + drawX));
+    draw_sprite_ext(sprPiston,0,drawX+1,drawY+1,1,1,0,c_black,.1);
+    draw_sprite_ext(sprPiston,0,drawX,drawY,1,1,0,c_white,1);
+}*/
+//Gears
+/*gearA = (gearA + 45/64) mod 360;
+for(drawX = -64; drawX &lt; 864; drawX += 64){
+    draw_sprite_ext(sprGear,0,drawX,352,.8,.8,gearA,make_color_rgb(60,70,60),1);
+}*/
+//Conveyors
+convInd = (convInd + .5) mod 8;
+for(z=8;z&gt;=5;z-=1){
+    drawScale = 5/z;
+    shadowOff = 3*drawScale;
+    if z == 5{drawScale = 1;}//idk i just dont trust floating points
+    drawAlpha = 1 - drawScale;
+    drawY = 128+352*drawScale;
+    for(drawX=-32;drawX&lt;800;drawX+=32*drawScale){
+        draw_sprite_ext(sprConveyor,convInd,drawX+shadowOff,drawY+shadowOff,drawScale,drawScale,0,c_black,.35*drawScale);
+        draw_sprite_ext(sprConveyor,convInd,drawX,drawY,drawScale,drawScale,0,c_white,1);
+        draw_sprite_ext(sprConveyorWhite,convInd,drawX,drawY,drawScale,drawScale,0,c_ltgray,drawAlpha);
     }
 }
 </string>

@@ -25,9 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrGateInit()
-outLerp = 1
-outCol = 16777215
+            <string>///Init
+scrGateInit();
+outLerp = 1;
+outCol = c_white;
 </string>
           </argument>
         </arguments>
@@ -50,10 +51,11 @@ outCol = 16777215
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (myLight != self)
-{
-    with (myLight)
-        instance_destroy()
+            <string>///destroys child object aka lights
+if myLight != -1{
+    with myLight{
+        instance_destroy();
+    }
 }
 </string>
           </argument>
@@ -77,18 +79,17 @@ outCol = 16777215
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrGateStep()
-if solid
-{
-    outLerp = min((outLerp + 0.1), 1)
-    outCol = merge_color(c_black, c_white, outLerp)
-    image_alpha = lerp(0.35, 1, outLerp)
-}
-else
-{
-    outLerp = max((outLerp - 0.1), 0)
-    outCol = merge_color(c_black, c_white, outLerp)
-    image_alpha = lerp(0.35, 1, outLerp)
+            <string>///Solid check
+scrGateStep();
+//Outline
+if solid{
+    outLerp = min(outLerp+.1,1);
+    outCol = merge_color(c_black,c_white,outLerp);
+    image_alpha = lerp(.35,1,outLerp);
+}else{
+    outLerp = max(outLerp-.1,0);
+    outCol = merge_color(c_black,c_white,outLerp);
+    image_alpha = lerp(.35,1,outLerp);
 }
 </string>
           </argument>
@@ -112,16 +113,16 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_xscale = w
-image_yscale = h
-myLight = self
-if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exists(oBGW7) || (instance_exists(oLightsW9) || instance_exists(oBGW12)))))
-{
-    myLight = instance_create((x + (16 * w)), (y + (16 * h)), oLight)
-    myLight.parent = id
-    myLight.image_xscale = (0.2 * max(w, h))
-    myLight.image_yscale = myLight.image_xscale
-    myLight.image_blend = c_white
+            <string>image_xscale = w;
+image_yscale = h;
+
+myLight = -1;
+if instance_exists(oLightsW5) || instance_exists(oLightsW4) || instance_exists(oBGW7) || instance_exists(oLightsW9) || instance_exists(oBGW12){
+    myLight = instance_create(x+16*w,y+16*h,oLight);
+    myLight.parent = id;
+    myLight.image_xscale = .2 * max(w,h);
+    myLight.image_yscale = myLight.image_xscale;
+    myLight.image_blend = c_white;
 }
 </string>
           </argument>
@@ -145,7 +146,8 @@ if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exist
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrGateDrawMain()
+            <string>///Nested script
+scrGateDrawMain();
 </string>
           </argument>
         </arguments>

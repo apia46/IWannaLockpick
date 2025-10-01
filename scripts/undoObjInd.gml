@@ -1,37 +1,38 @@
-switch argument0
-{
-    case 238:
-    case 251:
-    case 252:
-    case 253:
-    case 255:
-    case 254:
-    case 256:
-    case 257:
-    case 258:
-    case 259:
-    case 260:
-    case 250:
-    case 261:
-    case 262:
+switch argument0{
+    case oKeyBulk:
+    case oKeyWhite:
+    case oKeyOrange:
+    case oKeyPurple:
+    case oKeyCyan:
+    case oKeyPink:
+    case oKeyRed:
+    case oKeyGreen:
+    case oKeyBlue:
+    case oKeyBrown:
+    case oKeyPure:
+    case oKeyMaster:
+    case oKeyBlack:
+    case oKeyCopy:
         return 0;
-    case 234:
-    case 264:
-    case 265:
-    case 266:
-    case 268:
-    case 267:
-    case 269:
-    case 270:
-    case 271:
-    case 272:
-    case 274:
-    case 273:
-    case 275:
-    case 277:
-    case 276:
+    break;
+    case oDoorSimple:
+    case oDoorWhite:
+    case oDoorOrange:
+    case oDoorPurple:
+    case oDoorCyan:
+    case oDoorPink:
+    case oDoorRed:
+    case oDoorGreen:
+    case oDoorBlue:
+    case oDoorBrown:
+    case oDoorPure:
+    case oDoorGold:
+    case oDoorBlack:
+    case oDoorCopy:
+    case oDoorStone:
         return 1;
-    case 235:
+    break;
+    case oDoorCombo:
         return 2;
+    break;
 }
-

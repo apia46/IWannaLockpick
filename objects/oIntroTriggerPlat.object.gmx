@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>triggered = 0
+            <string>triggered = 0;
 </string>
           </argument>
         </arguments>
@@ -48,12 +48,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!triggered)
-{
-    triggered = 1
-    scrPlaySoundExt(sndCherry, 1, 0.5, false)
-    with (oIntroPlatform)
-        state = 1
+            <string>if !triggered{
+    triggered = 1;
+    scrPlaySoundExt(sndCherry,1,.5,0);
+    with oIntroPlatform{state = 1;}
 }
 </string>
           </argument>

@@ -25,11 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0.133333333333333
-image_index = random(2)
-scale = random_range(0.75, 1)
-image_xscale = scale
-image_yscale = scale
+            <string>image_speed = 2/15;
+image_index = random(2);
+scale = random_range(.75,1);
+image_xscale = scale;
+image_yscale = scale;
 </string>
           </argument>
         </arguments>
@@ -52,9 +52,8 @@ image_yscale = scale
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_alpha *= 0.9
-if (image_alpha &lt; 0.005)
-    instance_destroy()
+            <string>image_alpha *= .9;
+if image_alpha &lt; .005{instance_destroy();}
 </string>
           </argument>
         </arguments>
@@ -77,8 +76,8 @@ if (image_alpha &lt; 0.005)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, floor(image_index), (x + scale), (y + scale), scale, scale, 0, make_color_rgb(255, 150, 255), image_alpha)
-draw_self()
+            <string>draw_sprite_ext(sprite_index,floor(image_index),x+scale,y+scale,scale,scale,0,make_color_rgb(255,150,255),image_alpha);
+draw_self();
 </string>
           </argument>
         </arguments>

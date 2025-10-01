@@ -25,11 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
-image_alpha = 0
-r = 64
-xT = x
-yT = y
+            <string>image_speed = 0;
+image_alpha = 0;
+r = 64;
+xT = x;
+yT = y;
 </string>
           </argument>
         </arguments>
@@ -52,12 +52,14 @@ yT = y
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if instance_exists(objPlayer)
-    dist = point_distance(xT, yT, objPlayer.x, objPlayer.y)
-if (dist &lt; r)
-    image_alpha = min((image_alpha + 0.02), 1)
-else
-    image_alpha = max((image_alpha - 0.02), 0)
+            <string>if instance_exists(objPlayer){
+    dist = point_distance(xT,yT,objPlayer.x,objPlayer.y);
+}
+if dist &lt; r{
+    image_alpha = min(image_alpha+0.02,1);
+}else{
+    image_alpha = max(image_alpha-0.02,0);
+}
 </string>
           </argument>
         </arguments>

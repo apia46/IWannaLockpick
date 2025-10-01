@@ -25,19 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>lightA = 0
-lightMult = 1.33
-for (iX = 0; iX &lt; room_width; iX += 120)
-{
-    for (iY = 0; iY &lt; room_height; iY += 120)
-    {
-        spawnX = (iX + random_range(0, 120))
-        spawnY = (iY + random_range(0, 120))
-        particle = instance_create(spawnX, spawnY, oLightPartNoSurf)
-        particle.type = 1
-        particle.image_index = 1
-        with (particle)
-            event_user(0)
+            <string>///particles
+
+lightA = 0;
+lightMult = 1.33;
+
+for(iX=0;iX&lt;room_width;iX+=120){
+    for(iY=0;iY&lt;room_height;iY+=120){
+        /*spawnX = iX + random_range(8,120-8);
+        spawnY = iY + random_range(8,120-8);
+        particle = instance_create(spawnX,spawnY,oLightPartNoSurf);
+        particle.type = 0;
+        particle.image_index = 0;
+        with particle{
+            event_user(0);
+        }*/
+        
+        spawnX = iX + random_range(0,120);
+        spawnY = iY + random_range(0,120);
+        particle = instance_create(spawnX,spawnY,oLightPartNoSurf);
+        particle.type = 1;
+        particle.image_index = 1;
+        with particle{
+            event_user(0);
+        }
     }
 }
 </string>
@@ -62,14 +73,17 @@ for (iX = 0; iX &lt; room_width; iX += 120)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>lightA = ((lightA + 2) % 360)
-lightMult = (1.33 * ((1 + (0.15 * sin(degtorad(lightA)))) + (0.015 * random_range(-1, 1))))
-with (oLightPartNoSurf)
-    draw_self()
-draw_set_blend_mode(1)
-with (oLightPartNoSurf)
-    draw_sprite_ext(sprLightSpot, 0, x, y, ((0.33 * image_xscale) * other.lightMult), ((0.33 * image_yscale) * other.lightMult), 0, image_blend, (image_alpha * 0.33))
-draw_set_blend_mode(0)
+            <string>lightA = (lightA + 2) mod 360;
+lightMult = 1.33 * (1 + .15*sin(degtorad(lightA)) + .015 * random_range(-1,1));
+
+with oLightPartNoSurf{
+    draw_self();
+}
+draw_set_blend_mode(bm_add);
+with oLightPartNoSurf{
+    draw_sprite_ext(sprLightSpot,0,x,y,.33*image_xscale*other.lightMult,.33*image_yscale*other.lightMult,0,image_blend,image_alpha*.33);
+}
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

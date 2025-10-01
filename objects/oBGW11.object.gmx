@@ -25,31 +25,40 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(0, 0, oW11Surf)
-sunA = 0
-sunA2 = 0
-sunA3 = 0
-sunB = make_color_hsv(24, 90, 255)
-sunB2 = make_color_hsv(30, 70, 255)
-sunB3 = make_color_hsv(36, 50, 255)
-sunB4 = make_color_hsv(42.5, 30, 255)
-alarm[0] = 100
-for (t = 0; t &lt; 12000; t += 100)
-{
-    for (i = 0; i &lt; 4; i += 1)
-    {
-        with (instance_create(800, ((125 * i) + random(125)), oCloud2))
-        {
-            x += (hspeed * other.t)
-            depth += round(y)
+            <string>//Surface object
+instance_create(0,0,oW11Surf);
+//Sun
+sunA = 0;
+sunA2 = 0;
+sunA3 = 0;
+sunB = make_color_hsv(24,90,255);
+sunB2 = make_color_hsv(30,70,255);
+sunB3 = make_color_hsv(36,50,255);
+sunB4 = make_color_hsv(42.5,30,255);
+//Clouds
+alarm[0] = 100;
+for(t=0;t&lt;400*30;t+=100){
+    for(i=0;i&lt;4;i+=1){
+        with instance_create(800,125*i+random(125),oCloud2){
+            x += hspeed * other.t;
+            depth += round(y);
         }
     }
 }
-background_color = make_color_hsv(140, 40, 230)
-background_index[0] = bGradient
-background_visible[0] = 1
-background_blend[0] = make_color_hsv(140, 70, 70)
-spireX = 0
+//BG
+background_color = make_color_hsv(140,40,230);
+background_index[0] = bGradient;
+background_visible[0] = true;
+background_blend[0] = make_color_hsv(140,70,70);
+//Spires
+spireX = 0;
+//BLEHHH
+/*
+blockSurf = surface_create(32,32);
+surface_set_target(blockSurf);
+draw_sprite(sprTileW11,0,0,0);
+surface_reset_target();
+*/
 </string>
           </argument>
         </arguments>
@@ -72,11 +81,11 @@ spireX = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 100
-for (i = 0; i &lt; 4; i += 1)
-{
-    a = instance_create(800, ((125 * i) + random(125)), oCloud2)
-    a.depth += round(a.y)
+            <string>///Cloud gen
+alarm[0] = 100;
+for(i=0;i&lt;4;i+=1){
+    a = instance_create(800,125*i+random(125),oCloud2);
+    a.depth += round(a.y);
 }
 </string>
           </argument>
@@ -100,7 +109,16 @@ for (i = 0; i &lt; 4; i += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>spireX -= 0.25
+            <string>///Sun+Spires
+spireX -= .25;
+
+//Surface (WHY DO I HAVE TO DO THIS GAMEMAKER, WHYYYYYYY)
+/*if !surface_exists(blockSurf){
+    blockSurf = surface_create(32,32);
+    surface_set_target(blockSurf);
+    draw_sprite(sprTileW11,0,0,0);
+    surface_reset_target();
+}
 </string>
           </argument>
         </arguments>
@@ -123,58 +141,103 @@ for (i = 0; i &lt; 4; i += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(1)
-draw_sprite_ext(sprLightSpot, 0, 400, 304, 3, 3, 0, sunB4, 0.75)
-draw_set_blend_mode(0)
-texture_set_interpolation(1)
-draw_background_tiled(bCliffThings2, spireX, 0)
-texture_set_interpolation(global.smoothingMode)
-sunA += 0.125
-sunA2 += 0.1875
-sunA3 += 0.25
-draw_set_color(sunB)
-r = 175
-for (i = 0; i &lt; 30; i += 1)
-{
-    a1 = (sunA + (12 * i))
-    a2 = (a1 + 6)
-    x1 = (r * sin(degtorad(a1)))
-    y1 = (r * cos(degtorad(a1)))
-    x2 = (r * sin(degtorad(a2)))
-    y2 = (r * cos(degtorad(a2)))
-    draw_triangle(400, 128, (400 + x1), (128 + y1), (400 + x2), (128 + y2), 0)
+            <string>//draw_background(bSkyTower,0,0);
+//Backlight
+draw_set_blend_mode(bm_add);
+draw_sprite_ext(sprLightSpot,0,400,304,3,3,0,sunB4,.75);
+draw_set_blend_mode(bm_normal);
+//Spires
+texture_set_interpolation(1);
+draw_background_tiled(bCliffThings2,spireX,0);
+texture_set_interpolation(global.smoothingMode);
+//Sun
+sunA += .125;
+sunA2 += .1875;
+sunA3 += .25;
+draw_set_color(sunB);
+r = 175;
+for(i=0;i&lt;30;i+=1){
+    a1 = sunA + 360/30*i;
+    a2 = a1 + 360/60;
+    x1 = r*sin(degtorad(a1)); y1 = r*cos(degtorad(a1));
+    x2 = r*sin(degtorad(a2)); y2 = r*cos(degtorad(a2));
+    draw_triangle(400,128,400+x1,128+y1,400+x2,128+y2,0);
 }
-r = 140
-draw_circle(400, 128, r, 0)
-draw_set_color(sunB2)
-r = 157.5
-for (i = 0; i &lt; 20; i += 1)
-{
-    a1 = (sunA2 + (18 * i))
-    a2 = (a1 + 9)
-    x1 = (r * sin(degtorad(a1)))
-    y1 = (r * cos(degtorad(a1)))
-    x2 = (r * sin(degtorad(a2)))
-    y2 = (r * cos(degtorad(a2)))
-    draw_triangle(400, 128, (400 + x1), (128 + y1), (400 + x2), (128 + y2), 0)
+r = 140;
+draw_circle(400,128,r,0);
+draw_set_color(sunB2);
+
+r=(175+140)/2;
+for(i=0;i&lt;20;i+=1){
+    a1 = sunA2 + 360/20*i;
+    a2 = a1 + 360/40;
+    x1 = r*sin(degtorad(a1)); y1 = r*cos(degtorad(a1));
+    x2 = r*sin(degtorad(a2)); y2 = r*cos(degtorad(a2));
+    draw_triangle(400,128,400+x1,128+y1,400+x2,128+y2,0);
 }
-r = 110
-draw_circle(400, 128, r, 0)
-draw_set_color(sunB3)
-r = 125
-for (i = 0; i &lt; 10; i += 1)
-{
-    a1 = (sunA3 + (36 * i))
-    a2 = (a1 + 18)
-    x1 = (r * sin(degtorad(a1)))
-    y1 = (r * cos(degtorad(a1)))
-    x2 = (r * sin(degtorad(a2)))
-    y2 = (r * cos(degtorad(a2)))
-    draw_triangle(400, 128, (400 + x1), (128 + y1), (400 + x2), (128 + y2), 0)
+r = 110;
+draw_circle(400,128,r,0);
+draw_set_color(sunB3);
+
+r=(140+110)/2;
+for(i=0;i&lt;10;i+=1){
+    a1 = sunA3 + 360/10*i;
+    a2 = a1 + 360/20;
+    x1 = r*sin(degtorad(a1)); y1 = r*cos(degtorad(a1));
+    x2 = r*sin(degtorad(a2)); y2 = r*cos(degtorad(a2));
+    draw_triangle(400,128,400+x1,128+y1,400+x2,128+y2,0);
 }
-r = 80
-draw_circle(400, 128, r, 0)
-draw_set_color(c_white)
+r = 80;
+draw_circle(400,128,r,0);
+draw_set_color(c_white);
+
+//I seriously hate Gamemaker so much sometimes
+/*
+xTiles = room_width/32;
+yTiles = room_height/32;
+stretch = 96/400;
+rw = room_width;
+rh = room_height;
+
+col1 = make_color_rgb(150,150,150);
+col2 = make_color_rgb(200,200,200);
+
+if surface_exists(blockSurf){
+    blockTex = surface_get_texture(blockSurf);
+}else{
+    exit;
+}
+texture_set_repeat(true);
+draw_primitive_begin_texture(pr_trianglelist,blockTex);
+//Top
+draw_vertex_texture_color(-400*stretch,-304*stretch,0,0,col1,1);
+draw_vertex_texture_color(rw+400*stretch,-304*stretch,xTiles,0,col1,1);
+draw_vertex_texture_color(400*stretch,304*stretch,0,6,col2,1);
+draw_vertex_texture_color(rw+400*stretch,-304*stretch,xTiles,0,col1,1);
+draw_vertex_texture_color(400*stretch,304*stretch,0,6,col2,1);
+draw_vertex_texture_color(rw-400*stretch,304*stretch,xTiles,6,col2,1);
+//Right
+draw_vertex_texture_color(rw-400*stretch,304*stretch,0,0,col2,1);
+draw_vertex_texture_color(rw+400*stretch,-304*stretch,6,0,col1,1);
+draw_vertex_texture_color(rw-400*stretch,rh-304*stretch,0,yTiles,col2,1);
+draw_vertex_texture_color(rw+400*stretch,-304*stretch,6,0,col1,1);
+draw_vertex_texture_color(rw-400*stretch,rh-304*stretch,0,yTiles,col2,1);
+draw_vertex_texture_color(rw+400*stretch,rh+304*stretch,6,yTiles,col1,1);
+//Bottom
+draw_vertex_texture_color(400*stretch,rh-304*stretch,0,0,col2,1);
+draw_vertex_texture_color(rw-400*stretch,rh-304*stretch,xTiles,0,col2,1);
+draw_vertex_texture_color(-400*stretch,rh+304*stretch,0,6,col1,1);
+draw_vertex_texture_color(rw-400*stretch,rh-304*stretch,xTiles,0,col2,1);
+draw_vertex_texture_color(-400*stretch,rh+304*stretch,0,6,col1,1);
+draw_vertex_texture_color(rw+400*stretch,rh+304*stretch,xTiles,6,col1,1);
+//Left
+draw_vertex_texture_color(-400*stretch,-304*stretch,0,0,col1,1);
+draw_vertex_texture_color(400*stretch,304*stretch,6,0,col2,1);
+draw_vertex_texture_color(-400*stretch,rh+304*stretch,0,yTiles,col1,1);
+draw_vertex_texture_color(400*stretch,304*stretch,6,0,col2,1);
+draw_vertex_texture_color(-400*stretch,rh+304*stretch,0,yTiles,col1,1);
+draw_vertex_texture_color(400*stretch,rh-304*stretch,0,0,col2,1);
+draw_primitive_end();
 </string>
           </argument>
         </arguments>

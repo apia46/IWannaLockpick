@@ -25,16 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a1 = 0
-a2 = 0
-a3 = 0
-as1 = 0
-as2 = 120
-as3 = 240
-r1 = 64
-r2 = 88
-r3 = 112
-rotA = 0
+            <string>a1 = 0;
+a2 = 0;
+a3 = 0;
+as1 = 0;
+as2 = 120;
+as3 = 240;
+
+r1 = 64;
+r2 = 88;
+r3 = 112;
+
+rotA = 0;
 </string>
           </argument>
         </arguments>
@@ -57,14 +59,15 @@ rotA = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a1 += 1
-a2 -= 0.75
-a3 += 0.5
-as1 += 1
-as2 += 0.75
-as3 += 0.5
-rotA = ((rotA + 1.5) % 360)
-image_angle = (10 * sin(degtorad(rotA)))
+            <string>a1 += 1;
+a2 -= .75;
+a3 += .5;
+as1 += 1;
+as2 += .75;
+as3 += .5;
+
+rotA = (rotA + 1.5) mod 360;
+image_angle = 10*sin(degtorad(rotA));
 </string>
           </argument>
         </arguments>
@@ -87,34 +90,30 @@ image_angle = (10 * sin(degtorad(rotA)))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, ia, ix, iy;
-col1 = make_color_rgb(140, 140, 20)
-col2 = make_color_rgb(140, 20, 140)
-col3 = make_color_rgb(20, 140, 140)
-draw_set_blend_mode(1)
-for (i = 0; i &lt; 16; i += 1)
-{
-    ia = (a1 + ((360 * i) / 16))
-    ix = (x + (r1 * sin(degtorad(ia))))
-    iy = (y + ((r1 / 5) * cos(degtorad((ia + as1)))))
-    draw_sprite_ext(sprGRStar, 0, ix, iy, 1, 1, 0, col1, 1)
+            <string>col1 = make_color_rgb(140,140,20);
+col2 = make_color_rgb(140,20,140);
+col3 = make_color_rgb(20,140,140);
+draw_set_blend_mode(bm_add);
+for(var i = 0; i &lt; 16; i += 1){
+    var ia = a1 + 360*i/16;
+    var ix = x + r1 * sin(degtorad(ia));
+    var iy = y + r1 / 5 * cos(degtorad(ia+as1));
+    draw_sprite_ext(sprGRStar,0,ix,iy,1,1,0,col1,1);
 }
-for (i = 0; i &lt; 20; i += 1)
-{
-    ia = (a2 + ((360 * i) / 20))
-    ix = (x + (r2 * sin(degtorad(ia))))
-    iy = (y + ((r2 / 5) * cos(degtorad((ia + as2)))))
-    draw_sprite_ext(sprGRStar, 0, ix, iy, 1, 1, 0, col2, 1)
+for(var i = 0; i &lt; 20; i += 1){
+    var ia = a2 + 360*i/20;
+    var ix = x + r2 * sin(degtorad(ia));
+    var iy = y + r2 / 5 * cos(degtorad(ia+as2));
+    draw_sprite_ext(sprGRStar,0,ix,iy,1,1,0,col2,1);
 }
-for (i = 0; i &lt; 24; i += 1)
-{
-    ia = (a3 + ((360 * i) / 24))
-    ix = (x + (r3 * sin(degtorad(ia))))
-    iy = (y + ((r3 / 5) * cos(degtorad((ia + as3)))))
-    draw_sprite_ext(sprGRStar, 0, ix, iy, 1, 1, 0, col3, 1)
+for(var i = 0; i &lt; 24; i += 1){
+    var ia = a3 + 360*i/24;
+    var ix = x + r3 * sin(degtorad(ia));
+    var iy = y + r3 / 5 * cos(degtorad(ia+as3));
+    draw_sprite_ext(sprGRStar,0,ix,iy,1,1,0,col3,1);
 }
-draw_sprite_ext(sprStarGlow, 0, x, y, 0.4, 0.4, rotA, c_white, 0.5)
-draw_set_blend_mode(0)
+draw_sprite_ext(sprStarGlow,0,x,y,.4,.4,rotA,c_white,.5);
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

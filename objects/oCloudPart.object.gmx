@@ -25,21 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sc = random_range(0.375, 0.5)
-scTarget = random_range(0.375, 0.5)
-image_xscale = sc
-image_yscale = sc
-if ((instance_position(x, (y - 16), oDoorSimple) != -4) || ((instance_position(x, (y - 16), oDoorCombo) != -4) || place_meeting(x, (y - 16), oKeyBulk)))
-    y += 4
-if ((instance_position(x, (y + 16), oDoorSimple) != -4) || ((instance_position(x, (y + 16), oDoorCombo) != -4) || place_meeting(x, (y + 16), oKeyBulk)))
-    y -= 4
-if ((instance_position((x - 16), y, oDoorSimple) != -4) || ((instance_position((x - 16), y, oDoorCombo) != -4) || place_meeting((x - 16), y, oKeyBulk)))
-    x += 4
-if ((instance_position((x + 16), y, oDoorSimple) != -4) || ((instance_position((x + 16), y, oDoorCombo) != -4) || place_meeting((x + 16), y, oKeyBulk)))
-    x -= 4
-x += random_range(-1, 1)
-y += random_range(-1, 1)
-alarm[0] = irandom_range(0, 50)
+            <string>sc = random_range(24/64,32/64);
+scTarget = random_range(24/64,32/64);
+image_xscale = sc;
+image_yscale = sc;
+if instance_position(x,y-16,oDoorSimple) != noone || instance_position(x,y-16,oDoorCombo) != noone || place_meeting(x,y-16,oKeyBulk){
+    y += 4;
+}
+if instance_position(x,y+16,oDoorSimple) != noone || instance_position(x,y+16,oDoorCombo) != noone || place_meeting(x,y+16,oKeyBulk){
+    y -= 4;
+}
+if instance_position(x-16,y,oDoorSimple) != noone || instance_position(x-16,y,oDoorCombo) != noone || place_meeting(x-16,y,oKeyBulk){
+    x += 4;
+}
+if instance_position(x+16,y,oDoorSimple) != noone || instance_position(x+16,y,oDoorCombo) != noone || place_meeting(x+16,y,oKeyBulk){
+    x -= 4;
+}
+x += random_range(-1,1);
+y += random_range(-1,1);
+alarm[0] = irandom_range(0,50);
 </string>
           </argument>
         </arguments>
@@ -62,8 +66,8 @@ alarm[0] = irandom_range(0, 50)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 50
-scTarget = random_range(0.375, 0.5)
+            <string>alarm[0] = 50;
+scTarget = random_range(24/64,32/64);
 </string>
           </argument>
         </arguments>
@@ -86,9 +90,9 @@ scTarget = random_range(0.375, 0.5)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sc += ((scTarget - sc) * 0.05)
-image_xscale = sc
-image_yscale = sc
+            <string>sc += (scTarget - sc) * .05;
+image_xscale = sc;
+image_yscale = sc;
 </string>
           </argument>
         </arguments>

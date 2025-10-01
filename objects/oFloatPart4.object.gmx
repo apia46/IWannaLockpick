@@ -25,42 +25,40 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>doKill = 0
-alarm[0] = 10
-dir = choose(0, 1, 2, 3)
-image_alpha = 0.25
-s = random_range(0.6, 1)
-image_alpha *= s
-image_xscale = s
-image_yscale = s
-switch dir
-{
-    case 0:
-        x = random(800)
-        y = 0
-        image_angle = 90
-        vspeed = 3
-        break
-    case 1:
-        x = random(800)
-        y = 608
-        image_angle = 90
-        vspeed = -3
-        break
-    case 2:
-        x = 0
-        y = random(608)
-        hspeed = 3
-        break
-    case 3:
-        x = 800
-        y = random(608)
-        hspeed = -3
-        break
+            <string>doKill = 0;
+alarm[0] = 10;
+dir = choose(0,1,2,3);
+image_alpha = 0.25;
+s = random_range(.6,1);
+image_alpha *= s;
+image_xscale = s;
+image_yscale = s;
+switch dir{
+    case 0://Down
+        x = random(800);
+        y = 0;
+        image_angle = 90;
+        vspeed = 3;
+    break;
+    case 1://Up
+        x = random(800);
+        y = 608;
+        image_angle = 90;
+        vspeed = -3;
+    break;
+    case 2://Left
+        x = 0;
+        y = random(608);
+        hspeed = 3;
+    break;
+    case 3://Right
+        x = 800;
+        y = random(608);
+        hspeed = -3;
+    break;
 }
-
-hspeed *= s
-vspeed *= s
+hspeed *= s;
+vspeed *= s;
 </string>
           </argument>
         </arguments>
@@ -83,7 +81,7 @@ vspeed *= s
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>doKill = 1
+            <string>doKill = 1;
 </string>
           </argument>
         </arguments>
@@ -106,8 +104,7 @@ vspeed *= s
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if doKill
-    instance_destroy()
+            <string>if doKill{instance_destroy();}
 </string>
           </argument>
         </arguments>

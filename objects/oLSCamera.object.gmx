@@ -25,15 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>snapDiv = 10
-if instance_exists(objPlayer)
+            <string>//place this object next to where player starts in the room and set the view to follow this object
+
+snapDiv = 10; //determines how fast the camera snaps to the player (higher numbers follow the player slower), can be changed in creation code
+
+if (instance_exists(objPlayer))
 {
-    x = objPlayer.x
-    y = objPlayer.y
+    x = objPlayer.x;
+    y = objPlayer.y;
 }
-wide = 0
-if global.areaClear[4]
-    wide = 1
+
+wide = 0;//Whether or not full movement is granted on the level select screen
+if global.areaClear[4]{//Checks to make sure you beat the "first phase"
+    wide = 1;
+}
 </string>
           </argument>
         </arguments>
@@ -56,20 +61,19 @@ if global.areaClear[4]
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if instance_exists(objPlayer)
+            <string>if (instance_exists(objPlayer))
 {
-    targetX = objPlayer.x
-    targetY = objPlayer.y
-    if (!wide)
-    {
-        targetX = clamp(targetX, 720, 880)
-        targetY = clamp(targetY, 0, 304)
+    targetX = objPlayer.x;
+    targetY = objPlayer.y;
+    if !wide{
+        targetX = clamp(targetX,320+400,1280-400);
+        targetY = clamp(targetY,0,304);
     }
-    x += ((targetX - x) / snapDiv)
-    y += ((targetY - y) / snapDiv)
+    x += (targetX - x) / snapDiv;
+    y += (targetY - y) / snapDiv;
 }
-view_xview[0] = clamp((x - 400), 0, (room_width - 800))
-view_yview[0] = clamp((y - 304), 0, (room_height - 608))
+view_xview[0] = clamp(x-400,0,room_width-800);
+view_yview[0] = clamp(y-304,0,room_height-608);
 </string>
           </argument>
         </arguments>
@@ -92,10 +96,10 @@ view_yview[0] = clamp((y - 304), 0, (room_height - 608))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if instance_exists(objPlayer)
+            <string>if (instance_exists(objPlayer))
 {
-    x = objPlayer.x
-    y = objPlayer.y
+    x = objPlayer.x;
+    y = objPlayer.y;
 }
 </string>
           </argument>

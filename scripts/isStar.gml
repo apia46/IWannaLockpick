@@ -1,6 +1,7 @@
-var _ccheck;
-_ccheck = argument0
-if (_ccheck == 12)
+///isStar(color,colorCopy);
+var _ccheck = argument0;
+if _ccheck == key_COPY{
     return global.star[argument1];
-else
+}else{
     return global.star[argument0];
+}

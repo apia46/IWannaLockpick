@@ -25,45 +25,50 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.inCutscene = 1
-itemID = 0
-msg[0, 0] = "You found the Lens of Truth!"
-msg[0, 1] = "What could it be for..?"
-length[0] = 2
-msg[1, 0] = "You found the PDA!"
-msg[1, 1] = (("Hold [" + getBindStr(global.specialButton, global.usingController)) + "] to view your key counts at any time!")
-msg[1, 2] = "You can even use it in Free-Camera Mode!"
-length[1] = 3
-msg[2, 0] = "You got the Warp Rod!"
-msg[2, 1] = (("Press [" + getBindStr(global.warpButton, global.usingController)) + "] to quickly travel between worlds!")
-msg[2, 2] = "You can only go to places you've visited before."
-length[2] = 3
-msg[3, 0] = "You got an Omega Key!"
-msg[3, 1] = "You get the feeling you made major progress somehow."
-length[3] = 2
-msg[4, 0] = "You found Kina's Heart!"
-msg[4, 1] = "A new world has opened up at the Focal Point!"
-msg[4, 2] = "You're on track to reach the end, for REAL this time!"
-msg[4, 3] = "I hope you're ready!"
-length[4] = 4
-drawString = ""
-curMsg = msg[0, 0]
-curPos = 0
-maxLength = length[0]
-msgMod = 0
-msgAt = 0
-msgLength = 0
-state = 0
-boxAngle = 0
-boxSin = 0
-boxX = 0
-boxY = 0
-boxW = 0
-boxH = 0
-drawX = 0
-drawY = 0
-drawW = 0
-drawH = 0
+            <string>global.inCutscene = 1;
+itemID = 0;//Which dialog tree to use
+msg[0,0] = "You found the Lens of Truth!";
+msg[0,1] = "What could it be for..?";
+length[0] = 2;//Length of msg array (2nd value)
+msg[1,0] = "You found the PDA!";
+msg[1,1] = "Hold ["+getBindStr(global.specialButton,global.usingController)+"] to view your key counts at any time!";
+msg[1,2] = "You can even use it in Free-Camera Mode!";
+length[1] = 3;
+msg[2,0] = "You got the Warp Rod!";
+msg[2,1] = "Press ["+getBindStr(global.warpButton,global.usingController)+"] to quickly travel between worlds!";
+msg[2,2] = "You can only go to places you've visited before.";
+length[2] = 3;
+msg[3,0] = "You got an Omega Key!";
+msg[3,1] = "You get the feeling you made major progress somehow.";
+//msg[3,2] = "Also, a new puzzle might have opened up somewhere...";
+//msg[3,3] = "Exciting!";
+length[3] = 2;
+msg[4,0] = "You found Kina's Heart!";
+msg[4,1] = "A new world has opened up at the Focal Point!";
+msg[4,2] = "You're on track to reach the end, for REAL this time!";
+msg[4,3] = "I hope you're ready!";
+length[4] = 4;
+drawString = "";//Blank text which gets more added to it
+curMsg = msg[0,0];
+curPos = 0;
+maxLength = length[0];
+
+msgMod = 0;
+msgAt = 0;
+msgLength = 0;
+
+state = 0;//States: 0 = Waiting, 1 = Box fits to screen, 2 = Text scrolls, 3 = Closing box
+
+boxAngle = 0;
+boxSin = 0;
+boxX = 0;
+boxY = 0;
+boxW = 0;
+boxH = 0;
+drawX = 0;
+drawY = 0;
+drawW = 0;
+drawH = 0;
 </string>
           </argument>
         </arguments>
@@ -86,96 +91,74 @@ drawH = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 1:
-        boxAngle = min((boxAngle + 4), 90)
-        boxSin = sin(degtorad(boxAngle))
-        drawX = lerp(boxXO, boxX, boxSin)
-        drawY = lerp(boxYO, boxY, boxSin)
-        drawW = lerp(boxWO, boxW, boxSin)
-        drawH = lerp(boxHO, boxH, boxSin)
-        if (boxAngle == 90)
-        {
-            state = 2
-            advText = 1
-            boxAngle = 0
-            boxSin = 0
-        }
-        break
-    case 2:
-        if advText
-        {
-            msgLength = string_length(curMsg)
-            msgMod = ((msgMod + 1) % 2)
-            if (msgMod == 0)
-            {
-                msgAt = min((msgAt + 1), msgLength)
-                char = string_copy(curMsg, msgAt, 1)
-                if ((char != " ") &amp;&amp; (char != "#"))
-                    talkSnd = scrPlaySoundExt(sndText, 0.6, 1.2, false)
-                if (msgAt == msgLength)
-                    advText = 0
+            <string>switch state{
+    case 1://Box grows to size
+        boxAngle = min(boxAngle + 4, 90);
+        boxSin = sin(degtorad(boxAngle));
+        drawX = lerp(boxXO,boxX,boxSin);
+        drawY = lerp(boxYO,boxY,boxSin);
+        drawW = lerp(boxWO,boxW,boxSin);
+        drawH = lerp(boxHO,boxH,boxSin);
+        if boxAngle == 90{state = 2;advText = 1;boxAngle = 0;boxSin = 0;}
+    break;
+    case 2://Text scrolling
+        if advText{
+            msgLength = string_length(curMsg);
+            msgMod = (msgMod + 1) mod 2;
+            if msgMod == 0{//advance text by 1
+                msgAt = min(msgAt + 1, msgLength);
+                char = string_copy(curMsg,msgAt,1);
+                if (char != " ")&amp;&amp;(char != "#"){
+                    talkSnd = scrPlaySoundExt(sndText,.6,1.2,false);
+                }
+                if msgAt == msgLength{
+                    advText = 0;
+                }
             }
-            if (scrButtonCheckPressed(global.selButton) || scrButtonCheckPressed(global.jumpButton))
-            {
-                msgAt = msgLength
-                advText = 0
-                scrPlaySoundExt(sndCamera, 0.8, 1.4, false)
+            if scrButtonCheckPressed(global.selButton) || scrButtonCheckPressed(global.jumpButton){
+                msgAt = msgLength; advText = 0; scrPlaySoundExt(sndCamera,.8,1.4,0);
             }
-        }
-        else if (scrButtonCheckPressed(global.selButton) || scrButtonCheckPressed(global.jumpButton))
-        {
-            scrPlaySoundExt(sndCamera, 0.8, 1.4, false)
-            curPos += 1
-            if (curPos != maxLength)
-            {
-                curMsg = msg[itemID, curPos]
-                msgAt = 0
-                boxXO = boxX
-                boxYO = boxY
-                boxWO = boxW
-                boxHO = boxH
-                boxW = (string_width(curMsg) + 16)
-                boxH = (string_height(curMsg) + 16)
-                boxX = round((400 - (boxW / 2)))
-                boxY = round((304 - (boxH / 2)))
-                state = 1
-            }
-            else
-            {
-                curMsg = " "
-                msgAt = 0
-                state = 3
-                boxXO = boxX
-                boxYO = boxY
-                boxWO = boxW
-                boxHO = boxH
-                boxW = 0
-                boxH = 0
-                boxX = 400
-                boxY = 304
+        }else{
+            if scrButtonCheckPressed(global.selButton) || scrButtonCheckPressed(global.jumpButton){
+                scrPlaySoundExt(sndCamera,.8,1.4,0);
+                curPos += 1;
+                if curPos != maxLength{
+                    curMsg = msg[itemID,curPos];
+                    msgAt = 0;
+                    //Get box dimensions
+                    boxXO = boxX; boxYO = boxY; boxWO = boxW; boxHO = boxH;
+                    boxW = string_width(curMsg)+16;
+                    boxH = string_height(curMsg)+16;
+                    boxX = round(400-boxW/2);
+                    boxY = round(304-boxH/2);
+                    state = 1;
+                }else{
+                    curMsg = " "; msgAt = 0;
+                    state = 3;
+                    boxXO = boxX; boxYO = boxY; boxWO = boxW; boxHO = boxH;
+                    boxW = 0;
+                    boxH = 0;
+                    boxX = 400;
+                    boxY = 304;
+                }
             }
         }
-        drawString = string_copy(curMsg, 1, msgAt)
-        break
+        drawString = string_copy(curMsg,1,msgAt);
+    break;
     case 3:
-        boxAngle = min((boxAngle + 4), 90)
-        boxSin = sin(degtorad(boxAngle))
-        drawX = lerp(boxXO, boxX, boxSin)
-        drawY = lerp(boxYO, boxY, boxSin)
-        drawW = lerp(boxWO, boxW, boxSin)
-        drawH = lerp(boxHO, boxH, boxSin)
-        if (boxAngle == 90)
-        {
-            with (objPlayer)
-                frozen = 0
-            global.inCutscene = 0
-            instance_destroy()
+        boxAngle = min(boxAngle + 4, 90);
+        boxSin = sin(degtorad(boxAngle));
+        drawX = lerp(boxXO,boxX,boxSin);
+        drawY = lerp(boxYO,boxY,boxSin);
+        drawW = lerp(boxWO,boxW,boxSin);
+        drawH = lerp(boxHO,boxH,boxSin);
+        if boxAngle == 90{
+            with objPlayer{frozen = 0;}
+            global.inCutscene = 0;
+            instance_destroy();
         }
-        break
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -198,17 +181,20 @@ drawH = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = 1
-curMsg = msg[itemID, 0]
-maxLength = length[itemID]
-boxXO = 400
-boxYO = 304
-boxWO = 0
-boxHO = 0
-boxW = (string_width(curMsg) + 16)
-boxH = (string_height(curMsg) + 16)
-boxX = round((400 - (boxW / 2)))
-boxY = round((304 - (boxH / 2)))
+            <string>///Reset text vars + Box
+state = 1;
+curMsg = msg[itemID,0];
+maxLength = length[itemID];
+
+//Get box dimensions
+boxXO = 400;
+boxYO = 304;
+boxWO = 0;
+boxHO = 0;
+boxW = string_width(curMsg)+16;
+boxH = string_height(curMsg)+16;
+boxX = round(400-boxW/2);
+boxY = round(304-boxH/2);
 </string>
           </argument>
         </arguments>
@@ -231,22 +217,23 @@ boxY = round((304 - (boxH / 2)))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state == 0)
-    exit
-draw_set_font(fTalk)
-draw_set_halign(fa_center)
-draw_set_valign(fa_middle)
-draw_set_color(c_white)
-draw_rectangle(drawX, drawY, (drawX + drawW), (drawY + drawH), 0)
-draw_set_color(c_silver)
-draw_rectangle((drawX + 1), (drawY + 1), (drawX + drawW), (drawY + drawH), 1)
-draw_text(401, 305, drawString)
-draw_text(400, 305, drawString)
-draw_text(401, 305, drawString)
-draw_set_color(c_black)
-draw_rectangle(drawX, drawY, (drawX + drawW), (drawY + drawH), 1)
-draw_text(400, 304, drawString)
-draw_set_color(c_white)
+            <string>if state == 0{exit;}
+//Draw set
+draw_set_font(fTalk);
+draw_set_halign(fa_middle);
+draw_set_valign(fa_middle);
+//Draw box and string. Wheeeee
+draw_set_color(c_white);
+draw_rectangle(drawX,drawY,drawX+drawW,drawY+drawH,0);
+draw_set_color(c_ltgray);
+draw_rectangle(drawX+1,drawY+1,drawX+drawW,drawY+drawH,1);
+draw_text(401,305,drawString);
+draw_text(400,305,drawString);
+draw_text(401,305,drawString);
+draw_set_color(c_black);
+draw_rectangle(drawX,drawY,drawX+drawW,drawY+drawH,1);
+draw_text(400,304,drawString);
+draw_set_color(c_white);
 </string>
           </argument>
         </arguments>

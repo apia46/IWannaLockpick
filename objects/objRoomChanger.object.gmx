@@ -25,9 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>warpX = 0
-warpY = 0
-roomTo = 16
+            <string>//change these in creation code
+
+warpX = 0;
+warpY = 0;
+roomTo = rTemplate;
 </string>
           </argument>
         </arguments>
@@ -50,17 +52,18 @@ roomTo = 16
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((warpX == 0) &amp;&amp; (warpY == 0))
+            <string>if (warpX == 0 &amp;&amp; warpY == 0)
 {
-    with (objPlayer)
-        instance_destroy()
+    with(objPlayer)
+        instance_destroy();
 }
 else
 {
-    objPlayer.x = warpX
-    objPlayer.y = warpY
+    objPlayer.x = warpX;
+    objPlayer.y = warpY;
 }
-room_goto(roomTo)
+
+room_goto(roomTo);
 </string>
           </argument>
         </arguments>

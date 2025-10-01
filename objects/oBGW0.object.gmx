@@ -25,19 +25,21 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 10
-for (t = 0; t &lt; 400; t += 10)
-{
-    p = instance_create(0, 0, oFloatPart4)
-    p.x += (p.hspeed * t)
-    p.y += (p.vspeed * t)
+            <string>alarm[0] = 10;
+//particles
+for(t=0;t&lt;400;t+=10){
+    p=instance_create(0,0,oFloatPart4);
+    p.x += p.hspeed*t;
+    p.y += p.vspeed*t;
 }
-background_visible[1] = 0
-background_index[1] = bAsriel
-background_alpha[1] = 0.05
-bgH = 0
-bgAK = 0
-bgYK = 0
+//bg
+background_visible[1] = false;
+background_index[1] = bAsriel;
+background_alpha[1] = 0.05;
+bgH = 0;
+
+bgAK = 0;
+bgYK = 0;
 </string>
           </argument>
         </arguments>
@@ -60,8 +62,8 @@ bgYK = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 10
-instance_create(0, 0, oFloatPart4)
+            <string>alarm[0] = 10;
+instance_create(0,0,oFloatPart4);
 </string>
           </argument>
         </arguments>
@@ -84,9 +86,9 @@ instance_create(0, 0, oFloatPart4)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bgAK = ((bgAK + 1) % 360)
-bgYK = (48 - round((4 * sin(degtorad(bgAK)))))
-background_y[4] = bgYK
+            <string>bgAK = (bgAK + 1) mod 360;
+bgYK = 48 - round(4*sin(degtorad(bgAK)));
+background_y[4] = bgYK;
 </string>
           </argument>
         </arguments>
@@ -109,18 +111,20 @@ background_y[4] = bgYK
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bgH = ((bgH + 0.5) % 256)
-background_blend[1] = make_color_hsv(bgH, 200, 255)
-draw_set_blend_mode(1)
-scrDrawBGElement(1)
-draw_set_blend_mode(0)
-draw_set_color(make_color_rgb(180, 180, 180))
-draw_rectangle(200, 152, 600, 456, 1)
-draw_set_color(c_white)
-draw_line_color(200, 152, 0, 0, make_color_rgb(180, 180, 180), c_dkgray)
-draw_line_color(200, 456, 0, 608, make_color_rgb(180, 180, 180), c_dkgray)
-draw_line_color(600, 152, 800, 0, make_color_rgb(180, 180, 180), c_dkgray)
-draw_line_color(600, 456, 800, 608, make_color_rgb(180, 180, 180), c_dkgray)
+            <string>//BG
+bgH = (bgH + .5) mod 256;
+background_blend[1] = make_color_hsv(bgH,200,255);
+draw_set_blend_mode(bm_add);
+scrDrawBGElement(1);
+draw_set_blend_mode(bm_normal);
+//Backdrop
+draw_set_color(make_color_rgb(180,180,180));
+draw_rectangle(400-(400*.5),304-(304*.5),400+(400*.5),304+(304*.5),1);
+draw_set_color(c_white);
+draw_line_color(400-(400*.5),304-(304*.5),400-(400),304-(304),make_color_rgb(180,180,180),c_dkgray);
+draw_line_color(400-(400*.5),304+(304*.5),400-(400),304+(304),make_color_rgb(180,180,180),c_dkgray);
+draw_line_color(400+(400*.5),304-(304*.5),400+(400),304-(304),make_color_rgb(180,180,180),c_dkgray);
+draw_line_color(400+(400*.5),304+(304*.5),400+(400),304+(304),make_color_rgb(180,180,180),c_dkgray);
 </string>
           </argument>
         </arguments>

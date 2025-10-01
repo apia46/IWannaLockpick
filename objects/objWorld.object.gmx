@@ -25,19 +25,86 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_number(object_index) &gt; 1)
-    instance_destroy()
-global.copyUniAmt = 0
-global.copyUniTime = shader_get_uniform(shdRainbowStripe2, "time")
-global.doorHue = 0
-global.doorCol1 = make_color_hsv(global.doorHue, 125, 255)
-global.doorCol2 = make_color_hsv(global.doorHue, 180, 230)
-global.doorCol3 = make_color_hsv(global.doorHue, 255, 190)
-global.runSwitch = 0
-runMsgA = 360
-runMsgAlpha = 0
-pauseAlpha = 0
-pauseFade = 0
+            <string>//make sure we never have more than one world object
+
+if (instance_number(object_index) &gt; 1)
+    instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///shaders
+global.copyUniAmt = 0;
+global.copyUniTime = shader_get_uniform(shdRainbowStripe2,"time");
+global.doorHue = 0;
+global.doorCol1 = make_color_hsv(global.doorHue,125,255);
+global.doorCol2 = make_color_hsv(global.doorHue,180,230);
+global.doorCol3 = make_color_hsv(global.doorHue,255,190);
+global.runSwitch = 0;
+global.salvageA = 0;
+global.salvageCol = make_color_hsv(140,150,255);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///runswitch
+runMsgA = 360;
+runMsgAlpha = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///pause
+pauseAlpha = 0;
+pauseFade = 0;//0 = fade to empty, 1 = fade to black
 </string>
           </argument>
         </arguments>
@@ -60,10 +127,12 @@ pauseFade = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!window_get_fullscreen())
+            <string>///return to previous window position/size (after using display_reset)
+
+if (!window_get_fullscreen())
 {
-    window_set_position(global.windowXPrev, global.windowYPrev)
-    window_set_size(global.windowWidthPrev, global.windowHeightPrev)
+    window_set_position(global.windowXPrev,global.windowYPrev);
+    window_set_size(global.windowWidthPrev,global.windowHeightPrev);
 }
 </string>
           </argument>
@@ -87,7 +156,9 @@ pauseFade = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>audio_pause_sound(global.currentMusic)
+            <string>///pause current music when it's done fading out
+
+audio_pause_sound(global.currentMusic);
 </string>
           </argument>
         </arguments>
@@ -104,261 +175,443 @@ pauseFade = 0
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
+        <whoName>objWorld</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///game checks (pause!)
+
+//set linear interpolation depending on what the current smoothing setting is
+texture_set_interpolation(global.smoothingMode);
+
+//controller checks
+getControlMode();
+if (global.controllerEnabled &amp;&amp; global.controllerIndex != -1)
+{
+    if (!global.controllerMode)  //check if we should switch to controller mode
+    {
+        if (keyboard_check_pressed(vk_anykey))
+        {
+            global.controllerDelay = -1;
+        }
+        else if (scrAnyControllerButton() != -1)
+        {
+            if (global.controllerDelay == -1)
+                global.controllerDelay = global.controllerDelayLength;
+        }
+    }
+    else    //check if we should switch to keyboard mode
+    {
+        if (keyboard_check_pressed(vk_anykey))
+        {
+            if (global.controllerDelay == -1)
+                global.controllerDelay = global.controllerDelayLength;
+        }
+        else if (scrAnyControllerButton() != -1)
+        {
+            global.controllerDelay = -1;
+        }
+    }
+    
+    if (global.controllerDelay != -1)   //check delay for switching between keyboard/controller
+    {
+        if (global.controllerDelay == 0)    //delay over, toggle controller mode
+        {
+            global.controllerMode = !global.controllerMode;
+            global.controllerDelay = -1;
+        }
+        else
+        {
+            global.controllerDelay -= 1;
+        }
+    }
+}
+
+//ACTION CRITERIA
+canAction = !global.inCutscene &amp;&amp; instance_exists(objPlayer) &amp;&amp; room != rIntro &amp;&amp; room != rIntro2 &amp;&amp; room != rTitleNew;
+canAction = canAction &amp;&amp; !instance_exists(oWorldTransition) &amp;&amp; !instance_exists(oLevelTransition) &amp;&amp; !instance_exists(oTitleTransition) &amp;&amp; !instance_exists(oIntroTransition) &amp;&amp; !instance_exists(oLevelWinInvalid);
+
+if (global.gameStarted)
+{
+    //handle pausing
+    if (global.pauseDelay &lt;= 0) //check if pause delay is active
+    {
+        if (scrButtonCheckPressed(global.pauseButton))
+        {
+            if (!global.gamePaused &amp;&amp; canAction)  //game currently not paused, pause the game
+            {
+                if (!global.noPause &amp;&amp; !global.inCutscene)
+                {
+                    global.gamePaused = true;  //set the game to paused
+                    global.canExitLevel = global.inLevel &amp;&amp; instance_exists(objPlayer) &amp;&amp; !global.inCutscene;
+                    global.pauseDelay = global.pauseDelayLength; //set pause delay
+                    scrPauseMusic();
+                    with oMouseover{//Cancel pencilmark
+                        if markIsNew &amp;&amp; global.curPM != -1{
+                            scrRemoveMark(global.curPM);
+                        }
+                        global.curPM = -1;
+                        global.pmState = 0;
+                    }
+                    
+                    instance_deactivate_all(true);  //deactivate everything
+                    
+                    instance_create(0,0,oPauseManager); //make pause manager object
+                    pauseFade = 1;
+                    
+                    global.pauseSurf = surface_create(surface_get_width(application_surface),surface_get_height(application_surface));    //create new surface
+                    surface_copy(global.pauseSurf,0,0,application_surface);             //copy current screen to it
+                }
+            }
+            else    //game currently paused, unpause the game
+            {
+                //global.gamePaused = false;  //set the game to unpaused
+                global.pauseDelay = global.pauseDelayLength;     //set pause delay
+                with oPauseManager{
+                    if mode == -1{
+                        event_user(0);
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        global.pauseDelay -= 1;
+    }
+    
+    if (!global.gamePaused) //check if the game is currently paused
+    {
+        if (scrButtonCheckPressed(global.restartButton) &amp;&amp; canAction &amp;&amp; global.pmState == 0)
+        {
+            //stop death sound/music
+            audio_stop_sound(global.deathSound);
+            audio_stop_sound(global.gameOverMusic);
+            
+            //resume room music
+            audio_resume_sound(global.currentMusic);
+            
+            ///return to old gain if music is being faded out
+            if (global.musicFading)
+            {
+                global.musicFading = false;
+                audio_sound_gain(global.currentMusic,global.currentGain,0);
+                alarm[0] = -1;   //reset alarm that pauses music
+            }
+            
+            scrSaveGame(false); //save death/time
+            //scrLoadGame(false); //load the game
+            with objPlayer{instance_destroy();}
+            room_restart();
+        }else if scrButtonCheckPressed(global.leaveButton) &amp;&amp; canAction &amp;&amp; global.inLevel &amp;&amp; global.pmState == 0{
+            with objPlayer{
+                event_user(1);//Animation
+                instance_destroy();
+            }
+            global.inLevel = 0;
+            t = instance_create(0,0,oWorldTransition);
+            if global.outerLevelTele{
+                t.telePlayer = 1;
+                t.teleX = global.levelEnteredX;
+                t.teleY = global.levelEnteredY;
+                global.outerLevelTele = 0;
+            }
+            t.roomTo = global.roomOuter;
+        }
+        
+        if (global.timeWhenDead || instance_exists(objPlayer)) &amp;&amp; instance_exists(objPlayerStart)  //increment timer
+        {
+            global.timeMicro += delta_time;
+            global.time += global.timeMicro div 1000000;
+            global.timeMicro = global.timeMicro mod 1000000;
+        }
+    }
+    else    //game is paused, check for volume controls
+    {
+        /*if (scrButtonCheck(global.upButton))
+        {
+            if (global.volumeLevel &lt; 100)
+                global.volumeLevel += 1;
+        }
+        else if (scrButtonCheck(global.downButton))
+        {
+            if (global.volumeLevel &gt; 0)
+                global.volumeLevel -= 1;
+        }
+        
+        audio_master_gain(global.volumeLevel/100);  //set master gain*/
+    }
+    
+    scrSetRoomCaption();    //keep caption updated
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (objWorld)
+            <string>///debug keys
+
+if (global.debugMode &amp;&amp; global.gameStarted &amp;&amp; !global.gamePaused)
 {
-    texture_set_interpolation(global.smoothingMode)
-    getControlMode()
-    if (global.controllerEnabled &amp;&amp; (global.controllerIndex != -1))
+    if (keyboard_check(vk_tab))             //drags player with mouse
     {
-        if (!global.controllerMode)
+        with (objPlayer)
         {
-            if keyboard_check_pressed(vk_anykey)
-                global.controllerDelay = -1
-            else if (scrAnyControllerButton() != -1)
-            {
-                if (global.controllerDelay == -1)
-                    global.controllerDelay = global.controllerDelayLength
-            }
-        }
-        else if keyboard_check_pressed(vk_anykey)
-        {
-            if (global.controllerDelay == -1)
-                global.controllerDelay = global.controllerDelayLength
-        }
-        else if (scrAnyControllerButton() != -1)
-            global.controllerDelay = -1
-        if (global.controllerDelay != -1)
-        {
-            if (global.controllerDelay == 0)
-            {
-                global.controllerMode = (!global.controllerMode)
-                global.controllerDelay = -1
-            }
-            else
-                global.controllerDelay -= 1
+            x = mouse_x;
+            y = mouse_y;
         }
     }
-    canAction = ((!global.inCutscene) &amp;&amp; (instance_exists(objPlayer) &amp;&amp; ((room != rIntro) &amp;&amp; ((room != rIntro2) &amp;&amp; (room != rTitleNew)))))
-    canAction = (canAction &amp;&amp; ((!instance_exists(oWorldTransition)) &amp;&amp; ((!instance_exists(oLevelTransition)) &amp;&amp; ((!instance_exists(oTitleTransition)) &amp;&amp; ((!instance_exists(oIntroTransition)) &amp;&amp; (!instance_exists(oLevelWinInvalid)))))))
-    if global.gameStarted
+    if (keyboard_check_pressed(vk_backspace))   //toggles debug overlay
     {
-        if (global.pauseDelay &lt;= 0)
+        //global.debugOverlay = !global.debugOverlay;
+    }
+    if (keyboard_check_pressed(vk_insert))  //saves game
+    {
+        with (objPlayer)
         {
-            if scrButtonCheckPressed(global.pauseButton)
-            {
-                if ((!global.gamePaused) &amp;&amp; canAction)
-                {
-                    if ((!global.noPause) &amp;&amp; (!global.inCutscene))
-                    {
-                        global.gamePaused = 1
-                        global.canExitLevel = (global.inLevel &amp;&amp; (instance_exists(objPlayer) &amp;&amp; (!global.inCutscene)))
-                        global.pauseDelay = global.pauseDelayLength
-                        scrPauseMusic()
-                        with (oMouseover)
-                        {
-                            if (markIsNew &amp;&amp; (global.curPM != -1))
-                                scrRemoveMark(global.curPM)
-                            global.curPM = -1
-                            global.pmState = 0
-                        }
-                        instance_deactivate_all(true)
-                        instance_create(0, 0, oPauseManager)
-                        pauseFade = 1
-                        global.pauseSurf = surface_create(surface_get_width(application_surface), surface_get_height(application_surface))
-                        surface_copy(global.pauseSurf, 0, 0, application_surface)
-                    }
-                }
-                else
-                {
-                    global.pauseDelay = global.pauseDelayLength
-                    with (oPauseManager)
-                    {
-                        if (mode == -1)
-                            event_user(0)
-                    }
-                }
-            }
+            scrSaveGame(true);
+            scrPlaySoundExt(sndItem,1,1,false);
         }
+    }
+    if (keyboard_check_pressed(vk_delete))  //toggles showing the hitbox
+    {
+        global.debugShowHitbox = !global.debugShowHitbox;
+    }
+    if (keyboard_check_pressed(vk_home))    //toggles god mode
+    {
+        global.debugNoDeath = !global.debugNoDeath;
+    }
+    if (keyboard_check_pressed(vk_end))     //toggles infinite jump
+    {
+        global.debugInfJump = !global.debugInfJump;
+    }
+    if (keyboard_check_pressed(vk_pageup) &amp;&amp; room != room_last)  //goes to next room
+    {        
+        with (objPlayer)
+            instance_destroy();
+    
+        room_goto_next();
+    }
+    if (keyboard_check_pressed(vk_pagedown) &amp;&amp; room != room_first)    //goes to previous room
+    {        
+        with (objPlayer)
+            instance_destroy();
+    
+        room_goto_previous();
+    }
+}
+
+if (global.debugVisuals)
+{
+    with (objPlayer)    //sets appearance of the player to show god mode/infinite jump
+    {
+        if (global.debugNoDeath)     //makes player slightly transparent when god mode is on
+            image_alpha = 0.7;
         else
-            global.pauseDelay -= 1
-        if (!global.gamePaused)
-        {
-            if (scrButtonCheckPressed(global.restartButton) &amp;&amp; (canAction &amp;&amp; (global.pmState == 0)))
-            {
-                audio_stop_sound(global.deathSound)
-                audio_stop_sound(global.gameOverMusic)
-                audio_resume_sound(global.currentMusic)
-                if global.musicFading
-                {
-                    global.musicFading = 0
-                    audio_sound_gain(global.currentMusic, global.currentGain, 0)
-                    alarm[0] = -1
-                }
-                scrSaveGame(0)
-                with (objPlayer)
-                    instance_destroy()
-                room_restart()
-            }
-            else if (scrButtonCheckPressed(global.leaveButton) &amp;&amp; (canAction &amp;&amp; (global.inLevel &amp;&amp; (global.pmState == 0))))
-            {
-                with (objPlayer)
-                {
-                    event_user(1)
-                    instance_destroy()
-                }
-                global.inLevel = 0
-                t = instance_create(0, 0, oWorldTransition)
-                if global.outerLevelTele
-                {
-                    t.telePlayer = 1
-                    t.teleX = global.levelEnteredX
-                    t.teleY = global.levelEnteredY
-                    global.outerLevelTele = 0
-                }
-                t.roomTo = global.roomOuter
-            }
-            if ((global.timeWhenDead || instance_exists(objPlayer)) &amp;&amp; instance_exists(objPlayerStart))
-            {
-                global.timeMicro += delta_time
-                global.time += (global.timeMicro div 1000000)
-                global.timeMicro %= 1000000
-            }
-        }
-        scrSetRoomCaption()
-    }
-}
-if (global.debugMode &amp;&amp; (global.gameStarted &amp;&amp; (!global.gamePaused)))
-{
-    if keyboard_check(vk_tab)
-    {
-        with (objPlayer)
-        {
-            x = mouse_x
-            y = mouse_y
-        }
-    }
-    if keyboard_check_pressed(vk_backspace)
-    {
-    }
-    if keyboard_check_pressed(vk_insert)
-    {
-        with (objPlayer)
-        {
-            scrSaveGame(1)
-            scrPlaySoundExt(sndItem, 1, 1, false)
-        }
-    }
-    if keyboard_check_pressed(vk_delete)
-        global.debugShowHitbox = (!global.debugShowHitbox)
-    if keyboard_check_pressed(vk_home)
-        global.debugNoDeath = (!global.debugNoDeath)
-    if keyboard_check_pressed(vk_end)
-        global.debugInfJump = (!global.debugInfJump)
-    if (keyboard_check_pressed(vk_pageup) &amp;&amp; (room != room_last))
-    {
-        with (objPlayer)
-            instance_destroy()
-        room_goto_next()
-    }
-    if (keyboard_check_pressed(vk_pagedown) &amp;&amp; (room != room_first))
-    {
-        with (objPlayer)
-            instance_destroy()
-        room_goto_previous()
-    }
-}
-if global.debugVisuals
-{
-    with (objPlayer)
-    {
-        if global.debugNoDeath
-            image_alpha = 0.7
+            image_alpha = 1;
+        
+        if (global.debugInfJump)     //makes player turn blue when infinite jump is on
+            image_blend = c_blue;
         else
-            image_alpha = 1
-        if global.debugInfJump
-            image_blend = c_blue
-        else
-            image_blend = c_white
+            image_blend = c_white;
     }
 }
-if keyboard_check_pressed(vk_escape)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///function keys
+
+if (keyboard_check_pressed(vk_escape))
 {
+    //game_end();
 }
-if (keyboard_check_pressed(vk_f2) &amp;&amp; (canAction &amp;&amp; (global.pmState == 0)))
+
+if (keyboard_check_pressed(vk_f2) &amp;&amp; canAction &amp;&amp; global.pmState == 0)
 {
-    global.autosave = 0
-    scrRestartGame()
-    exit
+    global.autosave = 0;
+    scrRestartGame();
+    exit;
 }
-if keyboard_check_pressed(vk_f3)
+
+if (keyboard_check_pressed(vk_f3))
 {
-    global.smoothingMode = (!global.smoothingMode)
-    scrSaveConfigNew()
+    global.smoothingMode = !global.smoothingMode;
+    scrSaveConfigNew();    //save fullscreen setting
 }
-if (keyboard_check_pressed(vk_f4) &amp;&amp; (!global.gamePaused))
+
+if (keyboard_check_pressed(vk_f4) &amp;&amp; !global.gamePaused)    //toggle fullscreen mode
 {
-    global.fullscreenMode = (!global.fullscreenMode)
-    window_set_fullscreen(global.fullscreenMode)
-    scrSaveConfigNew()
+    global.fullscreenMode = !global.fullscreenMode;
+    //global.smoothingMode = global.fullscreenMode;
+    
+    window_set_fullscreen(global.fullscreenMode);
+    
+    scrSaveConfigNew();    //save fullscreen setting
 }
-if (keyboard_check_pressed(vk_f5) &amp;&amp; (!global.gamePaused))
-    scrResetWindowSize()
-if (keyboard_check(vk_shift) &amp;&amp; (keyboard_check(vk_control) &amp;&amp; (keyboard_check_pressed(ord("D")) &amp;&amp; (global.gameStarted &amp;&amp; (!global.gamePaused)))))
+
+if (keyboard_check_pressed(vk_f5) &amp;&amp; !global.gamePaused)    //reset window size
 {
-    scrDeleteAllSaveMarks()
-    scrInitPencilmark()
-    with (oMouseover)
-        mouseState = -1
-    with (oPencilmark)
-    {
-        tmpType = 0
-        tmpSymbol = 0
-        tmpNum = 0
-        tmpStr = ""
-        tmpCol = 0
-        global.pmState = 0
+    scrResetWindowSize();
+}
+
+//Erase ALL pencilmarks on this savefile
+if (keyboard_check(vk_shift) &amp;&amp; keyboard_check(vk_control) &amp;&amp; keyboard_check_pressed(ord("D")) &amp;&amp; global.gameStarted &amp;&amp; !global.gamePaused){
+    scrDeleteAllSaveMarks();
+    scrInitPencilmark();
+    with oMouseover{
+        mouseState = -1;
     }
-    scrPlaySoundExt(sndCrumble, 1, 1, false)
+    with oPencilmark{
+        //Temp mark variables (copied to every new mark)
+        tmpType = 0;
+        tmpSymbol = 0;
+        tmpNum = 0;
+        tmpStr = "";
+        tmpCol = 0;
+        global.pmState = 0;
+    }
+    scrPlaySoundExt(sndCrumble,1,1,false);
 }
-if (keyboard_check(vk_control) &amp;&amp; (keyboard_check_pressed(ord("M")) &amp;&amp; (!global.gamePaused)))
+
+//Reset all keybinds
+if keyboard_check(vk_shift) &amp;&amp; keyboard_check(vk_control) &amp;&amp; keyboard_check_pressed(ord("R")){
+    scrResetAllControls();
+    scrPlaySoundExt(sndCrumble,1,1,false);
+}
+
+if (keyboard_check(vk_control) &amp;&amp; keyboard_check_pressed(ord("M")) &amp;&amp; !global.gamePaused)
 {
-    scrToggleMusic()
-    scrSaveConfigNew()
+    //toggle mute music setting
+    scrToggleMusic();
+    
+    scrSaveConfigNew();    //save mute setting
 }
-if global.muteMusic
-    scrStopMusic()
-global.copyUniAmt = ((global.copyUniAmt + 0.0004) % 72)
-shader_set(shdRainbowStripe2)
-shader_set_uniform_f(global.copyUniTime, global.copyUniAmt)
-shader_reset()
-global.doorHue = ((global.doorHue + 0.75) % 255)
-global.doorCol1 = make_color_hsv(global.doorHue, 125, 255)
-global.doorCol2 = make_color_hsv(global.doorHue, 180, 230)
-global.doorCol3 = make_color_hsv(global.doorHue, 255, 190)
-if (scrButtonCheckPressed(global.rsButton) &amp;&amp; (instance_exists(objPlayer) &amp;&amp; ((room != rIntro) &amp;&amp; (global.pmState == 0))))
-{
-    global.runSwitch = (!global.runSwitch)
-    scrPlaySoundExt(sndRunswitch, 1, (0.7 + (0.3 * global.runSwitch)), false)
-    runMsgA = 0
-    runMsgAlpha = 0
+if global.muteMusic{
+    scrStopMusic();
 }
-if (runMsgA &lt; 360)
-{
-    runMsgA = min((runMsgA + 3), 360)
-    runMsgAlpha = abs(sin(degtorad(runMsgA)))
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///global draw vars
+global.copyUniAmt = (global.copyUniAmt + 1/2500) mod 72;
+shader_set(shdRainbowStripe2);
+shader_set_uniform_f(global.copyUniTime,global.copyUniAmt);
+shader_reset();
+global.doorHue = (global.doorHue + .75) mod 255;
+global.doorCol1 = make_color_hsv(global.doorHue,125,255);
+global.doorCol2 = make_color_hsv(global.doorHue,180,230);
+global.doorCol3 = make_color_hsv(global.doorHue,255,190);
+global.salvageA = (global.salvageA + 2) mod 360;
+global.salvageCol = make_color_hsv(140,150+105*sin(degtorad(global.salvageA)),255);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///runswitch+visual+fanims
+if scrButtonCheckPressed(global.rsButton) &amp;&amp; instance_exists(objPlayer) &amp;&amp; room != rIntro &amp;&amp; global.pmState == 0{
+    global.runSwitch = !global.runSwitch;
+    scrPlaySoundExt(sndRunswitch,1,.7+.3*global.runSwitch,0);
+    runMsgA = 0;
+    runMsgAlpha = 0;
 }
-else
-    runMsgAlpha = 0
-if (pauseFade == 0)
-    pauseAlpha = max((pauseAlpha - 0.04), 0)
-else
-    pauseAlpha = min((pauseAlpha + 0.04), 1)
+if runMsgA &lt; 360{
+    runMsgA = min(runMsgA + 3, 360);
+    runMsgAlpha = abs(sin(degtorad(runMsgA)));
+}else{
+    runMsgAlpha = 0;
+}
+
+if pauseFade == 0{
+    pauseAlpha = max(pauseAlpha - 1/25, 0);
+}else{
+    pauseAlpha = min(pauseAlpha + 1/25, 1);
+}
+
+if global.fastAnims{
+    if !global.fAnimIsNormal{
+        global.fAnimTimer = max(global.fAnimTimer - 1,0);
+        if global.fAnimTimer == 0{global.fAnimIsNormal = 1; global.fAnimTimer = 0; global.fAnimSpd = 0;}
+    }
+}else{
+    global.fAnimIsNormal = 1;
+    global.fAnimTimer = 25;
+    global.fAnimSpd = 0;
+}
+
+/*if keyboard_check_pressed(vk_f6){
+    global.useSymbols = !global.useSymbols;
+}
+
+if keyboard_check_pressed(vk_f7){
+    global.filter = (global.filter + 1) mod 3;
+}*/
 </string>
           </argument>
         </arguments>
@@ -381,11 +634,16 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_activate_all()
-if surface_exists(global.pauseSurf)
-    surface_free(global.pauseSurf)
-scrSaveConfigNew()
-io_clear()
+            <string>///Unpause
+instance_activate_all();    //reactivate objects
+
+if (surface_exists(global.pauseSurf)){
+    surface_free(global.pauseSurf);         //free the surface
+}
+
+scrSaveConfigNew();    //save config in case volume levels were changed
+
+io_clear(); //clear input states to prevent possible pause strats/exploits
 </string>
           </argument>
         </arguments>
@@ -408,10 +666,12 @@ io_clear()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.musicFading = 1
-global.currentGain = audio_sound_get_gain(global.currentMusic)
-audio_sound_gain(global.currentMusic, 0, 1000)
-alarm[0] = 50
+            <string>///fade current music out
+global.musicFading = true;
+global.currentGain = audio_sound_get_gain(global.currentMusic);     //get current gain
+audio_sound_gain(global.currentMusic,0,1000);                       //fade out music over 1 second
+
+alarm[0] = 50;  //pause music when it's done fading
 </string>
           </argument>
         </arguments>
@@ -434,10 +694,13 @@ alarm[0] = 50
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!instance_exists(objPlayMusic))
-    scrGetMusic()
-room_speed = 50
-scrSetRoomCaption()
+            <string>///room checks
+
+if (!instance_exists(objPlayMusic))  //make sure the play music object isn't in the current room
+    scrGetMusic();  //find and play the proper music for the current room
+
+room_speed = 50;    //make sure game is running at the correct frame rate
+scrSetRoomCaption();    //make sure window caption stays updated
 </string>
           </argument>
         </arguments>
@@ -460,19 +723,26 @@ scrSetRoomCaption()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _isPart2;
-scrInitializeGlobals()
-if file_exists("config.ini")
-{
-    ini_open("config.ini")
-    _isPart2 = ini_read_real("Part2Check", "Check", 0)
-    ini_close()
-    if (!_isPart2)
-        file_delete("config.ini")
+            <string>///initialize everything
+
+//initialize all variables
+global.runSwitch = 0;
+scrInitializeGlobals();
+
+//load the current config file, sets default config if it doesn't exist
+//NEW CODE: Ye Olde Part 1 Check
+if file_exists("config.ini"){
+    ini_open("config.ini");
+    var _isPart2 = ini_read_real("Part2Check","Check",0);
+    ini_close();
+    if !_isPart2{
+        file_delete("config.ini");
+    }
 }
-scrLoadConfigNew()
-room_goto(rTitleNew)
-global.runSwitch = 0
+scrLoadConfigNew();
+
+//room_goto_next();
+room_goto(rTitleNew);
 </string>
           </argument>
         </arguments>
@@ -495,17 +765,32 @@ global.runSwitch = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.filter == 1)
-{
-    shader_set(shdColorblind)
-    draw_surface(application_surface, 0, 0)
-    shader_reset()
-}
-else if (global.filter == 2)
-{
-    shader_set(shdColorblind2)
-    draw_surface(application_surface, 0, 0)
-    shader_reset()
+            <string>///Key/Door Colorblind Assistance
+/*if global.colorAssist{
+    var vSc = view_wview[0] / 800;
+    with oKeyBulk{
+        draw_sprite_ext(sprColorblindHelp,color,((x+32-6)-view_xview)*vSc,((y+6)-view_yview)*vSc,vSc,vSc,0,c_white,1);
+    }
+    with oDoorSimple{
+        if color == colorSpend{
+            draw_sprite_ext(sprColorblindHelp,colorSpend,((x+32*w)-view_xview)*vSc,(y-view_yview)*vSc,vSc,vSc,0,c_white,1);
+        }else{
+            draw_sprite_ext(sprColorblindHelp,colorSpend,((x+32*w)-view_xview)*vSc,(y-view_yview)*vSc,vSc,vSc,0,c_white,1);
+            draw_sprite_ext(sprColorblindHelp,color,((x+32*w-8)-view_xview)*vSc,((y+8)-view_yview)*vSc,vSc,vSc,0,c_white,1);
+        }
+    }
+    with oDoorCombo{
+        
+    }
+}*/
+if global.filter == 1{
+    shader_set(shdColorblind);
+    draw_surface(application_surface,0,0);
+    shader_reset();
+}else if global.filter == 2{
+    shader_set(shdColorblind2);
+    draw_surface(application_surface,0,0);
+    shader_reset();
 }
 </string>
           </argument>
@@ -529,7 +814,7 @@ else if (global.filter == 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>texture_set_interpolation(global.smoothingMode)
+            <string>texture_set_interpolation(global.smoothingMode);
 </string>
           </argument>
         </arguments>
@@ -552,8 +837,8 @@ else if (global.filter == 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_white)
-texture_set_interpolation(0)
+            <string>draw_set_color(c_white);
+texture_set_interpolation(0);
 </string>
           </argument>
         </arguments>
@@ -576,67 +861,208 @@ texture_set_interpolation(0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var runTop, runBot, drawX, drawY, drawAlign;
-draw_set_alpha(runMsgAlpha)
-draw_set_font(fMiniID)
-draw_set_halign(fa_left)
-draw_set_valign(fa_top)
-if global.runSwitch
-{
-    runTop = make_color_rgb(230, 255, 230)
-    runBot = make_color_rgb(230, 200, 150)
-    drawTextGradient(4, 4, (("[" + getBindStr(global.rsButton, global.usingController)) + "] Auto-Run is on"), runTop, runBot, 1)
+            <string>///runswitch/mute
+draw_set_alpha(runMsgAlpha);
+draw_set_font(fMiniID);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+if global.runSwitch{
+    var runTop = make_color_rgb(230,255,230);
+    var runBot = make_color_rgb(230,200,150);
+    drawTextGradient(4,4,"["+getBindStr(global.rsButton,global.usingController)+"] Auto-Run is on",runTop,runBot,1);
+}else{
+    var runTop = make_color_rgb(220,255,230);
+    var runBot = make_color_rgb(100,220,140);
+    drawTextGradient(4,4,"["+getBindStr(global.rsButton,global.usingController)+"] Auto-Run is off",runTop,runBot,1);
 }
-else
-{
-    runTop = make_color_rgb(220, 255, 230)
-    runBot = make_color_rgb(100, 220, 140)
-    drawTextGradient(4, 4, (("[" + getBindStr(global.rsButton, global.usingController)) + "] Auto-Run is off"), runTop, runBot, 1)
-}
-draw_set_alpha(1)
-draw_set_halign(fa_left)
-draw_set_alpha(1)
-if global.debugOverlay
-{
-    draw_set_color(c_black)
-    draw_set_halign(fa_left)
-    draw_set_font(fDefault12)
-    drawX = 0
-    drawY = 0
-    drawAlign = 0
-    if instance_exists(objPlayer)
-    {
-        drawX = objPlayer.x
-        drawY = objPlayer.y
-        drawAlign = (objPlayer.x % 3)
+draw_set_alpha(1);
+//draw_set_halign(fa_right);
+/*if global.muteMusic{
+    var runTop = make_color_rgb(255,230,230);
+    var runBot = make_color_rgb(230,150,150);
+    drawTextGradient(800-4,4,"Music Muted",runTop,runBot,1);
+}*/
+draw_set_halign(fa_left);
+draw_set_alpha(1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Key/Door Colorblind Assistance
+/*if global.colorAssist{
+    var vSc = view_wview[0] / 800;
+    with oKeyBulk{
+        draw_sprite_ext(sprColorblindHelp,color,((x+32-6)-view_xview)*vSc,((y+6)-view_yview)*vSc,vSc,vSc,0,c_white,1);
     }
-    scrDrawTextOutline(20, 20, ("X: " + string(drawX)), c_black, c_white)
-    scrDrawTextOutline(20, 40, ("Y: " + string(drawY)), c_black, c_white)
-    scrDrawTextOutline(20, 60, ("Align: " + string(drawAlign)), c_black, c_white)
-    scrDrawTextOutline(20, 80, ("Room name: " + room_get_name(room)), c_black, c_white)
-    scrDrawTextOutline(20, 100, ("Room number: " + string(room)), c_black, c_white)
-    scrDrawTextOutline(20, 120, ("God mode: " + string(global.debugNoDeath)), c_black, c_white)
-    scrDrawTextOutline(20, 140, ("Infinite jump: " + string(global.debugInfJump)), c_black, c_white)
-    scrDrawTextOutline(20, 160, ("FPS: " + string(fps)), c_black, c_white)
-    scrDrawTextOutline(20, 180, ("Real FPS: " + string(fps_real)), c_black, c_white)
-}
-if global.gamePaused
+    with oDoorSimple{
+        if color == colorSpend{
+            draw_sprite_ext(sprColorblindHelp,colorSpend,((x+32*w)-view_xview)*vSc,(y-view_yview)*vSc,vSc,vSc,0,c_white,1);
+        }else{
+            draw_sprite_ext(sprColorblindHelp,colorSpend,((x+32*w)-view_xview)*vSc,(y-view_yview)*vSc,vSc,vSc,0,c_white,1);
+            draw_sprite_ext(sprColorblindHelp,color,((x+32*w-8)-view_xview)*vSc,((y+8)-view_yview)*vSc,vSc,vSc,0,c_white,1);
+        }
+    }
+    with oDoorCombo{
+        
+    }
+}*/
+/*if global.colorBlind{
+    shader_set(shdColorblind);
+    draw_surface(application_surface,0,0);
+    shader_reset();
+}*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw debug overlay
+
+if (global.debugOverlay)
 {
-    draw_clear(c_black)
-    if surface_exists(global.pauseSurf)
-        draw_surface(global.pauseSurf, 0, 0)
-    draw_set_color(c_black)
-    draw_set_alpha(pauseAlpha)
-    draw_rectangle(-1, -1, display_get_gui_width(), display_get_gui_height(), 0)
-    draw_set_alpha(1)
-    draw_set_color(c_white)
+    draw_set_color(c_black);
+    draw_set_halign(fa_left);
+    draw_set_font(fDefault12);
+    
+    var drawX = 0, drawY = 0, drawAlign = 0;
+    if (instance_exists(objPlayer))
+    {
+        drawX = objPlayer.x;
+        drawY = objPlayer.y;
+        drawAlign = objPlayer.x mod 3;
+    }
+    
+    scrDrawTextOutline(20,20,"X: "+string(drawX),c_black,c_white);
+    scrDrawTextOutline(20,40,"Y: "+string(drawY),c_black,c_white);
+    scrDrawTextOutline(20,60,"Align: "+string(drawAlign),c_black,c_white);
+    scrDrawTextOutline(20,80,"Room name: "+room_get_name(room),c_black,c_white);
+    scrDrawTextOutline(20,100,"Room number: "+string(room),c_black,c_white);
+    scrDrawTextOutline(20,120,"God mode: "+string(global.debugNoDeath),c_black,c_white);
+    scrDrawTextOutline(20,140,"Infinite jump: "+string(global.debugInfJump),c_black,c_white);
+    scrDrawTextOutline(20,160,"FPS: "+string(fps),c_black,c_white);
+    scrDrawTextOutline(20,180,"Real FPS: "+string(fps_real),c_black,c_white);
 }
-if (global.debugMode &amp;&amp; (room == rTitle))
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw pause screen
+
+if (global.gamePaused)  //check if game is paused to draw the pause screen
 {
-    draw_set_color(c_red)
-    draw_set_font(fDefault12)
-    draw_set_halign(fa_left)
-    draw_text(34, 34, "Debug mode")
+    draw_clear(c_black);
+    
+    if (surface_exists(global.pauseSurf))       //check if surface exists before drawing it
+        draw_surface(global.pauseSurf,0,0);
+    
+    draw_set_color(c_black);
+    draw_set_alpha(pauseAlpha);
+    
+    draw_rectangle(-1,-1,display_get_gui_width(),display_get_gui_height(),0);    //darken the paused screen
+    
+    draw_set_alpha(1);
+    
+    draw_set_color(c_white);
+    
+    /*draw_set_halign(fa_center);
+    draw_set_font(fDefault30);
+    
+    draw_text(display_get_gui_width()/2,display_get_gui_height()/2 - 24,"PAUSE");
+    
+    draw_set_halign(fa_left);
+    draw_set_font(fDefault18);
+    
+    var t = global.time;
+    var timeText = string(t div 3600) + ":";
+    t = t mod 3600;
+    timeText += string(t div 600);
+    t = t mod 600;
+    timeText += string(t div 60) + ":";
+    t = t mod 60;
+    timeText += string(t div 10);
+    t = t mod 10;
+    timeText += string(floor(t));
+    
+    draw_text(20,516,"Volume: " + string(global.volumeLevel) + "%");
+    //draw_text(20,541,"Deaths: " + string(global.death));
+    draw_text(20,541,"Time: " + timeText);*/
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///draw debug mode text when we're on the title screen
+
+if (global.debugMode &amp;&amp; room == rTitle)
+{
+    draw_set_color(c_red);
+    draw_set_font(fDefault12);
+    draw_set_halign(fa_left);
+    
+    draw_text(34,34,"Debug mode");
 }
 </string>
           </argument>

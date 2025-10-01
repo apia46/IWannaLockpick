@@ -25,13 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>vspeed = random_range(-4, -3)
-hspeed = random_range(-1.2, 1.2)
-gravity = random_range(0.4, 0.5)
-c1 = 16777215
-c2 = 16777215
-c3 = 16777215
-image_speed = 0
+            <string>vspeed=random_range(-4,-3);
+hspeed=random_range(-1.2,1.2);
+gravity=random_range(0.4,0.5);
+
+c1 = c_white;
+c2 = c_white;
+c3 = c_white;
+image_speed = 0;
 </string>
           </argument>
         </arguments>
@@ -54,9 +55,10 @@ image_speed = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_alpha -= 0.04
-if (image_alpha &lt;= 0.04)
-    instance_destroy()
+            <string>image_alpha-=0.04;
+if(image_alpha&lt;=0.04){
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -79,10 +81,10 @@ if (image_alpha &lt;= 0.04)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprDebris, 0, x, y, 1, 1, 0, c_white, image_alpha)
-draw_sprite_ext(sprDebris, 1, x, y, 1, 1, 0, c1, image_alpha)
-draw_sprite_ext(sprDebris, 2, x, y, 1, 1, 0, c2, image_alpha)
-draw_sprite_ext(sprDebris, 3, x, y, 1, 1, 0, c3, image_alpha)
+            <string>draw_sprite_ext(sprDebris,0,x,y,1,1,0,c_white,image_alpha);
+draw_sprite_ext(sprDebris,1,x,y,1,1,0,c1,image_alpha);
+draw_sprite_ext(sprDebris,2,x,y,1,1,0,c2,image_alpha);
+draw_sprite_ext(sprDebris,3,x,y,1,1,0,c3,image_alpha);
 </string>
           </argument>
         </arguments>

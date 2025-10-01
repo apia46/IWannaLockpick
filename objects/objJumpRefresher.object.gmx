@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>refreshTime = 100
+            <string>refreshTime = 100;   //sets how many frames it takes after hitting to refresh (can use -1 to make it never refresh)
 </string>
           </argument>
         </arguments>
@@ -48,7 +48,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>visible = 1
+            <string>visible = true;
 </string>
           </argument>
         </arguments>
@@ -71,7 +71,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_yscale = global.grav
+            <string>image_yscale = global.grav;
 </string>
           </argument>
         </arguments>
@@ -94,12 +94,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if visible
+            <string>if (visible)
 {
     with (objPlayer)
-        djump = 1
-    visible = 0
-    alarm[0] = refreshTime
+        djump = 1;
+    
+    visible = false;
+    alarm[0] = refreshTime;
 }
 </string>
           </argument>

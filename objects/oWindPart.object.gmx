@@ -25,12 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>direction = 0
-scale = random_range(0.4, 0.8)
-image_xscale = (scale * 4)
-image_yscale = (scale * 0.25)
-image_alpha = ((0.2 + (scale / 2)) * 0.5)
-speed = (scale * 2)
+            <string>direction = 0;
+scale = random_range(.4,.8);
+image_xscale = scale*4;
+image_yscale = scale*.25;
+image_alpha = (.2+scale/2)*.5;
+speed = scale*2;
 </string>
           </argument>
         </arguments>
@@ -53,8 +53,7 @@ speed = (scale * 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (x &gt; 1000)
-    instance_destroy()
+            <string>if x&gt;1000{instance_destroy();}
 </string>
           </argument>
         </arguments>

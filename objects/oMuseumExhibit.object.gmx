@@ -25,10 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
-exInd = 1
-floatA = 0
-floatY = 0
+            <string>image_speed = 0;
+exInd = 1;//Exhibit index
+floatA = 0;
+floatY = 0;
 </string>
           </argument>
         </arguments>
@@ -51,8 +51,8 @@ floatY = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>floatA = ((floatA + 1.6) % 360)
-floatY = round((3 * sin(degtorad(floatA))))
+            <string>floatA = (floatA+1.6) mod 360;
+floatY = round(3*sin(degtorad(floatA)));
 </string>
           </argument>
         </arguments>
@@ -75,8 +75,8 @@ floatY = round((3 * sin(degtorad(floatA))))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprKHGlass, exInd, x, (y + floatY))
-draw_self()
+            <string>draw_sprite(sprKHGlass,exInd,x,y+floatY);
+draw_self();
 </string>
           </argument>
         </arguments>

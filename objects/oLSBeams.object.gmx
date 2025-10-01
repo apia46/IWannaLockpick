@@ -25,15 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var c1, c2;
-draw_set_blend_mode(3)
-draw_set_alpha(0)
-c1 = make_color_rgb(200, 120, 180)
-c2 = c_black
-draw_rectangle_color(view_xview[0], view_yview[0], (view_xview[0] + 63), (view_yview[0] + 607), c1, c2, c2, c1, 0)
-draw_rectangle_color((view_xview[0] + 736), view_yview[0], (view_xview[0] + 799), (view_yview[0] + 607), c2, c1, c1, c2, 0)
-draw_set_alpha(1)
-draw_set_blend_mode(0)
+            <string>draw_set_blend_mode(bm_subtract);
+draw_set_alpha(0);
+var c1 = make_color_rgb(200,120,180);
+var c2 = c_black;
+draw_rectangle_color(view_xview,view_yview,view_xview+63,view_yview+607,c1,c2,c2,c1,0);
+draw_rectangle_color(view_xview+736,view_yview,view_xview+799,view_yview+607,c2,c1,c1,c2,0);
+draw_set_alpha(1);
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

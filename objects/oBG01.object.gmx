@@ -25,103 +25,102 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var tiles, i;
-bgX = 0
-bgX2 = 0
-bgHue = 0
-bgBlend = make_color_hsv(0, 128, 255)
-type = 0
-switch room
-{
+            <string>bgX = 0;
+bgX2 = 0;
+bgHue = 0;
+bgBlend = make_color_hsv(0,128,255);
+type = 0;
+
+switch room{
     case rHub01:
-    case 26:
-    case 27:
-    case 28:
-    case 29:
-    case 30:
-    case 31:
-    case 33:
-    case 34:
-    case 35:
-    case 36:
-    case 37:
-    case 38:
-    case 39:
-    case 40:
-    case 41:
-    case 42:
-    case 43:
-    case 44:
-        background_color = make_color_hsv(165, 180, 140)
-        background_index[0] = bGradient
-        background_visible[0] = 1
-        background_blend[0] = make_color_hsv(130, 90, 210)
-        for (t = 0; t &lt; 400; t += 4)
-        {
-            p = instance_create(random_range(-100, 900), 632, oFloatPart)
-            p.x += (p.hspeed * t)
-            p.y += (p.vspeed * t)
-            p.image_index += (p.image_speed * t)
+    case r01:
+    case r02:
+    case r03:
+    case r04:
+    case r05:
+    case r06:
+    case r07:
+    case r08:
+    case r09:
+    case r10:
+    case r1A:
+    case r1B:
+    case r0A:
+    case r0B:
+    case r0C:
+    case r0D:
+    case r0E:
+    case r0F:
+        background_color = make_color_hsv(165,180,140);
+        background_index[0] = bGradient;
+        background_visible[0] = true;
+        background_blend[0] = make_color_hsv(130,90,210);
+        for(t=0;t&lt;400;t+=4){
+            p=instance_create(random_range(-100,900),632,oFloatPart);
+            p.x += p.hspeed*t;
+            p.y += p.vspeed*t;
+            p.image_index += p.image_speed*t;
         }
-        alarm[0] = 4
-        break
-    case 45:
-    case 47:
-    case 48:
-    case 49:
-    case 62:
-    case 65:
-    case 63:
-    case 50:
-    case 51:
-    case 53:
-    case 54:
-    case 55:
-    case 56:
-    case 57:
-    case 58:
-    case 59:
-    case 60:
-    case 61:
-    case 66:
-    case 67:
-    case 68:
-    case 69:
-        background_color = make_color_hsv(140, 200, 80)
-        background_index[0] = bGradient
-        background_visible[0] = 1
-        background_blend[0] = make_color_hsv(28, 140, 255)
-        background_index[1] = bMist
-        background_visible[1] = 1
-        background_blend[1] = make_color_hsv(42.5, 160, 255)
-        background_alpha[1] = 0.8
-        background_hspeed[1] = -0.3
-        background_xscale[1] = 1.6
-        background_yscale[1] = 1.6
-        background_index[2] = bMist
-        background_visible[2] = 0
-        background_blend[2] = make_color_hsv(120, 200, 255)
-        background_alpha[2] = 0.4
-        background_hspeed[2] = -0.5
-        background_xscale[2] = 1
-        background_yscale[2] = 1
-        type = 1
-        for (t = 0; t &lt; 200; t += 2)
-        {
-            repeat (4)
-            {
-                p = instance_create(random_range(-100, 900), -32, oRainPart)
-                p.x += (p.hspeed * t)
-                p.y += (p.vspeed * t)
+        alarm[0] = 4;
+    break;
+    case rHub02:
+    case r11:
+    case r12:
+    case r12a:
+    case r1E:
+    case r1F:
+    case r1G:
+    case r13:
+    case r14:
+    case r15:
+    case r16:
+    case r17:
+    case r18:
+    case r19:
+    case r20:
+    case r1C:
+    case r1D:
+    case r1H:
+    case r1I:
+    case r1J:
+    case r1K:
+    case r1L:
+        //background_color = make_color_hsv(10,200,80);
+        background_color = make_color_hsv(140,200,80);
+        background_index[0] = bGradient;
+        background_visible[0] = true;
+        background_blend[0] = make_color_hsv(28,140,255);
+        background_index[1] = bMist;
+        background_visible[1] = true;
+        background_blend[1] = make_color_hsv(42.5,160,255);
+        background_alpha[1] = .8;
+        background_hspeed[1] = -.3;
+        background_xscale[1] = 1.6;
+        background_yscale[1] = 1.6;
+        background_index[2] = bMist;
+        background_visible[2] = false;
+        //background_blend[2] = make_color_hsv(100,100,255);
+        background_blend[2] = make_color_hsv(120,200,255);
+        background_alpha[2] = .4;
+        background_hspeed[2] = -.5;
+        background_xscale[2] = 1;
+        background_yscale[2] = 1;
+        type = 1;
+        for(t=0;t&lt;200;t+=2){
+            repeat(4){
+                p=instance_create(random_range(-100,900),-32,oRainPart);
+                p.x += p.hspeed*t;
+                p.y += p.vspeed*t;
             }
         }
-        tiles = tile_get_ids_at_depth(1000001)
-        for (i = 0; i &lt; array_length_1d(tiles); i++)
-            tile_set_blend(tiles[i], merge_color(c_white, make_color_rgb(180, 255, 230), (tile_get_y(tiles[i]) / 608)))
-        alarm[1] = 2
-        break
+        //Tile coloration
+        var tiles = tile_get_ids_at_depth(1000001);
+        for (var i = 0; i &lt; array_length_1d(tiles); i++;){
+            tile_set_blend(tiles[i], merge_color(c_white,make_color_rgb(180,255,230),tile_get_y(tiles[i])/608));
+        }
+        alarm[1] = 2;
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -144,9 +143,11 @@ switch room
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>repeat (4)
-    instance_create(random_range(-100, 900), -32, oRainPart)
-alarm[1] = 2
+            <string>///rain part
+repeat(4){
+    instance_create(random_range(-100,900),-32,oRainPart);
+}
+alarm[1] = 2;
 </string>
           </argument>
         </arguments>
@@ -169,8 +170,9 @@ alarm[1] = 2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(random_range(-100, 900), 632, oFloatPart)
-alarm[0] = 4
+            <string>///float part
+instance_create(random_range(-100,900),632,oFloatPart);
+alarm[0] = 4;
 </string>
           </argument>
         </arguments>
@@ -193,10 +195,10 @@ alarm[0] = 4
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bgX = ((bgX + 0.6) % 1600)
-bgX2 = ((bgX2 + 0.37) % 1600)
-bgHue = ((bgHue + 1) % 256)
-bgBlend = make_color_hsv(bgHue, 170, 255)
+            <string>bgX = (bgX + .6) mod 1600;
+bgX2 = (bgX2 + .37) mod 1600;
+bgHue = (bgHue + 1) mod 256;
+bgBlend = make_color_hsv(bgHue,170,255);
 </string>
           </argument>
         </arguments>
@@ -219,22 +221,20 @@ bgBlend = make_color_hsv(bgHue, 170, 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (type == 0)
-{
-    texture_set_interpolation(1)
-    draw_set_blend_mode(1)
-    draw_background_tiled_ext(bAsriel, bgX, 0, 1, 1, bgBlend, 0.1)
-    draw_background_tiled_ext(bAsriel, bgX2, -32, 1, 1, merge_color(bgBlend, c_black, 0.6), 0.1)
-    draw_set_blend_mode(0)
-    texture_set_interpolation(global.smoothingMode)
-}
-else
-{
-    draw_set_blend_mode(1)
-    draw_background_tiled_ext(bMist, background_x[2], background_y[2], background_xscale[2], background_yscale[2], background_blend[2], background_alpha[2])
-    draw_set_blend_mode(0)
-    with (oRainPart)
-        draw_self()
+            <string>if type == 0{
+    texture_set_interpolation(true);
+    draw_set_blend_mode(bm_add);
+    draw_background_tiled_ext(bAsriel,bgX,0,1,1,bgBlend,.1);
+    draw_background_tiled_ext(bAsriel,bgX2,-32,1,1,merge_color(bgBlend,c_black,.6),.1);
+    draw_set_blend_mode(bm_normal);
+    texture_set_interpolation(global.smoothingMode);
+}else{
+    draw_set_blend_mode(bm_add);
+    draw_background_tiled_ext(bMist,background_x[2],background_y[2],background_xscale[2],background_yscale[2],background_blend[2],background_alpha[2]);
+    draw_set_blend_mode(bm_normal);
+    with oRainPart{
+        draw_self();
+    }
 }
 </string>
           </argument>

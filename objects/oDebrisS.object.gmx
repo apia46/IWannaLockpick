@@ -25,23 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>speed = 1.5
-direction = random(360)
-xS = x
-yS = y
-xT = x
-yT = y
-state = 0
-drawMain = 1
-whiteAmt = 0
-shakeAmt = 2
-shakeX = 0
-shakeY = 0
-alarm[0] = 25
-c1 = 16777215
-c2 = 16777215
-c3 = 16777215
-image_speed = 0
+            <string>speed = 1.5;
+direction = random(360);
+xS = x;
+yS = y;
+xT = x;
+yT = y;
+state = 0;
+drawMain = 1;
+whiteAmt = 0;
+shakeAmt = 2;
+shakeX = 0;
+shakeY = 0;
+
+alarm[0] = 25;
+
+c1 = c_white;
+c2 = c_white;
+c3 = c_white;
+image_speed = 0;
 </string>
           </argument>
         </arguments>
@@ -64,7 +66,10 @@ image_speed = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>//instance_destroy();
+//state = 2;
+//drawMain = 0;
+</string>
           </argument>
         </arguments>
       </action>
@@ -86,9 +91,9 @@ image_speed = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = 1
-speed = 0
-alarm[1] = 26
+            <string>state = 1;
+speed = 0;
+alarm[1] = 26;
 </string>
           </argument>
         </arguments>
@@ -111,26 +116,22 @@ alarm[1] = 26
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>shakeAmt = max((shakeAmt - 0.1), 0)
-shakeX = random_range((-shakeAmt), shakeAmt)
-shakeY = random_range((-shakeAmt), shakeAmt)
-if (state == 0)
-    speed = max((speed - 0.06), 0.3)
-if (state == 1)
-{
-    x += ((xT - x) * 0.1)
-    y += ((yT - y) * 0.1)
-    if (abs((xT - x)) &lt;= 1)
-        x = xT
-    if (abs((yT - y)) &lt;= 1)
-        y = yT
-    whiteAmt = min((whiteAmt + 0.0666666666666667), 1)
+            <string>shakeAmt = max(shakeAmt - 0.1, 0);
+shakeX = random_range(-shakeAmt,shakeAmt);
+shakeY = random_range(-shakeAmt,shakeAmt);
+if state == 0{
+    speed = max(speed - 0.06, 0.3);
 }
-if (state == 2)
-{
-    whiteAmt = max((whiteAmt - 0.05), 0)
-    if (whiteAmt == 0)
-        instance_destroy()
+if state == 1{
+    x += (xT - x) * 0.1;
+    y += (yT - y) * 0.1;
+    if abs(xT-x) &lt;= 1{x = xT;}
+    if abs(yT-y) &lt;= 1{y = yT;}
+    whiteAmt = min(whiteAmt + 1/15, 1);
+}
+if state == 2{
+    whiteAmt = max(whiteAmt - .05, 0);
+    if whiteAmt == 0{instance_destroy();}
 }
 </string>
           </argument>
@@ -154,14 +155,13 @@ if (state == 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if drawMain
-{
-    draw_sprite_ext(sprDebris, 0, x, y, 1, 1, 0, c_white, image_alpha)
-    draw_sprite_ext(sprDebris, 1, x, y, 1, 1, 0, c1, image_alpha)
-    draw_sprite_ext(sprDebris, 2, x, y, 1, 1, 0, c2, image_alpha)
-    draw_sprite_ext(sprDebris, 3, x, y, 1, 1, 0, c3, image_alpha)
+            <string>if drawMain{
+    draw_sprite_ext(sprDebris,0,x,y,1,1,0,c_white,image_alpha);
+    draw_sprite_ext(sprDebris,1,x,y,1,1,0,c1,image_alpha);
+    draw_sprite_ext(sprDebris,2,x,y,1,1,0,c2,image_alpha);
+    draw_sprite_ext(sprDebris,3,x,y,1,1,0,c3,image_alpha);
 }
-draw_sprite_ext(sprBlockWhite, 0, x, y, 0.5, 0.5, 0, c_white, whiteAmt)
+draw_sprite_ext(sprBlockWhite,0,x,y,.5,.5,0,c_white,whiteAmt);
 </string>
           </argument>
         </arguments>

@@ -25,22 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ID = -1
-myDoor = -1
-noRoom = 0
-makeDoor = 0
-isCombo = 0
-lockCount = 0
-w = 1
-h = 1
-colorSpend = 0
-count = 1
-icount = 0
-type = 0
-image_speed = 0
-image_index = 1
-colA = 0
-colHue = 140
+            <string>ID = -1;
+myDoor = -1;
+noRoom = 0;
+
+makeDoor = 0;
+isCombo = 0;
+lockCount = 0;
+//Default door properties
+w = 1;
+h = 1;
+colorSpend = 0;
+count = 1;
+icount = 0;
+type = 0;
+
+image_speed = 0;
+image_index = 1;
+colA = 0;
+colHue = 140;
 </string>
           </argument>
         </arguments>
@@ -63,10 +66,10 @@ colHue = 140
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if noRoom
-    colHue = 0
-colA = (((colA + 2) + (4 * noRoom)) % 360)
-image_blend = make_color_hsv(colHue, (150 + (105 * sin(degtorad(colA)))), 255)
+            <string>if noRoom{colHue = 0;}
+
+colA = (colA + 2+4*noRoom) mod 360;
+image_blend = make_color_hsv(colHue,150+105*sin(degtorad(colA)),255);
 </string>
           </argument>
         </arguments>
@@ -89,13 +92,13 @@ image_blend = make_color_hsv(colHue, (150 + (105 * sin(degtorad(colA)))), 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (noRoom &amp;&amp; (myDoor != self))
-{
-    with (myDoor)
-        instance_destroy()
+            <string>///Delete salvage if no space
+if noRoom &amp;&amp; myDoor != -1{
+    with myDoor{
+        instance_destroy();
+    }
 }
-if ((myDoor != self) &amp;&amp; (!noRoom))
-    instance_destroy()
+if myDoor != -1 &amp;&amp; !noRoom{instance_destroy();}
 </string>
           </argument>
         </arguments>
@@ -118,17 +121,15 @@ if ((myDoor != self) &amp;&amp; (!noRoom))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (myDoor != self)
-{
-    with (myDoor)
-    {
-        solid = 0
-        if (!place_free(x, y))
-        {
-            other.noRoom = 1
-            other.image_index = 2
+            <string>///Check collisions with salvage door
+if myDoor != -1{
+    with myDoor{
+        solid = 0;
+        if !place_free(x,y){
+            other.noRoom = 1;
+            other.image_index = 2;
         }
-        solid = 1
+        solid = 1;
     }
 }
 </string>
@@ -153,16 +154,16 @@ if ((myDoor != self) &amp;&amp; (!noRoom))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((frac(ID) == 0) &amp;&amp; ((ID &gt;= 0) &amp;&amp; (ID &lt; 100)))
-{
-    if scrSalvageExists(ID)
-    {
-        scrLoadSalvage(ID)
-        if makeDoor
-            scrSalvageMakeDoor()
+            <string>///Make Door (Called from Undo Object)
+if frac(ID) == 0 &amp;&amp; ID &gt;= 0 &amp;&amp; ID &lt; 100{//Don't want any shenanigans afoot
+    if scrSalvageExists(ID){
+        scrLoadSalvage(ID);
+        if makeDoor{
+            scrSalvageMakeDoor();
+        }
+    }else{
+        scrSalvageWriteBlank(ID);
     }
-    else
-        scrSalvageWriteBlank(ID)
 }
 </string>
           </argument>
@@ -186,35 +187,46 @@ if ((myDoor != self) &amp;&amp; (!noRoom))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, image_index, (x + 1), (y + 1), 1, 1, 0, merge_color(image_blend, c_black, 0.5), 1)
-draw_self()
-if noRoom
-{
-    draw_set_color(image_blend)
-    draw_rectangle((x - (16 * w)), (y - (32 * h)), ((x + (16 * w)) - 1), (y - 1), 1)
-    draw_rectangle(((x - (16 * w)) + 1), ((y - (32 * h)) + 1), ((x + (16 * w)) - 2), (y - 2), 1)
-    draw_set_color(c_white)
+            <string>draw_sprite_ext(sprite_index,image_index,x+1,y+1,1,1,0,merge_color(image_blend,c_black,.5),1);
+draw_self();
+
+//No-room outline
+if noRoom{
+    draw_set_color(image_blend);
+    draw_rectangle(x-16*w,y-32*h,x+16*w-1,y-1,1);
+    draw_rectangle(x-16*w+1,y-32*h+1,x+16*w-2,y-2,1);
+    draw_set_color(c_white);
 }
-draw_set_font(fMiniID)
-draw_set_alpha(1)
-draw_set_halign(fa_left)
-draw_set_valign(fa_bottom)
-outCol = make_color_rgb(40, 100, 200)
-inCol = make_color_rgb(221, 227, 235)
-s = string(ID)
-draw_set_alpha(0.35)
-draw_set_color(c_black)
-draw_text((((x + 1) - 16) + 1), ((y + 3) + 1), s)
-draw_text((((x + 1) - 16) + 2), ((y + 3) + 2), s)
-draw_set_color(outCol)
-draw_set_alpha(1)
-draw_text(((x + 2) - 16), (y + 3), s)
-draw_text((x - 16), (y + 3), s)
-draw_text(((x + 1) - 16), (y + 2), s)
-draw_text(((x + 1) - 16), (y + 4), s)
-draw_set_color(inCol)
-draw_text_color(((x + 1) - 16), (y + 3), s, c_white, c_white, inCol, inCol, 1)
-draw_set_color(c_white)
+
+//Text for ID
+draw_set_font(fMiniID);
+draw_set_alpha(1);
+draw_set_halign(fa_left);
+draw_set_valign(fa_bottom);
+outCol = make_color_rgb(40,100,200);
+inCol = make_color_rgb(221,227,235);
+s = string(ID);
+draw_set_alpha(.35);
+draw_set_color(c_black);
+draw_text(x+1-16+1,y+3+1,s);
+draw_text(x+1-16+2,y+3+2,s);
+draw_set_color(outCol);
+draw_set_alpha(1);
+/*draw_text(x-1-16,y+2,s);
+draw_text(x-16,y+1,s);
+draw_text(x+3-16,y+2,s);
+draw_text(x+2-16,y+1,s);
+draw_text(x-1-16,y+4,s);
+draw_text(x-16,y+5,s);
+draw_text(x+3-16,y+4,s);
+draw_text(x+2-16,y+5,s);*/
+draw_text(x+2-16,y+3,s);
+draw_text(x-16,y+3,s);
+draw_text(x+1-16,y+2,s);
+draw_text(x+1-16,y+4,s);
+draw_set_color(inCol);
+draw_text_color(x+1-16,y+3,s,c_white,c_white,inCol,inCol,1);
+draw_set_color(c_white);
 </string>
           </argument>
         </arguments>

@@ -25,11 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>direction = (250 + random_range(-6, 6))
-image_angle = direction
-speed = random_range(3, 6)
-image_xscale = (0.4 * (1 + (0.6 * (speed - 3))))
-image_yscale = (image_xscale * 0.5)
+            <string>direction=250+random_range(-6,6);
+image_angle = direction;
+speed = random_range(3,6);
+image_xscale = .4*(1+.6*(speed-3));
+image_yscale = image_xscale*.5;
 </string>
           </argument>
         </arguments>
@@ -52,8 +52,7 @@ image_yscale = (image_xscale * 0.5)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (y &gt; 640)
-    instance_destroy()
+            <string>if y &gt; 640{instance_destroy();}
 </string>
           </argument>
         </arguments>

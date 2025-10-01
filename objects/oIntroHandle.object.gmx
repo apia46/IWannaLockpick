@@ -25,18 +25,24 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = 0
-t = 0
-diaFrame = 0
-spriteY = 0
-bgI = 79
-bgCol = 16777215
-bgA = 1
-drawBlack = 0
-blackA = 0
-frontA = 1
-skipAlpha = 0
-skipA = 0
+            <string>///Intro dialog
+
+state = 0;//0 = fade in, 1 = in dialog, 2 = fade out, (3 = dialog with lily into enter play)
+t = 0;
+
+diaFrame = 0;
+spriteY = 0;
+
+bgI = bWorld0;
+bgCol = c_white;
+bgA = 1;
+
+drawBlack = 0;
+blackA = 0;
+
+frontA = 1;
+skipAlpha = 0;
+skipA = 0;
 </string>
           </argument>
         </arguments>
@@ -59,59 +65,42 @@ skipA = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 0:
-        with (objPlayer)
-            frozen = 1
-        frontA = max((frontA - 0.02), 0)
-        if (frontA == 0)
-        {
-            state = 1
-            with (oDialogHandle)
-                diaStart(91)
+            <string>switch state{
+    case 0://fade in
+        with objPlayer{frozen = 1;}
+        frontA = max(frontA - 1/50, 0);
+        if frontA == 0{state = 1;with oDialogHandle{diaStart(91);}}
+    break;
+    case 1://in intro
+        if scrButtonCheckPressed(global.skipButton){
+            audio_sound_gain(global.currentMusic,0,1000);
+            state = 4;
+            drawBlack = 1;
+            scrPlaySoundExt(sndSelectMade,.75,1,false);
+            with oDialogHandle{diaState = 0;}
         }
-        break
-    case 1:
-        if scrButtonCheckPressed(global.skipButton)
-        {
-            audio_sound_gain(global.currentMusic, 0, 1000)
-            state = 4
-            drawBlack = 1
-            scrPlaySoundExt(sndSelectMade, 0.75, 1, false)
-            with (oDialogHandle)
-                diaState = 0
+    break;
+    case 2://fade out
+        bgA = max(bgA-1/75,0);
+        if bgA == 0{state = 3;with oDialogHandle{diaStart(92);}}
+    break;
+    case 3://lily is talking
+        
+    break;
+    case 4://skip to hub
+        t = min(t+1,75);
+        blackA = min(blackA+1/50,1);
+        if t == 50{scrStopMusic();}
+        if t == 75{
+            with objPlayer{instance_destroy();}
+            instance_create(0,0,oIntroTransition);
+            room_goto(rMainHub);
         }
-        break
-    case 2:
-        bgA = max((bgA - 0.0133333333333333), 0)
-        if (bgA == 0)
-        {
-            state = 3
-            with (oDialogHandle)
-                diaStart(92)
-        }
-        break
-    case 3:
-        break
-    case 4:
-        t = min((t + 1), 75)
-        blackA = min((blackA + 0.02), 1)
-        if (t == 50)
-            scrStopMusic()
-        if (t == 75)
-        {
-            with (objPlayer)
-                instance_destroy()
-            instance_create(0, 0, oIntroTransition)
-            room_goto(rMainHub)
-        }
-        break
+    break;
 }
-
-spriteY += ((0 - spriteY) * 0.1)
-skipA = ((skipA + 2) % 360)
-skipAlpha = (0.5 - (0.5 * cos(degtorad(skipA))))
+spriteY += (0-spriteY) * .1;
+skipA = (skipA + 2) mod 360;
+skipAlpha = .5 - 0.5*cos(degtorad(skipA));
 </string>
           </argument>
         </arguments>
@@ -134,16 +123,15 @@ skipAlpha = (0.5 - (0.5 * cos(degtorad(skipA))))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch oDialogHandle.diaPos
-{
-    case 1:
-    case 4:
-    case 6:
-        diaFrame += 1
-        spriteY = 10
-        break
+            <string>///dialog just advanced
+switch oDialogHandle.diaPos{
+    case 1://Introduce Lily
+    case 4://Letter
+    case 6://Byebye
+        diaFrame += 1;
+        spriteY = 10;
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -166,37 +154,42 @@ skipAlpha = (0.5 - (0.5 * cos(degtorad(skipA))))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _x, _y, runTop, runBot;
-_x = view_xview[0]
-_y = view_yview[0]
-draw_background_ext(bgI, _x, _y, 1, 1, 0, bgCol, bgA)
-switch diaFrame
-{
-    case 1:
-        draw_sprite_ext(sprCG0, 0, ((_x + 400) + 3), (((_y + 304) + spriteY) + 3), 1, 1, 0, c_black, (0.35 * bgA))
-        draw_sprite_ext(sprCG0, 0, (_x + 400), ((_y + 304) + spriteY), 1, 1, 0, c_white, bgA)
-        break
-    case 2:
-        draw_sprite_ext(sprCG0, 1, ((_x + 400) + 3), (((_y + 304) + spriteY) + 3), 1, 1, 0, c_black, (0.35 * bgA))
-        draw_sprite_ext(sprCG0, 1, (_x + 400), ((_y + 304) + spriteY), 1, 1, 0, c_white, bgA)
-        break
-    case 3:
-        draw_sprite_ext(sprCG1, 0, ((_x + 400) + 3), (((_y + 256) + spriteY) + 3), 1, 1, 0, c_black, (0.35 * bgA))
-        draw_sprite_ext(sprCG1, 0, (_x + 400), ((_y + 256) + spriteY), 1, 1, 0, c_white, bgA)
-        break
+            <string>var _x = view_xview[0];
+var _y = view_yview[0];
+
+draw_background_ext(bgI,_x,_y,1,1,0,bgCol,bgA);
+
+switch diaFrame{
+    case 1://Lily
+        draw_sprite_ext(sprCG0,0,_x+400+3,_y+304+spriteY+3,1,1,0,c_black,.35*bgA);
+        draw_sprite_ext(sprCG0,0,_x+400,_y+304+spriteY,1,1,0,c_white,bgA);
+    break;
+    case 2://Letter
+        draw_sprite_ext(sprCG0,1,_x+400+3,_y+304+spriteY+3,1,1,0,c_black,.35*bgA);
+        draw_sprite_ext(sprCG0,1,_x+400,_y+304+spriteY,1,1,0,c_white,bgA);
+    break;
+    case 3://Byebye
+        draw_sprite_ext(sprCG1,0,_x+400+3,_y+256+spriteY+3,1,1,0,c_black,.35*bgA);
+        draw_sprite_ext(sprCG1,0,_x+400,_y+256+spriteY,1,1,0,c_white,bgA);
+    break;
 }
 
-draw_set_alpha((skipAlpha * bgA))
-draw_set_font(fMiniID)
-draw_set_halign(fa_right)
-draw_set_valign(fa_top)
-runTop = make_color_rgb(230, 255, 255)
-runBot = make_color_rgb(170, 200, 255)
-drawTextGradient((_x + 795), ((_y + 608) - 128), (("- Press [" + getBindStr(global.skipButton, global.usingController)) + "] to skip -"), runTop, runBot, 1)
-draw_set_alpha(1)
-drawScreenRect(make_color_rgb(60, 130, 60), frontA)
-if drawBlack
-    drawScreenRect(c_black, blackA)
+///skip text
+draw_set_alpha(skipAlpha*bgA);
+draw_set_font(fMiniID);
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+var runTop = make_color_rgb(230,255,255);
+var runBot = make_color_rgb(170,200,255);
+drawTextGradient(_x+795,_y+608-128,"- Press ["+getBindStr(global.skipButton,global.usingController)+"] to skip -",runTop,runBot,1);
+draw_set_alpha(1);
+
+//idk how i didn't think of this one earlier
+drawScreenRect(make_color_rgb(60,130,60),frontA);
+
+if drawBlack{
+    drawScreenRect(c_black,blackA);
+}
 </string>
           </argument>
         </arguments>

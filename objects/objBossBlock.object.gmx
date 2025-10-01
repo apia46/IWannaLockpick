@@ -25,7 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>itemNum = 0
+            <string>//this wall disappears when a boss item is obtained
+
+//set in creation code
+itemNum = 0;
 </string>
           </argument>
         </arguments>
@@ -48,8 +51,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.bossItem[itemNum]
-    instance_destroy()
+            <string>if (global.bossItem[itemNum])  //destroy self if item has been obtained
+    instance_destroy();
 </string>
           </argument>
         </arguments>

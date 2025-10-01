@@ -25,12 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
-canSave = 1
-grav = 1
-if (global.difficulty &gt; 2)
-    instance_destroy()
-sprite_index = sprSave
+            <string>image_speed = 0;
+canSave = true;
+grav = 1;       //sets which player gravity this save works with
+
+if (global.difficulty &gt; 2)  //destroy if on a higher difficulty than very hard
+    instance_destroy();
+
+sprite_index = sprSave;
 </string>
           </argument>
         </arguments>

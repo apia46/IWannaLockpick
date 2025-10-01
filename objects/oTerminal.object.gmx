@@ -25,141 +25,184 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i;
-w = 3
-h = 4
-hue = 0
-c1 = 0
-c2 = make_color_rgb(180, 150, 0)
-c3 = 0
-c4 = make_color_hsv(hue, 50, 80)
-c5 = make_color_hsv(hue, 100, 50)
-c6 = make_color_hsv(hue, 150, 20)
-salvageID = -1
-active = 1
-color = 4
-colorSpend = 12
-colorCopy = 12
-tempColor = 0
-tempSpend = 0
-count = 1
-icount = 0
-type = 5
-copies = 1
-icopies = 0
-iPow = 0
-browned = 0
-lock[0, 0] = 0
-omegaA = 0
-omegaY = 0
-floatA = 0
-floatY = 0
-goldIndex = 0
-goldSpd = 0.1
-oCol[0] = 4
-oCol[1] = 5
-oCol[2] = 6
-oCol[3] = 0
-oCol[4] = 10
-oCol[5] = 11
-oCol[6] = 12
-oCol[7] = 13
-oCol[8] = 1
-oCol[9] = 2
-oCol[10] = 3
-oCol[11] = 7
-oCol[12] = 8
-oCol[13] = 9
-sCol[0] = 1
-sCol[1] = 2
-sCol[2] = 3
-sCol[3] = 7
-sCol[4] = 8
-sCol[5] = 9
-sCol[6] = 4
-sCol[7] = 5
-sCol[8] = 6
-sCol[9] = 10
-sCol[10] = 12
-sCol[11] = 13
-sCol[12] = 0
-sCol[13] = 11
-cName[0] = "Master"
-cName[1] = "White"
-cName[2] = "Orange"
-cName[3] = "Purple"
-cName[4] = "Red"
-cName[5] = "Green"
-cName[6] = "Blue"
-cName[7] = "Pink"
-cName[8] = "Cyan"
-cName[9] = "Black"
-cName[10] = "Brown"
-cName[11] = "Pure"
-cName[12] = "Glitch"
-cName[13] = "Stone"
-oCount = 0
-for (i = 0; i &lt; 14; i += 1)
-{
-    if global.omegaKey[i]
-        oCount += 1
+            <string>w = 3; h = 4;
+hue = 0;
+c1 = c_black;
+c2 = make_color_rgb(180,150,0);
+c3 = c_black;
+c4 = make_color_hsv(hue,50,80);
+c5 = make_color_hsv(hue,100,50);
+c6 = make_color_hsv(hue,150,20);
+//garbage
+salvageID = -1;//For mouseover purposes
+active = 1;//Whether or not it can be opened. Inactive means it goes far out of bounds.
+color = 4;
+colorSpend = 12;//Can spend a key type other than the required one
+colorCopy = 12;//For copy doors
+tempColor = 0;
+tempSpend = 0;//These mostly have to do with the brown key gimmick
+count = 1;
+icount = 0;
+type = 5;//0 = Normal, 1 = Blast, 2 = Swap, 3 = Zero, 4 = INFINITY
+copies = 1;//Number of copies for the negative master key system
+icopies = 0;
+iPow = 0;
+browned = 0;
+lock[0,0] = 0;
+
+omegaA = 0;
+omegaY = 0;
+floatA = 0;
+floatY = 0;
+
+goldIndex = 0;
+goldSpd = .1;
+
+//Omega key colors
+oCol[0] = key_RED;//Inner ring
+oCol[1] = key_GREEN;
+oCol[2] = key_BLUE;
+oCol[3] = key_MASTER;//Middle ring
+oCol[4] = key_BROWN;
+oCol[5] = key_PURE;
+oCol[6] = key_COPY;
+oCol[7] = key_STONE;
+oCol[8] = key_WHITE;//Outer ring
+oCol[9] = key_ORANGE;
+oCol[10] = key_PURPLE;
+oCol[11] = key_PINK;
+oCol[12] = key_CYAN;
+oCol[13] = key_BLACK;
+
+//Salvage color selector colors (6x3 cropped selection)
+sCol[0] = key_WHITE;
+sCol[1] = key_ORANGE;
+sCol[2] = key_PURPLE;
+sCol[3] = key_PINK;
+sCol[4] = key_CYAN;
+sCol[5] = key_BLACK;
+sCol[6] = key_RED;
+sCol[7] = key_GREEN;
+sCol[8] = key_BLUE;
+sCol[9] = key_BROWN;
+sCol[10] = key_COPY;
+sCol[11] = key_STONE;
+sCol[12] = key_MASTER;
+sCol[13] = key_PURE;
+
+cName[0] = "Master";
+cName[1] = "White";
+cName[2] = "Orange";
+cName[3] = "Purple";
+cName[4] = "Red";
+cName[5] = "Green";
+cName[6] = "Blue";
+cName[7] = "Pink";
+cName[8] = "Cyan";
+cName[9] = "Black";
+cName[10] = "Brown";
+cName[11] = "Pure";
+cName[12] = "Glitch";
+cName[13] = "Stone";
+
+//Omega points count
+oCount = 0;
+for(var i = 0; i &lt; 14; i += 1){
+    if global.omegaKey[i]{
+        oCount += 1;
+    }
 }
-state = 0
-nearPlayer = 0
-pickSide = 0
-pickAngle = 90
-pickAlpha = 0.5
-pickTitle[0] = "ω-Keys"
-pickStr[0] = "Find the many Omega Keys#and use them to modify#the colors of Salvages!#Change both Lock Colors#AND the Spend Color!"
-pickTitle[1] = "Ω-Perks"
-pickStr[1] = "New things are unlocked#with more Omega Keys!#With all of them, you can#see the final secrets#of this world!"
-curPerk = 0
-perkReq[0] = 1
-perkReq[1] = 3
-perkReq[2] = 7
-perkReq[3] = 14
-perkAngle = 90
-perkAlpha = 0.5
-perkShine = 0
-for (i = 0; i &lt; 4; i += 1)
-    perkVis[i] = 0
-perkVis[0] = 1
-for (i = 0; i &lt; 3; i += 1)
-{
-    if global.omegaPerk[i]
-        perkVis[(i + 1)] = 1
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Terminal variables
+state = 0;//0 = Off, 1 = FadeIn, 2 = MainSelect, 3 = FadeOut,
+//4 = SalvageList, 5 = SalvageLock, 6 = SalvageColor, 7 = OmegaPerk
+nearPlayer = 0;//Whether it can be used.
+pickSide = 0;//0 = Left (omega), 1 = Right (Omega)
+pickAngle = 90;
+pickAlpha = .5;
+pickTitle[0] = "ω-Keys";
+pickStr[0] = "Find the many Omega Keys#and use them to modify#the colors of Salvages!#Change both Lock Colors#AND the Spend Color!";
+pickTitle[1] = "Ω-Perks";
+pickStr[1] = "New things are unlocked#with more Omega Keys!#With all of them, you can#see the final secrets#of this world!";
+
+//Perks
+curPerk = 0;
+perkReq[0] = 1;
+perkReq[1] = 3;
+perkReq[2] = 5;
+perkReq[3] = 14;
+perkAngle = 90;
+perkAlpha = .5;
+perkShine = 0;//Only for unlocking perks
+for(var i = 0; i &lt; 4; i += 1){
+    perkVis[i] = 0;
 }
-perkTitle[0] = "1 Ω"
-perkDesc[0] = "Hidden connections will#reveal themselves."
-perkTitle[1] = "3 Ω"
-perkDesc[1] = "Unlock Chapter EX#of The Great Beyond!"
-perkTitle[2] = "7 Ω"
-perkDesc[2] = "Unlock World Ω,#a bonus world!"
-perkTitle[3] = "14 Ω"
-perkDesc[3] = "A last little gift,#by yours truly!"
-salvageID = 0
-salvageExists = 0
-salvageIsCombo = 0
-salvageLockCount = 0
-salvageLock = -1
-salvageColX = 0
-salvageColY = 0
-salvageCol = 0
-colReplace = 0
-previewAA = 0
-previewA = 0
-t = 0
-fadeS = 0
-boxW = 0
-boxH = 0
-backAlpha = 0
-showArrow = 0
-arrowInd = 0
-canScrollUp = 0
-canScrollDown = 0
-lockString = ""
-salW = 1
-salH = 1
+perkVis[0] = 1;
+for(var i = 0; i &lt; 3; i += 1){
+    if global.omegaPerk[i]{
+        perkVis[i+1] = 1;
+    }
+}
+perkTitle[0] = "1 Ω";
+perkDesc[0] = "New Salvage Points#will appear.";
+perkTitle[1] = "3 Ω";
+perkDesc[1] = "Unlock Chapter EX#of The Great Beyond!";
+perkTitle[2] = "5 Ω";
+perkDesc[2] = "Unlock World Ω,#a bonus world!";
+perkTitle[3] = "14 Ω";
+perkDesc[3] = "A last little gift,#by yours truly!";
+
+//salvage
+salvageID = 0;//ID of salvage
+salvageExists = 0;//Whether a salvage exists/should be drawn
+salvageIsCombo = 0;//Whether a salvage is a combo door
+salvageLockCount = 0;//Amount of locks a combo door has
+
+salvageLock = -1;//Which lock of the salvage is being changed.
+salvageColX = 0;//Color selection X
+salvageColY = 0;//Color selection Y
+salvageCol = 0;//Actual color of selection
+colReplace = 0;//Color of lock to be replaced
+//-1 = Spend Color, 0 = First Lock (OR main lock in Normal Doors)
+
+//omega
+
+//visual
+previewAA = 0;//Alpha Angle
+previewA = 0;//Alpha
+t = 0;//Time
+fadeS = 0;//Fade sine
+boxW = 0;//GUI Width (actually doubled)
+boxH = 0;//GUI Height (actually doubled)
+backAlpha = 0;//Back black rectangle alpha
+showArrow = 0;//Whether to show the arrow.
+arrowInd = 0;//White up arrow index
+canScrollUp = 0;//Visual indicators for salvage/lock selections
+canScrollDown = 0;
+lockString = "";
+
+//Salvage nonsense
+salW = 1;
+salH = 1;
 </string>
           </argument>
         </arguments>
@@ -182,390 +225,353 @@ salH = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var fileExists, sInput, oldCX, oldCY, colValid;
-hue = ((hue + 0.5) % 256)
-c1 = 0
-c2 = make_color_rgb(180, 150, 0)
-c3 = 0
-c4 = make_color_hsv(hue, 100, 110)
-c5 = make_color_hsv(hue, 180, 70)
-c6 = make_color_hsv(hue, 255, 30)
-colorSpend = 8
-scrColorDoor2()
-omegaA = ((omegaA + 2) % 360)
-omegaY = (-5 * sin(degtorad(omegaA)))
-floatA = ((floatA + 1) % 360)
-floatY = round((-4 * sin(degtorad(floatA))))
-goldIndex = ((goldIndex + goldSpd) % 4)
-nearPlayer = place_meeting(x, y, objPlayer)
-with (oMouseover)
-{
-    if (warpMode != 0)
-        other.nearPlayer = 0
-}
-switch state
-{
-    case 0:
-        if (nearPlayer &amp;&amp; (!global.inCutscene))
-        {
-            if scrButtonCheckPressed(global.intrButton)
-            {
-                global.inCutscene = 1
-                with (objPlayer)
-                    frozen = 1
-                state = 1
-                t = 0
-                fadeS = 0
-                boxW = 0
-                boxH = 0
-                scrPlaySoundExt(sndCamera, 1, 1, false)
-            }
-        }
-        break
-    case 1:
-        t = min((t + 1), 40)
-        fadeS += ((1 - fadeS) * 0.15)
-        if (t == 40)
-        {
-            state = 2
-            t = 0
-            fadeS = 1
-            pickSide = 0
-        }
-        boxW = (144 * fadeS)
-        boxH = (192 * fadeS)
-        break
-    case 2:
-        if scrButtonCheckPressed(global.shootButton)
-        {
-            state = 3
-            t = 0
-            fadeS = 1
-            boxW = 0
-            boxH = 0
-            scrPlaySoundExt(sndCamera, 1, 1, false)
-        }
-        else if (scrButtonCheckPressed(global.upButton) || scrButtonCheckPressed(global.downButton))
-        {
-            pickSide = (!pickSide)
-            pickAngle = 90
-            pickAlpha = 0.5
-            scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-        }
-        else if scrButtonCheckPressed(global.selButton)
-        {
-            scrPlaySoundExt(sndSelectMade, 1, 1, false)
-            if (pickSide == 0)
-            {
-                state = 4
-                t = 0
-                fadeS = 1
-                salvageID = 0
-                salvageExists = 0
-                salvageIsCombo = 0
-                salvageLockCount = 0
-                salvageLock = -1
-                salvageColX = 0
-                salvageColY = 0
-                canScrollUp = 0
-                canScrollDown = 1
-                fileExists = scrSalvageExists(salvageID)
-                if fileExists
-                    scrLoadSalvageT(salvageID)
-                else
-                    salvageExists = 0
-            }
-            else
-            {
-                state = 7
-                t = 0
-                fadeS = 1
-                curPerk = 0
-                perkAngle = 90
-                perkAlpha = 0.5
-            }
-            pickAngle = ((pickAngle + 3) % 360)
-            pickAlpha = (0.5 - (0.5 * cos(degtorad(pickAngle))))
-        }
-        break
-    case 3:
-        t = min((t + 1), 40)
-        fadeS += ((0 - fadeS) * 0.15)
-        if (t == 40)
-        {
-            global.inCutscene = 0
-            with (objPlayer)
-                frozen = 0
-            state = 0
-            t = 0
-            fadeS = 0
-        }
-        boxW = (144 * fadeS)
-        boxH = (192 * fadeS)
-        break
-    case 4:
-        if scrButtonCheckPressed(global.shootButton)
-        {
-            state = 2
-            pickSide = 0
-            pickAngle = 90
-            pickAlpha = 0.5
-            scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-        }
-        sInput = 0
-        if scrButtonCheckPressed(global.upButton)
-        {
-            if (salvageID &gt; 0)
-            {
-                salvageID = max((salvageID - 1), 0)
-                sInput = 1
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        else if scrButtonCheckPressed(global.downButton)
-        {
-            if (salvageID &lt; 99)
-            {
-                salvageID = min((salvageID + 1), 99)
-                sInput = 1
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        else if scrButtonCheckPressed(global.rightButton)
-        {
-            if (salvageID &lt; 99)
-            {
-                salvageID = min((salvageID + 10), 99)
-                sInput = 1
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        else if scrButtonCheckPressed(global.leftButton)
-        {
-            if (salvageID &gt; 0)
-            {
-                salvageID = max((salvageID - 10), 0)
-                sInput = 1
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        if sInput
-        {
-            fileExists = scrSalvageExists(salvageID)
-            if fileExists
-                scrLoadSalvageT(salvageID)
-            else
-                salvageExists = 0
-            canScrollUp = (!(salvageID == 0))
-            canScrollDown = (!(salvageID == 99))
-        }
-        if scrButtonCheckPressed(global.selButton)
-        {
-            if salvageExists
-            {
-                state = 5
-                scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                salvageLock = -1
-                canScrollUp = 0
-                if salvageIsCombo
-                    canScrollDown = (!(salvageLockCount == 0))
-                else
-                    canScrollDown = 1
-                salvageColX = 0
-                salvageColY = 0
-                salvageCol = 0
-                if (salvageLock == -1)
-                    colReplace = salCS
-                else if salvageIsCombo
-                    colReplace = salLock[salvageLock, 0]
-                else
-                    colReplace = salC
-            }
-        }
-        break
-    case 5:
-        if scrButtonCheckPressed(global.shootButton)
-        {
-            state = 4
-            scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            canScrollUp = (!(salvageID == 0))
-            canScrollDown = (!(salvageID == 99))
-        }
-        sInput = 0
-        if scrButtonCheckPressed(global.upButton)
-        {
-            if (salvageLock &gt; -1)
-            {
-                salvageLock = max((salvageLock - 1), -1)
-                sInput = 1
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        else if scrButtonCheckPressed(global.downButton)
-        {
-            if salvageIsCombo
-            {
-                if (salvageLock &lt; (salvageLockCount - 1))
-                {
-                    salvageLock = min((salvageLock + 1), (salvageLockCount - 1))
-                    sInput = 1
-                    scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-                }
-            }
-            else if (salvageLock == -1)
-            {
-                salvageLock = 0
-                sInput = 1
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        if sInput
-        {
-            canScrollUp = (!(salvageLock == -1))
-            if salvageIsCombo
-                canScrollDown = (!(salvageLock == (salvageLockCount - 1)))
-            else
-                canScrollDown = (!(salvageLock == 0))
-            previewAA = 90
-            previewA = 0
-            if (salvageLock == -1)
-                colReplace = salCS
-            else if salvageIsCombo
-                colReplace = salLock[salvageLock, 0]
-            else
-                colReplace = salC
-        }
-        if scrButtonCheckPressed(global.selButton)
-        {
-            state = 6
-            scrPlaySoundExt(sndSelectMade, 1, 1, false)
-            salvageColX = 0
-            salvageColY = 0
-            salvageCol = 0
-        }
-        break
-    case 6:
-        if scrButtonCheckPressed(global.shootButton)
-        {
-            state = 5
-            scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-        }
-        oldCX = salvageColX
-        oldCY = salvageColY
-        sInput = 0
-        if scrButtonCheckPressed(global.upButton)
-        {
-            salvageColY = max((salvageColY - 1), 0)
-            sInput = 1
-        }
-        else if scrButtonCheckPressed(global.downButton)
-        {
-            salvageColY = min((salvageColY + 1), 2)
-            sInput = 1
-            if (salvageColY == 2)
-                salvageColX = (2 + (salvageColX &gt;= 3))
-        }
-        else if scrButtonCheckPressed(global.leftButton)
-        {
-            salvageColX = max((salvageColX - 1), 0)
-            sInput = 1
-            if (salvageColY == 2)
-                salvageColX = 2
-        }
-        else if scrButtonCheckPressed(global.rightButton)
-        {
-            salvageColX = min((salvageColX + 1), 5)
-            sInput = 1
-            if (salvageColY == 2)
-                salvageColX = 3
-        }
-        if sInput
-        {
-            if ((oldCX != salvageColX) || (oldCY != salvageColY))
-                scrPlaySoundExt(sndSelectBeep, 0.8, 1.4, false)
-        }
-        if (salvageColY == 2)
-            salvageCol = sCol[((12 + salvageColX) - 2)]
-        else
-            salvageCol = sCol[(salvageColX + (6 * salvageColY))]
-        colValid = (global.omegaKey[salvageCol] || global.allUnlock)
-        if (salvageCol == colReplace)
-            colValid = 0
-        if (scrButtonCheckPressed(global.selButton) &amp;&amp; colValid)
-        {
-            if (salvageLock == -1)
-                salCS = salvageCol
-            else if salvageIsCombo
-                salLock[salvageLock, 0] = salvageCol
-            else
-                salC = salvageCol
-            colReplace = salvageCol
-            scrSaveSalvageT(salvageID)
-            state = 5
-            scrPlaySoundExt(sndSelectMade, 1, 1, false)
-            scrPlaySoundExt(sndCopy1, 1, 1, false)
-            global.convoUnlocked[3] = 1
-        }
-        break
-    case 7:
-        if (perkShine &gt; 0)
-        {
-            perkShine *= 0.9
-            if (perkShine &lt; 0.02)
-                perkShine = 0
-        }
-        else if scrButtonCheckPressed(global.shootButton)
-        {
-            state = 2
-            pickSide = 0
-            pickAngle = 90
-            pickAlpha = 0.5
-            scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-        }
-        else if scrButtonCheckPressed(global.upButton)
-        {
-            if (curPerk &gt; 0)
-            {
-                curPerk -= 1
-                perkAngle = 90
-                perkAlpha = 0.5
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        else if scrButtonCheckPressed(global.downButton)
-        {
-            if (curPerk &lt; 3)
-            {
-                curPerk += 1
-                perkAngle = 90
-                perkAlpha = 0.5
-                scrPlaySoundExt(sndSelectBeep, 1, 1, false)
-            }
-        }
-        else if scrButtonCheckPressed(global.selButton)
-        {
-            if (!global.omegaPerk[curPerk])
-            {
-                if (oCount &gt;= perkReq[curPerk])
-                {
-                    global.omegaPerk[curPerk] = 1
-                    perkShine = 1
-                    scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                    scrPlaySoundExt(sndLevel, 0.8, 0.8, false)
-                    scrPlaySoundExt(sndPop, 1, 1, false)
-                }
-            }
-        }
-        break
-}
+            <string>///Draw vars
+hue = (hue + .5) mod 256;
+c1 = c_black;
+c2 = make_color_rgb(180,150,0);
+c3 = c_black;
+c4 = make_color_hsv(hue,100,110);
+c5 = make_color_hsv(hue,180,70);
+c6 = make_color_hsv(hue,255,30);
+colorSpend = key_CYAN;
+scrColorDoor2();
 
-if (nearPlayer &amp;&amp; (state == 0))
-    showArrow = 1
-else
-    showArrow = 0
-arrowInd = ((arrowInd + 0.1) % 2)
-previewAA = ((previewAA + 3) % 360)
-previewA = (0.5 - (0.5 * cos(degtorad(previewAA))))
+omegaA = (omegaA + 2) mod 360;
+omegaY = -5*sin(degtorad(omegaA));
+
+floatA = (floatA + 1) mod 360;
+floatY = round(-4*sin(degtorad(floatA)));
+
+goldIndex = (goldIndex + goldSpd) mod 4;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///TERMINAL
+//0 = Off, 1 = FadeIn, 2 = MainSelect, 3 = FadeOut,
+//4 = SalvageList, 5 = SalvageLock, 6 = SalvageColor, 7 = OmegaPerk
+nearPlayer = place_meeting(x,y,objPlayer);
+//Cheese code cheese code!
+with oMouseover{
+    if warpMode != 0{
+        other.nearPlayer = 0;
+    }
+}
+switch state{
+    case 0://Off
+        if nearPlayer &amp;&amp; !global.inCutscene{
+            if scrButtonCheckPressed(global.intrButton){//Fade in
+                global.inCutscene = 1;
+                with objPlayer{frozen = 1;}
+                
+                state = 1;
+                t = 0; fadeS = 0;
+                boxW = 0; boxH = 0;
+                scrPlaySoundExt(sndCamera,1,1,false);
+            }
+        }
+    break;
+    case 1://Fade in (TEMP: Goto 4 instead of 2)
+        t = min(t+1,40);
+        fadeS += (1-fadeS) * .15;
+        if t == 40{//Goto 2
+            state = 2;
+            t = 0; fadeS = 1;
+            pickSide = 0;
+        }
+        boxW = 4.5*32*fadeS;
+        boxH = 6*32*fadeS;
+    break;
+    case 2://Main select
+        if scrButtonCheckPressed(global.shootButton){//Go back to 2 (TEMP: 3)
+            state = 3;
+            t = 0; fadeS = 1;
+            boxW = 0; boxH = 0;
+            scrPlaySoundExt(sndCamera,1,1,false);
+        }else if scrButtonCheckPressed(global.upButton) || scrButtonCheckPressed(global.downButton){
+            pickSide = !pickSide;//Switch sides
+            pickAngle = 90;
+            pickAlpha = .5;
+            scrPlaySoundExt(sndSelectBeep,1,1,false);
+        }else if scrButtonCheckPressed(global.selButton){//Select menu!
+            scrPlaySoundExt(sndSelectMade,1,1,false);
+            if pickSide == 0{//Salvage
+                state = 4;
+                t = 0; fadeS = 1;
+                //Code block for initializing state 4
+                salvageID = 0;//ID of salvage
+                salvageExists = 0;//Whether a salvage exists/should be drawn
+                salvageIsCombo = 0;//Whether a salvage is a combo door
+                salvageLockCount = 0;//Amount of locks a combo door has
+                salvageLock = -1;//Which lock of the salvage is being changed.
+                salvageColX = 0;//Color selection X
+                salvageColY = 0;//Color selection Y
+                canScrollUp = 0;
+                canScrollDown = 1;
+                var fileExists = scrSalvageExists(salvageID);
+                if fileExists{
+                    scrLoadSalvageT(salvageID);
+                }else{
+                    salvageExists = 0;
+                }
+            }else{//Perks
+                state = 7;
+                t = 0; fadeS = 1;
+                //Code block for initializing state 7
+                curPerk = 0;
+                perkAngle = 90;
+                perkAlpha = .5;
+            }
+            pickAngle = (pickAngle + 3) mod 360;
+            pickAlpha = .5-.5*cos(degtorad(pickAngle));
+        }
+    break;
+    case 3://Fade out
+        t = min(t+1,40);
+        fadeS += (0-fadeS) * .15;
+        if t == 40{//Goto 0
+            global.inCutscene = 0;
+            with objPlayer{frozen = 0;}
+            state = 0;
+            t = 0; fadeS = 0;
+        }
+        boxW = 4.5*32*fadeS;
+        boxH = 6*32*fadeS;
+    break;
+    case 4://SALVAGE SELECT
+        if scrButtonCheckPressed(global.shootButton){//Go back to 2 (TEMP: 3)
+            state = 2;
+            pickSide = 0; pickAngle = 90; pickAlpha = .5;
+            scrPlaySoundExt(sndSelectBeep,1,1,false);
+        }
+        var sInput = 0;
+        if scrButtonCheckPressed(global.upButton){//Go back a salvage
+            if salvageID &gt; 0{
+                salvageID = max(salvageID - 1, 0); sInput = 1;
+                scrPlaySoundExt(sndSelectBeep,1,1,false);
+            }
+        }else if scrButtonCheckPressed(global.downButton){//Go forward a salvage
+            if salvageID &lt; 99{
+                salvageID = min(salvageID + 1, 99); sInput = 1;
+                scrPlaySoundExt(sndSelectBeep,1,1,false);
+            }
+        }else if scrButtonCheckPressed(global.rightButton){//Go forward 10 salvages
+            if salvageID &lt; 99{
+                salvageID = min(salvageID + 10, 99); sInput = 1;
+                scrPlaySoundExt(sndSelectBeep,1,1,false);
+            }
+        }else if scrButtonCheckPressed(global.leftButton){//Go backward 10 salvages
+            if salvageID &gt; 0{
+                salvageID = max(salvageID - 10, 0); sInput = 1;
+                scrPlaySoundExt(sndSelectBeep,1,1,false);
+            }
+        }
+        if sInput{//Check new salvage
+            var fileExists = scrSalvageExists(salvageID);
+            if fileExists{
+                scrLoadSalvageT(salvageID);
+            }else{
+                salvageExists = 0;
+            }
+            canScrollUp = !(salvageID == 0);
+            canScrollDown = !(salvageID == 99);
+        }
+        if scrButtonCheckPressed(global.selButton){//Select salvage
+            if salvageExists{//Goto lock select (state 5)
+                state = 5;
+                scrPlaySoundExt(sndSelectMade,1,1,false);
+                salvageLock = -1;
+                canScrollUp = 0;
+                if salvageIsCombo{
+                    canScrollDown = !(salvageLockCount == 0);
+                }else{
+                    canScrollDown = 1;
+                }
+                //Resets lock color vars for states 5/6
+                salvageColX = 0;//Color selection X
+                salvageColY = 0;//Color selection Y
+                salvageCol = 0;
+                //Get lock color
+                if salvageLock == -1{//colorSpend
+                    colReplace = salCS;
+                }else{
+                    if salvageIsCombo{
+                        colReplace = salLock[salvageLock,0];
+                    }else{
+                        colReplace = salC;
+                    }
+                }
+            }
+        }
+    break;
+    case 5://Lock select
+        if scrButtonCheckPressed(global.shootButton){//Go back to 4
+            state = 4;
+            scrPlaySoundExt(sndSelectBeep,1,1,false);
+            canScrollUp = !(salvageID == 0);
+            canScrollDown = !(salvageID == 99);
+        }
+        var sInput = 0;
+        if scrButtonCheckPressed(global.upButton){//Go back a lock
+            if salvageLock &gt; -1{
+                salvageLock = max(salvageLock - 1, -1); sInput = 1;
+                scrPlaySoundExt(sndSelectBeep,1,1,false);
+            }
+        }else if scrButtonCheckPressed(global.downButton){//Go forward a lock
+            if salvageIsCombo{
+                if salvageLock &lt; (salvageLockCount-1){
+                    salvageLock = min(salvageLock + 1, salvageLockCount-1); sInput = 1;
+                    scrPlaySoundExt(sndSelectBeep,1,1,false);
+                }
+            }else{
+                if salvageLock == -1{
+                    salvageLock = 0; sInput = 1;
+                    scrPlaySoundExt(sndSelectBeep,1,1,false);
+                }
+            }
+        }
+        if sInput{
+            canScrollUp = !(salvageLock == -1);
+            if salvageIsCombo{
+                canScrollDown = !(salvageLock == (salvageLockCount-1));
+            }else{
+                canScrollDown = !(salvageLock == 0);
+            }
+            previewAA = 90;//Alpha Angle
+            previewA = 0;//Alpha
+            //Get lock color
+            if salvageLock == -1{//colorSpend
+                colReplace = salCS;
+            }else{
+                if salvageIsCombo{
+                    colReplace = salLock[salvageLock,0];
+                }else{
+                    colReplace = salC;
+                }
+            }
+        }
+        if scrButtonCheckPressed(global.selButton){//Select salvage
+            state = 6;
+            scrPlaySoundExt(sndSelectMade,1,1,false);
+            salvageColX = 0;//Color selection X
+            salvageColY = 0;//Color selection Y
+            salvageCol = 0;
+        }
+    break;
+    case 6://Color select (Row 0: Normal, Row 1: Special, Row 2: Master,Pure)
+        if scrButtonCheckPressed(global.shootButton){//Go back to 5
+            state = 5;
+            scrPlaySoundExt(sndSelectBeep,1,1,false);
+        }
+        var oldCX, oldCY;
+        oldCX = salvageColX;
+        oldCY = salvageColY;
+        var sInput = 0;
+        if scrButtonCheckPressed(global.upButton){//Color Up
+            salvageColY = max(salvageColY - 1, 0); sInput = 1;
+        }else if scrButtonCheckPressed(global.downButton){//Color Down
+            salvageColY = min(salvageColY + 1, 2); sInput = 1;
+            if salvageColY == 2{//Move X selection
+                salvageColX = 2+(salvageColX &gt;= 3);
+            }
+        }else if scrButtonCheckPressed(global.leftButton){//Color Left
+            salvageColX = max(salvageColX - 1, 0); sInput = 1;
+            if salvageColY == 2{salvageColX = 2;}
+        }else if scrButtonCheckPressed(global.rightButton){//Color Right
+            salvageColX = min(salvageColX + 1, 5); sInput = 1;
+            if salvageColY == 2{salvageColX = 3;}
+        }
+        if sInput{//Just play a noise
+            if oldCX != salvageColX || oldCY != salvageColY{
+                scrPlaySoundExt(sndSelectBeep,.8,1.4,0);
+            }
+        }
+        //Check color valid
+        if salvageColY == 2{//Crop back a bit
+            salvageCol = sCol[12+salvageColX-2];
+        }else{
+            salvageCol = sCol[salvageColX+6*salvageColY];
+        }
+        var colValid = global.omegaKey[salvageCol] || global.allUnlock;
+        if salvageCol == colReplace{colValid = 0;}//Don't change a color to itself
+        if scrButtonCheckPressed(global.selButton) &amp;&amp; colValid{//SET COLOR
+            //Get color, change lock, save new salvage data, etc
+            if salvageLock == -1{//colorSpend
+                salCS = salvageCol;
+            }else{
+                if salvageIsCombo{
+                    salLock[salvageLock,0] = salvageCol;
+                }else{
+                    salC = salvageCol;
+                }
+            }
+            colReplace = salvageCol;
+            scrSaveSalvageT(salvageID);
+            state = 5;
+            scrPlaySoundExt(sndSelectMade,1,1,false);
+            scrPlaySoundExt(sndCopy1,1,1,false);
+            global.convoUnlocked[3] = 1;//Lily canonically realizes what the Terminal does
+        }
+    break;
+    case 7://Omega Perks
+        if perkShine &gt; 0{
+            perkShine *= .9;
+            if perkShine &lt; .02{perkShine = 0;}
+        }else if scrButtonCheckPressed(global.shootButton){//Go back to 2 (TEMP: 3)
+            state = 2;
+            pickSide = 0; pickAngle = 90; pickAlpha = .5;
+            scrPlaySoundExt(sndSelectBeep,1,1,false);
+        }else if scrButtonCheckPressed(global.upButton){
+            if curPerk &gt; 0{
+                curPerk -= 1;
+                perkAngle = 90; perkAlpha = .5;
+                scrPlaySoundExt(sndSelectBeep,1,1,false);
+            }
+        }else if scrButtonCheckPressed(global.downButton){
+            if curPerk &lt; 3{
+                curPerk += 1;
+                perkAngle = 90; perkAlpha = .5;
+                scrPlaySoundExt(sndSelectBeep,1,1,false);
+            }
+        }else if scrButtonCheckPressed(global.selButton){
+            if !global.omegaPerk[curPerk]{
+                if oCount &gt;= perkReq[curPerk]{//Check and unlock omega perk!
+                    global.omegaPerk[curPerk] = 1;
+                    perkShine = 1;
+                    scrPlaySoundExt(sndSelectMade,1,1,false);
+                    scrPlaySoundExt(sndLevel,.8,.8,0);
+                    scrPlaySoundExt(sndPop,1,1,false);
+                }
+            }
+        }
+    break;
+}
+//Arrow visual
+if nearPlayer &amp;&amp; state == 0{
+    showArrow = 1;
+}else{
+    showArrow = 0;
+}
+arrowInd = (arrowInd + .1) mod 2;
+//Preview white rectangle
+previewAA = (previewAA + 3) mod 360;//Alpha Angle
+previewA = .5-.5*cos(degtorad(previewAA));//Alpha
 </string>
           </argument>
         </arguments>
@@ -588,206 +594,217 @@ previewA = (0.5 - (0.5 * cos(degtorad(previewAA))))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy, tempX, tempY, tempID, tempCol, tempDrawCol, i, dy;
-if ((state == 4) || ((state == 5) || (state == 6)))
-    getTLockString()
-if (fadeS != 0)
-{
-    draw_set_color(c_black)
-    draw_set_alpha((fadeS * 0.6))
-    draw_rectangle(-1, -1, 801, 607, 0)
-    draw_set_alpha(1)
-    draw_set_color(c_white)
+            <string>///TERMINAL
+//Lock string (this is the best time to call it)
+if state == 4 || state == 5 || state == 6{
+    getTLockString();
 }
-if (state != 0)
-{
-    draw_set_color(c_black)
-    draw_rectangle((400 - boxW), (304 - boxH), (400 + boxW), (304 + boxH), 0)
-    draw_set_color(c_fuchsia)
-    draw_rectangle((400 - boxW), (304 - boxH), (400 + boxW), (304 + boxH), 1)
-    draw_set_color(c_white)
+
+//Background rectangle
+if fadeS != 0{
+    draw_set_color(c_black);
+    draw_set_alpha(fadeS*.6);
+    draw_rectangle(-1,-1,801,607,0);
+    draw_set_alpha(1);
+    draw_set_color(c_white);
 }
-switch state
-{
+
+//Main GUI rectangle
+if state != 0{
+    draw_set_color(c_black);
+    draw_rectangle(400-boxW,304-boxH,400+boxW,304+boxH,0);
+    draw_set_color(c_fuchsia);
+    draw_rectangle(400-boxW,304-boxH,400+boxW,304+boxH,1);
+    draw_set_color(c_white);
+}
+
+//State machine draw
+switch state{
     case 1:
-    case 3:
-        break
-    case 2:
-        draw_set_alpha((pickAlpha * 0.35))
-        if (pickSide == 0)
-            draw_rectangle(((400 - boxW) + 16), ((304 - boxH) + 24), ((400 + boxW) - 16), 280, 0)
-        else
-            draw_rectangle(((400 - boxW) + 16), ((304 + boxH) - 24), ((400 + boxW) - 16), 328, 0)
-        draw_set_alpha(1)
-        draw_set_color(c_fuchsia)
-        draw_rectangle(((400 - boxW) + 16), ((304 - boxH) + 24), ((400 + boxW) - 16), 280, 1)
-        draw_rectangle(((400 - boxW) + 16), ((304 + boxH) - 24), ((400 + boxW) - 16), 328, 1)
-        draw_set_color(c_white)
-        draw_set_font(fPDA)
-        draw_set_halign(fa_center)
-        draw_set_valign(fa_middle)
-        draw_text(400, ((304 - boxH) + 48), pickTitle[0])
-        draw_text(400, 352, pickTitle[1])
-        draw_set_font(fMiniID)
-        draw_set_color(c_fuchsia)
-        draw_text(400, ((304 - boxH) + 112), pickStr[0])
-        draw_text(400, 416, pickStr[1])
-        draw_set_color(c_white)
-        break
-    case 4:
-        draw_set_font(fPresents)
-        draw_set_halign(fa_center)
-        draw_set_valign(fa_middle)
-        draw_text(400, 368, ("Salvage#" + string(salvageID)))
-        draw_set_font(fTalkSmall)
-        if canScrollUp
-        {
-            draw_sprite_ext(sprUpArrowDoor, arrowInd, 400, 336, 1, 1, 0, c_white, 1)
-            draw_text(400, 320, "-1")
-            draw_sprite_ext(sprUpArrowDoor, arrowInd, 348, 368, 1, 1, 90, c_white, 1)
-            draw_text(320, 368, "-10")
+    case 3://Do nothing
+        
+    break;
+    case 2://Main select
+        //Pick rectangle
+        draw_set_alpha(pickAlpha*.35);
+        if pickSide == 0{
+            draw_rectangle(400-boxW+16,304-boxH+24,400+boxW-16,304-24,0);
+        }else{
+            draw_rectangle(400-boxW+16,304+boxH-24,400+boxW-16,304+24,0);
         }
-        if canScrollDown
-        {
-            draw_sprite_ext(sprUpArrowDoor, arrowInd, 400, 400, 1, -1, 0, c_white, 1)
-            draw_text(400, 416, "+1")
-            draw_sprite_ext(sprUpArrowDoor, arrowInd, 452, 368, 1, 1, 270, c_white, 1)
-            draw_text(480, 368, "+10")
+        draw_set_alpha(1);
+        //Main Rectangles
+        draw_set_color(c_fuchsia);
+        draw_rectangle(400-boxW+16,304-boxH+24,400+boxW-16,304-24,1);
+        draw_rectangle(400-boxW+16,304+boxH-24,400+boxW-16,304+24,1);
+        draw_set_color(c_white);
+        //Text
+        draw_set_font(fPDA);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(400,304-boxH+48,pickTitle[0]);
+        draw_text(400,304+48,pickTitle[1]);
+        draw_set_font(fMiniID);
+        draw_set_color(c_fuchsia);
+        draw_text(400,304-boxH+112,pickStr[0]);
+        draw_text(400,304+112,pickStr[1]);
+        draw_set_color(c_white);
+    break;
+    case 4://Salvage Select
+        //Essentials: Salvage preview, salvage ID, and up/down scroll arrows.
+        //Bonus: Text box, dividing line, scroll menu, etc
+        draw_set_font(fPresents);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(400,304+64,"Salvage#"+string(salvageID));
+        draw_set_font(fTalkSmall);
+        if canScrollUp{
+            draw_sprite_ext(sprUpArrowDoor,arrowInd,400,304+64-32,1,1,0,c_white,1);
+            draw_text(400,304+64-48,"-1");
+            draw_sprite_ext(sprUpArrowDoor,arrowInd,400-52,304+64,1,1,90,c_white,1);
+            draw_text(400-80,304+64,"-10");
         }
-        break
-    case 5:
-    case 6:
-        draw_set_font(fTalk)
-        draw_set_halign(fa_center)
-        draw_set_valign(fa_middle)
-        draw_text(400, 440, lockString)
-        draw_set_color(c_fuchsia)
-        draw_line((400 - boxW), 401, ((400 + boxW) - 1), 401)
-        draw_set_color(c_white)
-        if (state == 5)
-        {
-            if canScrollUp
-                draw_sprite_ext(sprUpArrowDoor, arrowInd, 400, 422, 1, 1, 0, c_white, 1)
-            if canScrollDown
-                draw_sprite_ext(sprUpArrowDoor, arrowInd, 400, 458, 1, -1, 0, c_white, 1)
+        if canScrollDown{
+            draw_sprite_ext(sprUpArrowDoor,arrowInd,400,304+64+32,1,-1,0,c_white,1);
+            draw_text(400,304+64+48,"+1");
+            draw_sprite_ext(sprUpArrowDoor,arrowInd,400+52,304+64,1,1,270,c_white,1);
+            draw_text(400+80,304+64,"+10");
         }
-        for (ix = 0; ix &lt; 6; ix += 1)
-        {
-            for (iy = 0; iy &lt; 3; iy += 1)
-            {
-                if (!((iy == 2) &amp;&amp; ((ix != 2) &amp;&amp; (ix != 3))))
-                {
-                    tempX = (408 + (32 * (ix - 3)))
-                    tempY = (312 + (32 * iy))
-                    tempID = (ix + (6 * iy))
-                    if (iy == 2)
-                        tempID -= 2
-                    tempCol = sCol[tempID]
-                    tempDrawCol = scrGetLockColor(tempCol)
-                    if (tempCol == 0)
-                        draw_sprite_ext(sprDGoldGrad, floor(goldIndex), tempX, tempY, 0.25, 0.25, 0, c_white, 1)
-                    else if (tempCol == 11)
-                        draw_sprite_ext(sprDPureGrad, floor(goldIndex), tempX, tempY, 0.25, 0.25, 0, c_white, 1)
-                    else if (tempCol == 13)
-                        draw_sprite_ext(sprDStoneTexture, 0, tempX, tempY, 0.25, 0.25, 0, c_white, 1)
-                    else if (tempCol == 12)
-                    {
-                        shader_set(shdRainbowStripe2)
-                        draw_sprite_ext(sprTerminalColor, 1, tempX, tempY, 1, 1, 0, tempDrawCol, 1)
-                        shader_reset()
+    break;
+    case 5://Salvage Lock Select
+    case 6://Salvage Color Select
+        draw_set_font(fTalk);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(400,304+136,lockString);
+        //Dividing line
+        draw_set_color(c_fuchsia);
+        draw_line(400-boxW,401,400+boxW-1,401);
+        draw_set_color(c_white);
+        //Arrow lock select (state 5)
+        if state == 5{
+            if canScrollUp{draw_sprite_ext(sprUpArrowDoor,arrowInd,400,304+136-18,1,1,0,c_white,1);}
+            if canScrollDown{draw_sprite_ext(sprUpArrowDoor,arrowInd,400,304+136+18,1,-1,0,c_white,1);}
+        }
+        //Colors
+        for(var ix = 0; ix &lt; 6; ix += 1){
+            for(var iy = 0; iy &lt; 3; iy += 1){
+                if !(iy == 2 &amp;&amp; ix != 2 &amp;&amp; ix != 3){
+                    var tempX = 400+8+32*(ix-3);
+                    var tempY = 304+8+32*iy;
+                    
+                    var tempID = ix+6*iy;
+                    if iy == 2{tempID -= 2;}
+                    var tempCol = sCol[tempID];
+                    var tempDrawCol = scrGetLockColor(tempCol); 
+                    //Actual color fills
+                    if tempCol == key_MASTER{
+                        draw_sprite_ext(sprDGoldGrad,floor(goldIndex),tempX,tempY,.25,.25,0,c_white,1);
+                    }else if tempCol == key_PURE{
+                        draw_sprite_ext(sprDPureGrad,floor(goldIndex),tempX,tempY,.25,.25,0,c_white,1);
+                    }else if tempCol == key_STONE{
+                        draw_sprite_ext(sprDStoneTexture,0,tempX,tempY,.25,.25,0,c_white,1);
+                    }else if tempCol == key_COPY{
+                        shader_set(shdRainbowStripe2);
+                        draw_sprite_ext(sprTerminalColor,1,tempX,tempY,1,1,0,tempDrawCol,1);
+                        shader_reset();
+                    }else{
+                        draw_sprite_ext(sprTerminalColor,1,tempX,tempY,1,1,0,tempDrawCol,1);
                     }
-                    else
-                        draw_sprite_ext(sprTerminalColor, 1, tempX, tempY, 1, 1, 0, tempDrawCol, 1)
-                    if (tempCol == colReplace)
-                    {
-                        draw_sprite_ext(sprTerminalColor, 0, tempX, tempY, 1, 1, 0, make_color_rgb((255 * previewA), 255, (255 * previewA)), 1)
-                        draw_sprite_ext(sprTerminalColor, 3, tempX, tempY, 1, 1, 0, make_color_rgb((255 * previewA), 255, (255 * previewA)), 1)
+                    
+                    //Outline/selection boxes
+                    if tempCol == colReplace{//Green border
+                        draw_sprite_ext(sprTerminalColor,0,tempX,tempY,1,1,0,make_color_rgb(255*previewA,255,255*previewA),1);
+                        draw_sprite_ext(sprTerminalColor,3,tempX,tempY,1,1,0,make_color_rgb(255*previewA,255,255*previewA),1);
+                    }else{
+                        draw_sprite(sprTerminalColor,0,tempX,tempY);
                     }
-                    else
-                        draw_sprite(sprTerminalColor, 0, tempX, tempY)
-                    if ((salvageColX == ix) &amp;&amp; ((salvageColY == iy) &amp;&amp; (state == 6)))
-                        draw_sprite(sprTerminalColor, 3, tempX, tempY)
-                    if ((!global.omegaKey[tempCol]) &amp;&amp; (!global.allUnlock))
-                        draw_sprite(sprTerminalColor, 2, tempX, tempY)
+                    if salvageColX == ix &amp;&amp; salvageColY == iy &amp;&amp; state == 6{//Selection box
+                        draw_sprite(sprTerminalColor,3,tempX,tempY);
+                    }
+                    if !global.omegaKey[tempCol] &amp;&amp; !global.allUnlock{
+                        draw_sprite(sprTerminalColor,2,tempX,tempY);
+                    }
                 }
             }
         }
-        break
-    case 7:
-        for (i = 0; i &lt; 3; i += 1)
-        {
-            if global.omegaPerk[i]
-                perkVis[(i + 1)] = 1
-        }
-        for (i = 0; i &lt; 4; i += 1)
-        {
-            dy = (((304 - boxH) + (i * 80)) + 32)
-            if (curPerk == i)
-            {
-                draw_set_alpha((perkAlpha * 0.35))
-                draw_rectangle(((400 - boxW) + 16), (dy + 8), (((400 + boxW) - 64) - 16), ((dy + 80) - 8), 0)
-                draw_set_alpha(1)
+    break;
+    case 7://Omega Perks
+        for(var i = 0; i &lt; 3; i += 1){
+            if global.omegaPerk[i]{
+                perkVis[i+1] = 1;
             }
-            draw_set_color(c_white)
-            if global.omegaPerk[i]
-                draw_set_color(make_color_rgb(0, 255, 0))
-            else if (oCount &gt;= perkReq[i])
-                draw_set_color(make_color_rgb(255, 255, 0))
-            draw_rectangle(((400 - boxW) + 16), (dy + 8), (((400 + boxW) - 64) - 16), ((dy + 80) - 8), 1)
-            draw_set_color(c_white)
-            draw_set_font(fPDA)
-            draw_set_halign(fa_center)
-            draw_set_valign(fa_middle)
-            if perkVis[i]
-                draw_text(368, (dy + 24), perkTitle[i])
-            else
-                draw_text(368, (dy + 24), "???")
-            draw_set_font(fMiniID)
-            draw_set_color(c_fuchsia)
-            if perkVis[i]
-                draw_text(368, (dy + 48), perkDesc[i])
-            else
-                draw_text(368, (dy + 48), "Unlock the previous#Perk to see details!")
-            draw_set_color(c_white)
-            draw_set_alpha(perkShine)
-            draw_rectangle(((400 - boxW) + 16), (dy + 8), (((400 + boxW) - 64) - 16), ((dy + 80) - 8), 1)
-            draw_set_alpha(1)
-            draw_sprite(sprRequireSymbol, i, ((400 + boxW) - 64), ((dy + 40) - 16))
         }
-        draw_set_font(fPDA)
-        draw_set_halign(fa_center)
-        draw_set_valign(fa_middle)
-        draw_text(400, ((304 - boxH) + 16), ("Ω-Total: " + string(oCount)))
-        break
-    default:
-    
+        for(var i = 0; i &lt; 4; i += 1){
+            var dy = 304 - boxH + i*80 + 32;
+            //Pick rectangle
+            if curPerk == i{
+                draw_set_alpha(perkAlpha*.35);
+                draw_rectangle(400-boxW+16,dy+8,400+boxW-64-16,dy+80-8,0);
+                draw_set_alpha(1);
+            }
+            //Main Rectangles
+            draw_set_color(c_white);
+            if global.omegaPerk[i]{
+                draw_set_color(make_color_rgb(0,255,0));
+            }else if oCount &gt;= perkReq[i]{
+                draw_set_color(make_color_rgb(255,255,0));
+            }
+            draw_rectangle(400-boxW+16,dy+8,400+boxW-64-16,dy+80-8,1);
+            draw_set_color(c_white);
+            //Text
+            draw_set_font(fPDA);
+            draw_set_halign(fa_center);
+            draw_set_valign(fa_center);
+            if perkVis[i]{
+                draw_text(400-32,dy+24,perkTitle[i]);
+            }else{
+                draw_text(400-32,dy+24,"???");
+            }
+            draw_set_font(fMiniID);
+            draw_set_color(c_fuchsia);
+            if perkVis[i]{
+                draw_text(400-32,dy+48,perkDesc[i]);
+            }else{
+                draw_text(400-32,dy+48,"Unlock the previous#Perk to see details!");
+            }
+            draw_set_color(c_white);
+            //Shine
+            draw_set_alpha(perkShine);
+            draw_rectangle(400-boxW+16,dy+8,400+boxW-64-16,dy+80-8,1);
+            draw_set_alpha(1);
+            //Symbol
+            draw_sprite(sprRequireSymbol,i,400+boxW-64,dy+40-16);
+        }
+        //Text
+        draw_set_font(fPDA);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(400,304-boxH+16,"Ω-Total: "+string(oCount));
+    break;
 }
-
-if ((state &gt;= 4) &amp;&amp; (state &lt;= 6))
-{
-    if salvageExists
-        drawTerminalSalvage()
-    else
-    {
-        draw_set_font(fTalk)
-        draw_set_halign(fa_center)
-        draw_set_valign(fa_middle)
-        draw_text(400, 176, "No salvage data.")
+if state &gt;= 4 &amp;&amp; state &lt;= 6{//Salvage preview
+    if salvageExists{
+        drawTerminalSalvage();
+    }else{
+        draw_set_font(fTalk);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(400,304-128,"No salvage data.");
     }
-    draw_set_color(c_fuchsia)
-    draw_line((400 - boxW), 305, ((400 + boxW) - 1), 305)
-    draw_set_color(c_white)
-    draw_set_font(fTalk)
-    draw_set_halign(fa_center)
-    draw_set_valign(fa_middle)
-    draw_text(400, ((304 - boxH) + 12), "Preview")
+    draw_set_color(c_fuchsia);
+    draw_line(400-boxW,305,400+boxW-1,305);
+    draw_set_color(c_white);
+    draw_set_font(fTalk);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_text(400,304-boxH+12,"Preview");
 }
-if ((state == 2) || (state &gt;= 4))
-{
-    draw_set_font(fTalk)
-    draw_set_halign(fa_left)
-    draw_set_valign(fa_middle)
-    draw_text(((400 - boxW) + 12), ((304 + boxH) - 12), (((("" + getBindStr(global.selButton, global.usingController)) + " : Confirm, ") + getBindStr(global.shootButton, global.usingController)) + " : Back"))
+if state == 2 || state &gt;= 4{//Controls
+    draw_set_font(fTalk);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_center);
+    draw_text(400-boxW+12,304+boxH-12,""+getBindStr(global.selButton,global.usingController)+" : Confirm, "+getBindStr(global.shootButton,global.usingController)+" : Back");
 }
 </string>
           </argument>
@@ -811,20 +828,34 @@ if ((state == 2) || (state &gt;= 4))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = xstart
-y = (ystart + floatY)
-draw_sprite_ext(sprDPureGrad, floor(goldIndex), x, y, (w * 0.5), (h * 0.5), 0, c_white, 1)
-scrColorDoorArg(12)
-shader_set(shdRainbowStripe2)
-scrDrawDoorRequire()
-shader_reset()
-c2 = make_color_rgb(180, 150, 0)
-drawTerminalLock()
-draw_sprite_ext(sprTerminalOmega, 0, (x + (w * 16)), ((y + (h * 16)) + omegaY), 1, 1, 0, c_black, 0.35)
-drawTerminalTopLeft()
-drawTerminalTopRight()
-if showArrow
-    draw_sprite(sprUpArrowDoor, arrowInd, (x + 48), y)
+            <string>///Door stuff
+x = xstart;
+y = ystart + floatY;
+
+//scrDrawDoorSpend();
+draw_sprite_ext(sprDPureGrad,floor(goldIndex),x,y,w*.5,h*.5,0,c_white,1);
+
+scrColorDoorArg(key_COPY);
+shader_set(shdRainbowStripe2);
+scrDrawDoorRequire();
+shader_reset();
+c2 = make_color_rgb(180,150,0);
+
+drawTerminalLock();
+
+//Omega
+draw_sprite_ext(sprTerminalOmega,0,x+w*16,y+h*16+omegaY,1,1,0,c_black,.35);
+
+//Topleft door: White, Omega Keys
+drawTerminalTopLeft();
+
+//Topright door: Black, Omega Points
+drawTerminalTopRight();
+
+//Arrow
+if showArrow{
+    draw_sprite(sprUpArrowDoor,arrowInd,x+48,y);
+}
 </string>
           </argument>
         </arguments>

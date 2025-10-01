@@ -25,244 +25,374 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, t, saveMap, f, ii, j;
-state = 0
-sTime = 0
-doIntro = 0
-introTime = 0
-fsIndex = 0
-fsY = 0
-inFileX = 0
-inFileY = 0
-fsLocked = 0
-for (i = 0; i &lt; 3; i += 1)
-{
-    fileBoxY[i] = 700
-    fileBoxYT[i] = 700
-    fileBoxXO[i] = 0
-    fileBoxYO[i] = 0
-    fileBoxA[i] = (18 * i)
+            <string>///Unholy number of variables
+
+//State and state-related variables
+state = 0;
+sTime = 0;//mini-state timers
+doIntro = 0;
+introTime = 0;//Doesn't reset
+
+//File select control variables
+fsIndex = 0;//0, 1, 2
+fsY = 0;//0 = files, 1 = options
+inFileX = 0;//0 = No for confirmation, 1 = Yes for confirmation
+inFileY = 0;//0 = New Game/Continue, 1 = Delete File, 2 = Delete Confirm
+fsLocked = 0;//Whether or not you can scroll the choices
+
+//File select positions
+for(i=0;i&lt;3;i+=1){
+    fileBoxY[i] = 700; fileBoxYT[i] = 700;
+    fileBoxXO[i] = 0; fileBoxYO[i] = 0;
+    fileBoxA[i] = 18*i;
 }
-fileBoxX[0] = 176
-fileBoxX[1] = 400
-fileBoxX[2] = 624
-pointerYA = 0
-watsY = -32
-watsYT = 256
-watsA = 0
-watsFade = 0
-shiftIn = 0
-shiftYA = 0
-shiftYO = 0
-shiftY = 672
-pleaseIn = 0
-pleaseYA = 0
-pleaseYO = 0
-pleaseY = -64
-titleX = 400
-titleY = -128
-titleYT = 128
-titleAX = 0
-titleAY = 0
-titleXO = 0
-titleYO = 0
-titleXO2 = 0
-titleYO2 = 0
-cutinQueue = ds_priority_create()
-cutinDraw = 0
-cutinAllY = 736
-cutinRA = 40
-cutinR = 0
-cutinA = 0
-for (i = 0; i &lt; 12; i += 1)
-{
-    cutinRot[i] = random(360)
-    _cutinTemp = ((30 * i) + cutinA)
-    _cutinS = sin(degtorad(_cutinTemp))
-    _cutinC = cos(degtorad(_cutinTemp))
-    cutinX[i] = (cutinR * _cutinC)
-    cutinY[i] = ((cutinR / 3) * (-sin(degtorad((_cutinTemp + cutinA)))))
-    cutinZ[i] = (cutinR * _cutinS)
-    cutinScale[i] = (0.85 - (0.2 * _cutinS))
-    cutinBlend[i] = merge_color(c_white, c_black, (0.75 - (0.25 * _cutinS)))
+fileBoxX[0] = 400-224; fileBoxX[1] = 400; fileBoxX[2] = 400+224;
+pointerYA = 0;
+
+//Watson Presents variables
+watsY = -32;
+watsYT = 256;
+watsA = 0;
+watsFade = 0;
+
+//Shift to start variables
+shiftIn = 0;
+shiftYA = 0;
+shiftYO = 0;
+shiftY = 608+64;
+
+//Please select file variables
+pleaseIn = 0;
+pleaseYA = 0;
+pleaseYO = 0;
+pleaseY = -64;
+
+//Title variables (I can make the title its own object...right?!?!
+titleX = 400;
+titleY = -128;//Center Y of title
+titleYT = 128;//Target Y...
+titleAX = 0;//wavy movement angle x
+titleAY = 0;//wavy movement angle y
+titleXO = 0;//4 offsets for the 2 different parts of the title
+titleYO = 0;
+titleXO2 = 0;
+titleYO2 = 0;
+
+//Cut-in Variables
+cutinQueue = ds_priority_create();
+cutinDraw = 0;
+cutinAllY = 608+128;
+cutinRA = 40;
+cutinR = 0;
+cutinA = 0;
+for(i=0;i&lt;12;i+=1){
+    cutinRot[i] = random(360);
+    _cutinTemp = 360/12*i + cutinA;
+    _cutinS = sin(degtorad(_cutinTemp));
+    _cutinC = cos(degtorad(_cutinTemp));
+    cutinX[i] = cutinR * _cutinC;
+    cutinY[i] = cutinR/3 * -sin(degtorad(_cutinTemp+cutinA));
+    cutinZ[i] = cutinR * _cutinS;
+    cutinScale[i] = .85 - .2*_cutinS;
+    cutinBlend[i] = merge_color(c_white,c_black,.75-.25*_cutinS);
 }
-keyState = -1
-keyBounce = 0
-keyX = 840
-keyY = 184
-keyXT = 400
-keyYT = 0
-keyYA = 0
-keyYO = 0
-keyA = 0
-keyAT = 0
-keyAA = 0
-keyAO = 0
-keyShake = 0
-keySX = 0
-keySY = 0
-keyWhite = 0
-keySprite = 57
-keyIndex = 0
-plateCol = 16777215
-plateYA = 0
-plateYO = 0
-plateY = 384
-plateYT = 320
-plateA = 0
-plateAT = 0
-plateAA = 0
-plateAO = 0
-plateAlpha = 0
-spotCol = 16777215
-spotA = 0
-fbCol = make_color_hsv(170, 200, 20)
-fbHue = 0
-fbShift = 0
-fbAlpha = 0.4
-fbBG = 0
-fbBGY = 0
-fbGradient = 0
-mbWhiteAmt = 0
-mbAlpha = 0
-mbCol = make_color_rgb((100 * mbAlpha), (180 * mbAlpha), (80 * mbAlpha))
-for (t = 0; t &lt; 800; t += 20)
-{
-    p = instance_create(random(768), 630, oTitlePart1)
-    p.x += (p.hspeed * t)
-    p.y += (p.vspeed * t)
+
+//Bouncing key variables
+keyState = -1;//Key movement mode
+keyBounce = 0;//Key bounce counter
+keyX = 800+40;
+keyY = 304-40-80;
+keyXT = 400;//X and Y targets
+keyYT = 0;
+keyYA = 0;//Y angle for bounce state
+keyYO = 0;//Y offset
+keyA = 0;//Angle and Angle Target
+keyAT = 0;
+keyAA = 0;//Angle Angle and Angle Offset
+keyAO = 0;
+keyShake = 0;//Shake, Shake X, Shake Y
+keySX = 0;
+keySY = 0;
+keyWhite = 0;//White fade
+keySprite = sprKMasterTitle2;//Sprite of the bouncing key
+keyIndex = 0;//Image index of key
+
+//Spotlight and plate variables
+plateCol = c_white;
+plateYA = 0;//Y angle
+plateYO = 0;//Y offset
+plateY = 304+80;//Y and Y target
+plateYT = 304+16;
+plateA = 0;//Angle and target
+plateAT = 0;
+plateAA = 0;//Plate angle angle + offset
+plateAO = 0;
+plateAlpha = 0;
+spotCol = c_white;
+spotA = 0;
+
+//FAR back rectangle
+fbCol = make_color_hsv(170,200,20);
+fbHue = 0;
+fbShift = 0;//Hue shift
+fbAlpha = 0.4;
+fbBG = 0;//Checkerboard BG
+fbBGY = 0;
+fbGradient = 0;//Whether to draw the black gradient
+
+//Mid level rectangle, includes white fade and subtract layer
+mbWhiteAmt = 0;
+mbAlpha = 0;
+mbCol = make_color_rgb(100*mbAlpha,180*mbAlpha,80*mbAlpha);
+
+//Door BG particles
+for(t=0;t&lt;800;t+=20){
+    p=instance_create(random(768),630,oTitlePart1);
+    p.x += p.hspeed*t;
+    p.y += p.vspeed*t;
 }
-alarm[1] = 20
-titleMusic = -1
-loopStart = 22.29
-loopEnd = 38.24
-loopDiff = (loopEnd - loopStart)
-loopPos = 0
-alarm[0] = 200
-if (!file_exists("firstboot.txt"))
-{
-    state = -1
-    alarm[0] = -1
-    alarm[2] = 50
+alarm[1] = 20;
+
+//Music variables
+titleMusic = -1;
+loopStart = 22.29;//Start of the loop
+loopEnd = 38.24;//End of the loop
+loopDiff = loopEnd - loopStart;
+loopPos = 0;//Position of the song for looping purposes
+alarm[0] = 200;//Alarm 0 will fire Ev0, which starts the music and intro sequence
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///First Boot
+if !file_exists("firstboot.txt"){
+    state = -1;
+    alarm[0] = -1;
+    alarm[2] = 50;
 }
-str[0] = "Data 1"
-str[1] = "Data 2"
-str[2] = "Data 3"
-for (i = 0; i &lt; 3; i++)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Load save file vars
+str[0] = "Data 1";
+str[1] = "Data 2";
+str[2] = "Data 3";
+
+for (var i = 0; i &lt; 3; i++)
 {
-    exists[i] = 0
-    exists2[i] = 0
-    timeStr[i] = "None yet..."
-    solvecount[i] = 0
-    clearcount[i] = 0
-    completecount[i] = 0
-    if file_exists(("Data\save" + string((i + 1))))
+    exists[i] = false;
+    exists2[i] = false;//Part 2 save
+    timeStr[i] = "None yet...";
+    solvecount[i] = 0;
+    clearcount[i] = 0;
+    completecount[i] = 0;
+    if (file_exists("Data\save"+string(i+1)))  //check if current save exists
     {
-        exists[i] = 1
-        if global.extraSaveProtection
-            saveMap = ds_map_secure_load(("Data\save" + string((i + 1))))
+        //load save data
+        exists[i] = true;
+        
+        //load the save map
+        var saveMap;
+        
+        if (global.extraSaveProtection) //use ds_map_secure function
+        {
+            saveMap = ds_map_secure_load("Data\save"+string(i+1));
+        }
+        else    //use text file
+        {
+            var f = file_text_open_read("Data\save"+string(i+1));
+            
+            saveMap = json_decode(base64_decode(file_text_read_string(f)));
+            
+            file_text_close(f);
+        }
+        
+        if (saveMap != -1)  //check if the save map loaded correctly
+        {
+            death[i] = ds_map_find_value(saveMap,"death");
+            if (is_undefined(death[i])) //check for undefined value in case the save was messed with or got corrupted
+                death[i] = 0;
+            
+            time[i] = ds_map_find_value(saveMap,"time");
+            if (is_undefined(time[i]))
+                time[i] = 0;
+    
+            difficulty[i] = ds_map_find_value(saveMap,"difficulty");
+            if (is_undefined(difficulty[i]))
+                difficulty[i] = 0;
+                
+            //Count up the rooms solved, areas cleared, and areas FC'd
+            solvecount[i] = 0;
+            for(var ii = 0; ii &lt; 250; ii += 1){
+                _tempSolve = ds_map_find_value(saveMap,"saveRoomClear["+string(ii)+"]");
+                if (is_undefined(_tempSolve)){
+                    _tempSolve = 0;
+                }
+                solvecount[i] += _tempSolve;
+            }
+            
+            clearcount[i] = 0;
+            completecount[i] = 0;
+            for(var ii = 0; ii &lt; 15; ii += 1){
+                _tempClear = ds_map_find_value(saveMap,"saveClear["+string(ii)+"]");
+                if (is_undefined(_tempClear)){
+                    _tempClear = 0;
+                }
+                clearcount[i] += _tempClear;
+                _tempComplete = ds_map_find_value(saveMap,"saveComplete["+string(ii)+"]");
+                if (is_undefined(_tempComplete)){
+                    _tempComplete = 0;
+                }
+                completecount[i] += _tempComplete;
+            }
+            
+            for (var j = 0; j &lt; 8; j++)
+            {
+                boss[j,i] = ds_map_find_value(saveMap,"saveBossItem["+string(j)+"]");
+                if (is_undefined(boss[j,i]))
+                    boss[j,i] = false;
+            }
+            
+            clear[i] = ds_map_find_value(saveMap,"saveGameClear");
+            if (is_undefined(clear[i]))
+                clear[i] = false;
+            
+            ds_map_destroy(saveMap);
+        }
         else
         {
-            f = file_text_open_read(("Data\save" + string((i + 1))))
-            saveMap = json_decode(base64_decode(file_text_read_string(f)))
-            file_text_close(f)
-        }
-        if (saveMap != -1)
-        {
-            death[i] = ds_map_find_value(saveMap, "death")
-            if is_undefined(death[i])
-                death[i] = 0
-            time[i] = ds_map_find_value(saveMap, "time")
-            if is_undefined(time[i])
-                time[i] = 0
-            difficulty[i] = ds_map_find_value(saveMap, "difficulty")
-            if is_undefined(difficulty[i])
-                difficulty[i] = 0
-            solvecount[i] = 0
-            for (ii = 0; ii &lt; 250; ii += 1)
+            //save map didn't load correctly, set the variables to the defaults
+            death[i] = 0;
+            time[i] = 0;
+            difficulty[i] = 0;
+            for (var j = 0; j &lt; 8; j++)
             {
-                _tempSolve = ds_map_find_value(saveMap, (("saveRoomClear[" + string(ii)) + "]"))
-                if is_undefined(_tempSolve)
-                    _tempSolve = 0
-                solvecount[i] += _tempSolve
+                boss[j,i] = false;
             }
-            clearcount[i] = 0
-            completecount[i] = 0
-            for (ii = 0; ii &lt; 15; ii += 1)
-            {
-                _tempClear = ds_map_find_value(saveMap, (("saveClear[" + string(ii)) + "]"))
-                if is_undefined(_tempClear)
-                    _tempClear = 0
-                clearcount[i] += _tempClear
-                _tempComplete = ds_map_find_value(saveMap, (("saveComplete[" + string(ii)) + "]"))
-                if is_undefined(_tempComplete)
-                    _tempComplete = 0
-                completecount[i] += _tempComplete
-            }
-            for (j = 0; j &lt; 8; j++)
-            {
-                boss[j, i] = ds_map_find_value(saveMap, (("saveBossItem[" + string(j)) + "]"))
-                if is_undefined(boss[j, i])
-                    boss[j, i] = 0
-            }
-            clear[i] = ds_map_find_value(saveMap, "saveGameClear")
-            if is_undefined(clear[i])
-                clear[i] = 0
-            ds_map_destroy(saveMap)
-        }
-        else
-        {
-            death[i] = 0
-            time[i] = 0
-            difficulty[i] = 0
-            for (j = 0; j &lt; 8; j++)
-                boss[j, i] = 0
-            clear[i] = 0
+            clear[i] = false;
         }
     }
     else
     {
-        exists[i] = 0
-        death[i] = 0
-        time[i] = 0
+        exists[i] = false;
+        death[i] = 0;
+        time[i] = 0;
     }
-    t = time[i]
-    timeStr[i] = (string((t div 3600)) + ":")
-    t %= 3600
-    timeStr[i] += string((t div 600))
-    t %= 600
-    timeStr[i] += (string((t div 60)) + ":")
-    t %= 60
-    timeStr[i] += string((t div 10))
-    t %= 10
-    timeStr[i] += string(floor(t))
-    if file_exists(("Data\p2save" + string((i + 1))))
+    
+    var t = time[i];
+    
+    timeStr[i] = string(t div 3600) + ":";
+    t = t mod 3600;
+    timeStr[i] += string(t div 600);
+    t = t mod 600;
+    timeStr[i] += string(t div 60) + ":";
+    t = t mod 60;
+    timeStr[i] += string(t div 10);
+    t = t mod 10;
+    timeStr[i] += string(floor(t));
+    
+    //PART 2
+    if (file_exists("Data\p2save"+string(i+1)))  //check if current save exists
     {
-        exists2[i] = 1
-        if global.extraSaveProtection
-            saveMap = ds_map_secure_load(("Data\p2save" + string((i + 1))))
+        //load save data
+        exists2[i] = true;
+        
+        //load the save map
+        var saveMap;
+        
+        if (global.extraSaveProtection) //use ds_map_secure function
+        {
+            saveMap = ds_map_secure_load("Data\p2save"+string(i+1));
+        }
+        else    //use text file
+        {
+            var f = file_text_open_read("Data\p2save"+string(i+1));
+            
+            saveMap = json_decode(base64_decode(file_text_read_string(f)));
+            
+            file_text_close(f);
+        }
+        
+        if (saveMap != -1)  //check if the save map loaded correctly
+        {       
+            //Count up the rooms solved, areas cleared, and areas FC'd
+            //solvecount[i] = 0;
+            for(var ii = 0; ii &lt; 100; ii += 1){
+                _tempSolve = ds_map_find_value(saveMap,"saveRoomClear["+string(ii)+"]");
+                if (is_undefined(_tempSolve)){
+                    _tempSolve = 0;
+                }
+                solvecount[i] += _tempSolve;
+            }
+            
+            ds_map_destroy(saveMap);
+        }
         else
         {
-            f = file_text_open_read(("Data\p2save" + string((i + 1))))
-            saveMap = json_decode(base64_decode(file_text_read_string(f)))
-            file_text_close(f)
-        }
-        if (saveMap != -1)
-        {
-            for (ii = 0; ii &lt; 100; ii += 1)
-            {
-                _tempSolve = ds_map_find_value(saveMap, (("saveRoomClear[" + string(ii)) + "]"))
-                if is_undefined(_tempSolve)
-                    _tempSolve = 0
-                solvecount[i] += _tempSolve
-            }
-            ds_map_destroy(saveMap)
+            //save map didn't load correctly, set the variables to the defaults
+            
         }
     }
     else
-        exists2[i] = 0
+    {
+        exists2[i] = false;
+    }
 }
-texture_set_repeat(0)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//Other
+texture_set_repeat(0);
 </string>
           </argument>
         </arguments>
@@ -285,8 +415,8 @@ texture_set_repeat(0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (oDialogHandle)
-    diaStart(90)
+            <string>///Dialog for first boot
+with oDialogHandle{diaStart(90);}
 </string>
           </argument>
         </arguments>
@@ -309,8 +439,9 @@ texture_set_repeat(0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[1] = 20
-instance_create(random_range(0, 768), 630, oTitlePart1)
+            <string>///door particle
+alarm[1] = 20;
+instance_create(random_range(0,768),630,oTitlePart1);
 </string>
           </argument>
         </arguments>
@@ -333,7 +464,8 @@ instance_create(random_range(0, 768), 630, oTitlePart1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_user(0)
+            <string>///Fire Ev0
+event_user(0);
 </string>
           </argument>
         </arguments>
@@ -356,409 +488,446 @@ instance_create(random_range(0, 768), 630, oTitlePart1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var doorDir, iD;
-if (!global.ultraSave)
-{
-    pass = string_copy(keyboard_string, (string_length(keyboard_string) - 6), 7)
-    if (pass == "lpdebug")
-    {
-        global.ultraSave = 1
-        scrPlaySoundExt(sndItem, 1, 1, false)
+            <string>///Debug stuff
+if !global.ultraSave{
+    pass = string_copy(keyboard_string,string_length(keyboard_string)-6,7);
+    if pass == "lpdebug"{
+        global.ultraSave = 1;
+        scrPlaySoundExt(sndItem,1,1,false);
     }
 }
-switch state
-{
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///MAIN States
+
+/*State Reference:
+-1 - First Boot Sequence
+0 - PreIntro
+1 - Intro
+2 - Transition to file select (3) from intro (1)
+3 - File Select (Choose File)
+4 - File Select (File Options)
+5 - File Selected! Moving on to game...
+6 - Back transition to intro (1) from file select (3)
+7 - Transition to options (8) from file select (3)
+8 - Options
+9 - Transition to file select (3) from options (8)
+*/
+
+switch state{
     case 0:
-        if (alarm[0] &lt; 50)
-            watsFade = 1
-        if ((alarm[0] &gt; 1) &amp;&amp; scrButtonCheckPressed(global.menuAcceptButton))
-        {
-            alarm[0] = -1
-            event_user(0)
+        if alarm[0] &lt; 50{
+            watsFade = 1;
         }
-        break
+        if alarm[0] &gt; 1 &amp;&amp; scrButtonCheckPressed(global.selButton){
+            alarm[0] = -1;
+            event_user(0);//start intro
+        }
+    break;
     case 1:
-        if (introTime &gt; 50)
-        {
-            if scrButtonCheckPressed(global.menuAcceptButton)
-            {
-                startSnd = scrPlaySoundExt(sndTitleStart, 0.85, 1, false)
-                if audio_is_playing(titleMusic)
-                    audio_sound_gain(titleMusic, (0.5 * (global.musicLevel / 100)), 1)
-                state = 2
-                sTime = 0
-                mbWhiteAmt = 0.6
-                pleaseIn = 1
-                shiftIn = 0
+        if introTime &gt; 50{
+            if scrButtonCheckPressed(global.selButton){
+                startSnd = scrPlaySoundExt(sndTitleStart,.85,1,false);
+                if audio_is_playing(titleMusic){
+                    audio_sound_gain(titleMusic,0.5*(global.musicLevel/100),1);
+                }
+                state = 2;
+                sTime = 0;
+                mbWhiteAmt = .6;
+                pleaseIn = 1;
+                shiftIn = 0;
             }
         }
-        break
+    break;
     case 2:
-        sTime = min((sTime + 1), 60)
-        if (sTime == 5)
-            fileBoxYT[2] = 224
-        if (sTime == 15)
-            fileBoxYT[1] = 224
-        if (sTime == 25)
-            fileBoxYT[0] = 224
-        mbAlpha = min((mbAlpha + 0.0166666666666667), 1)
-        if (mbAlpha == 1)
-        {
-            state = 3
-            sTime = 0
+        sTime = min(sTime+1,60);
+        if sTime == 5{fileBoxYT[2] = 224;}
+        if sTime == 15{fileBoxYT[1] = 224;}
+        if sTime == 25{fileBoxYT[0] = 224;}
+        mbAlpha = min(mbAlpha + 1/60, 1);
+        if mbAlpha == 1{
+            state = 3;
+            sTime = 0;
         }
-        break
+    break;
     case 3:
-        if scrButtonCheckPressed(global.menuRightButton)
-        {
-            fsIndex += 1
-            _beep = scrPlaySoundExt(sndSelectBeep, 1, 0.6, false)
+        if scrButtonCheckPressed(global.rightButton){
+            fsIndex += 1;
+            _beep = scrPlaySoundExt(sndSelectBeep,1,.6,false);
+        }else if scrButtonCheckPressed(global.leftButton){
+            fsIndex -= 1;
+            _beep = scrPlaySoundExt(sndSelectBeep,1,.6,false);
         }
-        else if scrButtonCheckPressed(global.menuLeftButton)
-        {
-            fsIndex -= 1
-            _beep = scrPlaySoundExt(sndSelectBeep, 1, 0.6, false)
+        if fsIndex == 3{fsIndex = 0;}else if fsIndex == -1{fsIndex = 2;}
+        if scrButtonCheckPressed(global.selButton){
+            state = 4;
+            inFileY = 0;
+            inFileX = 0;
+            scrPlaySoundExt(sndSelectMade,1,1,false);
+        }else if scrButtonCheckPressed(global.shootButton){
+            state = 6;
+            pleaseIn = 0;
+            scrPlaySoundExt(sndTitleCancel,1,1,false);
+            scrPlaySoundExt(sndMasterUnequip,1,1,false);
+            if audio_is_playing(titleMusic){
+                audio_sound_gain(titleMusic,0.8*(global.musicLevel/100),2);
+            }
         }
-        if (fsIndex == 3)
-            fsIndex = 0
-        else if (fsIndex == -1)
-            fsIndex = 2
-        if scrButtonCheckPressed(global.menuAcceptButton)
-        {
-            state = 4
-            inFileY = 0
-            inFileX = 0
-            scrPlaySoundExt(sndSelectMade, 1, 1, false)
-        }
-        else if scrButtonCheckPressed(global.menuBackButton)
-        {
-            state = 6
-            pleaseIn = 0
-            scrPlaySoundExt(sndTitleCancel, 1, 1, false)
-            scrPlaySoundExt(sndMasterUnequip, 1, 1, false)
-            if audio_is_playing(titleMusic)
-                audio_sound_gain(titleMusic, (0.8 * (global.musicLevel / 100)), 2)
-        }
-        break
+    break;
     case 4:
-        if (fsLocked == 0)
-        {
-            if exists[fsIndex]
-            {
-                if scrButtonCheckPressed(global.menuUpButton)
-                {
-                    inFileY -= 1
-                    if (inFileY == -1)
-                        inFileY = 1
-                    _beep = scrPlaySoundExt(sndSelectBeep, 1, 0.8, false)
-                }
-                else if scrButtonCheckPressed(global.menuDownButton)
-                {
-                    inFileY += 1
-                    if (inFileY == 2)
-                        inFileY = 0
-                    _beep = scrPlaySoundExt(sndSelectBeep, 1, 0.8, false)
+        if fsLocked == 0{
+            if exists[fsIndex]{
+                if scrButtonCheckPressed(global.upButton){
+                    inFileY -= 1; if inFileY == -1{inFileY = 1;}
+                    _beep = scrPlaySoundExt(sndSelectBeep,1,.8,false);
+                }else if scrButtonCheckPressed(global.downButton){
+                    inFileY += 1; if inFileY == 2{inFileY = 0;}
+                    _beep = scrPlaySoundExt(sndSelectBeep,1,.8,false);
                 }
             }
-        }
-        else
-        {
-            if scrButtonCheckPressed(global.menuRightButton)
-            {
-                inFileX += 1
-                _beep = scrPlaySoundExt(sndSelectBeep, 1, 0.4, false)
+        }else{
+            if scrButtonCheckPressed(global.rightButton){
+                inFileX += 1;
+                _beep = scrPlaySoundExt(sndSelectBeep,1,.4,false);
+            }else if scrButtonCheckPressed(global.leftButton){
+                inFileX -= 1;
+                _beep = scrPlaySoundExt(sndSelectBeep,1,.4,false);
             }
-            else if scrButtonCheckPressed(global.menuLeftButton)
-            {
-                inFileX -= 1
-                _beep = scrPlaySoundExt(sndSelectBeep, 1, 0.4, false)
-            }
-            if (inFileX == -1)
-                inFileX = 1
-            else if (inFileX == 2)
-                inFileX = 0
+            if inFileX == -1{inFileX = 1;}else if inFileX == 2{inFileX = 0;}
         }
-        if scrButtonCheckPressed(global.menuAcceptButton)
-        {
-            switch inFileY
-            {
-                case 0:
-                    if file_exists(("Data\save" + string((fsIndex + 1))))
-                    {
-                        global.savenum = (fsIndex + 1)
-                        state = 5
-                        transObj = instance_create(0, 0, oTitleTransition)
-                        if exists[fsIndex]
-                            transObj.action = 1
-                        else
-                            transObj.action = 0
-                        if audio_is_playing(titleMusic)
-                            audio_sound_gain(titleMusic, 0, 1)
-                        scrPlaySoundExt(sndSelectMade, 1, 1, false)
+        if scrButtonCheckPressed(global.selButton){
+            switch inFileY{
+                case 0://Start game
+                    if (file_exists("Data\save"+string(fsIndex+1))){
+                        global.savenum = fsIndex+1;
+                        state = 5;
+                        transObj = instance_create(0,0,oTitleTransition);
+                        if exists[fsIndex]{
+                            transObj.action = 1;//Load
+                            //show_debug_message("TitleMain chose to load");
+                        }else{
+                            transObj.action = 0;//New Game
+                        }
+                        if audio_is_playing(titleMusic){
+                            audio_sound_gain(titleMusic,0,1);
+                        }
+                        scrPlaySoundExt(sndSelectMade,1,1,false);
+                    }else{
+                        global.savenum = fsIndex+1;
+                        global.file2Detected = 0;
+                        state = 5;
+                        transObj = instance_create(0,0,oTitleTransition);
+                        transObj.action = 0;
+                        if audio_is_playing(titleMusic){
+                            audio_sound_gain(titleMusic,0,1);
+                        }
+                        scrPlaySoundExt(sndSelectMade,1,1,false);
                     }
-                    else
-                    {
-                        global.savenum = (fsIndex + 1)
-                        global.file2Detected = 0
-                        state = 5
-                        transObj = instance_create(0, 0, oTitleTransition)
-                        transObj.action = 0
-                        if audio_is_playing(titleMusic)
-                            audio_sound_gain(titleMusic, 0, 1)
-                        scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                    }
-                    break
-                case 1:
-                    fsLocked = 1
-                    inFileY = 2
-                    inFileX = 0
-                    scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                    break
-                case 2:
-                    switch inFileX
-                    {
-                        case 0:
-                            scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                            inFileY = 1
-                            fsLocked = 0
-                            break
-                        case 1:
-                            scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                            scrPlaySoundExt(sndCrumble, 1, 1, false)
-                            inFileY = 0
-                            fsLocked = 0
-                            file_delete(("Data\save" + string((fsIndex + 1))))
-                            file_delete(("Data\p2save" + string((fsIndex + 1))))
-                            doorDir = ("Data" + string((fsIndex + 1)))
-                            for (iD = 0; iD &lt; 99; iD += 1)
-                            {
-                                if file_exists((((doorDir + "\door") + scrSalvageDoorString(iD)) + ".ini"))
-                                    file_delete((((doorDir + "\door") + scrSalvageDoorString(iD)) + ".ini"))
+                break;
+                case 1://Delete
+                    fsLocked = 1;
+                    inFileY = 2;
+                    inFileX = 0;
+                    scrPlaySoundExt(sndSelectMade,1,1,false);
+                break;
+                case 2://Delete Confirmation
+                    switch inFileX{
+                        case 0://Don't delete
+                            scrPlaySoundExt(sndSelectMade,1,1,false);
+                            inFileY = 1;
+                            fsLocked = 0;
+                        break;
+                        case 1://DESTROY THE WORLD AND EVERYTHING INSIDE
+                            scrPlaySoundExt(sndSelectMade,1,1,false);
+                            scrPlaySoundExt(sndCrumble,1,1,false);
+                            inFileY = 0;
+                            fsLocked = 0;
+                            file_delete("Data\save"+string(fsIndex+1));
+                            file_delete("Data\p2save"+string(fsIndex+1));
+                            //Delete the door directory
+                            var doorDir = "Data"+string(fsIndex+1);
+                            for(var iD = 0; iD &lt;= 99; iD += 1){
+                                if file_exists(doorDir+"\door"+scrSalvageDoorString(iD)+".ini"){
+                                    file_delete(doorDir+"\door"+scrSalvageDoorString(iD)+".ini");
+                                }
                             }
-                            exists[fsIndex] = 0
-                            timeStr[fsIndex] = "None yet..."
-                            solvecount[fsIndex] = 0
-                            clearcount[fsIndex] = 0
-                            break
+                            exists[fsIndex] = 0;
+                            timeStr[fsIndex] = "None yet...";
+                            solvecount[fsIndex] = 0;
+                            clearcount[fsIndex] = 0;
+                        break;
                     }
-                    
-                    break
+                break;
             }
-            
-        }
-        else if scrButtonCheckPressed(global.menuBackButton)
-        {
-            if fsLocked
-            {
-                fsLocked = 0
-                if (inFileY == 2)
-                    inFileY = 1
+        }else if scrButtonCheckPressed(global.shootButton){
+            if fsLocked{
+                fsLocked = 0;
+                if inFileY == 2{inFileY = 1;}
+            }else{
+                state = 3;
             }
-            else
-                state = 3
-            scrPlaySoundExt(sndMasterUnequip, 1, 1, false)
+            scrPlaySoundExt(sndMasterUnequip,1,1,false);
         }
-        break
-    case 5:
-        break
+    break;
+    case 5://Game starting...
+        
+    break;
     case 6:
-        sTime = min((sTime + 1), 60)
-        if (sTime == 5)
-            fileBoxYT[2] = 700
-        if (sTime == 15)
-            fileBoxYT[1] = 700
-        if (sTime == 25)
-            fileBoxYT[0] = 700
-        mbAlpha = max((mbAlpha - 0.0166666666666667), 0)
-        if (mbAlpha == 0)
-        {
-            state = 1
-            sTime = 0
-            shiftIn = 1
+        sTime = min(sTime+1,60);
+        if sTime == 5{fileBoxYT[2] = 700;}
+        if sTime == 15{fileBoxYT[1] = 700;}
+        if sTime == 25{fileBoxYT[0] = 700;}
+        mbAlpha = max(mbAlpha - 1/60, 0);
+        if mbAlpha == 0{
+            state = 1;
+            sTime = 0;
+            shiftIn = 1;
         }
-        break
+    break;
 }
-
-if doIntro
-{
-    introTime = min((introTime + 1), 450)
-    if (introTime == 1)
-        keyState = 0
-    if (introTime == 449)
-    {
-        if (state == 1)
-            shiftIn = 1
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Intro timing (This is its own thing)
+if doIntro{
+    introTime = min(introTime + 1, 450);
+    if introTime == 1{
+        keyState = 0;
+    }
+    if introTime == 449{
+        if state == 1{
+            shiftIn = 1;
+        }
     }
 }
-watsY += ((watsYT - watsY) * 0.06)
-if ((state == 0) &amp;&amp; (watsFade == 0))
-    watsA += ((1 - watsA) * 0.05)
-else
-    watsA *= 0.95
-switch keyState
-{
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Music and objects
+
+//Watson Presents
+watsY += (watsYT - watsY) * 0.06;
+if state == 0 &amp;&amp; watsFade == 0{
+    watsA += (1 - watsA) * .05;
+}else{
+    watsA *= 0.95;
+}
+
+//Key movement
+switch keyState{
     case 0:
-        keyX += ((keyXT - keyX) * 0.013)
-        keyA += ((keyAT - keyA) * 0.15)
-        keyYA = ((keyYA + 4.5) % 360)
-        keyY = (264 - (80 * abs(cos(degtorad(keyYA)))))
-        if ((((keyYA % 360) - 90) % 180) == 0)
-        {
-            instance_create(keyX, 304, oTitleRipple)
-            keyWhite = 1
-            keyBounce += 1
-            keyAT += 80
-            with (oTitlePart1)
-                whiteA = 1
-            if (keyBounce == 5)
-            {
-                keyState = 1
-                keyXT = 400
-                keyYT = 104
-                keyAT = 720
+        keyX += (keyXT - keyX) * 0.013;
+        keyA += (keyAT - keyA) * 0.15;
+        keyYA = (keyYA + 4.5) mod 360;
+        keyY = 304 - 40 - 80*abs(cos(degtorad(keyYA)));
+        if ((keyYA mod 360 - 90) mod 180) == 0{
+            instance_create(keyX,304,oTitleRipple);
+            keyWhite = 1;
+            keyBounce += 1;
+            keyAT += 80;
+            with oTitlePart1{whiteA = 1;}
+            if keyBounce == 5{
+                keyState = 1;
+                keyXT = 400; keyYT = 304 - 200; keyAT = 720;
             }
         }
-        keyWhite *= 0.95
-        fbCol = make_color_hsv(170, 200, (20 + (40 * keyWhite)))
-        fbAlpha = (0.4 + (0.4 * keyWhite))
-        break
+        keyWhite *= 0.95;
+        fbCol = make_color_hsv(170,200,20+40*keyWhite);
+        fbAlpha = 0.4+0.4*keyWhite;
+    break;
     case 1:
-        keyX += ((keyXT - keyX) * 0.1)
-        keyY += ((keyYT - keyY) * 0.1)
-        keyA += ((keyAT - keyA) * 0.08)
-        keyShake = min(((keyShake * 1.02) + 0.02), 3)
-        keySX = random_range((-keyShake), keyShake)
-        keySY = random_range((-keyShake), keyShake)
-        if (keyShake == 3)
-        {
-            keyState = 2
-            keyYA = 0
+        keyX += (keyXT - keyX) * 0.1;
+        keyY += (keyYT - keyY) * 0.1;
+        keyA += (keyAT - keyA) * 0.08;
+        keyShake = min(keyShake*1.02 + 0.02, 3);
+        keySX = random_range(-keyShake,keyShake);
+        keySY = random_range(-keyShake,keyShake);
+        if keyShake == 3{
+            keyState = 2;
+            keyYA = 0;
         }
-        keyWhite *= 0.8
-        fbCol = make_color_hsv(170, 200, (20 + (40 * keyWhite)))
-        fbAlpha = (0.4 + (0.4 * keyWhite))
-        plateY += ((plateYT - plateY) * 0.1)
-        plateAlpha += ((0.5 - plateAlpha) * 0.1)
-        spotA += ((0.8 - spotA) * 0.05)
-        break
-    case 2:
-        keyYA = min((keyYA + 0.08), 6)
-        keyY += keyYA
-        keyA += ((keyAT - keyA) * 0.08)
-        keySX = random_range((-keyShake), keyShake)
-        keySY = random_range((-keyShake), keyShake)
-        if (keyY &gt;= 264)
-        {
-            keyState = 3
-            keyYT = 424
-            keyA = 0
-            keyAT = -15
-            keySprite = 56
-            plateYT = 448
-            plateAT = -15
-            mbWhiteAmt = 0.8
-            fbShift = 1
-            fbBG = 1
-            fbGradient = 1
-            cutinDraw = 1
+        keyWhite *= 0.8;
+        fbCol = make_color_hsv(170,200,20+40*keyWhite);
+        fbAlpha = 0.4+0.4*keyWhite;
+        //plate stuff
+        plateY += (plateYT - plateY) * 0.1;
+        plateAlpha += (0.5 - plateAlpha) * 0.1;
+        spotA += (0.8 - spotA) * 0.05;
+    break;
+    case 2://falling
+        keyYA = min(keyYA + 0.08, 6);
+        keyY += keyYA;
+        keyA += (keyAT - keyA) * 0.08;
+        keySX = random_range(-keyShake,keyShake);
+        keySY = random_range(-keyShake,keyShake);
+        if keyY &gt;= (304 - 40){
+            keyState = 3;
+            keyYT = 304+120;
+            keyA = 0; keyAT = -15;
+            keySprite = sprKMasterTitle;
+            plateYT = 304+144;
+            plateAT = -15;
+            mbWhiteAmt = 0.8;
+            fbShift = 1;
+            fbBG = 1;
+            fbGradient = 1;
+            cutinDraw = 1;
         }
-        plateY += ((plateYT - plateY) * 0.1)
-        plateAlpha += ((0.5 - plateAlpha) * 0.1)
-        spotA += ((0.8 - spotA) * 0.05)
-        break
-    case 3:
-        keyX += ((keyXT - keyX) * 0.1)
-        keyY += ((keyYT - keyY) * 0.1)
-        keyA += ((keyAT - keyA) * 0.08)
-        if (abs((keyY - keyYT)) &lt; 0.5)
-        {
-            keyState = 4
-            plateAT = 0
-            plateYT = 400
-            plateYA = 10
-            keyAT = 0
-            keyYT = 320
-            keyYA = 0
+        //plate stuff
+        plateY += (plateYT - plateY) * 0.1;
+        plateAlpha += (0.5 - plateAlpha) * 0.1;
+        spotA += (0.8 - spotA) * 0.05;
+    break;
+    case 3://landed
+        keyX += (keyXT - keyX) * 0.1;
+        keyY += (keyYT - keyY) * 0.1;
+        keyA += (keyAT - keyA) * 0.08;
+        if abs(keyY-keyYT) &lt; .5{
+            keyState = 4;
+            plateAT = 0;
+            plateYT = 304+96;
+            plateYA = 10;
+            keyAT = 0;
+            keyYT = 304+16;
+            keyYA = 0;
         }
-        keyShake *= 0.85
-        keySX = random_range((-keyShake), keyShake)
-        keySY = random_range((-keyShake), keyShake)
-        keyIndex = ((keyIndex + 0.125) % 8)
-        plateY += ((plateYT - plateY) * 0.1)
-        plateA += ((plateAT - plateA) * 0.08)
-        plateAlpha += ((1 - plateAlpha) * 0.1)
-        spotA += ((0.8 - spotA) * 0.05)
-        break
-    case 4:
-        keyX += ((keyXT - keyX) * 0.03)
-        keyY += ((keyYT - keyY) * 0.03)
-        keyA += ((keyAT - keyA) * 0.03)
-        keyYA = ((keyYA + 1.2) % 360)
-        keyYO = (12 * sin(degtorad(keyYA)))
-        keyAA = ((keyAA + 1) % 360)
-        keyAO = (10 * sin(degtorad(keyAA)))
-        keyIndex = ((keyIndex + 0.125) % 8)
-        plateY += ((plateYT - plateY) * 0.03)
-        plateA += ((plateAT - plateA) * 0.03)
-        plateAlpha += ((1 - plateAlpha) * 0.1)
-        plateYA = ((plateYA + 1.2) % 360)
-        plateYO = (6 * sin(degtorad(plateYA)))
-        plateAA = ((plateAA + 1) % 360)
-        plateAO = (-10 * sin(degtorad(plateAA)))
-        break
+        keyShake *= 0.85;
+        keySX = random_range(-keyShake,keyShake);
+        keySY = random_range(-keyShake,keyShake);
+        keyIndex = (keyIndex + 1/8) mod 8;
+        //plate stuff
+        plateY += (plateYT - plateY) * 0.1;
+        plateA += (plateAT - plateA) * 0.08;
+        plateAlpha += (1 - plateAlpha) * 0.1;
+        spotA += (0.8 - spotA) * 0.05;
+    break;
+    case 4://Normal
+        keyX += (keyXT - keyX) * 0.03;
+        keyY += (keyYT - keyY) * 0.03;
+        keyA += (keyAT - keyA) * 0.03;
+        keyYA = (keyYA + 1.2) mod 360;
+        keyYO = 12 * sin(degtorad(keyYA));
+        keyAA = (keyAA + 1) mod 360;
+        keyAO = 10*sin(degtorad(keyAA));
+        keyIndex = (keyIndex + 1/8) mod 8;
+        //plate stuff
+        plateY += (plateYT - plateY) * 0.03;
+        plateA += (plateAT - plateA) * 0.03;
+        plateAlpha += (1 - plateAlpha) * 0.1;
+        plateYA = (plateYA + 1.2) mod 360;
+        plateYO = 6 * sin(degtorad(plateYA));
+        plateAA = (plateAA + 1) mod 360;
+        plateAO = -10*sin(degtorad(plateAA));
+    break;
 }
 
-if (keyState &gt;= 3)
-{
-    fbBGY -= 1
-    if (fbBGY &lt; 0)
-        fbBGY += 64
-    cutinAllY += ((352 - cutinAllY) * 0.06)
-    cutinRA = min((cutinRA + 1), 90)
-    cutinR = (200 * sin(degtorad(cutinRA)))
-    cutinA = ((cutinA + 0.9) % 360)
-    ds_priority_clear(cutinQueue)
-    for (i = 0; i &lt; 12; i += 1)
-    {
-        cutinRot[i] += 1.1
-        _cutinTemp = ((30 * i) + cutinA)
-        _cutinS = sin(degtorad(_cutinTemp))
-        _cutinC = cos(degtorad(_cutinTemp))
-        cutinX[i] = (cutinR * _cutinC)
-        cutinY[i] = ((cutinR / 4) * (-sin(degtorad((_cutinTemp + cutinA)))))
-        cutinZ[i] = (cutinR * _cutinS)
-        cutinScale[i] = (0.95 - (0.3 * _cutinS))
-        cutinBlend[i] = merge_color(c_white, c_black, (0.25 + (0.25 * _cutinS)))
-        ds_priority_add(cutinQueue, i, round((200 + cutinZ[i])))
+if keyState &gt;= 3{
+    //background stuff
+    fbBGY -= 1; if fbBGY &lt; 0{fbBGY += 64;}
+    cutinAllY += (352 - cutinAllY) * .06;
+    cutinRA = min(cutinRA + 1, 90);
+    cutinR = 200 * sin(degtorad(cutinRA));
+    cutinA = (cutinA + .9) mod 360;
+    ds_priority_clear(cutinQueue);
+    for(i=0;i&lt;12;i+=1){
+        cutinRot[i] += 1.1;
+        _cutinTemp = 360/12*i + cutinA;
+        _cutinS = sin(degtorad(_cutinTemp));
+        _cutinC = cos(degtorad(_cutinTemp));
+        cutinX[i] = cutinR * _cutinC;
+        cutinY[i] = cutinR/4 * -sin(degtorad(_cutinTemp+cutinA));
+        cutinZ[i] = cutinR * _cutinS;
+        cutinScale[i] = .95 - .3*_cutinS;
+        cutinBlend[i] = merge_color(c_white,c_black,.25+.25*_cutinS);
+        ds_priority_add(cutinQueue,i,round(200+cutinZ[i]));
     }
 }
-if (keyState &gt;= 4)
-{
-    titleX = 400
-    titleY += ((titleYT - titleY) * 0.04)
-    titleAX = ((titleAX + 0.7) % 360)
-    titleAY = ((titleAY + 1.65) % 360)
-    titleXO = (6 * sin(degtorad(titleAX)))
-    titleXO2 = (6 * sin(degtorad((titleAX + 10))))
-    titleYO = (13 * sin(degtorad(titleAY)))
-    titleYO2 = (13 * sin(degtorad((titleAY + 10))))
+if keyState &gt;= 4{//Key has landed
+    titleX = 400;
+    titleY += (titleYT - titleY) * 0.04;
+    titleAX = (titleAX + 0.7) mod 360;
+    titleAY = (titleAY + 1.65) mod 360;
+    titleXO = 6 * sin(degtorad(titleAX));
+    titleXO2 = 6 * sin(degtorad(titleAX+10));
+    titleYO = 13 * sin(degtorad(titleAY));
+    titleYO2 = 13 * sin(degtorad(titleAY+10));
 }
-shiftYA = ((shiftYA + 1.5) % 360)
-shiftYO = (3 * sin(degtorad(shiftYA)))
-if shiftIn
-    shiftY += ((512 - shiftY) * 0.05)
-else
-    shiftY += ((672 - shiftY) * 0.05)
-pleaseYA = ((shiftYA + 1.5) % 360)
-pleaseYO = (3 * sin(degtorad(shiftYA)))
-if pleaseIn
-    pleaseY += ((96 - pleaseY) * 0.05)
-else
-    pleaseY += ((-64 - pleaseY) * 0.05)
-if audio_is_playing(titleMusic)
-{
-    if (audio_sound_get_track_position(titleMusic) &gt;= loopEnd)
-        audio_sound_set_track_position(titleMusic, (audio_sound_get_track_position(titleMusic) - loopDiff))
+
+//Press Shift
+shiftYA = (shiftYA + 1.5) mod 360;
+shiftYO = 3 * sin(degtorad(shiftYA));
+if shiftIn{
+    shiftY += ((608-96)-shiftY) * 0.05;
+}else{
+    shiftY += ((608+64)-shiftY) * 0.05;
+}
+
+//Please Select
+pleaseYA = (shiftYA + 1.5) mod 360;
+pleaseYO = 3 * sin(degtorad(shiftYA));
+if pleaseIn{
+    pleaseY += ((96)-pleaseY) * 0.05;
+}else{
+    pleaseY += ((-64)-pleaseY) * 0.05;
+}
+
+//Music loop
+if audio_is_playing(titleMusic){
+    if audio_sound_get_track_position(titleMusic) &gt;= loopEnd{
+        audio_sound_set_track_position(titleMusic,audio_sound_get_track_position(titleMusic)-loopDiff);
+    }
 }
 </string>
           </argument>
@@ -782,13 +951,15 @@ if audio_is_playing(titleMusic)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.muteMusic)
-{
-    titleMusic = audio_play_sound(musTitle, 1, true)
-    audio_sound_gain(titleMusic, ((0.8 * global.musicLevel) / 100), 0)
+            <string>///Start music and intro sequence
+if !global.muteMusic{
+    titleMusic = audio_play_sound(musTitle,1,1);
+    global.musicTitle = "Klonoa 2 - Element";
+    instance_create(0,0,oMusicCredit);
+    audio_sound_gain(titleMusic,0.8*global.musicLevel/100,0);
 }
-state = 1
-doIntro = 1
+state = 1;
+doIntro = 1;
 </string>
           </argument>
         </arguments>
@@ -811,8 +982,8 @@ doIntro = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>ds_priority_destroy(cutinQueue)
-audio_stop_sound(titleMusic)
+            <string>ds_priority_destroy(cutinQueue);
+audio_stop_sound(titleMusic);
 </string>
           </argument>
         </arguments>
@@ -835,169 +1006,273 @@ audio_stop_sound(titleMusic)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _shiftIndex, pointerX, pointerY, pointerImg;
-if fbShift
-{
-    fbHue = ((fbHue + 0.75) % 255)
-    fbCol = make_color_hsv(fbHue, 120, 180)
+            <string>///BG Elements
+/* These include:
+- Background color rectangle
+- Checkerboard background
+- Black under-gradient
+- Door particles
+*/
+
+if fbShift{
+    fbHue = (fbHue + 0.75) mod 255;
+    fbCol = make_color_hsv(fbHue,120,180);
 }
-draw_set_color(fbCol)
-draw_set_alpha(fbAlpha)
-draw_rectangle(0, 0, 799, 607, 0)
-draw_set_color(c_white)
-draw_set_alpha(1)
-if fbBG
-    draw_background_tiled_ext(bCheckers, 0, fbBGY, 1, 1, c_white, 0.4)
-if fbGradient
-    draw_background_ext(bGradient, 0, 608, 400, -1, 0, c_black, 0.8)
-with (oTitlePart1)
-{
-    draw_sprite_ext(sprite_index, 0, (x + 2), (y + 2), image_xscale, image_yscale, image_angle, c_black, (image_alpha * 0.35))
-    draw_self()
-    draw_sprite_ext(sprite_index, 1, x, y, image_xscale, image_yscale, image_angle, c_white, whiteA)
+
+draw_set_color(fbCol);
+draw_set_alpha(fbAlpha);
+draw_rectangle(0,0,799,607,0);
+draw_set_color(c_white);
+draw_set_alpha(1);
+
+if fbBG{
+    draw_background_tiled_ext(bCheckers,0,fbBGY,1,1,c_white,0.4);
 }
-draw_set_blend_mode(1)
-draw_set_alpha(spotA)
-draw_triangle_color(336, -1, 464, -1, 304, 256, 16777215, 16777215, 0, 0)
-draw_triangle_color(464, -1, 304, 256, 496, 256, 16777215, 0, 0, 0)
-draw_set_alpha(1)
-draw_set_blend_mode(0)
-if cutinDraw
-{
-    while 1
-    {
-        if (!ds_priority_empty(cutinQueue))
-        {
-            _i = ds_priority_find_max(cutinQueue)
-            if (cutinZ[_i] &gt;= 0)
-            {
-                draw_sprite_ext(sprTitleCutins, _i, ((400 + cutinX[_i]) + (3 * cutinScale[_i])), ((cutinAllY + cutinY[_i]) + (3 * cutinScale[_i])), cutinScale[_i], cutinScale[_i], cutinRot[_i], c_black, 0.35)
-                draw_sprite_ext(sprTitleCutins, _i, (400 + cutinX[_i]), (cutinAllY + cutinY[_i]), cutinScale[_i], cutinScale[_i], cutinRot[_i], cutinBlend[_i], 1)
-                ds_priority_delete_max(cutinQueue)
-                continue
+
+if fbGradient{
+    draw_background_ext(bGradient,0,608,400,-1,0,c_black,0.8);
+}
+
+with oTitlePart1{
+    draw_sprite_ext(sprite_index,0,x+2,y+2,image_xscale,image_yscale,image_angle,c_black,image_alpha*.35);
+    draw_self();
+    draw_sprite_ext(sprite_index,1,x,y,image_xscale,image_yscale,image_angle,c_white,whiteA);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Mainground Elements
+/*These are ordered as such:
+-Spotlight
+-Cutins (Back)
+-Plate
+-Key
+-Cutins (Front)
+-Title
+-Press SHIFT
+-Watson Presents
+*/
+
+draw_set_blend_mode(bm_add);
+draw_set_alpha(spotA);
+draw_triangle_color(400-64,-1,400+64,-1,400-96,256,c_white,c_white,c_black,0);
+draw_triangle_color(400+64,-1,400-96,256,400+96,256,c_white,c_black,c_black,0);
+draw_set_alpha(1);
+draw_set_blend_mode(bm_normal);
+
+if cutinDraw{
+    while true{
+        if !ds_priority_empty(cutinQueue){
+            _i = ds_priority_find_max(cutinQueue);
+            if cutinZ[_i] &gt;= 0{
+                draw_sprite_ext(sprTitleCutins,_i,400+cutinX[_i]+3*cutinScale[_i],cutinAllY+cutinY[_i]+3*cutinScale[_i],cutinScale[_i],cutinScale[_i],cutinRot[_i],c_black,.35);
+                draw_sprite_ext(sprTitleCutins,_i,400+cutinX[_i],cutinAllY+cutinY[_i],cutinScale[_i],cutinScale[_i],cutinRot[_i],cutinBlend[_i],1);
+                ds_priority_delete_max(cutinQueue);
+            }else{
+                break;
             }
-            else
-                break
-        }
-        else
-            break
-    }
-}
-draw_sprite_ext(sprTitlePlate, 0, 403, ((plateY + 3) + plateYO), 1, 1, (plateA + plateAO), c_black, (plateAlpha * 0.35))
-draw_sprite_ext(sprTitlePlate, 0, 400, (plateY + plateYO), 1, 1, (plateA + plateAO), plateCol, plateAlpha)
-draw_sprite_ext(keySprite, keyIndex, ((keyX + keySX) + 3), (((keyY + keySY) + 3) + keyYO), 1, 1, (keyA + keyAO), c_black, 0.35)
-draw_sprite_ext(keySprite, keyIndex, (keyX + keySX), ((keyY + keySY) + keyYO), 1, 1, (keyA + keyAO), c_white, 1)
-draw_sprite_ext(sprKMasterTitle2, 1, (keyX + keySX), ((keyY + keySY) + keyYO), 1, 1, (keyA + keyAO), c_white, keyWhite)
-if cutinDraw
-{
-    while 1
-    {
-        if (!ds_priority_empty(cutinQueue))
-        {
-            _i = ds_priority_find_max(cutinQueue)
-            draw_sprite_ext(sprTitleCutins, _i, ((400 + cutinX[_i]) + (3 * cutinScale[_i])), ((cutinAllY + cutinY[_i]) + (3 * cutinScale[_i])), cutinScale[_i], cutinScale[_i], cutinRot[_i], c_black, 0.35)
-            draw_sprite_ext(sprTitleCutins, _i, (400 + cutinX[_i]), (cutinAllY + cutinY[_i]), cutinScale[_i], cutinScale[_i], cutinRot[_i], cutinBlend[_i], 1)
-            ds_priority_delete_max(cutinQueue)
-            continue
-        }
-        else
-            break
-    }
-}
-draw_sprite_ext(sprTitleLogo, 0, ((titleX + titleXO) + 4), (((titleY + titleYO) - 40) + 4), 1, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprTitleLogo, 1, ((titleX + titleXO2) + 4), (((titleY + titleYO2) + 40) + 4), 1, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprTitleLogo, 0, (titleX + titleXO), ((titleY + titleYO) - 40), 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprTitleLogo, 1, (titleX + titleXO2), ((titleY + titleYO2) + 40), 1, 1, 0, c_white, 1)
-_shiftIndex = 0
-draw_sprite_ext(sprShiftToStart, _shiftIndex, 402, ((shiftY + shiftYO) + 2), 1, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprShiftToStart, _shiftIndex, 400, (shiftY + shiftYO), 1, 1, 0, c_white, 1)
-draw_set_font(fPresents)
-draw_set_color(c_white)
-draw_set_halign(fa_center)
-draw_set_alpha(watsA)
-draw_text(400, watsY, "- L. A. Watson Presents -")
-draw_set_alpha(1)
-draw_set_color(c_white)
-if (mbWhiteAmt &gt; 0)
-{
-    mbWhiteAmt *= 0.95
-    fbAlpha = (0.6 + (0.3 * mbWhiteAmt))
-    draw_set_alpha(mbWhiteAmt)
-    draw_rectangle(0, 0, 799, 607, 0)
-    draw_set_alpha(1)
-}
-if (mbAlpha &gt; 0)
-{
-    draw_set_blend_mode(3)
-    mbCol = make_color_rgb((100 * mbAlpha), (180 * mbAlpha), (80 * mbAlpha))
-    draw_set_color(mbCol)
-    draw_rectangle(0, 0, 799, 607, 0)
-    draw_set_color(c_white)
-    draw_set_blend_mode(0)
-}
-draw_sprite_ext(sprPleaseSelect, 0, 402, ((pleaseY + pleaseYO) + 2), 1, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprPleaseSelect, 0, 400, (pleaseY + pleaseYO), 1, 1, 0, c_white, 1)
-for (i = 0; i &lt; 3; i += 1)
-{
-    fileBoxA[i] = ((fileBoxA[i] + 2) % 360)
-    fileBoxY[i] += ((fileBoxYT[i] - fileBoxY[i]) * 0.05)
-    fileBoxXO[i] = (4 * sin(degtorad(fileBoxA[i])))
-    fileBoxYO[i] = (8 * cos(degtorad(fileBoxA[i])))
-    _tempX = (fileBoxX[i] + fileBoxXO[i])
-    _tempY = (fileBoxY[i] + fileBoxYO[i])
-    draw_sprite_ext(sprFileBorder, 0, (_tempX + 3), (_tempY + 3), 1, 1, 0, c_black, 0.35)
-    draw_sprite_ext(sprFileBorder, 0, _tempX, _tempY, 1, 1, 0, c_white, 1)
-    draw_set_halign(fa_center)
-    draw_set_color(c_black)
-    draw_set_alpha(1)
-    draw_set_font(fDefault30)
-    drawTextGradient(_tempX, (_tempY + 48), str[i], c_white, make_color_rgb(128, 128, 255), 2)
-    draw_set_font(fDefault12)
-    if exists[i]
-        _tempStr = "Continue"
-    else
-        _tempStr = "Start Game"
-    if ((inFileY == 0) &amp;&amp; ((fsIndex == i) &amp;&amp; (state == 4)))
-        _tempStr = (("&gt;" + _tempStr) + "&lt;")
-    drawTextGradient(_tempX, (_tempY + 88), _tempStr, c_white, make_color_rgb(255, 255, 128), 0)
-    if exists[i]
-    {
-        _tempStr = "Erase Data"
-        if ((inFileY == 2) &amp;&amp; (fsIndex == i))
-            _tempStr = "Truly?"
-        if ((inFileY == 1) &amp;&amp; ((fsIndex == i) &amp;&amp; (state == 4)))
-            _tempStr = (("&gt;" + _tempStr) + "&lt;")
-        drawTextGradient(_tempX, (_tempY + 112), _tempStr, make_color_rgb(255, 128, 128), make_color_rgb(100, 30, 30), 0)
-        if ((inFileY == 2) &amp;&amp; (fsIndex == i))
-        {
-            _tempStr = "No"
-            if ((inFileX == 0) &amp;&amp; ((fsIndex == i) &amp;&amp; (state == 4)))
-                _tempStr = (("&gt;" + _tempStr) + "&lt;")
-            drawTextGradient((_tempX - 24), (_tempY + 136), _tempStr, c_white, c_green, 0)
-            _tempStr = "YEAH!"
-            if ((inFileX == 1) &amp;&amp; ((fsIndex == i) &amp;&amp; (state == 4)))
-                _tempStr = (("&gt;" + _tempStr) + "&lt;")
-            drawTextGradient((_tempX + 24), (_tempY + 136), _tempStr, make_color_rgb(255, 128, 128), make_color_rgb(100, 30, 30), 0)
+        }else{
+            break;
         }
     }
-    else
-        timeStr[i] = "None yet..."
-    drawTextGradient(_tempX, (_tempY + 160), ("Time: " + timeStr[i]), make_color_hsv(212.5, 80, 255), make_color_hsv(140, 120, 190), 0)
-    if (solvecount[i] &gt; 0)
-        drawTextGradient(_tempX, (_tempY + 192), ("Puzzles Solved#" + string(solvecount[i])), make_color_hsv(212.5, 80, 255), make_color_hsv(140, 120, 190), 0)
-    if (clearcount[i] &gt; 0)
-        drawTextGradient(_tempX, (_tempY + 224), ("Areas Cleared#" + string(clearcount[i])), make_color_hsv(212.5, 80, 255), make_color_hsv(140, 120, 190), 0)
 }
-draw_set_color(c_white)
-pointerYA = ((pointerYA + 3) % 360)
-pointerX = (fileBoxX[fsIndex] + fileBoxXO[fsIndex])
-pointerY = (((fileBoxY[fsIndex] + fileBoxYO[fsIndex]) - 48) + (4 * sin(degtorad(pointerYA))))
-if ((state == 4) || (state == 5))
-    pointerImg = 1
-else
-    pointerImg = 0
-draw_sprite_ext(sprTitlePointer, pointerImg, (pointerX + 2), (pointerY + 2), 1, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprTitlePointer, pointerImg, pointerX, pointerY, 1, 1, 0, c_white, 1)
+
+draw_sprite_ext(sprTitlePlate,0,400+3,plateY+3+plateYO,1,1,plateA+plateAO,c_black,plateAlpha*.35);
+draw_sprite_ext(sprTitlePlate,0,400,plateY+plateYO,1,1,plateA+plateAO,plateCol,plateAlpha);
+
+draw_sprite_ext(keySprite,keyIndex,keyX+keySX+3,keyY+keySY+3+keyYO,1,1,keyA+keyAO,c_black,.35);
+draw_sprite_ext(keySprite,keyIndex,keyX+keySX,keyY+keySY+keyYO,1,1,keyA+keyAO,c_white,1);
+draw_sprite_ext(sprKMasterTitle2,1,keyX+keySX,keyY+keySY+keyYO,1,1,keyA+keyAO,c_white,keyWhite);
+
+if cutinDraw{
+    while true{
+        if !ds_priority_empty(cutinQueue){
+            _i = ds_priority_find_max(cutinQueue);
+            draw_sprite_ext(sprTitleCutins,_i,400+cutinX[_i]+3*cutinScale[_i],cutinAllY+cutinY[_i]+3*cutinScale[_i],cutinScale[_i],cutinScale[_i],cutinRot[_i],c_black,.35);
+            draw_sprite_ext(sprTitleCutins,_i,400+cutinX[_i],cutinAllY+cutinY[_i],cutinScale[_i],cutinScale[_i],cutinRot[_i],cutinBlend[_i],1);
+            ds_priority_delete_max(cutinQueue);
+        }else{
+            break;
+        }
+    }
+}
+
+draw_sprite_ext(sprTitleLogo,0,titleX+titleXO+4,titleY+titleYO-40+4,1,1,0,c_black,.35);
+draw_sprite_ext(sprTitleLogo,1,titleX+titleXO2+4,titleY+titleYO2+40+4,1,1,0,c_black,.35);
+draw_sprite_ext(sprTitleLogo,0,titleX+titleXO,titleY+titleYO-40,1,1,0,c_white,1);
+draw_sprite_ext(sprTitleLogo,1,titleX+titleXO2,titleY+titleYO2+40,1,1,0,c_white,1);
+
+/*var _shiftIndex = 0;
+if global.jumpButton[0] == vk_space{
+    _shiftIndex = 0;
+}else if global.jumpButton[0] == vk_shift{
+    _shiftIndex = 2;
+}else{
+    _shiftIndex = 1;
+}*/
+//If I hadn't forgotten that the main menu uses menu binds and not keybinds,
+//you would have been able to bear witness to one of the funniest jokes in the game.
+//The sprite I made for it is not in the game files anymore.
+var _shiftIndex = 0;
+
+draw_sprite_ext(sprShiftToStart,_shiftIndex,400+2,shiftY+shiftYO+2,1,1,0,c_black,.35);
+draw_sprite_ext(sprShiftToStart,_shiftIndex,400,shiftY+shiftYO,1,1,0,c_white,1);
+
+draw_set_font(fPresents);
+draw_set_color(c_white);
+draw_set_halign(fa_center);
+draw_set_alpha(watsA);
+draw_text(400,watsY,"- L. A. Watson Presents -");
+
+draw_set_alpha(1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Foreground Elements
+
+/*This includes:
+White flash in front of most other elements
+Subtract rectangle for file select
+*/
+
+draw_set_color(c_white);
+if mbWhiteAmt &gt; 0{
+    mbWhiteAmt *= 0.95;
+    fbAlpha = 0.6 + 0.3*mbWhiteAmt;
+    draw_set_alpha(mbWhiteAmt);
+    draw_rectangle(0,0,799,607,0);
+    draw_set_alpha(1);
+}
+if mbAlpha &gt; 0{
+    draw_set_blend_mode(bm_subtract);
+    mbCol = make_color_rgb(100*mbAlpha,180*mbAlpha,80*mbAlpha);
+    draw_set_color(mbCol);
+    draw_rectangle(0,0,799,607,0);
+    draw_set_color(c_white);
+    draw_set_blend_mode(bm_normal);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Selection Elements
+/*Includes:
+-Please select a file
+-File select pointer
+-File select boxes
+*/
+
+draw_sprite_ext(sprPleaseSelect,0,400+2,pleaseY+pleaseYO+2,1,1,0,c_black,.35);
+draw_sprite_ext(sprPleaseSelect,0,400,pleaseY+pleaseYO,1,1,0,c_white,1);
+
+for(i=0;i&lt;3;i+=1){
+    fileBoxA[i] = (fileBoxA[i] + 2) mod 360;
+    fileBoxY[i] += (fileBoxYT[i] - fileBoxY[i]) * 0.05;
+    fileBoxXO[i] = 4*sin(degtorad(fileBoxA[i]));
+    fileBoxYO[i] = 8*cos(degtorad(fileBoxA[i]));
+    _tempX = fileBoxX[i]+fileBoxXO[i];
+    _tempY = fileBoxY[i]+fileBoxYO[i];
+    draw_sprite_ext(sprFileBorder,0,_tempX+3,_tempY+3,1,1,0,c_black,0.35);
+    draw_sprite_ext(sprFileBorder,0,_tempX,_tempY,1,1,0,c_white,1);
+    //Now for the fun part
+    draw_set_halign(fa_center);
+    draw_set_color(c_black);
+    draw_set_alpha(1);
+    draw_set_font(fDefault30);
+    drawTextGradient(_tempX,_tempY+48,str[i],c_white,make_color_rgb(128,128,255),2);
+    //draw_text(_tempX,_tempY+48,str[i]);
+    
+    draw_set_font(fDefault12);
+    if exists[i]{_tempStr = "Continue";}else{_tempStr = "Start Game";}
+    if inFileY == 0 &amp;&amp; fsIndex == i &amp;&amp; state == 4{_tempStr = ("&gt;"+_tempStr+"&lt;");}
+    drawTextGradient(_tempX,_tempY+88,_tempStr,c_white,make_color_rgb(255,255,128),0);
+    
+    if exists[i]{
+        //draw_set_color(make_color_rgb(100,30,30));
+        _tempStr = "Erase Data"; if inFileY == 2 &amp;&amp; fsIndex == i{_tempStr = "Truly?";}
+        if inFileY == 1 &amp;&amp; fsIndex == i &amp;&amp; state == 4{_tempStr = ("&gt;"+_tempStr+"&lt;");}
+        drawTextGradient(_tempX,_tempY+112,_tempStr,make_color_rgb(255,128,128),make_color_rgb(100,30,30),0);
+        if inFileY == 2 &amp;&amp; fsIndex == i{
+            //draw_set_color(c_black);
+            _tempStr = "No";
+            if inFileX == 0 &amp;&amp; fsIndex == i &amp;&amp; state == 4{_tempStr = ("&gt;"+_tempStr+"&lt;");}
+            drawTextGradient(_tempX-24,_tempY+136,_tempStr,c_white,c_green,0);
+            
+            //draw_set_color(make_color_rgb(100,30,30));
+            _tempStr = "YEAH!";
+            if inFileX == 1 &amp;&amp; fsIndex == i &amp;&amp; state == 4{_tempStr = ("&gt;"+_tempStr+"&lt;");}
+            drawTextGradient(_tempX+24,_tempY+136,_tempStr,make_color_rgb(255,128,128),make_color_rgb(100,30,30),0);
+        }
+    }else{
+        timeStr[i] = "None yet...";
+    }
+    
+    //draw_set_color(c_black);
+    drawTextGradient(_tempX,_tempY+160,"Time: "+timeStr[i],make_color_hsv(212.5,80,255),make_color_hsv(140,120,190),0);
+    if (solvecount[i] &gt; 0){drawTextGradient(_tempX,_tempY+192,"Puzzles Solved#"+string(solvecount[i]),make_color_hsv(212.5,80,255),make_color_hsv(140,120,190),0);}
+    if (clearcount[i] &gt; 0){drawTextGradient(_tempX,_tempY+224,"Areas Cleared#"+string(clearcount[i]),make_color_hsv(212.5,80,255),make_color_hsv(140,120,190),0);}
+    //if (completecount[i] &gt; 0){draw_text(_tempX,_tempY+224,"Areas Complete#"+string(completecount[i]));}
+}
+
+draw_set_color(c_white);
+
+var pointerX,pointerY,pointerImg;
+pointerYA = (pointerYA + 3) mod 360;
+pointerX = fileBoxX[fsIndex]+fileBoxXO[fsIndex];
+pointerY = fileBoxY[fsIndex]+fileBoxYO[fsIndex] - 48 + 4*sin(degtorad(pointerYA));
+if (state == 4 || state == 5){pointerImg = 1;}else{pointerImg = 0;}
+draw_sprite_ext(sprTitlePointer,pointerImg,pointerX+2,pointerY+2,1,1,0,c_black,.35);
+draw_sprite_ext(sprTitlePointer,pointerImg,pointerX,pointerY,1,1,0,c_white,1);
 </string>
           </argument>
         </arguments>

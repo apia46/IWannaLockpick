@@ -25,33 +25,45 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bgY = 0
-bgBlend = make_color_hsv(40, 255, 100)
-background_blend[1] = make_color_hsv(128, 90, 210)
-background_alpha[1] = 0.5
-for (t = 0; t &lt; 800; t += 10)
-{
-    p = instance_create(-32, random_range(-64, 672), oFloatPart2)
-    p.x += (p.hspeed * t)
-    p.y += (p.vspeed * t)
+            <string>bgY = 0;
+//bgY2 = 0;
+//bgA = 0;
+bgBlend = make_color_hsv(40,255,100);
+//bgBlend2 = make_color_hsv(40,230,150);
+//background_blend[1] = make_color_hsv(21.25,90,210);
+background_blend[1] = make_color_hsv(128,90,210);
+background_alpha[1] = .5;
+for(t=0;t&lt;800;t+=10){
+    p=instance_create(-32,random_range(-64,672),oFloatPart2);
+    p.x += p.hspeed*t;
+    p.y += p.vspeed*t;
 }
-alarm[0] = 10
-background_index[2] = bMistOcean
-background_visible[2] = 1
-background_blend[2] = make_color_hsv(28, 50, 230)
-background_alpha[2] = 0.8
-background_y[2] = 308
-background_hspeed[2] = 0.3
-background_vtiled[2] = 0
-background_index[3] = bMistOcean
-background_visible[3] = 1
-background_xscale[3] = 1.25
-background_yscale[3] = 1.25
-background_blend[3] = make_color_hsv(38, 100, 180)
-background_alpha[3] = 0.6
-background_y[3] = 233
-background_hspeed[3] = 0.6
-background_vtiled[3] = 0
+alarm[0] = 10;
+
+background_index[2] = bMistOcean;
+background_visible[2] = true;
+background_blend[2] = make_color_hsv(28,50,230);
+background_alpha[2] = .8;
+background_y[2] = 608-300;
+background_hspeed[2] = .15*2;
+background_vtiled[2] = false;
+
+background_index[3] = bMistOcean;
+background_visible[3] = true;
+background_xscale[3] = 1.25; background_yscale[3] = 1.25;
+background_blend[3] = make_color_hsv(38,100,180);
+background_alpha[3] = .6;
+background_y[3] = 608-375;
+background_hspeed[3] = .3*2;
+background_vtiled[3] = false;
+
+/*background_index[4] = bMistOcean;
+background_visible[4] = true;
+background_xscale[4] = 1.5; background_yscale[4] = 1.5;
+background_blend[4] = make_color_hsv(20,200,40);
+background_y[4] = 608-450;
+background_hspeed[4] = .45;
+background_vtiled[4] = false;*/
 </string>
           </argument>
         </arguments>
@@ -74,8 +86,8 @@ background_vtiled[3] = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(-32, random_range(-64, 672), oFloatPart2)
-alarm[0] = 10
+            <string>instance_create(-32,random_range(-64,672),oFloatPart2);
+alarm[0] = 10;
 </string>
           </argument>
         </arguments>
@@ -98,7 +110,10 @@ alarm[0] = 10
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bgY = ((bgY + 0.6) % 128)
+            <string>bgY = (bgY + .6) mod 128;
+//bgY2 = (bgY2 + .4) mod 64;
+//bgA = (bgA + 1.5) mod 360;
+//bgBlend = make_color_hsv(40,128,128+90*sin(degtorad(bgA)));
 </string>
           </argument>
         </arguments>
@@ -121,7 +136,14 @@ alarm[0] = 10
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_background_tiled_ext(bSquares, bgY, 0, 1, 1, c_white, 0.15)
+            <string>//texture_set_interpolation(true);
+//draw_set_blend_mode_ext(bm_one,bm_one);
+//draw_background_tiled_ext(bBrick,4,bgY2,1,1,bgBlend2,1);
+draw_background_tiled_ext(bSquares,bgY,0,1,1,c_white,.15);
+//draw_background_tiled_ext(background_index[2],background_x[2],background_y[2],background_xscale[2],background_yscale[2],background_blend[2],background_alpha[2]);
+//draw_background_tiled_ext(bMist,background_x[3],background_y[3],background_xscale[3],background_yscale[3],background_blend[3],background_alpha[3]);
+//draw_set_blend_mode(bm_normal);
+//texture_set_interpolation(global.smoothingMode);
 </string>
           </argument>
         </arguments>

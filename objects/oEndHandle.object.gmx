@@ -25,15 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = 0
-t = 0
-drawPlayer = 0
-pInd = 0
-frontA = 0
-kinaA = 0
-kinaY = 0
-skipAlpha = 0
-skipA = 0
+            <string>state = 0;//0 = normal, 1 = fade out
+t = 0;
+
+drawPlayer = 0;
+pInd = 0;
+
+frontA = 0;
+
+kinaA = 0;
+kinaY = 0;
+
+skipAlpha = 0;
+skipA = 0;
 </string>
           </argument>
         </arguments>
@@ -56,42 +60,34 @@ skipA = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 0:
-        break
-    case 1:
-        frontA = min((frontA + 0.01), 1)
-        if (frontA == 1)
-        {
-            t = min((t + 1), 50)
-            if (t == 1)
-            {
-                with (objPlayer)
-                    instance_destroy()
-                room_goto(rCredits)
+            <string>switch state{
+    case 0://none
+        
+    break;
+    case 1://fade to credits
+        frontA = min(frontA + 1/100, 1);
+        if frontA == 1{
+            t = min(t+1, 50);
+            if t == 1{
+                with objPlayer{instance_destroy();}
+                room_goto(rCredits);
             }
         }
-        break
-    default:
-    
+    break;
 }
+kinaA = (kinaA+1) mod 360;
+kinaY = round(3*sin(degtorad(kinaA)));
+pInd = (pInd+.1) mod 2;
 
-kinaA = ((kinaA + 1) % 360)
-kinaY = round((3 * sin(degtorad(kinaA))))
-pInd = ((pInd + 0.1) % 2)
-if (oDialogHandle.diaState != 0)
-{
-    skipA = ((skipA + 2) % 360)
-    skipAlpha = (0.5 - (0.5 * cos(degtorad(skipA))))
+//Skip stuff
+if oDialogHandle.diaState != 0{
+    skipA = (skipA + 2) mod 360;
+    skipAlpha = .5 - 0.5*cos(degtorad(skipA));
 }
-if (oDialogHandle.diaState != 0)
-{
-    if scrButtonCheckPressed(global.skipButton)
-    {
-        with (oDialogHandle)
-            event_user(0)
-        scrPlaySoundExt(sndSelectMade, 0.75, 1, false)
+if oDialogHandle.diaState != 0{
+    if scrButtonCheckPressed(global.skipButton){
+        with oDialogHandle{event_user(0);}
+        scrPlaySoundExt(sndSelectMade,.75,1,false);
     }
 }
 </string>
@@ -116,17 +112,15 @@ if (oDialogHandle.diaState != 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch oDialogHandle.diaPos
-{
-    case 4:
-        drawPlayer = 1
-        with (objPlayer)
-            visible = 0
-        global.musicVol = 0.8
-        scrPlayMusic(musEnding2, true)
-        break
+            <string>///dialog just advanced
+switch oDialogHandle.diaPos{
+    case 4://sit
+        drawPlayer = 1;
+        with objPlayer{visible = 0;}
+        global.musicVol = .8;
+        scrPlayMusic(musEnding2,true);
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -149,19 +143,19 @@ if (oDialogHandle.diaState != 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var runTop, runBot;
-if (oDialogHandle.diaState != 0)
-{
-    draw_set_alpha(skipAlpha)
-    draw_set_font(fMiniID)
-    draw_set_halign(fa_right)
-    draw_set_valign(fa_top)
-    runTop = make_color_rgb(230, 255, 255)
-    runBot = make_color_rgb(170, 200, 255)
-    drawTextGradient(795, 480, (("- Press [" + getBindStr(global.skipButton, global.usingController)) + "] to skip -"), runTop, runBot, 1)
-    draw_set_alpha(1)
+            <string>//skip text
+if oDialogHandle.diaState != 0{
+draw_set_alpha(skipAlpha);
+draw_set_font(fMiniID);
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+var runTop = make_color_rgb(230,255,255);
+var runBot = make_color_rgb(170,200,255);
+drawTextGradient(795,608-128,"- Press ["+getBindStr(global.skipButton,global.usingController)+"] to skip -",runTop,runBot,1);
+draw_set_alpha(1);
 }
-drawScreenRect(c_black, frontA)
+
+drawScreenRect(c_black,frontA);
 </string>
           </argument>
         </arguments>
@@ -184,12 +178,13 @@ drawScreenRect(c_black, frontA)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, 0, (x + 3), ((y + kinaY) + 3), -1, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprite_index, 0, x, (y + kinaY), -1, 1, 0, c_white, 1)
-if drawPlayer
-{
-    with (objPlayer)
-        draw_sprite(sprPlayerBack, floor(other.pInd), x, y)
+            <string>draw_sprite_ext(sprite_index,0,x+3,y+kinaY+3,-1,1,0,c_black,.35);
+draw_sprite_ext(sprite_index,0,x,y+kinaY,-1,1,0,c_white,1);
+
+if drawPlayer{
+    with objPlayer{
+        draw_sprite(sprPlayerBack,floor(other.pInd),x,y);
+    }
 }
 </string>
           </argument>

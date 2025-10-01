@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>active = 1
-alarm[0] = 1
+            <string>active = 1;
+alarm[0] = 1;
 </string>
           </argument>
         </arguments>
@@ -49,10 +49,10 @@ alarm[0] = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if active
-{
-    alarm[0] = 1
-    instance_create(random_range((bbox_left + 32), bbox_right), random_range(bbox_top, bbox_bottom), oLightParticleSomewhere)
+            <string>//make particles
+if active{
+    alarm[0] = 1;
+    instance_create(random_range(bbox_left+32,bbox_right),random_range(bbox_top,bbox_bottom),oLightParticleSomewhere);
 }
 </string>
           </argument>
@@ -76,7 +76,7 @@ alarm[0] = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>active = 0
+            <string>active = 0;
 </string>
           </argument>
         </arguments>

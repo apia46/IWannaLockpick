@@ -25,8 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited()
-smoothTransition = 0
+            <string>//this warp only activates when the player leaves the room, it can be used on the edges of rooms for smoother room transitions
+
+event_inherited();
+
+//can be changed in creation code
+smoothTransition = false;   //sets whether the player wraps around the screen for a smooth transition to the next room (this requires the room sizes to be the same)
 </string>
           </argument>
         </arguments>
@@ -49,21 +53,32 @@ smoothTransition = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((other.x &lt; 0) || ((other.x &gt; room_width) || ((other.y &lt; 0) || (other.y &gt; room_height))))
+            <string>if (other.x &lt; 0 || other.x &gt; room_width || other.y &lt; 0 || other.y &gt; room_height)  //check if player has left the room
 {
-    if (!smoothTransition)
-        event_inherited()
-    else
+    if (!smoothTransition)  //not using smooth transition, use default warp
+    {
+        event_inherited();
+    }
+    else        //using smooth transition, wrap around the screen then warp
     {
         if (other.x &lt; 0)
-            other.x += room_width
+        {
+            other.x += room_width;
+        }
         if (other.x &gt; room_width)
-            other.x -= room_width
+        {
+            other.x -= room_width;
+        }
         if (other.y &lt; 0)
-            other.y += room_height
+        {
+            other.y += room_height;
+        }
         if (other.y &gt; room_height)
-            other.y -= room_height
-        room_goto(roomTo)
+        {
+            other.y -= room_height;
+        }
+        
+        room_goto(roomTo);
     }
 }
 </string>

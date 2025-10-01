@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>s2 = -1
+            <string>s2 = -1;
 </string>
           </argument>
         </arguments>
@@ -48,7 +48,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s2)
+            <string>surface_free(s2);
 </string>
           </argument>
         </arguments>
@@ -71,7 +71,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s2)
+            <string>surface_free(s2);
 </string>
           </argument>
         </arguments>
@@ -94,10 +94,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>s2 = surface_create(800, 608)
-surface_set_target(s2)
-draw_clear_alpha(c_black, 0)
-surface_reset_target()
+            <string>//Underfoot lighting surface
+s2 = surface_create(800,608);
+surface_set_target(s2);
+draw_clear_alpha(c_black,0);
+surface_reset_target();
 </string>
           </argument>
         </arguments>
@@ -120,11 +121,10 @@ surface_reset_target()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if surface_exists(s2)
-{
-    draw_set_blend_mode(1)
-    draw_surface(s2, 0, 0)
-    draw_set_blend_mode(0)
+            <string>if surface_exists(s2){
+    draw_set_blend_mode(bm_add);
+    draw_surface(s2,0,0);
+    draw_set_blend_mode(bm_normal);
 }
 </string>
           </argument>

@@ -25,8 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>spawnA = 0
-moonA = 0
+            <string>//alarm[0] = 25;
+spawnA = 0;
+moonA = 0;
+//background_vspeed[1] = .125;//stars
+//background_vspeed[2] = .25;
 </string>
           </argument>
         </arguments>
@@ -49,14 +52,14 @@ moonA = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 100
-spawnA = ((spawnA + 44.496) % 360)
-for (i = 0; i &lt; 5; i += 1)
-{
-    spawnR = random_range(80, 600)
-    spawnX = ((room_width / 2) + lengthdir_x(spawnR, (spawnA + ((360 * i) / 5))))
-    spawnY = ((room_height / 2) + lengthdir_y(spawnR, (spawnA + ((360 * i) / 5))))
-    instance_create(spawnX, spawnY, oBackHubStar)
+            <string>///Stars
+alarm[0] = 100;
+spawnA = (spawnA + 360*.618/5) mod 360;
+for(i=0;i&lt;5;i+=1){
+    spawnR = random_range(80,600);
+    spawnX = room_width/2 + lengthdir_x(spawnR,spawnA+360*i/5);
+    spawnY = room_height/2 + lengthdir_y(spawnR,spawnA+360*i/5);
+    instance_create(spawnX,spawnY,oBackHubStar);
 }
 </string>
           </argument>
@@ -80,9 +83,9 @@ for (i = 0; i &lt; 5; i += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>background_y[0] += 0.125
-background_y[1] += 0.25
-background_y[2] += 0.5
+            <string>background_y[0] += .125;
+background_y[1] += .25;
+background_y[2] += .5;
 </string>
           </argument>
         </arguments>
@@ -105,9 +108,9 @@ background_y[2] += 0.5
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(1)
-draw_rectangle_color(-1, -1, 801, 609, c_black, c_black, make_color_rgb(0, 30, 45), make_color_rgb(0, 30, 45), 0)
-draw_set_blend_mode(0)
+            <string>draw_set_blend_mode(bm_add);
+draw_rectangle_color(-1,-1,801,609,c_black,c_black,make_color_rgb(0,30,45),make_color_rgb(0,30,45),0);
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>
@@ -130,43 +133,48 @@ draw_set_blend_mode(0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>moonA = ((moonA + 0.5) % 360)
-moonS = (1 + (0.05 * sin(degtorad(moonA))))
-draw_sprite_ext(sprOrbPart, 0, (room_width / 2), 96, (moonS * 2), (moonS * 2), 0, make_color_rgb(255, 255, 180), 0.125)
-draw_sprite_ext(sprOrbPart, 0, (room_width / 2), 96, moonS, moonS, 0, make_color_rgb(255, 255, 180), 1)
-if global.lowFX
-    exit
-shadowCol = make_color_rgb(40, 0, 40)
-with (oLevel)
-{
-    if (!isWorld)
-        draw_sprite_ext(sprite_index, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else if (rm == 17)
-        draw_sprite_ext(sprWorldEntry, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else
-        draw_sprite_ext(sprWorldEntry, (ID + 1), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-}
-with (objBlock)
-{
-    if (object_index == objBlock)
-        draw_sprite_ext(sprBlockWhite, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, other.shadowCol, 0.35)
-    else if ((object_index == oDoorLarge) || ((object_index == oDoorCombo) || ((object_index == oDoorSimple) || (object_get_parent(object_index) == 234))))
-    {
-        if copyDraw
-            draw_sprite_ext(sprBlockWhite, 0, (x + 3), (y + 3), w, h, image_angle, other.shadowCol, 0.35)
+            <string>//Moon
+moonA = (moonA+.5) mod 360;
+moonS = 1+.05*sin(degtorad(moonA));
+draw_sprite_ext(sprOrbPart,0,room_width/2,96,moonS*2,moonS*2,0,make_color_rgb(255,255,180),.125);
+draw_sprite_ext(sprOrbPart,0,room_width/2,96,moonS,moonS,0,make_color_rgb(255,255,180),1);
+if global.lowFX{exit;}
+//Dropshadow
+shadowCol = make_color_rgb(40,0,40);
+with oLevel{
+    if !isWorld{
+        draw_sprite_ext(sprite_index,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        if rm == rMainHub{
+            draw_sprite_ext(sprWorldEntry,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+        }else{
+            draw_sprite_ext(sprWorldEntry,ID+1,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+        }
     }
-    else if ((object_index == objStairR) || (object_index == objStairL))
-        draw_sprite_ext(sprite_index, image_index, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
 }
-with (oKeyBulk)
-{
-    if (color == 0)
-        draw_sprite_ext(sprAllKeysWhite, (type + 6), (x + 3), (y + 3), 1, 1, 0, other.shadowCol, 0.35)
-    else
-        draw_sprite_ext(sprAllKeysWhite, type, (x + 3), (y + 3), 1, 1, 0, other.shadowCol, 0.35)
+with objBlock{
+    if object_index == objBlock{
+        draw_sprite_ext(sprBlockWhite,0,x+3,y+3,image_xscale,image_yscale,image_angle,other.shadowCol,0.35);
+    }else if (object_index == oDoorLarge || object_index == oDoorCombo || object_index == oDoorSimple || object_get_parent(object_index) == oDoorSimple){
+        if copyDraw{
+            draw_sprite_ext(sprBlockWhite,0,x+3,y+3,w,h,image_angle,other.shadowCol,0.35);
+        }
+    }else if (object_index == objStairR || object_index == objStairL){
+        draw_sprite_ext(sprite_index,image_index,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        //draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }
 }
-with (objPlayer)
-    draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), (image_xscale * xScale), image_yscale, image_angle, c_black, (0.35 * image_alpha))
+with oKeyBulk{
+    if color == key_MASTER{
+        draw_sprite_ext(sprAllKeysWhite,type+6,x+3,y+3,1,1,0,other.shadowCol,.35);
+    }else{
+        draw_sprite_ext(sprAllKeysWhite,type,x+3,y+3,1,1,0,other.shadowCol,.35);
+    }
+}
+with objPlayer{
+    draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale*xScale,image_yscale,image_angle,c_black,0.35*image_alpha);
+}
 </string>
           </argument>
         </arguments>

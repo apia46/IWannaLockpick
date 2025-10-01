@@ -25,58 +25,66 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.lowFX
-    exit
-with (oLevel)
-{
-    if (!isWorld)
-        draw_sprite_ext(sprite_index, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else if (rm == 17)
-        draw_sprite_ext(sprWorldEntry, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else
-        draw_sprite_ext(sprWorldEntry, (ID + 1), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-}
-with (oLevelOmega)
-{
-    if (global.complexMode == 1)
-        draw_sprite_ext(sprite_index, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-}
-with (objBlock)
-{
-    if (object_index == objBlock)
-        draw_sprite_ext(sprBlockWhite, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, 0.35)
-    else if ((object_index == oDoorLarge) || ((object_index == oDoorCombo) || ((object_index == oDoorSimple) || (object_get_parent(object_index) == 234))))
-    {
-        if copyDraw
-            draw_sprite_ext(sprBlockWhite, 0, (x + 3), (y + 3), w, h, image_angle, c_black, 0.35)
+            <string>///drop shadows
+if global.lowFX{exit;}
+with oLevel{
+    if !isWorld{
+        draw_sprite_ext(sprite_index,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        if rm == rMainHub{
+            draw_sprite_ext(sprWorldEntry,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+        }else{
+            draw_sprite_ext(sprWorldEntry,ID+1,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+        }
     }
-    else if ((object_index == objStairR) || (object_index == objStairL))
-        draw_sprite_ext(sprite_index, image_index, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
 }
-with (oKeySimple)
-{
-    if (color != 0)
-        draw_sprite_ext(sprite_index, 2, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else
-        draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
+with oLevelOmega{
+    if global.complexMode == 1{
+        draw_sprite_ext(sprite_index,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha); 
+    }
 }
-with (oKeyBulk)
-{
-    if (color != 0)
-        draw_sprite_ext(sprAllKeysWhite, type, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else
-        draw_sprite_ext(sprAllKeysWhite, (type + 8), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
+with objBlock{
+    if object_index == objBlock{
+        draw_sprite_ext(sprBlockWhite,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35);
+    }else if (object_index == oDoorLarge || object_index == oDoorCombo || object_index == oDoorSimple || object_get_parent(object_index) == oDoorSimple){
+        if copyDraw{
+            draw_sprite_ext(sprBlockWhite,0,x+3,y+3,w,h,image_angle,c_black,0.35);
+        }
+    }else if (object_index == objStairR || object_index == objStairL){
+        draw_sprite_ext(sprite_index,image_index,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        //draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }
 }
-with (objPlayerKiller)
-    draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-with (objPlayer)
-    draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), (image_xscale * xScale), image_yscale, image_angle, c_black, (0.35 * image_alpha))
-with (objBullet)
-    draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-with (objSave)
-    draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-with (objWarp)
-    draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
+with oKeySimple{
+    if color != 0{
+        draw_sprite_ext(sprite_index,2,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }
+}
+with oKeyBulk{
+    if color != key_MASTER{
+        draw_sprite_ext(sprAllKeysWhite,type,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        draw_sprite_ext(sprAllKeysWhite,type+8,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }
+}
+with objPlayerKiller{
+    draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+}
+with objPlayer{
+    draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale*xScale,image_yscale,image_angle,c_black,0.35*image_alpha);
+}
+with objBullet{
+    draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+}
+with objSave{
+    draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+}
+with objWarp{
+    draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+}
 </string>
           </argument>
         </arguments>

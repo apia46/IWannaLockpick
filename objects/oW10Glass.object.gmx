@@ -25,30 +25,34 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var tileX, imgX, tileY, imgY;
-for (ix = 0; ix &lt; image_xscale; ix += 1)
-{
-    tileX = (x + (32 * ix))
-    if (image_xscale == 1)
-        imgX = 0
-    else if (ix == 0)
-        imgX = 32
-    else if (ix == (image_xscale - 1))
-        imgX = 96
-    else
-        imgX = 64
-    for (iy = 0; iy &lt; image_yscale; iy += 1)
-    {
-        tileY = (y + (32 * iy))
-        if (image_yscale == 1)
-            imgY = 0
-        else if (iy == 0)
-            imgY = 32
-        else if (iy == (image_yscale - 1))
-            imgY = 96
-        else
-            imgY = 64
-        tile_add(tileGreenGlass, imgX, imgY, 32, 32, tileX, tileY, 10000)
+            <string>var imgX,imgY,tileX,tileY;
+for(ix=0;ix&lt;image_xscale;ix+=1){
+    tileX = x+32*ix;
+    if image_xscale == 1{
+        imgX = 0;
+    }else{
+        if ix == 0{
+            imgX = 32;
+        }else if ix == (image_xscale-1){
+            imgX = 96;
+        }else{
+            imgX = 64;
+        }
+    }
+    for(iy=0;iy&lt;image_yscale;iy+=1){
+        tileY = y+32*iy;
+        if image_yscale == 1{
+            imgY = 0;
+        }else{
+            if iy == 0{
+                imgY = 32;
+            }else if iy == (image_yscale-1){
+                imgY = 96;
+            }else{
+                imgY = 64;
+            }
+        }
+        tile_add(tileGreenGlass,imgX,imgY,32,32,tileX,tileY,10000);
     }
 }
 </string>

@@ -25,11 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>convoID = 0
-image_speed = 0
-drawArrow = 0
-arrowInd = 0
-alarm[0] = 25
+            <string>convoID = 0;
+
+image_speed = 0;
+drawArrow = 0;
+arrowInd = 0;
+alarm[0] = 25;
 </string>
           </argument>
         </arguments>
@@ -52,8 +53,8 @@ alarm[0] = 25
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 25
-arrowInd = (!arrowInd)
+            <string>alarm[0] = 25;
+arrowInd = !arrowInd;
 </string>
           </argument>
         </arguments>
@@ -76,26 +77,22 @@ arrowInd = (!arrowInd)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((oDialogHandle.diaState != 0) || (!instance_exists(objPlayer)))
-{
-    drawArrow = 0
-    exit
+            <string>if oDialogHandle.diaState != 0 || !instance_exists(objPlayer){
+    drawArrow = 0;
+    exit;
 }
-if (instance_exists(objPlayer) &amp;&amp; (!global.inCutscene))
-{
-    if (objPlayer.frozen == 1)
-        exit
-    if place_meeting(x, y, objPlayer)
-    {
-        drawArrow = 1
-        if scrButtonCheckPressed(global.intrButton)
-        {
-            with (oDialogHandle)
-                diaStart(other.convoID)
+if instance_exists(objPlayer) &amp;&amp; !global.inCutscene{
+    if objPlayer.frozen == 1{exit;}
+    if place_meeting(x,y,objPlayer){
+        drawArrow = 1;
+        if scrButtonCheckPressed(global.intrButton){
+            with oDialogHandle{
+                diaStart(other.convoID);
+            }
         }
+    }else{
+        drawArrow = 0;
     }
-    else
-        drawArrow = 0
 }
 </string>
           </argument>
@@ -119,10 +116,11 @@ if (instance_exists(objPlayer) &amp;&amp; (!global.inCutscene))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, 1, (x + 1), (y + 1), 1, 1, 0, make_color_hsv(45, 255, 30), 1)
-draw_self()
-if drawArrow
-    draw_sprite(sprUpArrowDoor, arrowInd, (x + 16), y)
+            <string>draw_sprite_ext(sprite_index,1,x+1,y+1,1,1,0,make_color_hsv(45,255,30),1);
+draw_self();
+if drawArrow{
+    draw_sprite(sprUpArrowDoor,arrowInd,x+16,y);
+}
 </string>
           </argument>
         </arguments>

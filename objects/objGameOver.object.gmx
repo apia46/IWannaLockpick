@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 30
+            <string>alarm[0] = 30;
 </string>
           </argument>
         </arguments>
@@ -48,7 +48,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>visible = 1
+            <string>visible = true;
 </string>
           </argument>
         </arguments>
@@ -71,7 +71,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprite_index, -1, (display_get_gui_width() / 2), (display_get_gui_height() / 2))
+            <string>draw_sprite(sprite_index, -1, display_get_gui_width()/2, display_get_gui_height()/2);
 </string>
           </argument>
         </arguments>
@@ -94,7 +94,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>///do nothing
+</string>
           </argument>
         </arguments>
       </action>

@@ -25,17 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
-hue = ((irandom(5) * 51) + random_range(-5, 5))
-sat = 255
-hueT = hue
-satT = sat
-whiteA = 0
-direction = (90 + random_range(-10, 10))
-speed = random_range(0.6, 1.2)
-image_xscale = (speed / 1.2)
-image_yscale = image_xscale
-image_alpha = (0.6 * image_xscale)
+            <string>///Neon floating door
+image_speed = 0;
+hue = irandom(5)*51+random_range(-5,5);
+sat = 255;
+hueT = hue;
+satT = sat;
+whiteA = 0;
+
+direction=90+random_range(-10,10);
+speed = random_range(.6,1.2);
+image_xscale = speed/1.2;
+image_yscale = image_xscale;
+image_alpha = .6*image_xscale;
 </string>
           </argument>
         </arguments>
@@ -58,12 +60,11 @@ image_alpha = (0.6 * image_xscale)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (y &lt; -32)
-    instance_destroy()
-hue += ((hueT - hue) * 0.1)
-sat += ((satT - sat) * 0.1)
-whiteA *= 0.9
-image_blend = make_color_hsv(hue, sat, 255)
+            <string>if y &lt; -32{instance_destroy();}
+hue += (hueT - hue) * 0.1;
+sat += (satT - sat) * 0.1;
+whiteA *= 0.9;
+image_blend = make_color_hsv(hue,sat,255);
 </string>
           </argument>
         </arguments>
@@ -86,9 +87,9 @@ image_blend = make_color_hsv(hue, sat, 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, 0, (x + 2), (y + 2), image_xscale, image_yscale, image_angle, c_black, (image_alpha * 0.35))
-draw_self()
-draw_sprite_ext(sprite_index, 1, x, y, image_xscale, image_yscale, image_angle, c_white, whiteA)
+            <string>draw_sprite_ext(sprite_index,0,x+2,y+2,image_xscale,image_yscale,image_angle,c_black,image_alpha*.35);
+draw_self();
+draw_sprite_ext(sprite_index,1,x,y,image_xscale,image_yscale,image_angle,c_white,whiteA);
 </string>
           </argument>
         </arguments>

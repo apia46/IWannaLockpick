@@ -25,17 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.object[1]
-    instance_destroy()
-rayA = 0
-waveA = 0
-waveS = 0
-upA = 0
-upAmt = 0
-imgA = 90
-drawScale = 1
-scale = 1
-active = 0
+            <string>if global.object[1]{instance_destroy();}
+
+rayA = 0;
+waveA = 0;
+waveS = 0;
+upA = 0;
+upAmt = 0;
+imgA = 90;
+drawScale = 1;
+scale = 1;
+
+active = 0;
 </string>
           </argument>
         </arguments>
@@ -58,25 +59,26 @@ active = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>waveA = ((waveA + 3) % 360)
-waveS = sin(degtorad(waveA))
-if active
-{
-    upA = min((upA + 4), 90)
-    upAmt = sin(degtorad(upA))
-    image_alpha *= 0.95
-    scale = (1 + upAmt)
-    if (image_alpha &lt; 0.01)
-    {
-        box = instance_create(x, y, oItemGet)
-        box.itemID = 1
-        with (box)
-            event_user(0)
-        instance_destroy()
+            <string>waveA = (waveA + 3) mod 360;
+waveS = sin(degtorad(waveA));
+
+if active{
+    upA = min(upA + 4, 90);
+    upAmt = sin(degtorad(upA));
+    image_alpha *= .95;
+    scale = 1+upAmt;
+    if image_alpha &lt; .01{
+        //Make cutscene object
+        box = instance_create(x,y,oItemGet);
+        box.itemID = 1;
+        with box{event_user(0);}
+        instance_destroy();
     }
-    imgA += 12
+    imgA += 12;
+}else{
+    //imgA += 2;
 }
-drawScale = sin(degtorad(imgA))
+drawScale = sin(degtorad(imgA));
 </string>
           </argument>
         </arguments>
@@ -99,16 +101,16 @@ drawScale = sin(degtorad(imgA))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (active == 0)
-{
-    active = 1
-    global.object[1] = 1
-    global.inCutscene = 1
-    with (objPlayer)
-        frozen = 1
-    scrPlaySoundExt(sndPop, 1, 1, false)
-    scrPlaySoundExt(sndPowerup, 1, 1, false)
-    scrSaveGame(0)
+            <string>if active == 0{
+    active = 1;
+    global.object[1] = 1;
+    global.inCutscene = 1;
+    with objPlayer{
+        frozen = 1;
+    }
+    scrPlaySoundExt(sndPop,1,1,false);
+    scrPlaySoundExt(sndPowerup,1,1,false);
+    scrSaveGame(false);
 }
 </string>
           </argument>
@@ -132,22 +134,20 @@ drawScale = sin(degtorad(imgA))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>rayA = ((rayA + 2) % 360)
-draw_set_color(c_white)
-r = 20
-draw_set_blend_mode(1)
-for (i = 0; i &lt; 5; i += 1)
-{
-    a1 = (rayA + (72 * i))
-    a2 = (a1 + 36)
-    x1 = (r * sin(degtorad(a1)))
-    y1 = (r * cos(degtorad(a1)))
-    x2 = (r * sin(degtorad(a2)))
-    y2 = (r * cos(degtorad(a2)))
-    draw_triangle_color(x, y, (x + x1), (y + y1), (x + x2), (y + y2), merge_color(c_black, c_white, image_alpha), 0, 0, 0)
+            <string>///Rays + Lens
+rayA = (rayA + 2) mod 360;
+draw_set_color(c_white);
+r = 20;
+draw_set_blend_mode(bm_add);
+for(i=0;i&lt;5;i+=1){
+    a1 = rayA + 360/5*i;
+    a2 = a1 + 360/10;
+    x1 = r*sin(degtorad(a1)); y1 = r*cos(degtorad(a1));
+    x2 = r*sin(degtorad(a2)); y2 = r*cos(degtorad(a2));
+    draw_triangle_color(x,y,x+x1,y+y1,x+x2,y+y2,merge_color(c_black,c_white,image_alpha),c_black,c_black,0);
 }
-draw_set_blend_mode(0)
-draw_sprite_ext(sprite_index, 0, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, c_white, image_alpha)
+draw_set_blend_mode(bm_normal);
+draw_sprite_ext(sprite_index,0,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha);
 </string>
           </argument>
         </arguments>

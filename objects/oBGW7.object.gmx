@@ -25,55 +25,42 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_number(oBGW7) &gt; 1)
-{
-    instance_destroy()
-    exit
+            <string>//Probably the most ambitious aesthetic I've made to date, at least in terms of sheer
+//work required. It's like a weird mishmash of Cave Story, FEZ, *and* Baba Is You.
+//Let me say, I'll be real happy to tone down the craziness for World 8's visuals.
+if instance_number(oBGW7) &gt; 1{
+    instance_destroy();
+    exit;
 }
-curSong = -1
-scrStopMusic()
-deleteNext = 0
-totalTime = 25699
-transTime = 0
-transMax = 1000
-inTransition = 0
-colI = 0
-colI2 = 1
-lightArray[0] = make_color_hsv(165, 60, 255)
-lightArray[1] = 16777215
-lightArray[2] = make_color_hsv(30, 60, 255)
-lightArray[3] = 12632256
-waterArray[0] = make_color_hsv(170, 255, 140)
-waterArray[1] = make_color_hsv(130, 200, 200)
-waterArray[2] = make_color_hsv(170, 220, 100)
-waterArray[3] = make_color_hsv(170, 255, 60)
-surfArray[0] = make_color_hsv(150, 150, 170)
-surfArray[1] = make_color_hsv(110, 100, 240)
-surfArray[2] = make_color_hsv(40, 180, 140)
-surfArray[3] = make_color_hsv(160, 150, 90)
-bgArray[0] = make_color_hsv(165, 200, 150)
-bgArray[1] = make_color_hsv(140, 200, 255)
-bgArray[2] = make_color_hsv(220, 255, 120)
-bgArray[3] = make_color_hsv(190, 180, 60)
-bg2Array[0] = make_color_hsv(150, 170, 180)
-bg2Array[1] = make_color_hsv(100, 170, 220)
-bg2Array[2] = make_color_hsv(30, 220, 150)
-bg2Array[3] = make_color_hsv(170, 255, 30)
-cloudArray[0] = make_color_hsv(170, 255, 100)
-cloudArray[1] = make_color_hsv(110, 60, 255)
-cloudArray[2] = make_color_hsv(0, 255, 120)
-cloudArray[3] = 4210752
-cpArray[0] = make_color_hsv(170, 60, 255)
-cpArray[1] = make_color_hsv(130, 40, 255)
-cpArray[2] = make_color_hsv(30, 70, 255)
-cpArray[3] = 16777215
-lightCol = lightArray[3]
-waterCol = waterArray[3]
-surfaceCol = surfArray[3]
-bgCol = bgArray[3]
-bg2Col = bg2Array[3]
-cloudCol = cloudArray[3]
-cpCol = cpArray[3]
+//Song lengths in frames: Beacon 7650, Oki's Lullaby 16200, Ambience 10000 (Can be shortened)
+//The timer starts at the break of dawn, with ambience. Ambience is now 9000 long.
+//Thus, the key time moments for music are 1, 9000, 16700, 25700, and 42000. Seems good!
+curSong = -1;
+scrStopMusic();
+deleteNext = 0;//Whether it'll delete when entering the next room, since it's persistent
+totalTime = 25699;//We'll actually start this at nighttime! I like to be subversive :)
+transTime = 0;
+transMax = 1000;
+inTransition = 0;//Whether we're in the middle of changing colors etc
+colI = 0;//Which of the 4 main phases is starting the transition
+colI2 = 1;//Which of the 4 main phases the transition ends on
+
+//Colors, two variables per color; the "current value", and an array to lerp between.
+//0 = Early Morning, 1 = Noon, 2 = Dusk, 3 = Nighttime
+lightArray[0] = make_color_hsv(165,60,255);lightArray[1] = c_white;lightArray[2] = make_color_hsv(30,60,255);lightArray[3] = c_ltgray;
+waterArray[0] = make_color_hsv(170,255,140);waterArray[1] = make_color_hsv(130,200,200);waterArray[2] = make_color_hsv(170,220,100);waterArray[3] = make_color_hsv(170,255,60);
+surfArray[0] = make_color_hsv(150,150,170);surfArray[1] = make_color_hsv(110,100,240);surfArray[2] = make_color_hsv(40,180,140);surfArray[3] = make_color_hsv(160,150,90);
+bgArray[0] = make_color_hsv(165,200,150);bgArray[1] = make_color_hsv(140,200,255);bgArray[2] = make_color_hsv(220,255,120);bgArray[3] = make_color_hsv(190,180,60);
+bg2Array[0] = make_color_hsv(150,170,180);bg2Array[1] = make_color_hsv(100,170,220);bg2Array[2] = make_color_hsv(30,220,150);bg2Array[3] = make_color_hsv(170,255,30);
+cloudArray[0] = make_color_hsv(170,255,100);cloudArray[1] = make_color_hsv(110,60,255);cloudArray[2] = make_color_hsv(0,255,120);cloudArray[3] = c_dkgray;
+cpArray[0] = make_color_hsv(170,60,255);cpArray[1] = make_color_hsv(130,40,255);cpArray[2] = make_color_hsv(30,70,255);cpArray[3] = c_white;
+lightCol = lightArray[3];//Ambient lighting, depends on time of day
+waterCol = waterArray[3];//Color of the ocean
+surfaceCol = surfArray[3];//Color of the bars on top of the ocean, as well as reflections
+bgCol = bgArray[3];//Background TOP color
+bg2Col = bg2Array[3];//Background BOTTOM color
+cloudCol = cloudArray[3];//Background clouds
+cpCol = cpArray[3];//Foreground "walkable" clouds
 </string>
           </argument>
         </arguments>
@@ -96,8 +83,9 @@ cpCol = cpArray[3]
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(-200, random_range(0, 480), oWindPart)
-alarm[1] = 25
+            <string>///Windpart gen
+instance_create(-200,random_range(0,480),oWindPart);
+alarm[1] = 25;
 </string>
           </argument>
         </arguments>
@@ -120,8 +108,9 @@ alarm[1] = 25
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 400
-instance_create(-400, random_range(-150, 0), oCloud)
+            <string>///Cloud gen
+alarm[0] = 50*8;
+instance_create(-400,random_range(-150,0),oCloud);
 </string>
           </argument>
         </arguments>
@@ -144,175 +133,171 @@ instance_create(-400, random_range(-150, 0), oCloud)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var tLerp;
-totalTime += 1
-switch totalTime
-{
-    case 1:
-        if (!global.muteMusic)
-        {
-            if (curSong != -1)
-                audio_stop_sound(curSong)
-            curSong = audio_play_sound(musClouds2, 0, true)
-            global.musicTitle = "FEZ - Reflections (Ocean Cut)"
-            with (oMusicCredit)
-                instance_destroy()
-            instance_create(0, 0, oMusicCredit)
-            global.musicVolume = 0.9
-            audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
+            <string>///A GLOBAL TIMER!
+//Song lengths in frames: Beacon 7650, Oki's Lullaby 16200, Ambience 10000.
+//The timer starts at the break of dawn, with ambience. Ambience is now 9000 long.
+//Thus, the beginnings of each phase are 1, 9000, 16700, 25700, and 42000. Seems good!
+//I want a 40 second (2000) transition, which means 7000, 14700, 23700, and 40000.
+
+//musClouds is Beacon, musClouds2 is Reflections, and musClouds3 is Oki's Lullaby.
+
+totalTime += 1;
+switch totalTime{//One-time actions, namely transitions
+    case 1://Dawn begins... or, "break"s if you will! HAA HAA HEE HEE HOO HOO
+        //comment before full game release: what the hell did i mean by this
+        if !global.muteMusic{
+            if curSong != -1{
+                audio_stop_sound(curSong);
+            }
+            curSong = audio_play_sound(musClouds2,0,true);
+            global.musicTitle = "FEZ - Reflections (Ocean Cut)";
+            with oMusicCredit{instance_destroy();}
+            instance_create(0,0,oMusicCredit);
+            global.musicVolume = .9;
+            audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
         }
-        break
-    case 7000:
-        audio_sound_gain(curSong, 0, 40000)
-        inTransition = 1
-        transMax = 2000
-        colI = 0
-        colI2 = 1
-        break
-    case 9000:
-        if (!global.muteMusic)
-        {
-            if (curSong != -1)
-                audio_stop_sound(curSong)
-            curSong = audio_play_sound(musClouds, 0, true)
-            global.musicTitle = "FEZ - Beacon"
-            with (oMusicCredit)
-                instance_destroy()
-            instance_create(0, 0, oMusicCredit)
-            global.musicVolume = 0.9
-            audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
+    break;
+    case 7000://Dawn unbreaks. No HOOHEE this time. I am a mature boy.
+        audio_sound_gain(curSong,0,40000);
+        inTransition = 1; transMax = 2000;
+        colI = 0; colI2 = 1;
+    break;
+    case 9000://Noon begins. How did I not see the 9000 meme until now.
+        if !global.muteMusic{
+            if curSong != -1{
+                audio_stop_sound(curSong);
+            }
+            curSong = audio_play_sound(musClouds,0,true);
+            global.musicTitle = "FEZ - Beacon";
+            with oMusicCredit{instance_destroy();}
+            instance_create(0,0,oMusicCredit);
+            global.musicVolume = .9;
+            audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
         }
-        break
-    case 14700:
-        audio_sound_gain(curSong, 0, 40000)
-        inTransition = 1
-        transMax = 2000
-        colI = 1
-        colI2 = 2
-        break
-    case 16700:
-        if (!global.muteMusic)
-        {
-            if (curSong != -1)
-                audio_stop_sound(curSong)
-            curSong = audio_play_sound(musClouds2, 0, true)
-            global.musicTitle = "FEZ - Reflections (Ocean Cut)"
-            with (oMusicCredit)
-                instance_destroy()
-            instance_create(0, 0, oMusicCredit)
-            global.musicVolume = 0.9
-            audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
+    break;
+    case 14700://Transition to dusk. I have run out of funny comments fast.
+        audio_sound_gain(curSong,0,40000);
+        inTransition = 1; transMax = 2000;
+        colI = 1; colI2 = 2;
+    break;
+    case 16700://Dusk begins. Nothing eventful.
+        if !global.muteMusic{
+            if curSong != -1{
+                audio_stop_sound(curSong);
+            }
+            curSong = audio_play_sound(musClouds2,0,true);
+            global.musicTitle = "FEZ - Reflections (Ocean Cut)";
+            with oMusicCredit{instance_destroy();}
+            instance_create(0,0,oMusicCredit);
+            global.musicVolume = .9;
+            audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
         }
-        break
-    case 23700:
-        audio_sound_gain(curSong, 0, 40000)
-        inTransition = 1
-        transMax = 2000
-        colI = 2
-        colI2 = 3
-        break
-    case 25700:
-        if (!global.muteMusic)
-        {
-            if (curSong != -1)
-                audio_stop_sound(curSong)
-            curSong = audio_play_sound(musClouds3, 0, true)
-            global.musicTitle = "The Victors' Space Odyssey - The Rabbit of Oki, the Moon's Lullaby"
-            with (oMusicCredit)
-                instance_destroy()
-            instance_create(0, 0, oMusicCredit)
-            global.musicVolume = 0.8
-            audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
+    break;
+    case 23700://Dusk ends. Yeah.
+        audio_sound_gain(curSong,0,40000);
+        inTransition = 1; transMax = 2000;
+        colI = 2; colI2 = 3;
+    break;
+    case 25700://Night begins, along with the longest song goddamn.
+        if !global.muteMusic{
+            if curSong != -1{
+                audio_stop_sound(curSong);
+            }
+            curSong = audio_play_sound(musClouds3,0,true);
+            global.musicTitle = "The Victors' Space Odyssey - The Rabbit of Oki, the Moon's Lullaby";
+            with oMusicCredit{instance_destroy();}
+            instance_create(0,0,oMusicCredit);
+            global.musicVolume = .8;
+            audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
         }
-        break
-    case 40000:
-        audio_sound_gain(curSong, 0, 40000)
-        inTransition = 1
-        transMax = 2000
-        colI = 3
-        colI2 = 0
-        break
-    case 42000:
-        totalTime = 0
-        break
+    break;
+    case 40000://Nice, round number. It wasn't even on purpose! Well, half on purpose.
+        audio_sound_gain(curSong,0,40000);
+        inTransition = 1; transMax = 2000;
+        colI = 3; colI2 = 0;
+    break;
+    case 42000://The looping point. ...What? Are you seeing something I'm not?
+        totalTime = 0;
+    break; 
+}
+//Stops the song if it has 0 volume, which can happen if you pause too long
+if curSong != -1{
+    if audio_sound_get_gain(curSong) == 0{
+        audio_stop_sound(curSong);
+        curSong = -1;
+    }
+}
+//Plays the song instance if it's not to be faded yet AND it was cut out prior via mute
+if global.muteMusic{curSong = -1;}
+if curSong == -1 &amp;&amp; !global.muteMusic{
+    if (totalTime &gt;= 1 &amp;&amp; totalTime &lt;= 6999){
+        curSong = audio_play_sound(musClouds2,0,true);
+        global.musicVolume = .9;
+        audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
+    }else if (totalTime &gt;= 9000 &amp;&amp; totalTime &lt;= 14699){
+        curSong = audio_play_sound(musClouds,0,true);
+        global.musicVolume = .9;
+        audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
+    }else if (totalTime &gt;= 16700 &amp;&amp; totalTime &lt;= 23699){
+        curSong = audio_play_sound(musClouds2,0,true);
+        global.musicVolume = .9;
+        audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
+    }else if (totalTime &gt;= 25700 &amp;&amp; totalTime &lt;= 39999){
+        curSong = audio_play_sound(musClouds3,0,true);
+        global.musicVolume = .8;
+        audio_sound_gain(curSong,global.musicVolume*global.musicLevel/100,0);
+    }
 }
 
-if (curSong != -1)
-{
-    if (audio_sound_get_gain(curSong) == 0)
-    {
-        audio_stop_sound(curSong)
-        curSong = -1
-    }
+if global.muteMusic &amp;&amp; curSong != -1{
+    audio_stop_sound(curSong);
+    curSong = -1;
 }
-if global.muteMusic
-    curSong = -1
-if ((curSong == -1) &amp;&amp; (!global.muteMusic))
-{
-    if ((totalTime &gt;= 1) &amp;&amp; (totalTime &lt;= 6999))
-    {
-        curSong = audio_play_sound(musClouds2, 0, true)
-        global.musicVolume = 0.9
-        audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
-    }
-    else if ((totalTime &gt;= 9000) &amp;&amp; (totalTime &lt;= 14699))
-    {
-        curSong = audio_play_sound(musClouds, 0, true)
-        global.musicVolume = 0.9
-        audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
-    }
-    else if ((totalTime &gt;= 16700) &amp;&amp; (totalTime &lt;= 23699))
-    {
-        curSong = audio_play_sound(musClouds2, 0, true)
-        global.musicVolume = 0.9
-        audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
-    }
-    else if ((totalTime &gt;= 25700) &amp;&amp; (totalTime &lt;= 39999))
-    {
-        curSong = audio_play_sound(musClouds3, 0, true)
-        global.musicVolume = 0.8
-        audio_sound_gain(curSong, ((global.musicVolume * global.musicLevel) / 100), 0)
-    }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///THE COLORFUL FUNTIMES OF HELL
+//Doing simple math work and then a BUTTLOAD of color lerps
+if inTransition{
+    transTime = min(transTime + 1, transMax);
+    var tLerp = transTime / transMax;
+    
+    bgCol = merge_color(bgArray[colI],bgArray[colI2],tLerp);
+    bg2Col = merge_color(bg2Array[colI],bg2Array[colI2],tLerp);
+    cloudCol = merge_color(cloudArray[colI],cloudArray[colI2],tLerp);
+    cpCol = merge_color(cpArray[colI],cpArray[colI2],tLerp);
+    lightCol = merge_color(lightArray[colI],lightArray[colI2],tLerp);
+    waterCol = merge_color(waterArray[colI],waterArray[colI2],tLerp);
+    surfaceCol = merge_color(surfArray[colI],surfArray[colI2],tLerp);
+    
+    if transTime == transMax{inTransition = 0;transTime = 0;}
 }
-if (global.muteMusic &amp;&amp; (curSong != -1))
-{
-    audio_stop_sound(curSong)
-    curSong = -1
-}
-if inTransition
-{
-    transTime = min((transTime + 1), transMax)
-    tLerp = (transTime / transMax)
-    bgCol = merge_color(bgArray[colI], bgArray[colI2], tLerp)
-    bg2Col = merge_color(bg2Array[colI], bg2Array[colI2], tLerp)
-    cloudCol = merge_color(cloudArray[colI], cloudArray[colI2], tLerp)
-    cpCol = merge_color(cpArray[colI], cpArray[colI2], tLerp)
-    lightCol = merge_color(lightArray[colI], lightArray[colI2], tLerp)
-    waterCol = merge_color(waterArray[colI], waterArray[colI2], tLerp)
-    surfaceCol = merge_color(surfArray[colI], surfArray[colI2], tLerp)
-    if (transTime == transMax)
-    {
-        inTransition = 0
-        transTime = 0
-    }
-}
-background_blend[0] = bgCol
-background_color = bg2Col
-with (oCloud)
-    image_blend = other.cloudCol
-with (oWindPart)
-    image_blend = merge_color(c_white, other.cloudCol, 0.5)
-with (oCloudPart)
-    image_blend = other.cpCol
-with (oW7Ocean)
-{
-    waterCol = other.waterCol
-    surfaceCol = other.surfaceCol
-}
-with (oW7Reflection)
-    color = other.surfaceCol
-with (oLightsW7)
-    ambCol = other.lightCol
+//Now to reap the rewards and set all those colors... AAAAA
+background_blend[0] = bgCol;
+background_color = bg2Col;
+with oCloud{image_blend = other.cloudCol;}
+with oWindPart{image_blend = merge_color(c_white,other.cloudCol,.5);}
+with oCloudPart{image_blend = other.cpCol;}
+with oW7Ocean{waterCol = other.waterCol; surfaceCol = other.surfaceCol;}
+with oW7Reflection{color = other.surfaceCol;}
+with oLightsW7{ambCol = other.lightCol;}
 </string>
           </argument>
         </arguments>
@@ -335,71 +320,78 @@ with (oLightsW7)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy, p, _yoff, _oline;
-if ((room == rBackHub) || ((room == rTitle) || ((room == rInit) || ((room == rTitleNew) || deleteNext))))
-{
-    instance_destroy()
-    audio_stop_sound(curSong)
-    exit
+            <string>///Destroy if leaving
+if room == rBackHub || room == rTitle || room == rInit || room == rTitleNew || deleteNext{
+    instance_destroy();
+    audio_stop_sound(curSong);
+    exit;
 }
-with (instance_create(0, 0, oW7Ocean))
-{
-    waterCol = other.waterCol
-    surfaceCol = other.surfaceCol
-}
-for (t = 0; t &lt; 4000; t += 400)
-{
-    with (instance_create(-400, random_range(-150, 0), oCloud))
-    {
-        x += (hspeed * other.t)
-        y += (vspeed * other.t)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Clouds, particles, etc
+//Ocean
+with(instance_create(0,0,oW7Ocean)){waterCol = other.waterCol; surfaceCol = other.surfaceCol;}
+//Cloud gen
+for(t=0;t&lt;50*80;t+=50*8){
+    with(instance_create(-400,random_range(-150,0),oCloud)){
+        x += hspeed * other.t;
+        y += vspeed * other.t;
     }
 }
-alarm[0] = 200
-for (t = 0; t &lt; 1000; t += 25)
-{
-    with (instance_create(-200, random_range(0, 480), oWindPart))
-    {
-        x += (hspeed * other.t)
-        y += (vspeed * other.t)
+alarm[0] = 50*4;
+//Windpart gen
+for(t=0;t&lt;50*20;t+=25){
+    with(instance_create(-200,random_range(0,480),oWindPart)){
+        x += hspeed * other.t;
+        y += vspeed * other.t;
     }
 }
-alarm[1] = 25
-with (objBlock)
-{
-    if (object_index == objBlock)
-    {
-        for (ix = 0; ix &lt; (2 * image_xscale); ix += 1)
-        {
-            for (iy = 0; iy &lt; (2 * image_yscale); iy += 1)
-            {
-                p = instance_create(((x + (16 * ix)) + 8), ((y + (16 * iy)) + 8), oCloudPart)
-                p.image_blend = image_blend
+alarm[1] = 25;
+with objBlock{
+    if object_index == objBlock{
+        //Cloud particles
+        for (var ix = 0; ix &lt; 2*image_xscale; ix += 1){
+            for (var iy = 0; iy &lt; 2*image_yscale; iy += 1){
+                var p = instance_create(x+16*ix+8,y+16*iy+8,oCloudPart);
+                p.image_blend = image_blend;
             }
         }
-        _yoff = (496 - y)
-        _oline = instance_create(x, (496 + ((_yoff * 4) / 32)), oW7Reflection)
-        _oline.image_xscale = image_xscale
+        //Ocean reflection lines
+        var _yoff = 496 - y;
+        var _oline = instance_create(x,496+(_yoff*4/32),oW7Reflection);
+        _oline.image_xscale = image_xscale;
     }
 }
-instance_create(x, y, oLightsW7)
-background_blend[0] = bgCol
-background_color = bg2Col
-with (oCloud)
-    image_blend = other.cloudCol
-with (oWindPart)
-    image_blend = merge_color(c_white, other.cloudCol, 0.5)
-with (oCloudPart)
-    image_blend = other.cpCol
-with (oW7Ocean)
-{
-    waterCol = other.waterCol
-    surfaceCol = other.surfaceCol
-}
-with (oW7Reflection)
-    color = other.surfaceCol
-with (oLightsW7)
-    ambCol = other.lightCol
+//Make the lights too!
+instance_create(x,y,oLightsW7);
+
+//Copypasted that step event...
+background_blend[0] = bgCol;
+background_color = bg2Col;
+with oCloud{image_blend = other.cloudCol;}
+with oWindPart{image_blend = merge_color(c_white,other.cloudCol,.5);}
+with oCloudPart{image_blend = other.cpCol;}
+with oW7Ocean{waterCol = other.waterCol; surfaceCol = other.surfaceCol;}
+with oW7Reflection{color = other.surfaceCol;}
+with oLightsW7{ambCol = other.lightCol;}
 </string>
           </argument>
         </arguments>

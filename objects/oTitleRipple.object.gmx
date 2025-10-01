@@ -25,10 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_xscale = 0.4
-image_yscale = 0.4
-image_alpha = 1
-yT = (y + 48)
+            <string>image_xscale = 0.4;
+image_yscale = 0.4;
+image_alpha = 1;
+yT = y + 48;
 </string>
           </argument>
         </arguments>
@@ -51,15 +51,14 @@ yT = (y + 48)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_xscale += ((1.8 - image_xscale) * 0.1)
-image_yscale = image_xscale
-if (image_xscale &gt; 1)
-{
-    image_alpha *= 0.87
-    if (image_alpha &lt; 0.01)
-        instance_destroy()
+            <string>image_xscale += (1.8 - image_xscale) * 0.1;
+image_yscale = image_xscale;
+if image_xscale &gt; 1{
+    image_alpha *= 0.87;
+    if image_alpha &lt; 0.01{instance_destroy();}
 }
-y += ((yT - y) * 0.01)
+
+y += (yT-y) * .01;
 </string>
           </argument>
         </arguments>

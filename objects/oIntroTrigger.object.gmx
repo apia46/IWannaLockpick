@@ -25,11 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>triggered = 0
-blackA = 0
-state = 0
-sGain = 1
-sPitch = 1
+            <string>triggered = 0;
+blackA = 0;
+state = 0;
+
+sGain = 1;
+sPitch = 1;
 </string>
           </argument>
         </arguments>
@@ -52,11 +53,12 @@ sPitch = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[2] = 17
-sPitch = max((sPitch - 0.1), 0)
-sGain = max((sGain - 0.15), 0)
-if ((sPitch != 0) &amp;&amp; (sGain != 0))
-    scrPlaySoundExt(sndFall, sGain, sPitch, false)
+            <string>alarm[2] = 17;
+sPitch = max(sPitch - .1, 0);
+sGain = max(sGain - .15, 0);
+if sPitch != 0 &amp;&amp; sGain != 0{
+    scrPlaySoundExt(sndFall,sGain,sPitch,0);
+}
 </string>
           </argument>
         </arguments>
@@ -79,7 +81,7 @@ if ((sPitch != 0) &amp;&amp; (sGain != 0))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_goto(rIntro2)
+            <string>room_goto(rIntro2);
 </string>
           </argument>
         </arguments>
@@ -102,7 +104,7 @@ if ((sPitch != 0) &amp;&amp; (sGain != 0))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = 1
+            <string>state = 1;
 </string>
           </argument>
         </arguments>
@@ -125,13 +127,11 @@ if ((sPitch != 0) &amp;&amp; (sGain != 0))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state == 1)
-{
-    blackA = min((blackA + 0.0133333333333333), 1)
-    if (blackA == 1)
-    {
-        state = 2
-        alarm[1] = 50
+            <string>if state == 1{
+    blackA = min(blackA + 1/75, 1);
+    if blackA == 1{
+        state = 2;
+        alarm[1] = 50;
     }
 }
 </string>
@@ -156,13 +156,15 @@ if ((sPitch != 0) &amp;&amp; (sGain != 0))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (triggered == 0)
-{
-    triggered = 1
-    with (objPlayer)
-        instance_destroy()
-    audio_sound_gain(global.currentMusic, 0, 2000)
-    alarm[0] = 35
+            <string>if triggered == 0{
+    triggered = 1;
+    with objPlayer{instance_destroy();}
+    //scrPlaySoundExt(sndFall,1,1,false);
+    //audio_play_sound(sndPowerup,0,false);
+    //audio_play_sound(sndPop,0,false);
+    audio_sound_gain(global.currentMusic,0,2000);
+    alarm[0] = 35;
+    //alarm[2] = 17;
 }
 </string>
           </argument>
@@ -186,11 +188,11 @@ if ((sPitch != 0) &amp;&amp; (sGain != 0))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_black)
-draw_set_alpha(blackA)
-draw_rectangle(-1, -1, 801, 609, 0)
-draw_set_color(c_white)
-draw_set_alpha(1)
+            <string>draw_set_color(c_black);
+draw_set_alpha(blackA);
+draw_rectangle(-1,-1,801,609,0);
+draw_set_color(c_white);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>
@@ -213,7 +215,8 @@ draw_set_alpha(1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>///Bro nothing
+</string>
           </argument>
         </arguments>
       </action>

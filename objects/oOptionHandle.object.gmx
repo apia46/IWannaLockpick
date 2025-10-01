@@ -25,86 +25,162 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _c, i;
-colorsToShow = 10
-curColorEdit = 0
-colorShow[0] = 1
-colorShow[1] = 8
-colorShow[2] = 7
-colorShow[3] = 4
-colorShow[4] = 10
-colorShow[5] = 5
-colorShow[6] = 2
-colorShow[7] = 6
-colorShow[8] = 3
-colorShow[9] = 9
-colorName[0] = "White"
-colorName[1] = "Cyan"
-colorName[2] = "Pink"
-colorName[3] = "Red"
-colorName[4] = "Brown"
-colorName[5] = "Green"
-colorName[6] = "Orange"
-colorName[7] = "Blue"
-colorName[8] = "Purple"
-colorName[9] = "Black"
-_c = colorShow[curColorEdit]
-cHighR = color_get_red(global.highTone[_c])
-cHighG = color_get_green(global.highTone[_c])
-cHighB = color_get_blue(global.highTone[_c])
-cMainR = color_get_red(global.mainTone[_c])
-cMainG = color_get_green(global.mainTone[_c])
-cMainB = color_get_blue(global.mainTone[_c])
-cDarkR = color_get_red(global.darkTone[_c])
-cDarkG = color_get_green(global.darkTone[_c])
-cDarkB = color_get_blue(global.darkTone[_c])
-tab = 0
-state = 0
-curButton = -1
-curSlider = -1
-curIcon = -1
-curType = 0
-controlIndex = -1
-controllerMode = 0
-heldSlider = -1
-tabName[0] = "Sound"
-tabName[1] = "Visual"
-tabName[2] = "Colorblind"
-tabName[3] = "Accessibility"
-tabName[4] = "Controls"
-tabDesc[0] = "Change volume settings or mute the game."
-tabDesc[1] = "Change the game look or display."
-tabDesc[2] = "Options for colorblind accessibility."
-tabDesc[3] = "General accessibility options."
-tabDesc[4] = "Change the control binds."
-numTabs = 5
-tabBY = 16
-tabBW = 128
-tabSpacing = 160
-for (i = 0; i &lt; numTabs; i += 1)
-{
-    tabButtons[i] = 0
-    tabSliders[i] = 0
+            <string>///Colorblind
+colorsToShow = 10;
+curColorEdit = 0;//Which color is being edited
+//Only 10 colors are to be edited
+//White, Orange, Purple, Pink, Cyan, Black, Red, Green, Blue, Brown.
+//White, Cyan, Pink, Red, Brown, Green, Orange, Blue, Purple, Black
+colorShow[0] = 1;
+colorShow[1] = 8;
+colorShow[2] = 7;
+colorShow[3] = 4;
+colorShow[4] = 10;
+colorShow[5] = 5;
+colorShow[6] = 2;
+colorShow[7] = 6;
+colorShow[8] = 3;
+colorShow[9] = 9;
+colorName[0] = "White";
+colorName[1] = "Cyan";
+colorName[2] = "Pink";
+colorName[3] = "Red";
+colorName[4] = "Brown";
+colorName[5] = "Green";
+colorName[6] = "Orange";
+colorName[7] = "Blue";
+colorName[8] = "Purple";
+colorName[9] = "Black";
+//Actual colors
+var _c = colorShow[curColorEdit];
+cHighR = color_get_red(global.highTone[_c]);
+cHighG = color_get_green(global.highTone[_c]);
+cHighB = color_get_blue(global.highTone[_c]);
+cMainR = color_get_red(global.mainTone[_c]);
+cMainG = color_get_green(global.mainTone[_c]);
+cMainB = color_get_blue(global.mainTone[_c]);
+cDarkR = color_get_red(global.darkTone[_c]);
+cDarkG = color_get_green(global.darkTone[_c]);
+cDarkB = color_get_blue(global.darkTone[_c]);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Main init
+
+//General
+tab = 0;//Which tab of the options menu is open (Determines GUI button functionality)
+state = 0;//0 = Normal, 1 = Awaiting input for control setting
+curButton = -1;
+curSlider = -1;
+curIcon = -1;
+curType = 0;//0 = button, 1 = slider, 2 = label/icon
+controlIndex = -1;//For determining what control is currently being set.
+controllerMode = 0;//Whether to modify keyboard or controller binds
+heldSlider = -1;
+
+//TABS
+//0: Sound Options
+//Mute, Sound (Slider), Music (Slider), Master (Slider)
+//1: Visual Options
+//Fullscreen, Smoothing, Vsync, Window Scale (+/-), Low FX, Simple Locks, Pause Style
+//2: Colors/Colorblind Accessibility
+//Current Color Left/Right, 3 RGB sliders (Bright,Normal,Dark), Reset Color
+//Preset Left/Right, Apply Preset
+//Use Symbols, Do Same-Color Mouse Highlight, Colorblind Filter +/-
+//3: Accessibility
+//Hide Timer, Run Switch, All Full Jumps, All Unlocks
+//4: Controls
+tabName[0] = "Sound";//Names of each tab
+tabName[1] = "Visual";//Names of each tab
+tabName[2] = "Colorblind";//Names of each tab
+tabName[3] = "Accessibility";//Names of each tab
+tabName[4] = "Controls";//Names of each tab
+tabDesc[0] = "Change volume settings or mute the game.";
+tabDesc[1] = "Change the game look or display.";
+tabDesc[2] = "Options for colorblind accessibility.";
+tabDesc[3] = "General accessibility options.";
+tabDesc[4] = "Change the control binds.";
+numTabs = 5;
+tabBY = 16;//Tab button Y
+tabBW = 128; //Tab button W
+tabSpacing = 160;
+
+//Buttons: defOptionButton(tabID,ID,x,y,spr,ind,label,desc);
+for(var i = 0; i &lt; numTabs; i += 1){
+    tabButtons[i] = 0;//Number of buttons per tab
+    tabSliders[i] = 0;//Number of sliders per tab
 }
-tabTButtons[0] = 0
-defOptionElements()
-tabIcons[0] = 0
-sliderWidth = 100
-mX = getMouseGuiX()
-mY = getMouseGuiY()
-curName = "Name"
-curDesc = "Desc"
-theme = 0
-if (room == rTitleNew)
-    theme = 1
-colOut = make_color_hsv(170, 255, 80)
-colBox = make_color_hsv(135, 128, 255)
-colOutSel = make_color_hsv(200, 255, 120)
-colBoxSel = make_color_hsv(160, 90, 255)
-colOutSpc = make_color_hsv(25, 255, 120)
-colBoxSpc = make_color_hsv(40, 90, 255)
-colOutNo = 4210752
-colBoxNo = 12632256
+
+//Text Buttons:
+tabTButtons[0] = 0;//Number of text buttons per tab
+//NOTE: Text buttons obsolete, normal buttons now have both sprite and text.
+
+defOptionElements();//WRITE THIS FIRST: Include Tabs and Back/Save buttons
+
+//Labels (Non-interactible unchanging displays, CANNOT change strings)
+tabIcons[0] = 0;
+//NOTE: Icons are now built in to buttons and are hardcoded displays otherwise
+
+//Sliders (Mouse-interactible slider bars)
+sliderWidth = 100;
+//tabSliders[0] = 0;
+
+//Mouse
+mX = getMouseGuiX();
+mY = getMouseGuiY();
+
+//Other
+curName = "Name";//Name of the button currently hovered
+curDesc = "Desc";//Description of the option and what it does
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Colors
+
+theme = 0;//Color theme, 0 = Pause Menu, 1 = Title, 2 = Pre-game
+if room == rTitleNew{theme = 1;}
+colOut = make_color_hsv(170,255,80);
+colBox = make_color_hsv(135,128,255);
+colOutSel = make_color_hsv(200,255,120);
+colBoxSel = make_color_hsv(160,90,255);
+colOutSpc = make_color_hsv(25,255,120);
+colBoxSpc = make_color_hsv(40,90,255);
+colOutNo = c_dkgray;
+colBoxNo = c_ltgray;
 </string>
           </argument>
         </arguments>
@@ -127,34 +203,55 @@ colBoxNo = 12632256
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state == 0)
-    scrOptionInput()
-else if (state == 1)
-    scrOptionControlInput()
-switch theme
-{
-    case 0:
-        colOut = make_color_hsv(170, 255, 80)
-        colBox = make_color_hsv(135, 128, 255)
-        colOutSel = make_color_hsv(200, 255, 120)
-        colBoxSel = make_color_hsv(160, 90, 255)
-        colOutSpc = make_color_hsv(25, 255, 120)
-        colBoxSpc = make_color_hsv(40, 90, 255)
-        colOutNo = 4210752
-        colBoxNo = 12632256
-        break
-    case 1:
-        colOut = 16777215
-        colBox = 0
-        colOutSel = make_color_hsv(85, 128, 255)
-        colBoxSel = make_color_hsv(85, 255, 50)
-        colOutSpc = make_color_hsv(30, 128, 255)
-        colBoxSpc = make_color_hsv(20, 255, 50)
-        colOutNo = 4210752
-        colBoxNo = 12632256
-        break
+            <string>///Main inputs/navigation
+if state == 0{
+    scrOptionInput();
+}else if state == 1{//Control Input
+    scrOptionControlInput();
 }
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update colors
+switch theme{
+    case 0://Basic
+        colOut = make_color_hsv(170,255,80);
+        colBox = make_color_hsv(135,128,255);
+        colOutSel = make_color_hsv(200,255,120);
+        colBoxSel = make_color_hsv(160,90,255);
+        colOutSpc = make_color_hsv(25,255,120);
+        colBoxSpc = make_color_hsv(40,90,255);
+        colOutNo = c_dkgray;
+        colBoxNo = c_ltgray;
+    break;
+    case 1://Title
+        colOut = c_white;
+        colBox = c_black;
+        colOutSel = make_color_hsv(85,128,255);
+        colBoxSel = make_color_hsv(85,255,50);
+        colOutSpc = make_color_hsv(30,128,255);
+        colBoxSpc = make_color_hsv(20,255,50);
+        colOutNo = c_dkgray;
+        colBoxNo = c_ltgray;
+    break;
+}
 </string>
           </argument>
         </arguments>
@@ -177,7 +274,7 @@ switch theme
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>drawOptionMain()
+            <string>drawOptionMain();
 </string>
           </argument>
         </arguments>

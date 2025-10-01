@@ -25,41 +25,61 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, _t, t_hrs, t_min, t_sec;
-msgMax = 0
-msgPos = 0
-curText = ""
-textX = 0
-textY = 0
-textAlpha = 0
-textAngle = 0
-textSin = 0
-textUp = 0
-clearAngle = 0
-clearSin = 0
-clearAlpha = 1
-whiteAlpha = 0
-state = 0
-alarm[0] = 25
-global.inCutscene = 1
-solveCount = 0
-for (i = 0; i &lt; 250; i += 1)
-    solveCount += global.roomClear[i]
-_t = floor(global.time)
-t_hrs = (_t div 3600)
-_t %= 3600
-t_min = (_t div 60)
-_t %= 60
-t_sec = _t
-if (t_hrs != 0)
-    timeStr = (string(t_hrs) + "h ")
-if (t_min != 0)
-    timeStr += (string(t_min) + "m ")
-timeStr += (string(t_sec) + "s")
-if (global.tempClear == 0)
-{
-    background_visible[2] = 0
-    msgMax = 7
+            <string>msgMax = 0;
+msgPos = 0;
+curText = "";
+textX = 0;
+textY = 0;
+textAlpha = 0;
+textAngle = 0;
+textSin = 0;
+textUp = 0;
+
+clearAngle = 0;//For the big clear text (will explerp to 360*4)
+clearSin = 0;
+clearAlpha = 1;//White overlay
+
+whiteAlpha = 0;
+
+state = 0;
+alarm[0] = 25;
+global.inCutscene = 1;
+
+//Tally clears
+solveCount = 0;
+for(var i = 0; i &lt; 250; i += 1){
+    solveCount += global.roomClear[i];
+}
+
+/*var t = global.time;
+timeStr = string(t div 3600) + ":";
+t = t mod 3600;
+timeStr += string(t div 600);
+t = t mod 600;
+timeStr += string(t div 60) + ":";
+t = t mod 60;
+timeStr += string(t div 10);
+t = t mod 10;
+timeStr += string(floor(t));*/
+timeStr = "";
+var _t = floor(global.time);
+var t_hrs = (_t div 3600);
+_t = _t mod 3600;
+var t_min = (_t div 60);
+_t = _t mod 60;
+var t_sec = _t;
+if t_hrs != 0{
+    timeStr = string(t_hrs) + "h ";
+}
+if t_min != 0{
+    timeStr += string(t_min) + "m ";
+}
+timeStr += string(t_sec) + "s";
+
+//Dialog and aesthetic changes depending on the ending
+if global.tempClear == 0{//UDL clear
+    background_visible[2] = false;
+    msgMax = 7;
     msg[0] = "Hello."
     msg[1] = "Congratulations on completing Ultimate Door Logic."
     msg[2] = "That puzzle is supposed to be pretty hard!"
@@ -67,10 +87,8 @@ if (global.tempClear == 0)
     msg[4] = "Since this is a demo, though, here is a simple clear screen."
     msg[5] = "I hope you have enjoyed the game so far."
     msg[6] = "Thanks for playing!"
-}
-else
-{
-    msgMax = 9
+}else{//LG clear
+    msgMax = 9;
     msg[0] = "Wow!"
     msg[1] = "Congratulations on completing Chromatic Monolith!"
     msg[2] = "You are a true master of Lockpick's game mechanics."
@@ -103,9 +121,10 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.autosave = 0
-global.inCutscene = 0
-scrRestartGame()
+            <string>///Return to title
+global.autosave = 0;
+global.inCutscene = 0;
+scrRestartGame();
 </string>
           </argument>
         </arguments>
@@ -128,11 +147,12 @@ scrRestartGame()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrPlaySoundExt(sndTitleStart, 1, 1, false)
-state = 2
-textAngle = 0
-textAlpha = 0
-whiteAlpha = 1
+            <string>///GG!
+scrPlaySoundExt(sndTitleStart,1,1,false);
+state = 2;
+textAngle = 0;
+textAlpha = 0;
+whiteAlpha = 1;
 </string>
           </argument>
         </arguments>
@@ -155,8 +175,10 @@ whiteAlpha = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (oDialogHandle)
-    diaStart(95)
+            <string>///Fade in text
+with oDialogHandle{diaStart(95);}
+//state = 1;
+//curText = msg[0];
 </string>
           </argument>
         </arguments>
@@ -179,81 +201,71 @@ whiteAlpha = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 0:
-        break
-    case 1:
-        if (!textUp)
-        {
-            textAngle = min((textAngle + 2), 90)
-            textSin = sin(degtorad(textAngle))
-            textY = (-40 * textSin)
-            textAlpha = textSin
-            if (scrButtonCheckPressed(global.jumpButton) || scrButtonCheckPressed(global.shootButton))
-            {
-                if (textAngle == 90)
-                {
-                    scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                    textUp = 1
-                    textAngle = 0
+            <string>switch state{
+    case 0://Nothing
+        
+    break;
+    case 1://Fade in text, allow text advancing control
+        if !textUp{
+            textAngle = min(textAngle + 2, 90);
+            textSin = sin(degtorad(textAngle));
+            textY = -40*textSin;
+            textAlpha = textSin;
+            if scrButtonCheckPressed(global.jumpButton) || scrButtonCheckPressed(global.shootButton){
+                if textAngle == 90{
+                    scrPlaySoundExt(sndSelectMade,1,1,false);
+                    textUp = 1;
+                    textAngle = 0;
+                }
+            }
+        }else{
+            textAngle = min(textAngle + 3, 90);
+            textSin = sin(degtorad(textAngle));
+            textY = -40-40*textSin;
+            textAlpha = 1-textSin;
+            if textAngle == 90{
+                msgPos += 1;
+                if msgPos &gt;= msgMax{
+                    if alarm[1] &lt;= 0{
+                        alarm[1] = 30;
+                    }
+                }else{
+                    curText = msg[msgPos];
+                    textUp = 0;
+                    textAngle = 0;
                 }
             }
         }
-        else
-        {
-            textAngle = min((textAngle + 3), 90)
-            textSin = sin(degtorad(textAngle))
-            textY = (-40 - (40 * textSin))
-            textAlpha = (1 - textSin)
-            if (textAngle == 90)
-            {
-                msgPos += 1
-                if (msgPos &gt;= msgMax)
-                {
-                    if (alarm[1] &lt;= 0)
-                        alarm[1] = 30
-                }
-                else
-                {
-                    curText = msg[msgPos]
-                    textUp = 0
-                    textAngle = 0
-                }
+    break;
+    case 2://Fade in final clear stats and GG text
+        whiteAlpha = max(whiteAlpha - 0.02, 0);
+        
+        clearAngle += ((360*3 + 90)-clearAngle)*.03;
+        clearSin = sin(degtorad(clearAngle));
+        clearAlpha = 1-clearAngle/(360*3 + 90);//White overlay
+        
+        if clearAngle &gt;= (360*3){
+            textAngle = min(textAngle+1,90);
+            textSin = sin(degtorad(textAngle));
+            textX = -40+100*textSin;
+            textAlpha = textSin;
+        }
+        
+        if scrButtonCheckPressed(global.jumpButton) || scrButtonCheckPressed(global.shootButton){
+            if textAngle == 90{
+                scrPlaySoundExt(sndSelectMade,1,1,false);
+                audio_sound_gain(global.currentMusic,0,3000);
+                state = 3;
             }
         }
-        break
-    case 2:
-        whiteAlpha = max((whiteAlpha - 0.02), 0)
-        clearAngle += ((1170 - clearAngle) * 0.03)
-        clearSin = sin(degtorad(clearAngle))
-        clearAlpha = (1 - (clearAngle / 1170))
-        if (clearAngle &gt;= 1080)
-        {
-            textAngle = min((textAngle + 1), 90)
-            textSin = sin(degtorad(textAngle))
-            textX = (-40 + (100 * textSin))
-            textAlpha = textSin
+    break;
+    case 3://Fade to white before returning to title
+        whiteAlpha = min(whiteAlpha + 1/100,1);
+        if whiteAlpha == 1 &amp;&amp; alarm[2] &lt;= 0{
+            alarm[2] = 50;
         }
-        if (scrButtonCheckPressed(global.jumpButton) || scrButtonCheckPressed(global.shootButton))
-        {
-            if (textAngle == 90)
-            {
-                scrPlaySoundExt(sndSelectMade, 1, 1, false)
-                audio_sound_gain(global.currentMusic, 0, 3000)
-                state = 3
-            }
-        }
-        break
-    case 3:
-        whiteAlpha = min((whiteAlpha + 0.01), 1)
-        if ((whiteAlpha == 1) &amp;&amp; (alarm[2] &lt;= 0))
-            alarm[2] = 50
-        break
-    default:
-    
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -276,7 +288,7 @@ whiteAlpha = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.inCutscene = 1
+            <string>global.inCutscene = 1;
 </string>
           </argument>
         </arguments>
@@ -299,52 +311,53 @@ whiteAlpha = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(make_color_rgb(64, 0, 32))
-draw_rectangle(0, 0, 800, 608, 0)
-draw_set_color(c_white)
-draw_sprite(sprCG2, 0, 0, 64)
-if (state == 1)
-{
-    draw_set_font(fPresents)
-    draw_set_alpha(textAlpha)
-    draw_set_color(c_black)
-    draw_set_halign(fa_center)
-    draw_set_valign(fa_middle)
-    draw_text(398, (280 + textY), curText)
-    draw_text(402, (280 + textY), curText)
-    draw_text(400, ((280 + textY) - 1), curText)
-    draw_text(400, ((280 + textY) + 1), curText)
-    draw_set_color(c_white)
-    draw_text(400, (280 + textY), curText)
-    draw_set_alpha(1)
+            <string>draw_set_color(make_color_rgb(64,0,32));
+draw_rectangle(0,0,800,608,0);
+draw_set_color(c_white);
+
+draw_sprite(sprCG2,0,0,64);
+
+if state == 1{
+    draw_set_font(fPresents);
+    draw_set_alpha(textAlpha);
+    draw_set_color(c_black);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_text(400-2,280+textY,curText);
+    draw_text(400+2,280+textY,curText);
+    draw_text(400,280+textY-1,curText);
+    draw_text(400,280+textY+1,curText);
+    draw_set_color(c_white);
+    draw_text(400,280+textY,curText);
+    draw_set_alpha(1);
+}else if state &gt;= 2{
+    draw_sprite_ext(sprGG,0,400,128,clearSin,1,0,c_white,1);
+    draw_sprite_ext(sprGG,1,400,128,clearSin,1,0,c_white,clearAlpha);
+    
+    draw_set_font(fPresents);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_center);
+    tempStr = "Levels Cleared: "+string(solveCount);
+    draw_set_color(make_color_rgb(255,200,230));
+    draw_set_alpha(textAlpha*.25);
+    draw_text(textX+1,570+1,tempStr);
+    draw_set_alpha(textAlpha);
+    draw_text(textX,570,tempStr);
+    draw_set_color(c_white);
+    
+    tempStr = "Time Spent: "+timeStr;
+    draw_set_color(make_color_rgb(255,200,230));
+    draw_set_alpha(textAlpha*.25);
+    draw_text(textX+400+1,570+1,tempStr);
+    draw_set_alpha(textAlpha);
+    draw_text(textX+400,570,tempStr);
+    draw_set_color(c_white);
+    draw_set_alpha(1);
 }
-else if (state &gt;= 2)
-{
-    draw_sprite_ext(sprGG, 0, 400, 128, clearSin, 1, 0, c_white, 1)
-    draw_sprite_ext(sprGG, 1, 400, 128, clearSin, 1, 0, c_white, clearAlpha)
-    draw_set_font(fPresents)
-    draw_set_halign(fa_left)
-    draw_set_valign(fa_middle)
-    tempStr = ("Levels Cleared: " + string(solveCount))
-    draw_set_color(make_color_rgb(255, 200, 230))
-    draw_set_alpha((textAlpha * 0.25))
-    draw_text((textX + 1), 571, tempStr)
-    draw_set_alpha(textAlpha)
-    draw_text(textX, 570, tempStr)
-    draw_set_color(c_white)
-    tempStr = ("Time Spent: " + timeStr)
-    draw_set_color(make_color_rgb(255, 200, 230))
-    draw_set_alpha((textAlpha * 0.25))
-    draw_text(((textX + 400) + 1), 571, tempStr)
-    draw_set_alpha(textAlpha)
-    draw_text((textX + 400), 570, tempStr)
-    draw_set_color(c_white)
-    draw_set_alpha(1)
-}
-draw_set_alpha(whiteAlpha)
-draw_set_color(c_white)
-draw_rectangle(-1, -1, 801, 609, 0)
-draw_set_alpha(1)
+draw_set_alpha(whiteAlpha);
+draw_set_color(c_white);
+draw_rectangle(-1,-1,801,609,0);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

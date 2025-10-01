@@ -25,56 +25,68 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_number(oDialogHandle) &gt;= 2)
-{
-    instance_destroy()
-    exit
+            <string>if instance_number(oDialogHandle) &gt;= 2{
+    instance_destroy();
+    exit;
 }
-diaID = -1
-diaText[0] = ""
-diaSpeak[0] = -1
-diaPortrait[0] = 0
-diaVoice[0] = -1
-evCount = 0
-evLine[0] = -1
-evPos[0] = -1
-evType[0] = -1
-evArg[0] = 0
-evArg2[0] = 0
-diaState = 0
-endAction = 0
-nextConvo = -1
-diaPos = 0
-numLines = 1
-readString = ""
-charMax = 0
-boxY = 0
-boxX = 0
-boxCol = 4210752
-boxShake = 0
-speakerID = -1
-speakerName = "???"
-speakerSpr = -1
-speakerIndex = 0
-textCol = 16777215
-shaCol = 12632256
-hasShadow = 1
-voiceID = -1
-numSamples = 1
-vSample[0] = 11
-numPitches = 1
-vPitch[0] = 1
-vVariance = 0.02
-doScroll = 0
-curString = ""
-curChar = 0
-scrollWait = 2
-scrollCount = 0
-soundWait = 2
-soundCount = 0
-nextLineTimer = 0
-skipA = 0
-skipAlpha = 0
+//Dialog variables
+diaID = -1;//Conversation ID
+diaText[0] = "";//Stores the strings of the conversation
+diaSpeak[0] = -1;//Stores the speaker of each line
+diaPortrait[0] = 0;//Stores the speaker portrait of each line
+diaVoice[0] = -1;//Stores the voice palette of each line
+
+evCount = 0;//number of convo events
+evLine[0] = -1;//line of event
+evPos[0] = -1;//timing of event (character position, -1 = linestart)
+evType[0] = -1;//what action to perform on event trigger
+evArg[0] = 0;//argument
+evArg2[0] = 0;//argument2
+
+diaState = 0;//Dialog state  (0 = leaving, 1 = starting, 2 = reading, 3 = waiting)
+endAction = 0;//Dialog end action (0 = close dialog)
+nextConvo = -1;//Buffered conversation ID
+diaPos = 0;//Current array index in dialog position
+numLines = 1;//Number of lines in the dialog
+readString = "";//String to be read from
+charMax = 0;//Number of characters in the string
+
+//Box variables
+boxY = 0;//Dialog box height relative to bottom of screen
+boxX = 0;//Scrolls left
+boxCol = c_dkgray;//Back color for box
+boxShake = 0;//For box-shaking effects, exponentially reduces
+
+//Text variables
+speakerID = -1;//For storage purposes
+speakerName = "???";//Name of speaker, displays under portrait
+speakerSpr = -1;//Sprite index for speaker portrait
+speakerIndex = 0;//Image index for portrait
+textCol = c_white;//Color of text and box outline
+shaCol = c_ltgray;//Color of text dropshadow
+hasShadow = 1;//Whether to display text shadow
+
+//Voice palette variables
+voiceID = -1;//For storage purposes
+numSamples = 1;//Number of samples to choose from
+vSample[0] = sndText;//Array containing sample indices
+numPitches = 1;//Number of pitches to apply to voice
+vPitch[0] = 1;//Array of possible pitches
+vVariance = 0.02;//Pitch variance
+
+//Textscroll variables
+doScroll = 0;//Whether the dialog is currently being read
+curString = "";//Section of read string
+curChar = 0;//Current character position in the string
+scrollWait = 2;//Delay in frames between new characters being added to string
+scrollCount = 0;//Current countdown until next character is read
+soundWait = 2;//Delay in characters between textscroll sounds
+soundCount = 0;//Current countdown until next textscroll sound
+nextLineTimer = 0;//Prevents you from accidentally skipping a line
+
+//Skip variables
+skipA = 0;
+skipAlpha = 0;
 </string>
           </argument>
         </arguments>
@@ -97,92 +109,76 @@ skipAlpha = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch diaState
-{
-    case 0:
-        boxY = min(((boxY + 2) + ((0 - boxY) * 0.05)), 0)
-        break
-    case 1:
-        boxY = max(((boxY - 2) + ((-96 - boxY) * 0.05)), -96)
-        if (boxY == -96)
-        {
-            diaState = 2
-            diaPos = 0
-            scrStartLine(diaPos)
+            <string>switch diaState{
+    case 0://Hiding
+        boxY = min(boxY+2+(0-boxY)*.05,0);
+    break;
+    case 1://Showing
+        boxY = max(boxY-2+(-96-boxY)*.05,-96);
+        if boxY == -96{
+            diaState = 2;
+            diaPos = 0;
+            scrStartLine(diaPos);
         }
-        break
-    case 2:
-        if doScroll
-        {
-            scrollCount = ((scrollCount + 1) % scrollWait)
-            if (scrollCount == 0)
-            {
-                curChar = min((curChar + 1), charMax)
-                scrDiaEvents(0)
-                char = string_copy(readString, curChar, 1)
-                soundCount = ((soundCount + 1) % soundWait)
-                if (soundCount == 0)
-                {
-                    if ((char != " ") &amp;&amp; ((char != "#") &amp;&amp; (char != "'")))
-                        scrPlayTalkSound()
+    break;
+    case 2://Reading
+        if doScroll{
+            scrollCount = (scrollCount + 1) mod scrollWait;
+            if scrollCount == 0{//Read next character
+                curChar = min(curChar + 1, charMax);
+                //check for EVs at character position
+                scrDiaEvents(false);
+                char = string_copy(readString,curChar,1);
+                soundCount = (soundCount + 1) mod soundWait;
+                if soundCount == 0{//Play textscroll sound
+                    if (char != " ")&amp;&amp;(char != "#")&amp;&amp;(char != "'"){
+                        scrPlayTalkSound();
+                    }
                 }
-                if (curChar == charMax)
-                {
-                    if (doScroll == 1)
-                    {
-                        doScroll = 0
-                        nextLineTimer = 40
+                if curChar == charMax{
+                    if doScroll == 1{
+                        doScroll = 0;
+                        nextLineTimer = 40;
                     }
                 }
             }
         }
-        nextLineTimer = max((nextLineTimer - 1), 0)
-        if ((scrButtonCheckPressed(global.selButton) || (scrButtonCheckPressed(global.jumpButton) || scrButtonCheckPressed(global.shootButton))) &amp;&amp; (nextLineTimer == 0))
-        {
-            if doScroll
-            {
-                doScroll = 0
-                scrPlayTalkSound()
-                curChar = charMax
-            }
-            else
-            {
-                diaPos += 1
-                scrDiaEvents(1)
-                if (diaPos &gt;= numLines)
-                {
-                    event_user(0)
-                    scrPlaySoundExt(sndCamera, 0.8, 1.5, false)
-                }
-                else
-                {
-                    doScroll = 1
-                    scrStartLine(diaPos)
-                    scrPlaySoundExt(sndTypewriter, 0.7, 1.2, false)
+        nextLineTimer = max(nextLineTimer - 1, 0);
+        if (scrButtonCheckPressed(global.selButton) || scrButtonCheckPressed(global.jumpButton) || scrButtonCheckPressed(global.shootButton)) &amp;&amp; nextLineTimer == 0{
+            if doScroll{//Read to end of current line
+                doScroll = 0;
+                scrPlayTalkSound();
+                curChar = charMax;
+            }else{//Advance to next line or end conversation
+                diaPos += 1;
+                //EVs at line start
+                scrDiaEvents(true);
+                if diaPos &gt;= numLines{//End convo
+                    event_user(0);
+                    scrPlaySoundExt(sndCamera,.8,1.5,0);
+                }else{//Continue
+                    doScroll = 1;
+                    scrStartLine(diaPos);
+                    scrPlaySoundExt(sndTypewriter,.7,1.2,0);
                 }
             }
         }
-        curString = string_copy(readString, 1, curChar)
-        if (((endAction == 0) || ((endAction == 2) || (endAction == 7))) &amp;&amp; (diaState == 2))
-        {
-            if (scrButtonCheckPressed(global.skipButton) &amp;&amp; (diaState == 2))
-            {
-                scrPlaySoundExt(sndSelectMade, 0.75, 1, false)
-                event_user(0)
+        curString = string_copy(readString,1,curChar);
+        //Skip
+        if (endAction == 0 || endAction == 2 || endAction == 7) &amp;&amp; diaState == 2{
+            if scrButtonCheckPressed(global.skipButton) &amp;&amp; diaState == 2{
+                scrPlaySoundExt(sndSelectMade,.75,1,false);
+                event_user(0);
             }
-            skipA = ((skipA + 2) % 360)
-            skipAlpha = (0.5 - (0.5 * cos(degtorad(skipA))))
+            skipA = (skipA + 2) mod 360;
+            skipAlpha = .5 - 0.5*cos(degtorad(skipA));
         }
-        if (diaState != 2)
-        {
-            skipA = 0
-            skipAlpha = 0
-        }
-        break
-    case 3:
-        break
+        if diaState != 2{skipA = 0; skipAlpha = 0;}
+    break;
+    case 3://Idle
+        
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -205,99 +201,83 @@ skipAlpha = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i;
-switch endAction
-{
-    case 0:
-        diaState = 0
-        global.inCutscene = 0
-        with (objPlayer)
-            alarm[0] = 15
-        break
-    case 1:
-        diaState = 3
-        break
-    case 2:
-        diaState = 0
-        with (oKina)
-        {
-            state = 2
-            t = 0
-            scrPlaySoundExt(sndQuery, 1, 1, false)
+            <string>///End conversation
+switch endAction{
+    case 0://Normal end
+        diaState = 0;
+        global.inCutscene = 0;
+        with objPlayer{alarm[0] = 15;}
+    break;
+    case 1://Breakpoint (Does something ingame before acting)
+        diaState = 3;
+        //Copy this and add whatever code you want!
+    break;
+    case 2://Kina: Return to dialog select state
+        diaState = 0;
+        with oKina{
+            state = 2; t = 0;
+            scrPlaySoundExt(sndQuery,1,1,false);
         }
-        with (oKinaDiary)
-        {
-            state = 2
-            t = 0
-            scrPlaySoundExt(sndQuery, 1, 1, false)
+        with oKinaDiary{
+            state = 2; t = 0;
+            scrPlaySoundExt(sndQuery,1,1,false);
         }
-        with (oWats)
-        {
-            state = 2
-            t = 0
-            scrPlaySoundExt(sndQuery, 1, 1, false)
-            numConvoVis = 0
-            for (i = 0; i &lt; numConvos; i += 1)
-            {
-                convoVis[i] = 1
-                if ((i &gt; 0) &amp;&amp; (!global.convoRead[(82 + i)]))
-                    convoVis[i] = 0
-                convoMenu[i] = -1
-                if convoVis[i]
-                {
-                    convoRef[numConvoVis] = i
-                    numConvoVis += 1
+        with oWats{
+            state = 2; t = 0;
+            scrPlaySoundExt(sndQuery,1,1,false);
+            numConvoVis = 0;
+            for(var i = 0; i &lt; numConvos; i += 1){
+                convoVis[i] = 1;//We no longer stan anachronistic storytelling in this household
+                if i &gt; 0 &amp;&amp; !global.convoRead[82+i]{convoVis[i] = 0;}
+                convoMenu[i] = -1;//Yknow I'm glad I decided not to program this
+                if convoVis[i]{
+                    convoRef[numConvoVis] = i;
+                    numConvoVis += 1;
                 }
-                convoRead[i] = 1
+                convoRead[i] = 1;//Did this...ever get used for anything???
             }
-            setCenterConvoString()
+            setCenterConvoString();
         }
-        break
-    case 3:
-        diaState = 0
-        global.inCutscene = 0
-        with (objPlayer)
-            alarm[0] = 15
-        with (oKina)
-        {
-            state = 0
-            t = 0
+    break;
+    case 3://Kina: Return to neutral (end cutscene)
+        diaState = 0;
+        global.inCutscene = 0;
+        with objPlayer{alarm[0] = 15;}
+        with oKina{
+            state = 0; t = 0;
         }
-        break
-    case 4:
-        diaState = 0
-        instance_create(0, 0, oOptionHandle)
-        break
-    case 5:
-        diaState = 0
-        with (oIntroHandle)
-            state = 2
-        break
-    case 6:
-        diaState = 0
-        global.inCutscene = 0
-        with (oIntroHandle2)
-            state = 2
-        break
-    case 7:
-        diaState = 0
-        with (oClearHandle)
-            alarm[1] = 50
-        break
-    case 8:
-        diaState = 0
-        with (oEndHandle)
-            state = 1
-        audio_sound_gain(global.currentMusic, 0, 2000)
-        break
+    break;
+    case 4://First boot sequence
+        diaState = 0;
+        instance_create(0,0,oOptionHandle);
+    break;
+    case 5://Intro: Let Lily talk
+        diaState = 0;
+        with oIntroHandle{state = 2;}
+    break;
+    case 6://Intro: Begin warp sequence
+        diaState = 0; global.inCutscene = 0;
+        with oIntroHandle2{
+            state = 2;
+        }
+    break;
+    case 7://Escape: Trigger congrats text
+        diaState = 0;
+        with oClearHandle{
+            alarm[1] = 50;
+        }
+    break;
+    case 8://Fade to credit
+        diaState = 0;
+        with oEndHandle{state = 1;}
+        audio_sound_gain(global.currentMusic,0,2000);
+    break;
     default:
-        diaState = 0
-        global.inCutscene = 0
-        with (objPlayer)
-            alarm[0] = 15
-        break
+        diaState = 0;
+        global.inCutscene = 0;
+        with objPlayer{alarm[0] = 15;}
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -320,62 +300,63 @@ switch endAction
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var dx, dy, bx, by, runTop, runBot;
-if (boxY &gt; -0.5)
-    exit
-dx = view_xview[0]
-dy = (view_yview[0] + 608)
-boxX -= 1
-if (boxX &lt;= -56)
-    boxX += 56
-draw_set_alpha(1)
-for (i = 0; i &lt;= 15; i += 1)
-{
-    bx = (((56 * i) + dx) + boxX)
-    by = ((dy + boxY) + random_range((-boxShake), boxShake))
-    draw_set_color(boxCol)
-    draw_rectangle(bx, by, (bx + 55), dy, 0)
-    draw_set_color(c_white)
-    draw_sprite_ext(sprTalkBox, 0, bx, by, 1, 1, 0, textCol, 1)
+            <string>///Decide whether to draw based on box height
+if boxY &gt; -0.5{
+    exit;
 }
-draw_sprite(sprTalkBox, 1, dx, (dy + boxY))
-if (speakerSpr != -1)
-    draw_sprite(speakerSpr, speakerIndex, (dx + 8), ((dy + boxY) + 20))
-draw_set_halign(fa_center)
-draw_set_valign(fa_top)
-draw_set_font(fTalkSmall)
-if hasShadow
-{
-    draw_set_color(shaCol)
-    draw_set_alpha(0.5)
-    draw_text(((dx + 28) + 1), (((dy + boxY) + 72) + 1), speakerName)
+var dx = view_xview;
+var dy = view_yview+608;
+//Box (sprite width 56)
+boxX -= 1; if boxX &lt;= -56{boxX += 56;}//Scrolling box X
+draw_set_alpha(1);
+for(i=0;i&lt;=15;i+=1){
+    var bx = 56*i+dx+boxX;
+    var by = dy+boxY+random_range(-boxShake,boxShake);
+    draw_set_color(boxCol);
+    draw_rectangle(bx,by,bx+55,dy,0);//Back rectangle
+    draw_set_color(c_white);
+    draw_sprite_ext(sprTalkBox,0,bx,by,1,1,0,textCol,1);//Box scroll
 }
-draw_set_alpha(1)
-draw_set_color(textCol)
-draw_text((dx + 28), ((dy + boxY) + 72), speakerName)
-draw_set_font(fTalk)
-draw_set_halign(fa_left)
-if hasShadow
-{
-    draw_set_color(shaCol)
-    draw_set_alpha(0.5)
-    draw_text_ext(((dx + 64) + 1), (((dy + boxY) + 12) + 1), curString, 16, 700)
+//Portrait
+draw_sprite(sprTalkBox,1,dx,dy+boxY);//The box itself
+if speakerSpr != -1{//Portrait
+    draw_sprite(speakerSpr,speakerIndex,dx+8,dy+boxY+20);
 }
-draw_set_alpha(1)
-draw_set_color(textCol)
-draw_text_ext((dx + 64), ((dy + boxY) + 12), curString, 16, 700)
-draw_set_color(c_white)
-if (((endAction == 0) || ((endAction == 2) || (endAction == 7))) &amp;&amp; (diaState == 2))
-{
-    draw_set_alpha(skipAlpha)
-    draw_set_font(fMiniID)
-    draw_set_halign(fa_right)
-    draw_set_valign(fa_top)
-    runTop = make_color_rgb(230, 255, 255)
-    runBot = make_color_rgb(170, 200, 255)
-    drawTextGradient((dx + 795), (dy - 128), (("- Press [" + getBindStr(global.skipButton, global.usingController)) + "] to skip -"), runTop, runBot, 1)
-    draw_set_alpha(1)
-    draw_set_color(c_white)
+//Portrait text
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+draw_set_font(fTalkSmall);
+if hasShadow{
+    draw_set_color(shaCol);
+    draw_set_alpha(.5);
+    draw_text(dx+28+1,dy+boxY+72+1,speakerName);
+}
+draw_set_alpha(1);
+draw_set_color(textCol);
+draw_text(dx+28,dy+boxY+72,speakerName);
+//Actual text
+draw_set_font(fTalk);
+draw_set_halign(fa_left);
+if hasShadow{
+    draw_set_color(shaCol);
+    draw_set_alpha(.5);
+    draw_text_ext(dx+64+1,dy+boxY+12+1,curString,16,700);
+}
+draw_set_alpha(1);
+draw_set_color(textCol);
+draw_text_ext(dx+64,dy+boxY+12,curString,16,700);
+draw_set_color(c_white);
+///skip text
+if (endAction == 0 || endAction == 2 || endAction == 7) &amp;&amp; diaState == 2{
+    draw_set_alpha(skipAlpha);
+    draw_set_font(fMiniID);
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_top);
+    var runTop = make_color_rgb(230,255,255);
+    var runBot = make_color_rgb(170,200,255);
+    drawTextGradient(dx+795,dy-128,"- Press ["+getBindStr(global.skipButton,global.usingController)+"] to skip -",runTop,runBot,1);
+    draw_set_alpha(1);
+    draw_set_color(c_white);
 }
 </string>
           </argument>

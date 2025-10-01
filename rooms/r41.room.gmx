@@ -3,18 +3,18 @@
   <caption></caption>
   <width>800</width>
   <height>608</height>
-  <vsnap>32</vsnap>
-  <hsnap>32</hsnap>
+  <vsnap>16</vsnap>
+  <hsnap>16</hsnap>
   <isometric>0</isometric>
   <speed>30</speed>
   <persistent>0</persistent>
   <colour>64</colour>
-  <showcolour>0</showcolour>
-  <code>global.roomID = 0
-global.msg = "Creepy urban legends have circulated about this place... Are you sure you'll be safe down here? Haven't you heard of The Curse of the Brown Key?! ...AAH!!! I see one right now!!! See ya later!!!"</code>
+  <showcolour>-1</showcolour>
+  <code>global.roomID = 0;
+global.msg = "Creepy urban legends have circulated about this place... Are you sure you'll be safe down here? Haven't you heard of The Curse of the Brown Key?! ...AAH!!! I see one right now!!! See ya later!!!";</code>
   <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>
-  <clearDisplayBuffer>0</clearDisplayBuffer>
+  <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
     <isSet>0</isSet>
     <w>0</w>
@@ -42,57 +42,57 @@ global.msg = "Creepy urban legends have circulated about this place... Are you s
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
   </backgrounds>
   <views>
-    <view visible="-1" objName="&lt;undefined&gt;" xview="0" yview="0" wview="608" hview="0" xport="0" yport="0" wport="800" hport="608" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="768" hview="0" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="768" hview="0" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="768" hview="0" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="768" hview="0" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="768" hview="0" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="768" hview="0" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="768" hview="0" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="-1" objName="&lt;undefined&gt;" xview="0" yview="0" wview="800" hview="608" xport="0" yport="0" wport="800" hport="608" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="objPlayerStart" x="288" y="448" name="inst_1A2D2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDropShadow" x="288" y="416" name="inst_1A2D3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyHandle" x="32" y="256" name="inst_1A2D4" locked="0" code="show[0] = 1&#xA;show[1] = 2&#xA;show[2] = 8&#xA;show[3] = 10&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oLightsW5" x="256" y="416" name="inst_1A2D5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="0" y="480" name="inst_1A2D6" locked="0" code="" scaleX="25" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="96" y="224" name="inst_1A2D7" locked="0" code="" scaleX="1" scaleY="8" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="768" y="192" name="inst_1A2D8" locked="0" code="" scaleX="1" scaleY="9" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="0" y="192" name="inst_1A2D9" locked="0" code="" scaleX="24" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="128" y="288" name="inst_1A2DA" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="192" y="320" name="inst_1A2DB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="128" y="384" name="inst_1A2DC" locked="0" code="" scaleX="5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="128" y="416" name="inst_1A2DD" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="320" y="384" name="inst_1A2DE" locked="0" code="" scaleX="9" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="480" y="224" name="inst_1A2DF" locked="0" code="" scaleX="1" scaleY="5" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="352" y="288" name="inst_1A2E0" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="640" y="384" name="inst_1A2E1" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="512" y="288" name="inst_1A2E2" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="672" y="288" name="inst_1A2E3" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="576" y="224" name="inst_1A2E4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oBlockTile" x="0" y="0" name="inst_1A2E5" locked="0" code="" scaleX="25" scaleY="6" colour="4294967295" rotation="0"/>
-    <instance objName="oBlockTile" x="0" y="512" name="inst_1A2E6" locked="0" code="" scaleX="25" scaleY="3" colour="4294967295" rotation="0"/>
-    <instance objName="oBlockTile" x="0" y="224" name="inst_1A2E7" locked="0" code="" scaleX="3" scaleY="8" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyWhite" x="176" y="432" name="inst_1A2E8" locked="0" code="count = 2&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorWhite" x="672" y="416" name="inst_1A2E9" locked="0" code="h = 2&#xA;type = 1&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorWhite" x="192" y="224" name="inst_1A2EA" locked="0" code="h = 2&#xA;count = 2&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorWhite" x="704" y="320" name="inst_1A2EB" locked="0" code="h = 2&#xA;count = 3&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorOrange" x="736" y="320" name="inst_1A2EC" locked="0" code="h = 2&#xA;count = 2&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorOrange" x="384" y="320" name="inst_1A2ED" locked="0" code="h = 2&#xA;count = 3&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorBrown" x="704" y="224" name="inst_1A2EE" locked="0" code="w = 2&#xA;h = 2&#xA;count = 4&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorCyan" x="192" y="352" name="inst_1A2EF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorCyan" x="384" y="224" name="inst_1A2F0" locked="0" code="h = 2&#xA;count = 2&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorCyan" x="512" y="224" name="inst_1A2F1" locked="0" code="w = 2&#xA;h = 2&#xA;count = 6&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorCyan" x="384" y="416" name="inst_1A2F2" locked="0" code="w = 2&#xA;h = 2&#xA;count = 4&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorPurple" x="512" y="320" name="inst_1A2F3" locked="0" code="w = 2&#xA;h = 2&#xA;count = 4&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorPink" x="576" y="256" name="inst_1A2F4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oGoal" x="720" y="432" name="inst_1A2F5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyOrange" x="144" y="240" name="inst_1A2F6" locked="0" code="count = 3&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyBrown" x="144" y="336" name="inst_1A2F7" locked="0" code="count = 2&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyBrown" x="464" y="432" name="inst_1A2F8" locked="0" code="count = 13&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyCyan" x="432" y="240" name="inst_1A2F9" locked="0" code="count = 3&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyCyan" x="432" y="336" name="inst_1A2FA" locked="0" code="count = 2&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objPlayerStart" x="288" y="448" name="inst_6DC82D36" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDropShadow" x="288" y="416" name="inst_1269EA68" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyHandle" x="32" y="256" name="inst_BC6B6836" locked="0" code="show[0] = key_WHITE;&#xA;show[1] = key_ORANGE;&#xA;show[2] = key_CYAN;&#xA;show[3] = key_BROWN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oLightsW5" x="256" y="416" name="inst_283F874F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="0" y="480" name="inst_45D63BEB" locked="0" code="" scaleX="25" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="96" y="224" name="inst_9267CE6A" locked="0" code="" scaleX="1" scaleY="8" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="768" y="192" name="inst_A0FBA140" locked="0" code="" scaleX="1" scaleY="9" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="0" y="192" name="inst_A9454564" locked="0" code="" scaleX="24" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="128" y="288" name="inst_91341F88" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="192" y="320" name="inst_B48038A3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="128" y="384" name="inst_EB494769" locked="0" code="" scaleX="5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="128" y="416" name="inst_493947A3" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="320" y="384" name="inst_80701AD3" locked="0" code="" scaleX="9" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="480" y="224" name="inst_9B2E8E07" locked="0" code="" scaleX="1" scaleY="5" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="352" y="288" name="inst_E21EEFA9" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="640" y="384" name="inst_ECFF71B9" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="512" y="288" name="inst_FC6FCE45" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="672" y="288" name="inst_21DCC92D" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="576" y="224" name="inst_E1BEA2A3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oBlockTile" x="0" y="0" name="inst_B0FADA73" locked="0" code="" scaleX="25" scaleY="6" colour="4294967295" rotation="0"/>
+    <instance objName="oBlockTile" x="0" y="512" name="inst_E62C984F" locked="0" code="" scaleX="25" scaleY="3" colour="4294967295" rotation="0"/>
+    <instance objName="oBlockTile" x="0" y="224" name="inst_438AE6BF" locked="0" code="" scaleX="3" scaleY="8" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyWhite" x="176" y="432" name="inst_79E3532A" locked="0" code="count = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorWhite" x="672" y="416" name="inst_3C1B2E57" locked="0" code="h=2; type = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorWhite" x="192" y="224" name="inst_054D6848" locked="0" code="h=2; count = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorWhite" x="704" y="320" name="inst_BDFE3816" locked="0" code="h=2; count = 3;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorOrange" x="736" y="320" name="inst_408387A3" locked="0" code="h=2; count = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorOrange" x="384" y="320" name="inst_F52867CF" locked="0" code="h=2; count = 3;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorBrown" x="704" y="224" name="inst_E74372A3" locked="0" code="w=2; h=2; count=4;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorCyan" x="192" y="352" name="inst_A39A08E5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorCyan" x="384" y="224" name="inst_BC77F748" locked="0" code="h=2;count=2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorCyan" x="512" y="224" name="inst_42CA16A3" locked="0" code="w=2;h=2;count=6;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorCyan" x="384" y="416" name="inst_03D52F89" locked="0" code="w=2;h=2;count=4;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorPurple" x="512" y="320" name="inst_A6DFD245" locked="0" code="w=2;h=2;count=4;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorPink" x="576" y="256" name="inst_0789B95E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oGoal" x="720" y="432" name="inst_D49D3802" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyOrange" x="144" y="240" name="inst_A625D621" locked="0" code="count = 3;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyBrown" x="144" y="336" name="inst_DD6FA36B" locked="0" code="count = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyBrown" x="464" y="432" name="inst_B4AA6834" locked="0" code="count = 13;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyCyan" x="432" y="240" name="inst_673B6BF8" locked="0" code="count = 3;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyCyan" x="432" y="336" name="inst_4616405F" locked="0" code="count = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

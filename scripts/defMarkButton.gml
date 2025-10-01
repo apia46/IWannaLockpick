@@ -1,10 +1,12 @@
-pmButState[argument0] = argument1
-pmButX[argument0] = argument2
-pmButY[argument0] = argument3
-pmButW[argument0] = argument4
-pmButH[argument0] = argument5
-pmButSpr[argument0] = argument6
-pmButInd[argument0] = argument7
-pmButCol[argument0] = argument8
-pmButSelCol[argument0] = argument9
-pmButtons += 1
+///defMarkButton(ID,state,x,y,w,h,spr,ind,col,selcol);
+//X and Y are relative to the topleft of the mark UI box.
+pmButState[argument0] = argument1;
+pmButX[argument0] = argument2;
+pmButY[argument0] = argument3;
+pmButW[argument0] = argument4;
+pmButH[argument0] = argument5;
+pmButSpr[argument0] = argument6;
+pmButInd[argument0] = argument7;
+pmButCol[argument0] = argument8;
+pmButSelCol[argument0] = argument9;
+pmButtons += 1;

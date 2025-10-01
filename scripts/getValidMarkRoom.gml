@@ -1,15 +1,15 @@
-switch argument0
-{
-    case 2:
-    case 337:
-    case 338:
-    case 339:
-    case 340:
-    case 336:
-    case 335:
-    case 334:
-    case 341:
+///getValidMarkRoom(room);
+switch argument0{
+    case rTitleNew:
+    case rIntro:
+    case rIntro2:
+    case rTempClear:
+    case rEnd2:
+    case rConnection:
+    case rMuseum:
+    case rKinaDiary:
+    case rCredits:
         return 0;
+    break;
 }
-
 return 1;

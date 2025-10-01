@@ -1,40 +1,26 @@
-var buttonIn;
-buttonIn = argument0
-switch buttonIn
-{
-    case 32769:
-        return "A/Cross";
-    case 32770:
-        return "B/Circle";
-    case 32771:
-        return "X/Square";
-    case 32772:
-        return "Y/Triangle";
-    case 32773:
-        return "Left Bumper";
-    case 32775:
-        return "Left Trigger";
-    case 32774:
-        return "Right Bumper";
-    case 32776:
-        return "Right Trigger";
-    case 32777:
-        return "Select/Touch-Pad";
-    case 32778:
-        return "Start/Options";
-    case 32779:
-        return "Left Stick (pressed)";
-    case 32780:
-        return "Right Stick (pressed)";
-    case 32781:
-        return "D-Pad Up";
-    case 32782:
-        return "D-Pad Down";
-    case 32783:
-        return "D-Pad Left";
-    case 32784:
-        return "D-Pad Right";
-    default:
-        return "Unknown";
-}
+///scrGetControllerBind(buttonIndex)
+///gets a string representation of the button for a controller
+///argument0 - button constant (i.e. gp_face1, gp_start)
 
+var buttonIn = argument0;
+
+switch (buttonIn)
+{
+    case gp_face1: return "A/Cross"; break;
+    case gp_face2: return "B/Circle"; break;
+    case gp_face3: return "X/Square"; break;
+    case gp_face4: return "Y/Triangle"; break;
+    case gp_shoulderl: return "Left Bumper"; break;
+    case gp_shoulderlb: return "Left Trigger"; break;
+    case gp_shoulderr: return "Right Bumper"; break;
+    case gp_shoulderrb: return "Right Trigger"; break;
+    case gp_select: return "Select/Touch-Pad"; break;
+    case gp_start: return "Start/Options"; break;
+    case gp_stickl: return "Left Stick (pressed)"; break;
+    case gp_stickr: return "Right Stick (pressed)"; break;
+    case gp_padu: return "D-Pad Up"; break;
+    case gp_padd: return "D-Pad Down"; break;
+    case gp_padl: return "D-Pad Left"; break;
+    case gp_padr: return "D-Pad Right"; break;
+    default: return "Unknown"; break;
+}

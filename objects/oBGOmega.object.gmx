@@ -25,33 +25,38 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var tiles, i, sOld, sNew, _ox, _oy;
-background_index[0] = bLibrary2_2
-tiles = tile_get_ids_at_depth(-12)
-for (i = 0; i &lt; array_length_1d(tiles); i++)
-    tile_set_blend(tiles[i], make_color_rgb(55, 120, 60))
-sOld = random_get_seed()
-sNew = room
-random_set_seed(sNew)
-color1 = make_color_rgb(55, 120, 60)
-for (i = 0; i &lt;= 33; i += 1)
-{
-    _ox = ((25 * i) + random_range(-8, 8))
-    _ox *= 3
-    _oy = ((200 * (i % 3)) + random(200))
-    _oy *= 1.5
-    _ox = lerp((room_width / 2), _ox, 1.1)
-    _oy = lerp((room_height / 2), _oy, 1.1)
-    with (instance_create(_ox, _oy, oW6FlowerBG))
-    {
-        color = other.color1
-        layer = 2
-        petals = irandom_range(7, 10)
-        size = (1.25 + ((petals - 7) * 0.125))
-        boundary = 50
+            <string>background_index[0] = bLibrary2_2;
+var tiles = tile_get_ids_at_depth(-12);
+for (var i = 0; i &lt; array_length_1d(tiles); i++;){
+    tile_set_blend(tiles[i], make_color_rgb(55,120,60));
+}
+
+//Flowers
+
+//Unique room-based seed
+var sOld, sNew;
+sOld = random_get_seed();
+sNew = room;
+random_set_seed(sNew);
+color1 = make_color_rgb(55,120,60);
+//Add background flowers
+for(i=0;i&lt;=33;i+=1){
+    var _ox = 800/32*i+random_range(-8,8);
+    _ox *= 3;
+    var _oy = 200*(i mod 3)+random(200);
+    _oy *= 1.5;
+    _ox = lerp(room_width/2,_ox,1.1);
+    _oy = lerp(room_height/2,_oy,1.1);
+    with instance_create(_ox,_oy,oW6FlowerBG){
+        color = other.color1;
+        layer = 2;
+        petals = irandom_range(7,10);
+        size = 1.25+(petals-7)*.125;
+        boundary = 800/16;
+        //hspeed = -.15;
     }
 }
-random_set_seed(sOld)
+random_set_seed(sOld);
 </string>
           </argument>
         </arguments>
@@ -74,13 +79,11 @@ random_set_seed(sOld)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i;
-with (oW6FlowerBG)
-{
-    if (layer == 2)
-    {
-        for (i = 0; i &lt; petals; i += 1)
-            draw_sprite_ext(sprFlowerPetalSmall, 0, x, y, size, size, (angle + ((360 / petals) * i)), color, 0.125)
+            <string>with oW6FlowerBG{
+    if layer == 2{
+        for(var i=0; i&lt;petals; i+=1){
+            draw_sprite_ext(sprFlowerPetalSmall,0,x,y,size,size,angle+360/petals*i,color,.125);
+        }
     }
 }
 </string>

@@ -25,20 +25,22 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.inCutscene = 1
-color = global.roomTransitionColor
-alpha = 0
-state = 0
-roomTo = global.roomOuter
-timer = 0
-textOff = -500
-textA = 0
-wiggleA = 0
-wiggleX2 = 0
-wiggleY2 = 0
-telePlayer = 0
-teleX = 0
-teleY = 0
+            <string>global.inCutscene = 1;
+color = global.roomTransitionColor;
+alpha = 0;
+state = 0;
+roomTo = global.roomOuter;
+timer = 0;
+
+textOff = -500;
+textA = 0;
+wiggleA = 0;
+wiggleX2 = 0;
+wiggleY2 = 0;
+
+telePlayer = 0;
+teleX = 0;
+teleY = 0;
 </string>
           </argument>
         </arguments>
@@ -61,90 +63,66 @@ teleY = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 0:
-        timer = min((timer + 1), 60)
-        textA = min((textA + 1.125), 90)
-        textOff = (-500 + (500 * sin(degtorad(textA))))
-        alpha = (timer / 60)
-        if (timer == 60)
-        {
-            timer = 0
-            state = 1
+            <string>switch state{
+    case 0://fade in
+        timer = min(timer+1,60);
+        textA = min(textA + 90/80, 90);
+        textOff = -500+500*sin(degtorad(textA));
+        alpha = timer/60;
+        if timer == 60{
+            timer = 0;
+            state = 1;
         }
-        break
-    case 1:
-        timer = min((timer + 1), 100)
-        textA = min((textA + 1.125), 90)
-        textOff = (-500 + (500 * sin(degtorad(textA))))
-        if ((timer &gt;= 20) &amp;&amp; (timer &lt; 100))
-        {
-            if (scrButtonCheckPressed(global.selButton) || (scrButtonCheckPressed(global.jumpButton) || (scrButtonCheckPressed(global.shootButton) || scrButtonCheckPressed(global.restartButton))))
-            {
-                timer = 0
-                state = 2
-                global.inLevel = 0
-                if telePlayer
-                {
-                    with (objPlayer)
-                        instance_destroy()
-                    instance_create(teleX, teleY, objPlayer)
+    break;
+    case 1://stay
+        timer = min(timer+1, 100);
+        textA = min(textA + 90/80, 90);
+        textOff = -500+500*sin(degtorad(textA));
+        if timer &gt;= 20 &amp;&amp; timer &lt; 100{
+            if scrButtonCheckPressed(global.selButton) || scrButtonCheckPressed(global.jumpButton) || scrButtonCheckPressed(global.shootButton) || scrButtonCheckPressed(global.restartButton){
+                timer = 0;
+                state = 2;
+                global.inLevel = 0;
+                if telePlayer{
+                    with objPlayer{instance_destroy();}
+                    instance_create(teleX,teleY,objPlayer);
                 }
-                room_goto(roomTo)
-                if telePlayer
-                {
-                    with (oNewCamera)
-                    {
-                        x = other.teleX
-                        y = other.teleY
-                        event_user(0)
-                    }
+                room_goto(roomTo);
+                if telePlayer{
+                    with oNewCamera{x = other.teleX; y = other.teleY; event_user(0);}
                 }
-                global.inCutscene = 0
-                global.salvageActive = 0
-                global.salvageID = -1
+                global.inCutscene = 0;
+                global.salvageActive = 0;
+                global.salvageID = -1;
             }
+        }else if timer == 100{
+            timer = 0;
+            state = 2;
+            global.inLevel = 0;
+            if telePlayer{
+                with objPlayer{instance_destroy();}
+                instance_create(teleX,teleY,objPlayer);
+            }
+            room_goto(roomTo);
+            if telePlayer{
+                with oNewCamera{x = other.teleX; y = other.teleY; event_user(0);}
+            }
+            global.inCutscene = 0;
+            global.salvageActive = 0;
+            global.salvageID = -1;
         }
-        else if (timer == 100)
-        {
-            timer = 0
-            state = 2
-            global.inLevel = 0
-            if telePlayer
-            {
-                with (objPlayer)
-                    instance_destroy()
-                instance_create(teleX, teleY, objPlayer)
-            }
-            room_goto(roomTo)
-            if telePlayer
-            {
-                with (oNewCamera)
-                {
-                    x = other.teleX
-                    y = other.teleY
-                    event_user(0)
-                }
-            }
-            global.inCutscene = 0
-            global.salvageActive = 0
-            global.salvageID = -1
-        }
-        break
-    case 2:
-        timer = min((timer + 1), 35)
-        textA = (90 + ((timer * 90) / 35))
-        textOff = (-500 + (500 * sin(degtorad(textA))))
-        alpha = (1 - (timer / 35))
-        if (timer == 25)
-            instance_destroy()
-        break
+    break;
+    case 2://fade out
+        timer = min(timer+1, 35);
+        textA = 90+(timer*90/35);
+        textOff = -500+500*sin(degtorad(textA));
+        alpha = 1 - (timer/35);
+        if timer == 25{instance_destroy();}
+    break;
 }
-
-wiggleA = ((wiggleA + 5.6) % 360)
-wiggleX2 = (6 * sin(degtorad((wiggleA + 50))))
-wiggleY2 = (6 * cos(degtorad((wiggleA + 50))))
+wiggleA = (wiggleA + 5.6) mod 360;
+wiggleX2 = 6*sin(degtorad(wiggleA+50));
+wiggleY2 = 6*cos(degtorad(wiggleA+50));
 </string>
           </argument>
         </arguments>
@@ -167,17 +145,19 @@ wiggleY2 = (6 * cos(degtorad((wiggleA + 50))))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(color)
-draw_set_alpha(alpha)
-draw_rectangle(-1, -1, 800, 608, 0)
-draw_set_alpha(1)
-draw_set_halign(fa_center)
-draw_set_valign(fa_middle)
-draw_set_font(fLevelName)
-draw_set_color(c_black)
-drawTextOutline((400 + wiggleX2), ((304 + textOff) + wiggleY2), "Door Salvaged!", 2, 1)
-draw_set_color(c_white)
-draw_text((400 + wiggleX2), ((304 + textOff) + wiggleY2), "Door Salvaged!")
+            <string>//rectangle
+draw_set_color(color);
+draw_set_alpha(alpha);
+draw_rectangle(-1,-1,800,608,0);
+draw_set_alpha(1);
+//text
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_font(fLevelName);
+draw_set_color(c_black);
+drawTextOutline(400+wiggleX2,304+textOff+wiggleY2,"Door Salvaged!",2,1);
+draw_set_color(c_white);
+draw_text(400+wiggleX2,304+textOff+wiggleY2,"Door Salvaged!");
 </string>
           </argument>
         </arguments>

@@ -25,16 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>rayA = 0
-waveA = 0
-waveS = 0
-upA = 0
-upAmt = 0
-imgA = 90
-drawScale = 1
-scale = 1
-active = 0
-color = 0
+            <string>///Believe it or not, Ordinal Keys were a planned game mechanic.
+//They were the original mechanic for World 11, instead of Imaginary Keys.
+//They'd function similarly to Star Keys, but would also be capable of ordinal number math.
+//It was a bit too much to implement though (both in terms of larger ordinals such as w^2 and BHO, and because they didn't get along with Combo Doors).
+//So, I scrapped the mechanic, came up with Star Keys later down the line, and left the graphic ingame.
+//MANY MONTHS LATER, I need a cool collectible that'll unlock the Omega Puzzles!
+//Can you guess what sprite just so happens to exist for every color of key, and also looks like a lowercase omega???
+//It was a sheer coincidence! I didn't intend it!!!
+//And here we are.
+
+//if global.object[2]{instance_destroy();}
+
+rayA = 0;
+waveA = 0;
+waveS = 0;
+upA = 0;
+upAmt = 0;
+imgA = 90;
+drawScale = 1;
+scale = 1;
+
+active = 0;
+
+color = 0;
 </string>
           </argument>
         </arguments>
@@ -57,25 +71,26 @@ color = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>waveA = ((waveA + 3) % 360)
-waveS = sin(degtorad(waveA))
-if active
-{
-    upA = min((upA + 4), 90)
-    upAmt = sin(degtorad(upA))
-    image_alpha *= 0.95
-    scale = (1 + upAmt)
-    if (image_alpha &lt; 0.01)
-    {
-        box = instance_create(x, y, oItemGet)
-        box.itemID = 3
-        with (box)
-            event_user(0)
-        instance_destroy()
+            <string>waveA = (waveA + 3) mod 360;
+waveS = sin(degtorad(waveA));
+
+if active{
+    upA = min(upA + 4, 90);
+    upAmt = sin(degtorad(upA));
+    image_alpha *= .95;
+    scale = 1+upAmt;
+    if image_alpha &lt; .01{
+        //Make cutscene object
+        box = instance_create(x,y,oItemGet);
+        box.itemID = 3;
+        with box{event_user(0);}
+        instance_destroy();
     }
-    imgA += 12
+    imgA += 12;
+}else{
+    //imgA += 2;
 }
-drawScale = sin(degtorad(imgA))
+drawScale = sin(degtorad(imgA));
 </string>
           </argument>
         </arguments>
@@ -98,39 +113,36 @@ drawScale = sin(degtorad(imgA))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var iPart;
-if (active == 0)
-{
-    active = 1
-    global.omegaKey[color] = 1
-    global.inCutscene = 1
-    with (objPlayer)
-        frozen = 1
-    scrPlaySoundExt(sndOmegaKey2, 1, 1, false)
-    scrPlaySoundExt(sndOmegaKey, 2, 1, false)
-    scrSaveGame(0)
-    visible = 0
-    with (oNewCamera)
-        shakeAmt = 4
-    for (iPart = 0; iPart &lt; 40; iPart += 1)
-    {
-        p = instance_create(((x + 16) + random_range(-8, 8)), ((y + 16) + random_range(-8, 8)), oKeyPart)
-        p.direction = (iPart * 222.48)
-        p.image_blend = make_color_hsv(((iPart * 255) / 40), 180, 255)
+            <string>if active == 0{
+    active = 1;
+    global.omegaKey[color] = 1;
+    global.inCutscene = 1;
+    with objPlayer{
+        frozen = 1;
     }
-    for (iPart = 0; iPart &lt; 30; iPart += 1)
-    {
-        p = instance_create(((x + 16) + random_range(-8, 8)), ((y + 16) + random_range(-8, 8)), oKeyPart)
-        p.direction = (iPart * 222.48)
-        p.speed *= 0.5
-        p.image_blend = make_color_hsv(((iPart * 255) / 40), 255, 230)
+    scrPlaySoundExt(sndOmegaKey2,1,1,false);
+    scrPlaySoundExt(sndOmegaKey,2,1,false);
+    scrSaveGame(false);
+    visible = 0;
+    //shake
+    with oNewCamera{shakeAmt = 4;}
+    //particles
+    for(var iPart = 0; iPart &lt; 40; iPart += 1){
+        p = instance_create(x+16+random_range(-8,8),y+16+random_range(-8,8),oKeyPart);
+        p.direction = iPart*(360*.618);
+        p.image_blend = make_color_hsv(iPart*255/40,180,255);
     }
-    for (iPart = 0; iPart &lt; 20; iPart += 1)
-    {
-        p = instance_create(((x + 16) + random_range(-8, 8)), ((y + 16) + random_range(-8, 8)), oKeyPart)
-        p.direction = (iPart * 222.48)
-        p.image_blend = c_white
-        p.speed *= 0.3
+    for(var iPart = 0; iPart &lt; 30; iPart += 1){
+        p = instance_create(x+16+random_range(-8,8),y+16+random_range(-8,8),oKeyPart);
+        p.direction = iPart*(360*.618);
+        p.speed *= .5;
+        p.image_blend = make_color_hsv(iPart*255/40,255,230);
+    }
+    for(var iPart = 0; iPart &lt; 20; iPart += 1){
+        p = instance_create(x+16+random_range(-8,8),y+16+random_range(-8,8),oKeyPart);
+        p.direction = iPart*(360*.618);
+        p.image_blend = c_white;
+        p.speed *= .3;
     }
 }
 </string>
@@ -155,21 +167,25 @@ if (active == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrColorKey()
-if (color == 0)
-{
-    sprite_index = sprKMasterOrd
-    image_speed = 0.1
+            <string>///Set color (doubles as ID) and check if obtained
+scrColorKey();
+if color == key_MASTER{
+    sprite_index = sprKMasterOrd;
+    image_speed = .1;
 }
-if (color == 11)
-{
-    sprite_index = sprKPureOrd
-    image_speed = 0.1
+if color == key_PURE{
+    sprite_index = sprKPureOrd;
+    image_speed = .1;
 }
-if (color == 13)
-    sprite_index = sprKStoneOrd
-if global.omegaKey[color]
-    instance_destroy()
+if color == key_STONE{
+    sprite_index = sprKStoneOrd;
+}
+//glitch TBD
+
+//TBD: Check if ID corresponding to color has been obtained, destroy if so
+if global.omegaKey[color]{
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -192,44 +208,40 @@ if global.omegaKey[color]
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>rayA = ((rayA + 2) % 360)
-draw_set_color(c_white)
-r = 24
-draw_set_blend_mode(1)
-x += 16
-y += 16
-for (i = 0; i &lt; 5; i += 1)
-{
-    a1 = (rayA + (72 * i))
-    a2 = (a1 + 36)
-    x1 = (r * sin(degtorad(a1)))
-    y1 = (r * cos(degtorad(a1)))
-    x2 = (r * sin(degtorad(a2)))
-    y2 = (r * cos(degtorad(a2)))
-    draw_triangle_color(x, y, (x + x1), (y + y1), (x + x2), (y + y2), merge_color(c_black, c_white, image_alpha), 0, 0, 0)
+            <string>///Rays + Lens
+rayA = (rayA + 2) mod 360;
+draw_set_color(c_white);
+r = 24;
+draw_set_blend_mode(bm_add);
+x += 16; y += 16;
+for(i=0;i&lt;5;i+=1){
+    a1 = rayA + 360/5*i;
+    a2 = a1 + 360/10;
+    x1 = r*sin(degtorad(a1)); y1 = r*cos(degtorad(a1));
+    x2 = r*sin(degtorad(a2)); y2 = r*cos(degtorad(a2));
+    draw_triangle_color(x,y,x+x1,y+y1,x+x2,y+y2,merge_color(c_black,c_white,image_alpha),c_black,c_black,0);
 }
-x -= 16
-y -= 16
-draw_set_blend_mode(0)
-switch color
-{
-    case 0:
-    case 11:
-    case 13:
-        draw_sprite_ext(sprite_index, 0, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, c_white, image_alpha)
-        break
-    case 12:
-        draw_sprite_ext(sprite_index, 0, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, c_white, image_alpha)
-        shader_set(shdRainbowStripe2)
-        draw_sprite_ext(sprite_index, 1, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, blend, image_alpha)
-        shader_reset()
-        break
+x -= 16; y -= 16;
+draw_set_blend_mode(bm_normal);
+//The actual thing
+//Frame
+switch color{
+    case key_MASTER:
+    case key_PURE:
+    case key_STONE:
+        draw_sprite_ext(sprite_index,0,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha);
+    break;
+    case key_COPY:
+        draw_sprite_ext(sprite_index,0,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha);
+        shader_set(shdRainbowStripe2);
+        draw_sprite_ext(sprite_index,1,x,y+3*waveS+upAmt,drawScale*scale,scale,0,blend,image_alpha);
+        shader_reset();
+    break;
     default:
-        draw_sprite_ext(sprite_index, 0, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, c_white, image_alpha)
-        draw_sprite_ext(sprite_index, 1, x, ((y + (3 * waveS)) + upAmt), (drawScale * scale), scale, 0, blend, image_alpha)
-        break
+        draw_sprite_ext(sprite_index,0,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha);
+        draw_sprite_ext(sprite_index,1,x,y+3*waveS+upAmt,drawScale*scale,scale,0,blend,image_alpha);
+    break;
 }
-
 </string>
           </argument>
         </arguments>

@@ -25,40 +25,71 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>frozen = 0
-jump = (8.5 * global.grav)
-jump2 = (7 * global.grav)
-gravity = (0.4 * global.grav)
-recentJump = 0
-djump = 1
-maxSpeed = 3
-maxVspeed = 9
-image_speed = 0.2
-onPlatform = 0
-xScale = 1
-scrSetPlayerMask()
-if ((global.difficulty == 0) &amp;&amp; global.gameStarted)
-    instance_create(x, y, objBow)
-if global.autosave
+            <string>frozen = false; //sets if the player can move or not
+
+jump = 8.5 * global.grav; //set how fast the player jumps
+jump2 = 7 * global.grav; //sets how fast the player double jumps
+gravity = 0.4 * global.grav; //player gravity
+
+recentJump = 0; //whether the player has recently single jumped
+djump = 1; //allow the player to double jump as soon as he spawns
+maxSpeed = 3;   //max horizontal speed
+maxVspeed = 9;  //max vertical speed
+image_speed = 0.2; //initial speed of animation
+onPlatform = false; //sets if player is currently standing on a platform
+
+xScale = 1; //sets the direction the player is facing (1 is facing right, -1 is facing left)
+
+scrSetPlayerMask(); //set the player's hitbox
+
+if (global.difficulty == 0 &amp;&amp; global.gameStarted)   //create the player's bow
+    instance_create(x,y,objBow);
+
+if (global.autosave) //save the game if currently set to autosave
 {
-    scrSaveGame(1)
-    global.autosave = 0
+    scrSaveGame(true);
+    global.autosave = false;
 }
-masterMode = 0
-masterDrawAngle = 0
-masterDrawScale = 0.8
-brownMode = 0
-brownAngle = 0
-brownScale = 0.6
-drawIm = 0
-imAngle = 0
-runState = 0
-downStop = 1
-downDir = 0
-downTime = 0
-aura[0] = 0
-aura[1] = 0
-aura[2] = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///KeyPick variables
+masterMode = 0;//0 = None, 1 = Master Mode, -1 = AntiMaster Mode
+masterDrawAngle = 0;
+masterDrawScale = 0.8;
+
+brownMode = 0;//0 = None, 1 = Enbrown, -1 = Unenbrown
+brownAngle = 0;
+brownScale = .6;
+
+drawIm = 0;
+imAngle = 0;
+
+runState = 0;//0 = Normal, 1 = Run, 2 = Slow
+downStop = 1;//Stops the player if they interact with something while holding Down
+downDir = 0;//-1 is left, 1 is right
+downTime = 0;//Counts down to 0
+
+aura[0] = 0;//Red aura
+aura[1] = 0;//Green aura
+aura[2] = 0;//Blue aura
 </string>
           </argument>
         </arguments>
@@ -81,8 +112,9 @@ aura[2] = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (objBow)
-    instance_destroy()
+            <string>//when the player is destroyed, also destroy the bow
+with (objBow)
+    instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -105,7 +137,8 @@ aura[2] = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>frozen = 0
+            <string>///Unfreeze on a delay
+frozen = 0;
 </string>
           </argument>
         </arguments>
@@ -128,67 +161,100 @@ aura[2] = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var notOnBlock, onVineR, onVineL, L, R;
-if (((x &lt; 0) || ((x &gt; room_width) || ((y &lt; 0) || (y &gt; room_height)))) &amp;&amp; global.edgeDeath)
+            <string>if ((x &lt; 0 || x &gt; room_width || y &lt; 0 || y &gt; room_height) &amp;&amp; global.edgeDeath)  //check if player has left the room
+    //scrKillPlayer();
+
+//update player sprite
+if (global.playerAnimationFix)
 {
-    if global.playerAnimationFix
+    //block/vine checks
+    var notOnBlock = (place_free(x,y+(global.grav)));
+    var onVineR = (place_meeting(x+1,y,objWalljumpR) &amp;&amp; notOnBlock);
+    var onVineL = (place_meeting(x-1,y,objWalljumpL) &amp;&amp; notOnBlock);
+    
+    if (!onVineR &amp;&amp; !onVineL)   //not touching any vines
     {
-        notOnBlock = place_free(x, (y + global.grav))
-        onVineR = (place_meeting((x + 1), y, objWalljumpR) &amp;&amp; notOnBlock)
-        onVineL = (place_meeting((x - 1), y, objWalljumpL) &amp;&amp; notOnBlock)
-        if ((!onVineR) &amp;&amp; (!onVineL))
+        if (onPlatform || !notOnBlock)  //standing on something
         {
-            if (onPlatform || (!notOnBlock))
+            //check if moving left/right
+            var L = (scrButtonCheck(global.leftButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.leftButton)));
+            var R = (scrButtonCheck(global.rightButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.rightButton)));
+            
+            if ((L || R) &amp;&amp; !frozen)
             {
-                L = (scrButtonCheck(global.leftButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.leftButton)))
-                R = (scrButtonCheck(global.rightButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.rightButton)))
-                if ((L || R) &amp;&amp; (!frozen))
-                {
-                    sprite_index = sprPlayerRunning
-                    image_speed = 0.5
-                }
-                else
-                {
-                    sprite_index = sprPlayerIdle
-                    image_speed = 0.2
-                }
-            }
-            else if ((vspeed * global.grav) &lt; 0)
-            {
-                sprite_index = sprPlayerJump
-                image_speed = 0.5
+                sprite_index = sprPlayerRunning;
+                image_speed = 1/2;
             }
             else
             {
-                sprite_index = sprPlayerFall
-                image_speed = 0.5
+                sprite_index = sprPlayerIdle;
+                image_speed = 1/5;
             }
         }
-        else
-        {
-            sprite_index = sprPlayerSliding
-            image_speed = 0.5
+        else    //in the air
+        { 
+            if ((vspeed * global.grav) &lt; 0)
+            {
+                sprite_index = sprPlayerJump;
+                image_speed = 1/2;
+            }
+            else
+            {
+                sprite_index = sprPlayerFall;
+                image_speed = 1/2;
+            }
         }
     }
+    else    //touching a vine
+    {
+        sprite_index = sprPlayerSliding;
+        image_speed = 1/2;
+    }
 }
-if (global.key[4] &gt;= 1)
-    aura[0] = 1
-else
-    aura[0] = 0
-if (global.key[5] &gt;= 5)
-    aura[1] = 1
-else
-    aura[1] = 0
-if (global.key[6] &gt;= 3)
-    aura[2] = 1
-else
-    aura[2] = 0
-if (global.key[10] &gt;= 1)
-    brownMode = 1
-else if (global.key[10] &lt;= -1)
-    brownMode = -1
-else
-    brownMode = 0
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Key-related variables
+if global.key[key_RED] &gt;= 1{
+    aura[0] = 1;
+}else{
+    aura[0] = 0;
+}
+if global.key[key_GREEN] &gt;= 5{
+    aura[1] = 1;
+}else{
+    aura[1] = 0;
+}
+if global.key[key_BLUE] &gt;= 3{
+    aura[2] = 1;
+}else{
+    aura[2] = 0;
+}
+if global.key[key_BROWN] &gt;= 1{
+    brownMode = 1;
+}else if global.key[key_BROWN] &lt;= -1{
+    brownMode = -1;
+}else{
+    brownMode = 0;
+}
 </string>
           </argument>
         </arguments>
@@ -211,261 +277,376 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var L, R, D, U, h, slipBlockTouching, notOnBlock, onVineL, onVineR, slideBlockTouching, moveLimit, xLast, yLast, hLast, vLast, onSlope, slopeCheck, hTest, ySlope;
-L = (scrButtonCheck(global.leftButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.leftButton)))
-R = (scrButtonCheck(global.rightButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.rightButton)))
-D = (scrButtonCheck(global.walkButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.walkButton)))
-U = (scrButtonCheck(global.runButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.runButton)))
-if U
-    runState = (!global.runSwitch)
-if D
-    runState = 2
-if ((!U) &amp;&amp; (!D))
-    runState = global.runSwitch
-if (runState == 1)
-{
-    if place_meeting(x, (y + 1), objBlock)
-        maxSpeed = 6
-    else
-        maxSpeed = 3
+            <string>///controls+physics
+//check left/right button presses
+var L = (scrButtonCheck(global.leftButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.leftButton)));
+var R = (scrButtonCheck(global.rightButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.rightButton)));
+var D = (scrButtonCheck(global.walkButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.walkButton)));
+var U = (scrButtonCheck(global.runButton) || (global.directionalTapFix &amp;&amp; scrButtonCheckPressed(global.runButton)));
+if U{
+    runState = !global.runSwitch;
 }
-if (runState == 2)
-    maxSpeed = 1
-if (runState == 0)
-    maxSpeed = 3
-h = 0
-recentJump = 0
-downTime = max((downTime - 1), 0)
-if ((!frozen) &amp;&amp; (global.pmState == 0))
-{
-    if R
-    {
-        if ((downTime == 0) || (downDir != 1))
-            h = 1
-    }
-    else if L
-    {
-        if ((downTime == 0) || (downDir != -1))
-            h = -1
+if D{
+    runState = 2;
+}
+if !U &amp;&amp; !D{
+    runState = global.runSwitch;
+}
+//0 = Walk, 1 = Run, 2 = Slow
+if runState == 1{
+    if place_meeting(x,y+1,objBlock){
+        maxSpeed = 6;
+    }else{
+        maxSpeed = 3;
     }
 }
-slipBlockTouching = instance_place(x, (y + (1 * global.grav)), objSlipBlock)
-notOnBlock = place_free(x, (y + global.grav))
-onVineL = (place_meeting((x - 1), y, objWalljumpL) &amp;&amp; notOnBlock)
-onVineR = (place_meeting((x + 1), y, objWalljumpR) &amp;&amp; notOnBlock)
-if (h != 0)
+if runState == 2{maxSpeed = 1;}
+if runState == 0{
+    maxSpeed = 3;
+}
+
+var h = 0;
+recentJump = 0;
+downTime = max(downTime - 1, 0);
+
+if (!frozen &amp;&amp; global.pmState == 0) //don't move if frozen
 {
-    if ((!onVineR) &amp;&amp; (!onVineL))
-        xScale = h
-    if (((h == -1) &amp;&amp; (!onVineR)) || ((h == 1) &amp;&amp; (!onVineL)))
-    {
-        if (slipBlockTouching == noone)
-            hspeed = (maxSpeed * h)
-        else
-        {
-            hspeed += (slipBlockTouching.slip * h)
-            if (abs(hspeed) &gt; maxSpeed)
-                hspeed = (maxSpeed * h)
+    if (R){
+        if downTime == 0 || downDir != 1{
+            h = 1;
         }
-        sprite_index = sprPlayerRunning
-        image_speed = 0.5
+    }else if (L){
+        if downTime == 0 || downDir != -1{
+            h = -1;
+        }
     }
+}
+
+var slipBlockTouching = instance_place(x,y+(1*global.grav),objSlipBlock);   //check if on a slip block
+
+//vine checks
+var notOnBlock = (place_free(x,y+(global.grav)));
+var onVineL = (place_meeting(x-1,y,objWalljumpL) &amp;&amp; notOnBlock);
+var onVineR = (place_meeting(x+1,y,objWalljumpR) &amp;&amp; notOnBlock);
+
+if (h != 0)  //player is moving
+{
+    if (!onVineR &amp;&amp; !onVineL)   //make sure not currently touching a vine
+    {
+        xScale = h;
+    }
+    if ((h == -1 &amp;&amp; !onVineR) || (h == 1 &amp;&amp; !onVineL))
+    {
+        if (slipBlockTouching == noone) //not touching a slip block, move immediately at full speed
+        {
+            hspeed = maxSpeed * h;
+        }
+        else    //touching a slip block, use acceleration
+        {
+            hspeed += (slipBlockTouching.slip) * h;
+            
+            if (abs(hspeed) &gt; maxSpeed)
+                hspeed = maxSpeed * h;
+        }
+        
+        sprite_index = sprPlayerRunning;
+        image_speed = 0.5;
+    }
+}
+else    //player is not moving
+{
+    if (slipBlockTouching == noone) //not touching a slip block, stop immediately
+        hspeed = 0;
+    else    //touching a slip block, slow down
+    {
+        if (hspeed &gt; 0)
+        {
+            hspeed -= slipBlockTouching.slip;
+            
+            if (hspeed &lt;= 0)
+                hspeed = 0;
+        }
+        else if (hspeed &lt; 0)
+        {
+            hspeed += slipBlockTouching.slip;
+            
+            if (hspeed &gt;= 0)
+                hspeed = 0;
+        }
+    }
+  
+    sprite_index = sprPlayerIdle;
+    image_speed = 0.2;
+}
+
+
+if (!onPlatform)    //check if standing on a platform
+{
+    if((vspeed * global.grav) &lt; -0.05) {sprite_index = sprPlayerJump;}
+    else if((vspeed * global.grav) &gt; 0.05) {sprite_index = sprPlayerFall;}
 }
 else
 {
-    if (slipBlockTouching == noone)
-        hspeed = 0
-    else if (hspeed &gt; 0)
-    {
-        hspeed -= slipBlockTouching.slip
-        if (hspeed &lt;= 0)
-            hspeed = 0
-    }
-    else if (hspeed &lt; 0)
-    {
-        hspeed += slipBlockTouching.slip
-        if (hspeed &gt;= 0)
-            hspeed = 0
-    }
-    sprite_index = sprPlayerIdle
-    image_speed = 0.2
+    if (!place_meeting(x,y+(4*global.grav),objPlatform)) {onPlatform = false;}
 }
-if (!onPlatform)
+
+var slideBlockTouching = instance_place(x,y+(global.grav),objSlideBlock);   //check if on a slide block
+
+if (slideBlockTouching != noone)    //on a slide block, start moving with it
+    hspeed += slideBlockTouching.h;
+
+if (abs(vspeed) &gt; maxVspeed) {vspeed = sign(vspeed)*maxVspeed;} //check if moving vertically faster than max speed
+
+if (!frozen)    //check if frozen before doing anything
 {
-    if ((vspeed * global.grav) &lt; -0.05)
-        sprite_index = sprPlayerJump
-    else if ((vspeed * global.grav) &gt; 0.05)
-        sprite_index = sprPlayerFall
-}
-else if (!place_meeting(x, (y + (4 * global.grav)), objPlatform))
-    onPlatform = 0
-slideBlockTouching = instance_place(x, (y + global.grav), objSlideBlock)
-if (slideBlockTouching != noone)
-    hspeed += slideBlockTouching.h
-if (abs(vspeed) &gt; maxVspeed)
-    vspeed = (sign(vspeed) * maxVspeed)
-if (!frozen)
-{
-    if scrButtonCheckPressed(global.shootButton)
-    {
+    if (scrButtonCheckPressed(global.shootButton)){
+        //scrPlayerShoot();
     }
-    if (scrButtonCheckPressed(global.jumpButton) &amp;&amp; (global.pmState == 0))
-        scrPlayerJump()
-    if (scrButtonCheckReleased(global.jumpButton) &amp;&amp; (!global.fullJumps))
-        scrPlayerVJump()
+    if (scrButtonCheckPressed(global.jumpButton) &amp;&amp; global.pmState == 0){
+        scrPlayerJump();
+    }
+    if (scrButtonCheckReleased(global.jumpButton) &amp;&amp; !global.fullJumps){
+        scrPlayerVJump();
+    }
+    //if (scrButtonCheckPressed(global.suicideButton))
+        //scrKillPlayer();
 }
+
+/*if (global.adAlign &amp;&amp; place_meeting(x,y+(global.grav),objBlock) &amp;&amp; !frozen)  // A/D align
+{
+    if (scrButtonCheckPressed(global.alignLeftButton)) {hspeed -= 1;}
+    if (scrButtonCheckPressed(global.alignRightButton)) {hspeed += 1;}
+}*/
+
+//walljumps
+
 if (onVineL || onVineR)
 {
-    if onVineR
-        xScale = -1
+    if (onVineR)
+        xScale = -1;
     else
-        xScale = 1
-    vspeed = (2 * global.grav)
-    sprite_index = sprPlayerSliding
-    image_speed = 0.5
-    if ((onVineL &amp;&amp; scrButtonCheckPressed(global.rightButton)) || (onVineR &amp;&amp; scrButtonCheckPressed(global.leftButton)))
+        xScale = 1;
+    
+    vspeed = 2 * global.grav;
+    sprite_index = sprPlayerSliding;
+    image_speed = 1/2;
+    
+    //pressed away from the vine
+    if (onVineL &amp;&amp; scrButtonCheckPressed(global.rightButton)) || (onVineR &amp;&amp; scrButtonCheckPressed(global.leftButton))
     {
-        if scrButtonCheck(global.jumpButton)
+        if (scrButtonCheck(global.jumpButton))  //jumping off vine
         {
-            if onVineR
-                hspeed = -15
+            if (onVineR)
+                hspeed = -15;
             else
-                hspeed = 15
-            vspeed = (-9 * global.grav)
-            scrPlaySoundExt(sndWallJump, 1, 1, false)
-            sprite_index = sprPlayerJump
+                hspeed = 15;
+            
+            vspeed = -9 * global.grav;
+            scrPlaySoundExt(sndWallJump,1,1,false);
+            sprite_index = sprPlayerJump;
         }
-        else
+        else    //moving off vine
         {
-            if onVineR
-                hspeed = -3
+            if (onVineR)
+                hspeed = -3;
             else
-                hspeed = 3
-            sprite_index = sprPlayerFall
+                hspeed = 3;
+            
+            sprite_index = sprPlayerFall;
         }
     }
 }
-if (instance_exists(objSlope) &amp;&amp; (hspeed != 0))
+
+//slopes
+
+if (instance_exists(objSlope) &amp;&amp; hspeed != 0)
 {
-    moveLimit = abs(hspeed)
-    if (place_meeting((x + hspeed), ((y + vspeed) + gravity), objSlope) &amp;&amp; ((((vspeed + gravity) * global.grav) &gt; 0) &amp;&amp; notOnBlock))
+    var moveLimit = abs(hspeed);    //sets how high/low the player can go to snap onto a slope, this can be increased to make the player able to run over steeper slopes (ie setting it to abs(hspeed)*2 allows the player to run over slopes twice as steep)
+    
+    var slopeCheck;
+    var hTest;
+    
+    var ySlope;
+    
+    //falling onto a slope
+    if (place_meeting(x+hspeed,y+vspeed+gravity,objSlope) &amp;&amp; (vspeed+gravity)*global.grav &gt; 0 &amp;&amp; notOnBlock)
     {
-        xLast = x
-        yLast = y
-        hLast = hspeed
-        vLast = vspeed
-        vspeed += gravity
-        x += hspeed
-        hspeed = 0
-        if (!place_free(x, (y + vspeed)))
+        var xLast = x;
+        var yLast = y;
+        var hLast = hspeed;
+        var vLast = vspeed;
+        
+        vspeed += gravity;
+        
+        x += hspeed;
+        hspeed = 0;
+        
+        if(!place_free(x,y+vspeed))
         {
-            if (global.grav == 1)
-                move_contact_solid(270, abs(vspeed))
-            else
-                move_contact_solid(90, abs(vspeed))
-            vspeed = 0
+            if (global.grav == 1)   //normal
+                move_contact_solid(270,abs(vspeed));
+            else    //flipped
+                move_contact_solid(90,abs(vspeed));
+            vspeed = 0;
         }
-        y += vspeed
-        if ((!place_free(x, (y + global.grav))) &amp;&amp; place_free(x, y))
+        
+        y += vspeed;            
+        
+        if (!place_free(x,y+(global.grav)) &amp;&amp; place_free(x,y))  //snapped onto the slope properly
         {
-            djump = 1
-            notOnBlock = 0
+            djump = 1;
+            notOnBlock = false;
         }
-        else
+        else    //did not snap onto the slope, return to previous position
         {
-            x = xLast
-            y = yLast
-            hspeed = hLast
-            vspeed = vLast
+            x = xLast;
+            y = yLast;
+            hspeed = hLast;
+            vspeed = vLast;
         }
     }
+    
+    //moving down a slope
     if (!notOnBlock)
     {
-        onSlope = place_meeting(x, (y + global.grav), objSlope)
-        slopeCheck = 1
-        hTest = hspeed
-        while slopeCheck
+        var onSlope = (place_meeting(x,y+(global.grav),objSlope));    //treat normal blocks the same as slopes if we're standing on a slope
+        
+        slopeCheck = true;
+        hTest = hspeed;
+        
+        while (slopeCheck)
         {
-            ySlope = 0
-            while (((!place_meeting((x + hTest), ((y - ySlope) + global.grav), objSlope)) || (onSlope &amp;&amp; (!place_meeting((x + hTest), ((y - ySlope) + global.grav), objBlock)))) &amp;&amp; ((ySlope * global.grav) &gt; (-floor((moveLimit * (hTest / hspeed))))))
-                ySlope -= global.grav
-            if (place_meeting((x + hTest), ((y - ySlope) + global.grav), objSlope) || (onSlope &amp;&amp; place_meeting((x + hTest), ((y - ySlope) + global.grav), objBlock)))
+            ySlope = 0;
+            //check how far we should move down
+            while ((!place_meeting(x+hTest,y-ySlope+(global.grav),objSlope) || (onSlope &amp;&amp; !place_meeting(x+hTest,y-ySlope+(global.grav),objBlock))) &amp;&amp; ySlope*global.grav &gt; -floor(moveLimit*(hTest/hspeed)))
             {
-                if ((ySlope != 0) &amp;&amp; (!place_meeting((x + hTest), (y - ySlope), objBlock)))
+                ySlope -= global.grav;
+            }
+            
+            //check if we actually need to move down
+            if (place_meeting(x+hTest,y-ySlope+(global.grav),objSlope) || (onSlope &amp;&amp; place_meeting(x+hTest,y-ySlope+(global.grav),objBlock)))
+            {
+                if (ySlope != 0 &amp;&amp; !place_meeting(x+hTest,y-ySlope,objBlock))
                 {
-                    y -= ySlope
-                    x += hTest
-                    hspeed = 0
-                    slopeCheck = 0
+                    y -= ySlope;
+                    
+                    x += hTest;
+                    hspeed = 0;
+                    
+                    slopeCheck = false;
                 }
-                else if (hTest &gt; 0)
+                else
                 {
-                    hTest -= 1
+                    if (hTest &gt; 0)
+                    {
+                        hTest -= 1;
+                        if (hTest &lt;= 0)
+                            slopeCheck = false;
+                    }
+                    else if (hTest &lt; 0)
+                    {
+                        hTest += 1;
+                        if (hTest &gt;= 0)
+                            slopeCheck = false;
+                    }
+                    else
+                    {
+                        slopeCheck = false;
+                    }
+                }
+            }
+            else
+            {
+                slopeCheck = false;
+            }
+        }
+    }
+    
+    //moving up a slope
+    if (place_meeting(x+hspeed,y,objSlope))
+    {
+        slopeCheck = true;
+        hTest = hspeed;
+        
+        while (slopeCheck)
+        {
+            ySlope = 0;
+            
+            //check how far we have to move up
+            while (place_meeting(x+hTest,y-ySlope,objSlope) &amp;&amp; ySlope*global.grav &lt; floor(moveLimit*(hTest/hspeed)))
+            {
+                ySlope += global.grav;
+            }
+            
+            //check if we actually need to move up
+            if (place_free(x+hTest,y-ySlope))
+            {            
+                y -= ySlope;
+                
+                x += hTest;
+                hspeed = 0;
+                
+                slopeCheck = false;
+            }
+            else
+            {
+                if (hTest &gt; 0)
+                {
+                    hTest -= 1;
                     if (hTest &lt;= 0)
-                        slopeCheck = 0
+                        slopeCheck = false;
                 }
                 else if (hTest &lt; 0)
                 {
-                    hTest += 1
+                    hTest += 1;
                     if (hTest &gt;= 0)
-                        slopeCheck = 0
+                        slopeCheck = false;
                 }
                 else
-                    slopeCheck = 0
+                {
+                    slopeCheck = false;
+                }
             }
-            else
-                slopeCheck = 0
         }
     }
-    if place_meeting((x + hspeed), y, objSlope)
-    {
-        slopeCheck = 1
-        hTest = hspeed
-        while slopeCheck
-        {
-            ySlope = 0
-            while (place_meeting((x + hTest), (y - ySlope), objSlope) &amp;&amp; ((ySlope * global.grav) &lt; floor((moveLimit * (hTest / hspeed)))))
-                ySlope += global.grav
-            if place_free((x + hTest), (y - ySlope))
-            {
-                y -= ySlope
-                x += hTest
-                hspeed = 0
-                slopeCheck = 0
-            }
-            else if (hTest &gt; 0)
-            {
-                hTest -= 1
-                if (hTest &lt;= 0)
-                    slopeCheck = 0
-            }
-            else if (hTest &lt; 0)
-            {
-                hTest += 1
-                if (hTest &gt;= 0)
-                    slopeCheck = 0
-            }
-            else
-                slopeCheck = 0
-        }
-    }
-    xprevious = x
-    yprevious = y
+    
+    //set xprevious/yprevious coordinates for future solid collisions
+    xprevious = x;
+    yprevious = y;
 }
-if instance_exists(oNewCamera)
-{
-    if oNewCamera.freeCam
-        exit
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///keypick buttons
+//Include Undo Button, Master Button, and Camera Button.
+if instance_exists(oNewCamera){
+    if oNewCamera.freeCam{exit;}
 }
-if (scrButtonCheckPressed(global.masButton) &amp;&amp; (global.pmState == 0))
-    scrPlayerEquipMaster()
-else if (scrButtonCheckPressed(global.skipButton) &amp;&amp; ((!frozen) &amp;&amp; (global.pmState == 0)))
-    scrComplexSwitch()
-else if (scrButtonCheckPressed(global.camButton) &amp;&amp; (global.pmState == 0))
-{
-}
-else if (scrButtonCheckPressed(global.shootButton) &amp;&amp; (global.pmState == 0))
-{
+if scrButtonCheckPressed(global.masButton) &amp;&amp; global.pmState == 0{
+    scrPlayerEquipMaster();
+}else if scrButtonCheckPressed(global.skipButton) &amp;&amp; !frozen &amp;&amp; global.pmState == 0{
+    scrComplexSwitch();
+}else if scrButtonCheckPressed(global.camButton) &amp;&amp; global.pmState == 0{
+    //Enable free cam (Does nothing because the camera does it instead)
+}else if scrButtonCheckPressed(global.shootButton) &amp;&amp; global.pmState == 0{
+    //UNDO (Does nothing because the undo object does it instead)
 }
 </string>
           </argument>
@@ -489,52 +670,39 @@ else if (scrButtonCheckPressed(global.shootButton) &amp;&amp; (global.pmState ==
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!other.solid)
-    exit
-if (!place_free((x + hspeed), y))
+            <string>if !other.solid{exit;}
+
+if (!place_free(x+hspeed,y))
 {
-    if (global.grav == 1)
+    if (global.grav == 1)   //normal
     {
-        if (hspeed &lt;= 0)
-            move_contact_solid(180, abs(hspeed))
-        if (hspeed &gt; 0)
-            move_contact_solid(0, abs(hspeed))
+        if(hspeed &lt;= 0){move_contact_solid(180,abs(hspeed));}
+        if(hspeed &gt; 0){move_contact_solid(0,abs(hspeed));}
     }
-    else
+    else    //flipped
     {
-        if (hspeed &lt; 0)
-            move_contact_solid(180, abs(hspeed))
-        if (hspeed &gt;= 0)
-            move_contact_solid(0, abs(hspeed))
+        if(hspeed &lt; 0){move_contact_solid(180,abs(hspeed));}
+        if(hspeed &gt;= 0){move_contact_solid(0,abs(hspeed));}
     }
-    hspeed = 0
+    hspeed = 0;
 }
-if (!place_free(x, (y + vspeed)))
+ 
+if (!place_free(x,y+vspeed))
 {
-    if (global.grav == 1)
+    if (global.grav == 1)   //normal
     {
-        if (vspeed &lt;= 0)
-            move_contact_solid(90, abs(vspeed))
-        if (vspeed &gt; 0)
-        {
-            move_contact_solid(270, abs(vspeed))
-            djump = 1
-        }
+        if(vspeed &lt;= 0){move_contact_solid(90,abs(vspeed));}
+        if(vspeed &gt; 0){move_contact_solid(270,abs(vspeed));djump=1;}
     }
-    else
+    else    //flipped
     {
-        if (vspeed &lt;= 0)
-        {
-            move_contact_solid(90, abs(vspeed))
-            djump = 1
-        }
-        if (vspeed &gt; 0)
-            move_contact_solid(270, abs(vspeed))
+        if(vspeed &lt;= 0){move_contact_solid(90,abs(vspeed));djump=1;}
+        if(vspeed &gt; 0){move_contact_solid(270,abs(vspeed));}
     }
-    vspeed = 0
+    vspeed = 0;
 }
-if (!place_free((x + hspeed), (y + vspeed)))
-    hspeed = 0
+
+if (!place_free(x+hspeed,y+vspeed)) {hspeed = 0;}
 </string>
           </argument>
         </arguments>
@@ -557,7 +725,8 @@ if (!place_free((x + hspeed), (y + vspeed)))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>//scrKillPlayer();
+</string>
           </argument>
         </arguments>
       </action>
@@ -579,28 +748,33 @@ if (!place_free((x + hspeed), (y + vspeed)))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.grav == 1)
+            <string>if (global.grav == 1)   //normal
 {
-    if ((y - (vspeed / 2)) &lt;= other.y)
+    if (y-vspeed/2 &lt;= other.y)
     {
         if (other.vspeed &gt;= 0)
         {
-            y = (other.y - 9)
-            vspeed = other.vspeed
+            y = other.y-9;
+            vspeed = other.vspeed;
         }
-        onPlatform = 1
-        djump = 1
+        
+        onPlatform = true;
+        djump = 1;
     }
 }
-else if ((y - (vspeed / 2)) &gt;= ((other.y + other.sprite_height) - 1))
+else    //flipped
 {
-    if (other.yspeed &lt;= 0)
+    if (y-vspeed/2 &gt;= other.y+other.sprite_height-1)
     {
-        y = ((other.y + other.sprite_height) + 8)
-        vspeed = other.yspeed
+        if (other.yspeed &lt;= 0)
+        {
+            y = other.y+other.sprite_height+8;
+            vspeed = other.yspeed;
+        }
+        
+        onPlatform = true;
+        djump = 1;
     }
-    onPlatform = 1
-    djump = 1
 }
 </string>
           </argument>
@@ -624,50 +798,37 @@ else if ((y - (vspeed / 2)) &gt;= ((other.y + other.sprite_height) - 1))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!place_free((x + hspeed), y))
+            <string>if (!place_free(x+hspeed,y))
 {
-    if (global.grav == 1)
+    if (global.grav == 1)   //normal
     {
-        if (hspeed &lt;= 0)
-            move_contact_solid(180, abs(hspeed))
-        if (hspeed &gt; 0)
-            move_contact_solid(0, abs(hspeed))
+        if(hspeed &lt;= 0){move_contact_solid(180,abs(hspeed));}
+        if(hspeed &gt; 0){move_contact_solid(0,abs(hspeed));}
     }
-    else
+    else    //flipped
     {
-        if (hspeed &lt; 0)
-            move_contact_solid(180, abs(hspeed))
-        if (hspeed &gt;= 0)
-            move_contact_solid(0, abs(hspeed))
+        if(hspeed &lt; 0){move_contact_solid(180,abs(hspeed));}
+        if(hspeed &gt;= 0){move_contact_solid(0,abs(hspeed));}
     }
-    hspeed = 0
+    hspeed = 0;
 }
-if (!place_free(x, (y + vspeed)))
+ 
+if (!place_free(x,y+vspeed))
 {
-    if (global.grav == 1)
+    if (global.grav == 1)   //normal
     {
-        if (vspeed &lt;= 0)
-            move_contact_solid(90, abs(vspeed))
-        if (vspeed &gt; 0)
-        {
-            move_contact_solid(270, abs(vspeed))
-            djump = 1
-        }
+        if(vspeed &lt;= 0){move_contact_solid(90,abs(vspeed));}
+        if(vspeed &gt; 0){move_contact_solid(270,abs(vspeed));djump=1;}
     }
-    else
+    else    //flipped
     {
-        if (vspeed &lt;= 0)
-        {
-            move_contact_solid(90, abs(vspeed))
-            djump = 1
-        }
-        if (vspeed &gt; 0)
-            move_contact_solid(270, abs(vspeed))
+        if(vspeed &lt;= 0){move_contact_solid(90,abs(vspeed));djump=1;}
+        if(vspeed &gt; 0){move_contact_solid(270,abs(vspeed));}
     }
-    vspeed = 0
+    vspeed = 0;
 }
-if (!place_free((x + hspeed), (y + vspeed)))
-    hspeed = 0
+
+if (!place_free(x+hspeed,y+vspeed)) {hspeed = 0;}
 </string>
           </argument>
         </arguments>
@@ -690,27 +851,25 @@ if (!place_free((x + hspeed), (y + vspeed)))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var iPart;
-for (iPart = 0; iPart &lt; 40; iPart += 1)
-{
-    p = instance_create((x + random_range(-8, 8)), (y + random_range(-8, 8)), oKeyPart)
-    p.direction = (iPart * 222.48)
-    p.image_blend = make_color_hsv(((iPart * 255) / 40), 180, 255)
+            <string>///Invalid warp
+for(var iPart = 0; iPart &lt; 40; iPart += 1){
+    p = instance_create(x+random_range(-8,8),y+random_range(-8,8),oKeyPart);
+    p.direction = iPart*(360*.618);
+    p.image_blend = make_color_hsv(iPart*255/40,180,255);
 }
-for (iPart = 0; iPart &lt; 30; iPart += 1)
-{
-    p = instance_create((x + random_range(-8, 8)), (y + random_range(-8, 8)), oKeyPart)
-    p.direction = (iPart * 222.48)
-    p.speed *= 0.5
-    p.image_blend = make_color_hsv(((iPart * 255) / 40), 255, 230)
+for(var iPart = 0; iPart &lt; 30; iPart += 1){
+    p = instance_create(x+random_range(-8,8),y+random_range(-8,8),oKeyPart);
+    p.direction = iPart*(360*.618);
+    p.speed *= .5;
+    p.image_blend = make_color_hsv(iPart*255/40,255,230);
 }
-scrPlaySoundExt(sndAwaken, 1, 1, false)
-scrPlaySoundExt(sndPop, 1, 1, false)
-wAni = instance_create(x, y, oPlayerWarpFadeError)
-wAni.sprite_index = sprite_index
-wAni.image_index = image_index
-wAni.image_xscale = xScale
-instance_destroy()
+scrPlaySoundExt(sndAwaken,1,1,false);
+scrPlaySoundExt(sndPop,1,1,false);
+wAni = instance_create(x,y,oPlayerWarpFadeError);
+wAni.sprite_index = sprite_index;
+wAni.image_index = image_index;
+wAni.image_xscale = xScale;
+instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -733,11 +892,12 @@ instance_destroy()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>wAni = instance_create(x, y, oPlayerWarpFade)
-wAni.sprite_index = sprite_index
-wAni.image_index = image_index
-wAni.image_xscale = xScale
-instance_destroy()
+            <string>///Destroy, make warp anim
+wAni = instance_create(x,y,oPlayerWarpFade);
+wAni.sprite_index = sprite_index;
+wAni.image_index = image_index;
+wAni.image_xscale = xScale;
+instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -760,21 +920,19 @@ instance_destroy()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var iPart;
-scrPlaySoundExt(sndMasterUnequip, 1, 0.6, false)
-scrPlaySoundExt(sndSignflip, 0.7, 0.6, false)
-for (iPart = 0; iPart &lt; 40; iPart += 1)
-{
-    p = instance_create((x + random_range(-8, 8)), (y + random_range(-8, 8)), oKeyPart)
-    p.direction = (iPart * 222.48)
-    p.image_blend = make_color_hsv(0, 0, 160)
+            <string>///Back out of puzzle
+scrPlaySoundExt(sndMasterUnequip,1,.6,0);
+scrPlaySoundExt(sndSignflip,.7,.6,0);
+for(var iPart = 0; iPart &lt; 40; iPart += 1){
+    p = instance_create(x+random_range(-8,8),y+random_range(-8,8),oKeyPart);
+    p.direction = iPart*(360*.618);
+    p.image_blend = make_color_hsv(0,0,160);
 }
-for (iPart = 0; iPart &lt; 30; iPart += 1)
-{
-    p = instance_create((x + random_range(-8, 8)), (y + random_range(-8, 8)), oKeyPart)
-    p.direction = (iPart * 222.48)
-    p.speed *= 0.5
-    p.image_blend = make_color_hsv(0, 0, 90)
+for(var iPart = 0; iPart &lt; 30; iPart += 1){
+    p = instance_create(x+random_range(-8,8),y+random_range(-8,8),oKeyPart);
+    p.direction = iPart*(360*.618);
+    p.speed *= .5;
+    p.image_blend = make_color_hsv(0,0,90);
 }
 </string>
           </argument>
@@ -798,24 +956,29 @@ for (iPart = 0; iPart &lt; 30; iPart += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.key[4] &gt;= 1)
-    aura[0] = 1
-else
-    aura[0] = 0
-if (global.key[5] &gt;= 5)
-    aura[1] = 1
-else
-    aura[1] = 0
-if (global.key[6] &gt;= 3)
-    aura[2] = 1
-else
-    aura[2] = 0
-if (global.key[10] &gt;= 1)
-    brownMode = 1
-else if (global.key[10] &lt;= -1)
-    brownMode = -1
-else
-    brownMode = 0
+            <string>///Re-check key vars
+if global.key[key_RED] &gt;= 1{
+    aura[0] = 1;
+}else{
+    aura[0] = 0;
+}
+if global.key[key_GREEN] &gt;= 5{
+    aura[1] = 1;
+}else{
+    aura[1] = 0;
+}
+if global.key[key_BLUE] &gt;= 3{
+    aura[2] = 1;
+}else{
+    aura[2] = 0;
+}
+if global.key[key_BROWN] &gt;= 1{
+    brownMode = 1;
+}else if global.key[key_BROWN] &lt;= -1{
+    brownMode = -1;
+}else{
+    brownMode = 0;
+}
 </string>
           </argument>
         </arguments>
@@ -838,79 +1001,81 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var drawX, drawY;
-drawX = x
-drawY = y
-if (global.grav == -1)
-    drawY += 1
-if (brownMode == 1)
-{
-    draw_set_blend_mode(3)
-    brownAngle = ((brownAngle + 2.5) % 360)
-    draw_sprite_ext(sprBrownAura, 0, x, y, brownScale, brownScale, (-brownAngle), c_white, 0)
-    draw_set_blend_mode(0)
+            <string>///draw the player
+
+var drawX = x;
+var drawY = y;
+
+if (global.grav == -1)      //need to draw the player a pixel off in the y-axis when flipped for some reason
+    drawY += 1;
+    
+if brownMode == 1{
+    draw_set_blend_mode(bm_subtract);
+    brownAngle = (brownAngle + 2.5) mod 360;
+    draw_sprite_ext(sprBrownAura,0,x,y,brownScale,brownScale,-brownAngle,c_white,0);
+    draw_set_blend_mode(bm_normal);
+}else if brownMode == -1{
+    draw_set_blend_mode(bm_add);
+    brownAngle = (brownAngle + 2.5) mod 360;
+    draw_sprite_ext(sprBrownAura,0,x,y,brownScale,brownScale,-brownAngle,c_white,1);
+    draw_set_blend_mode(bm_normal);
 }
-else if (brownMode == -1)
-{
-    draw_set_blend_mode(1)
-    brownAngle = ((brownAngle + 2.5) % 360)
-    draw_sprite_ext(sprBrownAura, 0, x, y, brownScale, brownScale, (-brownAngle), c_white, 1)
-    draw_set_blend_mode(0)
+
+draw_sprite_ext(sprite_index,image_index,drawX,drawY,image_xscale*xScale,image_yscale*global.grav,image_angle,image_blend,image_alpha);
+
+//draw the player's hitbox
+if (global.debugShowHitbox){
+    draw_sprite_ext(mask_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha*0.8);
 }
-draw_sprite_ext(sprite_index, image_index, drawX, drawY, (image_xscale * xScale), (image_yscale * global.grav), image_angle, image_blend, image_alpha)
-if global.debugShowHitbox
-    draw_sprite_ext(mask_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, (image_alpha * 0.8))
-if aura[0]
-    draw_sprite_ext(sprAura, 0, x, y, 1, 1, 0, c_white, 0.5)
-if aura[1]
-    draw_sprite_ext(sprAura, 1, x, y, 1, 1, 0, c_white, 0.5)
-if aura[2]
-    draw_sprite_ext(sprAura, 2, x, y, 1, 1, 0, c_white, 0.5)
-if (masterMode &gt;= 1)
-{
-    draw_set_blend_mode(1)
-    masterDrawAngle = ((masterDrawAngle + 4) % 360)
-    masterDrawScale = (0.8 + (0.2 * sin(degtorad(masterDrawAngle))))
-    draw_sprite_ext(sprPlayerShine, 0, x, y, masterDrawScale, masterDrawScale, 0, make_color_rgb(180, 180, 50), 1)
-    draw_set_blend_mode(0)
-    draw_sprite_ext(sprKMaster, 0, (x - 16), (y - 16), 1, 1, 0, c_white, (masterDrawScale * 0.6))
+
+if aura[0]{
+    draw_sprite_ext(sprAura,0,x,y,1,1,0,c_white,0.5);
 }
-if (masterMode &lt;= -1)
-{
-    draw_set_blend_mode(1)
-    masterDrawAngle = ((masterDrawAngle + 4) % 360)
-    masterDrawScale = (0.8 + (0.2 * sin(degtorad(masterDrawAngle))))
-    draw_sprite_ext(sprPlayerShine, 0, x, y, masterDrawScale, masterDrawScale, 0, make_color_rgb(50, 50, 180), 1)
-    draw_set_blend_mode(0)
-    draw_sprite_ext(sprKMasterAnti, 0, (x - 16), (y - 16), 1, 1, 0, c_white, (masterDrawScale * 0.6))
+if aura[1]{
+    draw_sprite_ext(sprAura,1,x,y,1,1,0,c_white,0.5);
 }
-if global.complexMode
-{
-    draw_set_font(fTalk)
-    draw_set_halign(fa_center)
-    draw_set_valign(fa_middle)
-    draw_set_color(c_black)
-    draw_text((x - 1), (y - 24), "I-View")
-    draw_text((x + 1), (y - 24), "I-View")
-    draw_text(x, (y - 23), "I-View")
-    draw_text(x, (y - 25), "I-View")
-    draw_set_color(global.doorCol1)
-    draw_text(x, (y - 24), "I-View")
-    draw_set_color(c_white)
+if aura[2]{
+    draw_sprite_ext(sprAura,2,x,y,1,1,0,c_white,0.5);
 }
-if drawIm
-{
-    draw_set_blend_mode(1)
-    imAngle = min((imAngle + 5), 90)
-    imSin = sin(degtorad(imAngle))
-    imCos = cos(degtorad(imAngle))
-    draw_sprite_ext(sprWhiteAura, 0, x, y, imSin, imSin, 0, c_white, imCos)
-    if (imAngle == 90)
-    {
-        imAngle = 0
-        drawIm = 0
-    }
-    draw_set_blend_mode(0)
+
+if masterMode &gt;= 1{
+    draw_set_blend_mode(bm_add);
+    masterDrawAngle = (masterDrawAngle + 4) mod 360;
+    masterDrawScale = 0.8 + 0.2 * sin(degtorad(masterDrawAngle));
+    draw_sprite_ext(sprPlayerShine,0,x,y,masterDrawScale,masterDrawScale,0,make_color_rgb(180,180,50),1);
+    draw_set_blend_mode(bm_normal);
+    draw_sprite_ext(sprKMaster,0,x-16,y-16,1,1,0,c_white,masterDrawScale*.6);
+}
+if masterMode &lt;= -1{
+    draw_set_blend_mode(bm_add);
+    masterDrawAngle = (masterDrawAngle + 4) mod 360;
+    masterDrawScale = 0.8 + 0.2 * sin(degtorad(masterDrawAngle));
+    draw_sprite_ext(sprPlayerShine,0,x,y,masterDrawScale,masterDrawScale,0,make_color_rgb(50,50,180),1);
+    draw_set_blend_mode(bm_normal);
+    draw_sprite_ext(sprKMasterAnti,0,x-16,y-16,1,1,0,c_white,masterDrawScale*.6);
+}
+//Imaginary View Text
+if global.complexMode{
+    draw_set_font(fTalk);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_set_color(c_black);
+    draw_text(x-1,y-24,"I-View");
+    draw_text(x+1,y-24,"I-View");
+    draw_text(x,y-23,"I-View");
+    draw_text(x,y-25,"I-View");
+    draw_set_color(global.doorCol1);
+    draw_text(x,y-24,"I-View");
+    draw_set_color(c_white);
+}
+if drawIm{
+    draw_set_blend_mode(bm_add);
+    imAngle = min(imAngle + 5, 90);
+    imSin = sin(degtorad(imAngle));
+    imCos = cos(degtorad(imAngle));
+    draw_sprite_ext(sprWhiteAura,0,x,y,imSin,imSin,0,c_white,imCos);
+    if imAngle == 90{imAngle = 0; drawIm = 0;}
+    draw_set_blend_mode(bm_normal);
 }
 </string>
           </argument>

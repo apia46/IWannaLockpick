@@ -25,11 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
-canSave = 1
-grav = 1
-if (global.difficulty &gt; 1)
-    instance_destroy()
+            <string>image_speed = 0;
+canSave = true;
+grav = 1;       //sets which player gravity this save works with
+
+if (global.difficulty &gt; 1)  //destroy if on a higher difficulty than hard
+    instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -52,7 +53,7 @@ if (global.difficulty &gt; 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>canSave = 1
+            <string>canSave = true;
 </string>
           </argument>
         </arguments>
@@ -75,7 +76,8 @@ if (global.difficulty &gt; 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>//event_user(0);  //save the game
+</string>
           </argument>
         </arguments>
       </action>
@@ -97,8 +99,10 @@ if (global.difficulty &gt; 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if scrButtonCheckPressed(global.shootButton)
-    event_user(0)
+            <string>if (scrButtonCheckPressed(global.shootButton))  //save if player is touching the save and shooting
+{
+    event_user(0);
+}
 </string>
           </argument>
         </arguments>
@@ -121,15 +125,17 @@ if (global.difficulty &gt; 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (canSave &amp;&amp; (instance_exists(objPlayer) &amp;&amp; (global.grav == grav)))
+            <string>///save the game
+
+if (canSave &amp;&amp; instance_exists(objPlayer) &amp;&amp; global.grav == grav)
 {
-    if (!(((objPlayer.x &lt; 0) || ((objPlayer.x &gt; room_width) || ((objPlayer.y &lt; 0) || (objPlayer.y &gt; room_height)))) &amp;&amp; global.edgeDeath))
+    if (!((objPlayer.x &lt; 0 || objPlayer.x &gt; room_width || objPlayer.y &lt; 0 || objPlayer.y &gt; room_height) &amp;&amp; global.edgeDeath))  //make sure the player isn't saving outside the room to prevent save locking
     {
-        canSave = 0
-        alarm[0] = 30
-        image_index = 1
-        image_speed = 0.017
-        scrSaveGame(1)
+        canSave = false;    //make it so that the player can't save again immediately
+        alarm[0] = 30;  //set alarm so the player can save again
+        image_index = 1;
+        image_speed = 0.017;
+        scrSaveGame(true);
     }
 }
 </string>
@@ -154,8 +160,8 @@ if (global.difficulty &gt; 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_index = 0
-image_speed = 0
+            <string>image_index = 0;
+image_speed = 0;
 </string>
           </argument>
         </arguments>

@@ -25,76 +25,172 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i;
-image_speed = 0.1
-floatA = 0
-floatY = 0
-headXsc = -1
-arrowInd = 0
-active = 1
-browned = 0
-copies = 1
-icopies = 0
-opened = 0
-state = 0
-inRange = 0
-t = 0
-numConvos = 30
-curConvo = 0
-scrollIndex = 0
-centerConvo = 2
-convoRef[0] = 0
-numConvoVis = 0
-scrDefineKinaConvoVis()
-for (i = 0; i &lt; numConvos; i += 1)
-{
-    convoMenu[i] = -1
-    if convoVis[i]
-    {
-        convoRef[numConvoVis] = i
-        numConvoVis += 1
+            <string>///Kina variables
+image_speed = .1;
+
+floatA = 0;
+floatY = 0;
+headXsc = -1;
+arrowInd = 0;
+
+active = 1;
+browned = 0;
+copies = 1;
+icopies = 0;
+opened = 0;
+
+state = 0;//0 = Inert, 1 = Fade Out, 2 = Dialog Menu, 3 = Talking, 4 = Kablooey
+inRange = 0;
+t = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Dialog vars
+numConvos = 30;
+curConvo = 0;//Represents conversation ID, NOT scroll position
+scrollIndex = 0;//For the actual scrolling selection
+centerConvo = 2;//For scrolling the options
+convoRef[0] = 0;//Every visible conversation is added to an array.
+numConvoVis = 0;
+//This is so invisible convos are not counted in the scroll,
+//instead of being shown but inaccessible. Just to save space/not spoil.
+scrDefineKinaConvoVis();
+for(var i = 0; i &lt; numConvos; i += 1){
+    //convoVis[i] = 1;//This'll be much more sophisticated later.
+    convoMenu[i] = -1;//Whether it's a conversation or a nested menu etc
+    if convoVis[i]{
+        convoRef[numConvoVis] = i;
+        numConvoVis += 1;
     }
-    convoRead[i] = 1
+    convoRead[i] = 1;//Same here
 }
-scrDefineKinaConvos()
-setCenterConvoString()
-boxLerp = 0
-bumpA = 90
-bumpDir = 1
-bumpAmt = 1
-boxW = 200
-boxH = 32
-boxY = (y - 256)
-showArrow = 0
-color = 0
-colorSpend = 0
-iPow = 0
-tempColor = color
-tempSpend = colorSpend
-copyState = 0
-copyPitch = 1
-copyAlpha = 0
-copySound = 0
-copyTimer = 0
-copyDraw = 1
-c1 = 16777215
-c2 = 16777215
-c3 = 16777215
-scrColorDoor()
-scrColorDoor2()
-unrBase = 1.1
-unrPitch[0] = (1.33 * unrBase)
-unrPitch[1] = (1 * unrBase)
-unrTime = 0
-unrCount = 0
-unrDelay = 6
-unrWhich = 0
-unrCircL = 1
-doJingle = 0
-for (i = 0; i &lt; numConvoVis; i += 1)
-{
-    if (!global.convoRead[convoID[convoRef[i]]])
-        doJingle = 1
+scrDefineKinaConvos();
+setCenterConvoString();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Visual vars
+boxLerp = 0;//Based on t in state 2
+bumpA = 90;//Visual bumping
+bumpDir = 1;//1 = Down, -1 = Up
+bumpAmt = 1;
+boxW = 200;
+boxH = 32;
+boxY = y-256;
+showArrow = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///KeyPick vars
+
+//iPow
+color = key_MASTER;
+colorSpend = key_MASTER;
+iPow = 0;
+tempColor = color;
+tempSpend = colorSpend;
+
+//Copy animation variables
+copyState = 0;//0 = Nothing happening, 1 = Adding copy, 2 = Removing copy
+copyPitch = 1;
+copyAlpha = 0;
+copySound = 0;
+copyTimer = 0;
+copyDraw = 1;
+
+//Three blends for the top, middle, and bottom.
+c1 = c_white;
+c2 = c_white;
+c3 = c_white;
+scrColorDoor();
+scrColorDoor2();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Unread Jingle
+unrBase = 1.1;
+unrPitch[0] = 1.33*unrBase;
+unrPitch[1] = 1*unrBase;
+unrTime = 0;
+unrCount = 0;
+unrDelay = 6;
+unrWhich = 0;//Which pitch
+
+unrCircL = 1;
+
+doJingle = 0;
+for(var i = 0; i &lt; numConvoVis; i += 1){
+    if !global.convoRead[convoID[convoRef[i]]]{
+        doJingle = 1;
+    }
 }
 </string>
           </argument>
@@ -118,13 +214,12 @@ for (i = 0; i &lt; numConvoVis; i += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (browned &amp;&amp; active)
-{
-    alarm[0] = 120
-    repeat (4)
-    {
-        with (instance_create((x + random_range(-6, 6)), (y + random_range(-6, 6)), oBrownParticle))
-        {
+            <string>///Brown particles
+if browned &amp;&amp; active{
+    alarm[0] = 120;
+    repeat(4){
+        with(instance_create(x+random_range(-6,6),y+random_range(-6,6),oBrownParticle)){
+            
         }
     }
 }
@@ -150,335 +245,356 @@ for (i = 0; i &lt; numConvoVis; i += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, canGoldOpen;
-floatA = ((floatA + 2) % 360)
-floatY = round((3 * sin(degtorad(floatA))))
-inRange = 0
-if instance_exists(objPlayer)
-{
-    if (objPlayer.x &gt; x)
-        headXsc = 1
-    else
-        headXsc = -1
-    inRange = (distance_to_object(objPlayer) &lt; 16)
+            <string>///state handle + talk
+floatA = (floatA + 2) mod 360;
+floatY = round(3*sin(degtorad(floatA)));
+inRange = 0;//Doubles as the interact arrow show variable
+if instance_exists(objPlayer){
+    if objPlayer.x &gt; x{headXsc = 1;}else{headXsc = -1;}
+    inRange = (distance_to_object(objPlayer) &lt; 16);
+}else{
+    inRange = 0;
 }
-else
-    inRange = 0
-showArrow = 0
-switch state
-{
-    case 0:
-        if inRange
-        {
-            if ((objPlayer.masterMode != 0) || ((global.key[10] != 0) || browned))
-            {
-            }
-            else
-            {
-                showArrow = 1
-                if ((state == 0) &amp;&amp; scrButtonCheckPressed(global.intrButton))
-                {
-                    if (objPlayer.x &lt; x)
-                        objPlayer.xScale = 1
-                    else
-                        objPlayer.xScale = -1
-                    state = 2
-                    t = 0
-                    scrPlaySoundExt(sndQuery, 1, 1, false)
-                    scrollIndex = 0
-                    centerConvo = 2
-                    curConvo = convoID[scrollIndex]
-                    setCenterConvoString()
-                    global.inCutscene = 1
-                    with (objPlayer)
-                        frozen = 1
+//Cheese code cheese code!
+with oMouseover{
+    if warpMode != 0{
+        other.inRange = 0;
+    }
+}
+showArrow = 0;
+switch state{
+    case 0://Inert
+        if inRange{
+            if (objPlayer.masterMode != 0 || global.key[key_BROWN] != 0 || browned){//Key stuff
+                
+            }else{//Talking
+                showArrow = 1;
+                if state == 0 &amp;&amp; scrButtonCheckPressed(global.intrButton){//Init dialog select menu
+                    //Face the player correctly
+                    if objPlayer.x &lt; x{objPlayer.xScale = 1;}else{objPlayer.xScale = -1;}
+                    //State change
+                    state = 2; t = 0;
+                    scrPlaySoundExt(sndQuery,1,1,false);
+                    //Reset scroll variables
+                    scrollIndex = 0;
+                    centerConvo = 2;
+                    curConvo = convoID[scrollIndex];
+                    setCenterConvoString();
+                    global.inCutscene = 1;
+                    with objPlayer{frozen = 1;}
                 }
             }
         }
-        break
-    case 1:
-        t = min((t + 1), 25)
-        boxLerp = sin(degtorad((90 + ((t * 90) / 25))))
-        boxY = ((y - 256) - round((16 * boxLerp)))
-        if (t == 25)
-        {
-            state = 0
-            global.inCutscene = 0
-            with (objPlayer)
-                frozen = 0
+    break;
+    case 1://Fading out (box query disappears)
+        t = min(t+1,25);
+        boxLerp = sin(degtorad(90+t*90/25));
+        boxY = y - 256 - round(16*boxLerp);
+        if t == 25{
+            state = 0;
+            global.inCutscene = 0;
+            with objPlayer{frozen = 0;}
         }
-        break
-    case 2:
-        t = min((t + 1), 25)
-        boxLerp = sin(degtorad(((t * 90) / 25)))
-        boxY = ((y - 256) - round((16 * boxLerp)))
-        bumpA = min((bumpA + 9), 90)
-        bumpAmt = (1 - sin(degtorad(bumpA)))
-        boxY += round(((4 * bumpDir) * bumpAmt))
-        if (t == 25)
-        {
-            if scrButtonCheckPressed(global.downButton)
-            {
-                if (scrollIndex &lt; (numConvoVis - 1))
-                {
-                    scrollIndex += 1
-                    curConvo = convoID[convoRef[scrollIndex]]
-                    centerConvo = max(min(scrollIndex, (numConvoVis - 3)), 2)
-                    setCenterConvoString()
-                    scrPlaySoundExt(sndDiaScroll, 1, 1, false)
-                    bumpA = 0
-                    bumpDir = 1
+    break;
+    case 2://Select dialog
+        t = min(t+1,25);
+        boxLerp = sin(degtorad(t*90/25));
+        boxY = y - 256 - round(16*boxLerp);
+        //Box visual bumping
+        bumpA = min(bumpA+90/10,90);//Visual bumping
+        bumpAmt = 1-sin(degtorad(bumpA));
+        boxY += round(4*bumpDir*bumpAmt);
+        //Controls
+        if t == 25{
+            if scrButtonCheckPressed(global.downButton){//Scroll Down
+                if scrollIndex &lt; (numConvoVis-1){
+                    scrollIndex += 1;
+                    curConvo = convoID[convoRef[scrollIndex]];
+                    centerConvo = max(min(scrollIndex,numConvoVis-3),2);
+                    setCenterConvoString();
+                    scrPlaySoundExt(sndDiaScroll,1,1,false);
+                    bumpA = 0; bumpDir = 1;
+                }else if numConvoVis &gt; 1{
+                    scrollIndex = 0;
+                    curConvo = convoID[convoRef[scrollIndex]];
+                    centerConvo = max(min(scrollIndex,numConvoVis-3),2);
+                    setCenterConvoString();
+                    scrPlaySoundExt(sndDiaScroll,1,1,false);
+                    bumpA = 0; bumpDir = -1;
                 }
-                else if (numConvoVis &gt; 1)
-                {
-                    scrollIndex = 0
-                    curConvo = convoID[convoRef[scrollIndex]]
-                    centerConvo = max(min(scrollIndex, (numConvoVis - 3)), 2)
-                    setCenterConvoString()
-                    scrPlaySoundExt(sndDiaScroll, 1, 1, false)
-                    bumpA = 0
-                    bumpDir = -1
+            }else if scrButtonCheckPressed(global.upButton){//Scroll Up
+                if scrollIndex &gt; 0{
+                    scrollIndex -= 1;
+                    curConvo = convoID[convoRef[scrollIndex]];
+                    centerConvo = max(min(scrollIndex,numConvoVis-3),2);
+                    setCenterConvoString();
+                    scrPlaySoundExt(sndDiaScroll,1,1,false);
+                    bumpA = 0; bumpDir = -1;
+                }else if numConvoVis &gt; 1{
+                    scrollIndex = numConvoVis - 1;
+                    curConvo = convoID[convoRef[scrollIndex]];
+                    centerConvo = max(min(scrollIndex,numConvoVis-3),2);
+                    setCenterConvoString();
+                    scrPlaySoundExt(sndDiaScroll,1,1,false);
+                    bumpA = 0; bumpDir = 1;
                 }
-            }
-            else if scrButtonCheckPressed(global.upButton)
-            {
-                if (scrollIndex &gt; 0)
-                {
-                    scrollIndex -= 1
-                    curConvo = convoID[convoRef[scrollIndex]]
-                    centerConvo = max(min(scrollIndex, (numConvoVis - 3)), 2)
-                    setCenterConvoString()
-                    scrPlaySoundExt(sndDiaScroll, 1, 1, false)
-                    bumpA = 0
-                    bumpDir = -1
+            }else if scrButtonCheckPressed(global.selButton){//Select
+                state = 3; t = 0;
+                global.convoRead[curConvo] = 1;
+                doJingle = 0;
+                for(var i = 0; i &lt; numConvoVis; i += 1){
+                    if !global.convoRead[convoID[convoRef[i]]]{
+                        doJingle = 1;
+                    }
                 }
-                else if (numConvoVis &gt; 1)
-                {
-                    scrollIndex = (numConvoVis - 1)
-                    curConvo = convoID[convoRef[scrollIndex]]
-                    centerConvo = max(min(scrollIndex, (numConvoVis - 3)), 2)
-                    setCenterConvoString()
-                    scrPlaySoundExt(sndDiaScroll, 1, 1, false)
-                    bumpA = 0
-                    bumpDir = 1
+                scrSaveGame(false);//Save the fact that the convo was read
+                with oDialogHandle{
+                    diaStart(other.curConvo);
                 }
-            }
-            else if scrButtonCheckPressed(global.selButton)
-            {
-                state = 3
-                t = 0
-                global.convoRead[curConvo] = 1
-                doJingle = 0
-                for (i = 0; i &lt; numConvoVis; i += 1)
-                {
-                    if (!global.convoRead[convoID[convoRef[i]]])
-                        doJingle = 1
-                }
-                scrSaveGame(0)
-                with (oDialogHandle)
-                    diaStart(other.curConvo)
-                scrPlaySoundExt(sndQuery3, 1, 1, false)
-                scrPlaySoundExt(sndSelectMade, 0.6, 1.25, false)
-            }
-            else if scrButtonCheckPressed(global.shootButton)
-            {
-                state = 1
-                t = 0
-                scrPlaySoundExt(sndQuery2, 1, 1, false)
+                scrPlaySoundExt(sndQuery3,1,1,false);
+                scrPlaySoundExt(sndSelectMade,.6,1.25,0);
+            }else if scrButtonCheckPressed(global.shootButton){//Cancel
+                state = 1; t = 0;
+                scrPlaySoundExt(sndQuery2,1,1,false);
             }
         }
-        break
-    case 3:
-        t = min((t + 1), 25)
-        boxLerp = sin(degtorad((90 + ((t * 90) / 25))))
-        boxY = ((y - 256) - round((16 * boxLerp)))
-        break
-    case 4:
-        t = min((t + 1), 250)
-        if (t == 25)
-        {
-            scrPlaySoundExt(sndHeartOutward, 1, 1, false)
-            with (oKHCutStar)
-            {
-                state = 1
-                alarm[0] = 2
+    break;
+    case 3://Talking (Dialog handle does the work
+        t = min(t+1,25);
+        boxLerp = sin(degtorad(90+t*90/25));
+        boxY = y - 256 - round(16*boxLerp);
+    break;
+    case 4://Kablooey (This is basically a cutscene handle
+        t = min(t+1,250);
+        if t == 25{//Star move outward
+            scrPlaySoundExt(sndHeartOutward,1,1,false);
+            with oKHCutStar{state = 1;alarm[0] = 2;}
+        }
+        if t == 100{//Sound
+            scrPlaySoundExt(sndHeartInward,1,1,false);
+        }
+        if t == 115{//Inward
+            with oKHCutStar{state = 2; xS = 800; yS = 320;}
+        }
+        if t == 165{//Make heart
+            with oKHCutStar{instance_destroy();}
+            instance_create(800,320,oHeartItem);
+            //audio_play_sound(sndHeartCreate,0,false);
+            scrPlaySoundExt(sndTitleStart,.9,1.4,0);
+        }
+        if t == 249{//Make sure it ain't infinitely repeating
+            with oDialogHandle{
+                diaStart(20);
             }
         }
-        if (t == 100)
-            scrPlaySoundExt(sndHeartInward, 1, 1, false)
-        if (t == 115)
-        {
-            with (oKHCutStar)
-            {
-                state = 2
-                xS = 800
-                yS = 320
+    break;
+    case 5://Kablooey 2 (Abridged)
+        t = min(t+1,50);
+        if t == 49{//Make sure it ain't infinitely repeating
+            with oDialogHandle{
+                diaStart(21);
             }
         }
-        if (t == 165)
-        {
-            with (oKHCutStar)
-                instance_destroy()
-            instance_create(800, 320, oHeartItem)
-            scrPlaySoundExt(sndTitleStart, 0.9, 1.4, false)
-        }
-        if (t == 249)
-        {
-            with (oDialogHandle)
-                diaStart(20)
-        }
-        break
-    case 5:
-        t = min((t + 1), 50)
-        if (t == 49)
-        {
-            with (oDialogHandle)
-                diaStart(21)
-        }
-        break
+    break;
+}
+if inRange{
+    arrowInd = (arrowInd + .1) mod 2;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Door-Copy code
+//iPow stuff
+if global.complexMode == 0{//Real view
+    if copies &gt; 0{iPow = 0;}
+    if copies &lt; 0{iPow = 2;}
+    if copies == 0{
+        if icopies &gt; 0{iPow = 1;}
+        if icopies &lt; 0{iPow = 3;}
+    }
+}else{//Imaginary view
+    if icopies &gt; 0{iPow = 1;}
+    if icopies &lt; 0{iPow = 3;}
+    if icopies == 0{
+        if copies &gt; 0{iPow = 0;}
+        if copies &lt; 0{iPow = 2;}
+    }
 }
 
-if inRange
-    arrowInd = ((arrowInd + 0.1) % 2)
-if (global.complexMode == 0)
-{
-    if (copies &gt; 0)
-        iPow = 0
-    if (copies &lt; 0)
-        iPow = 2
-    if (copies == 0)
-    {
-        if (icopies &gt; 0)
-            iPow = 1
-        if (icopies &lt; 0)
-            iPow = 3
-    }
-}
-else
-{
-    if (icopies &gt; 0)
-        iPow = 1
-    if (icopies &lt; 0)
-        iPow = 3
-    if (icopies == 0)
-    {
-        if (copies &gt; 0)
-            iPow = 0
-        if (copies &lt; 0)
-            iPow = 2
-    }
-}
-switch copyState
-{
-    case 0:
-        break
-    case 1:
-        copyPitch += 0.015
-        audio_sound_pitch(copySound, copyPitch)
-        copyTimer = min((copyTimer + 1), 50)
-        copyAlpha = max((copyAlpha - 0.02), 0)
-        if (copyTimer == 50)
-            copyState = 0
-        break
-    case 2:
-        copyTimer = min((copyTimer + 1), 60)
-        if (copyTimer == 25)
-            scrPlaySoundExt(sndCopy1, 1, 1, false)
-        if (copyTimer == 40)
-            scrPlaySoundExt(sndMasterRelock, 1, 1, false)
-        if (copyTimer == 50)
-        {
-            copyDraw = 1
-            copyAlpha = 1
+switch copyState{
+    case 0://Nothing really
+        
+    break;
+    case 1://Adding a copy!
+        copyPitch += 0.015;
+        audio_sound_pitch(copySound,copyPitch);
+        copyTimer = min(copyTimer + 1, 50);
+        copyAlpha = max(copyAlpha - 0.02, 0);
+        if copyTimer == 50{
+            copyState = 0;
         }
-        if (copyTimer &gt; 50)
-            copyAlpha = max((copyAlpha - 0.1), 0)
-        if (copyTimer == 60)
-            copyState = 0
-        break
-    default:
+        //Use blend mode: bm_inv_dest_color, bm_inv_src_alpha, start at 1 and go to 0
+    break;
+    case 2://Destroying a copy!
+        copyTimer = min(copyTimer + 1, 60);
+        if copyTimer == 25{
+            scrPlaySoundExt(sndCopy1,1,1,false);
+        }
+        if copyTimer == 40{
+            scrPlaySoundExt(sndMasterRelock,1,1,false);
+        }
+        if copyTimer == 50{
+            copyDraw = 1;
+            copyAlpha = 1;
+        }
+        if copyTimer &gt; 50{
+            copyAlpha = max(copyAlpha - 0.1, 0);
+        }
+        if copyTimer == 60{
+            copyState = 0;
+        }
+    break;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Main key code
+if instance_exists(objPlayer) &amp;&amp; active &amp;&amp; copyState == 0{
+    distToP = distance_to_object(objPlayer);
+    if browned{
+        tempColor = key_BROWN;
+        tempSpend = key_BROWN;
+    }else{
+        tempColor = color;
+        tempSpend = colorSpend;
+    }
+    if objPlayer.brownMode != 0{
+        if distToP &lt;= 23{
+            enbrownKina();
+        }else{
+            brownNearPlayer = 0;
+        }
+    }
+    //iPow stuff
+    if global.complexMode == 0{//Real view
+        if copies &gt; 0{iPow = 0;}
+        if copies &lt; 0{iPow = 2;}
+        if copies == 0{
+            if icopies &gt; 0{iPow = 1;}
+            if icopies &lt; 0{iPow = 3;}
+        }
+    }else{//Imaginary view
+        if icopies &gt; 0{iPow = 1;}
+        if icopies &lt; 0{iPow = 3;}
+        if icopies == 0{
+            if copies &gt; 0{iPow = 0;}
+            if copies &lt; 0{iPow = 2;}
+        }
+    }
     
+    var canGoldOpen = !(tempColor == key_MASTER || tempColor == key_PURE || tempSpend == key_MASTER || tempSpend == key_PURE);
+    if distToP &lt;= 1{
+        if (canGoldOpen) &amp;&amp; objPlayer.masterMode != 0{//SPEND MASTER KEYS
+            scrKinaMasterOpen();
+            undoBUFFER();
+            scrPlayerDownStop();
+        }//No elseif; The normal lock is functionally unopenable
+    }
+    
+    useMasterCheck();
 }
-
-if (instance_exists(objPlayer) &amp;&amp; (active &amp;&amp; (copyState == 0)))
-{
-    distToP = distance_to_object(objPlayer)
-    if browned
-    {
-        tempColor = 10
-        tempSpend = 10
-    }
-    else
-    {
-        tempColor = color
-        tempSpend = colorSpend
-    }
-    if (objPlayer.brownMode != 0)
-    {
-        if (distToP &lt;= 23)
-            enbrownKina()
-        else
-            brownNearPlayer = 0
-    }
-    if (global.complexMode == 0)
-    {
-        if (copies &gt; 0)
-            iPow = 0
-        if (copies &lt; 0)
-            iPow = 2
-        if (copies == 0)
-        {
-            if (icopies &gt; 0)
-                iPow = 1
-            if (icopies &lt; 0)
-                iPow = 3
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///post-stuff
+//visible = active;
+if active == 0{brownNearPlayer = 0;}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///unread jingle
+if doJingle{
+    if unrCount &lt; 4{
+        unrTime += 1;
+        if unrTime &gt;= unrDelay{
+            unrTime = 0;
+            unrCount += 1;
+            if !instance_exists(oIntroTransition){
+                scrPlaySoundExt(sndRunswitch,.6,unrPitch[unrWhich],0);//unrPitch unrWhich sounds like a riddle
+            }
+            unrWhich = !unrWhich;
+            if unrCount == 1 || unrCount == 3{unrCircL = 0;}
         }
     }
-    else
-    {
-        if (icopies &gt; 0)
-            iPow = 1
-        if (icopies &lt; 0)
-            iPow = 3
-        if (icopies == 0)
-        {
-            if (copies &gt; 0)
-                iPow = 0
-            if (copies &lt; 0)
-                iPow = 2
-        }
-    }
-    canGoldOpen = (!((tempColor == 0) || ((tempColor == 11) || ((tempSpend == 0) || (tempSpend == 11)))))
-    if (distToP &lt;= 1)
-    {
-        if (canGoldOpen &amp;&amp; (objPlayer.masterMode != 0))
-        {
-            scrKinaMasterOpen()
-            undoBUFFER()
-            scrPlayerDownStop()
-        }
-    }
-    useMasterCheck()
-}
-if (active == 0)
-    brownNearPlayer = 0
-if doJingle
-{
-    if (unrCount &lt; 4)
-    {
-        unrTime += 1
-        if (unrTime &gt;= unrDelay)
-        {
-            unrTime = 0
-            unrCount += 1
-            if (!instance_exists(oIntroTransition))
-                scrPlaySoundExt(sndRunswitch, 0.6, unrPitch[unrWhich], false)
-            unrWhich = (!unrWhich)
-            if ((unrCount == 1) || (unrCount == 3))
-                unrCircL = 0
-        }
-    }
-    unrCircL += ((1 - unrCircL) * 0.15)
+    unrCircL += (1-unrCircL) * .15;
 }
 </string>
           </argument>
@@ -502,50 +618,38 @@ if doJingle
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, p, pAng;
-active = 0
-global.inCutscene = 1
-with (objPlayer)
-    frozen = 1
-with (oNewCamera)
-    shakeAmt = 4
-with (oInteractZone)
-    instance_destroy()
-scrPlaySoundExt(sndRBClap, 1, 1, false)
-scrPlaySoundExt(sndRBWhistle, 1, 1, false)
-if ((global.kinaHeart == 0) &amp;&amp; (!instance_exists(oHeartItem)))
-{
-    state = 4
-    t = 0
-    for (i = 0; i &lt; 20; i += 1)
-    {
-        p = instance_create(x, y, oKHSquishPart)
-        p.direction = ((360 * i) / 20)
-        p.image_angle = p.direction
-        p.speed = random_range(6, 12)
-        p.spdStart = p.speed
+            <string>///OPEN SESAME
+active = 0;
+global.inCutscene = 1;
+with objPlayer{frozen = 1;}
+with oNewCamera{shakeAmt = 4;}
+with oInteractZone{instance_destroy();}
+scrPlaySoundExt(sndRBClap,1,1,false);
+scrPlaySoundExt(sndRBWhistle,1,1,false);
+//global.kinaHeart = 1;//Uncomment when done testing
+if global.kinaHeart == 0 &amp;&amp; !instance_exists(oHeartItem){
+    state = 4; t = 0;//Set the correct state (Different from talking state)
+    for(var i = 0; i &lt; 20; i += 1){//Particles
+        var p = instance_create(x,y,oKHSquishPart);
+        p.direction = 360*i/20; p.image_angle = p.direction;
+        p.speed = random_range(6,12);
+        p.spdStart = p.speed;
     }
-    for (i = 0; i &lt; 10; i += 1)
-    {
-        p = instance_create(x, y, oKHCutStar)
-        pAng = ((360 * i) / 10)
-        p.hue = ((255 * i) / 10)
-        p.rX = lengthdir_x(700, pAng)
-        p.rY = lengthdir_y(700, pAng)
-        p.image_angle = pAng
+    for(var i = 0; i &lt; 10; i += 1){//Stars
+        var p = instance_create(x,y,oKHCutStar);
+        var pAng = 360*i/10;
+        p.hue = 255*i/10;
+        p.rX = lengthdir_x(700,pAng);
+        p.rY = lengthdir_y(700,pAng);
+        p.image_angle = pAng;
     }
-}
-else
-{
-    state = 5
-    t = 0
-    for (i = 0; i &lt; 20; i += 1)
-    {
-        p = instance_create(x, y, oKHSquishPart)
-        p.direction = ((360 * i) / 20)
-        p.image_angle = p.direction
-        p.speed = random_range(6, 12)
-        p.spdStart = p.speed
+}else{
+    state = 5; t = 0;//Abridged cutscene
+    for(var i = 0; i &lt; 20; i += 1){//Particles
+        var p = instance_create(x,y,oKHSquishPart);
+        p.direction = 360*i/20; p.image_angle = p.direction;
+        p.speed = random_range(6,12);
+        p.spdStart = p.speed;
     }
 }
 </string>
@@ -570,23 +674,20 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if browned
-{
-    alarm[0] = 120
-    repeat (4)
-    {
-        with (instance_create((x + random_range(-6, 6)), (y + random_range(-6, 6)), oBrownParticle))
-            scale = random_range(0.2, 0.5)
+            <string>///Brown particle burst
+var _bp;
+if browned{
+    alarm[0] = 120;
+    repeat(4){
+        with(instance_create(x+random_range(-6,6),y+random_range(-6,6),oBrownParticle)){
+            scale = random_range(.2,.5);
+        }
     }
-}
-else
-{
-    repeat (4)
-    {
-        with (instance_create((x + random_range(-6, 6)), (y + random_range(-6, 6)), oBrownParticle))
-        {
-            scale = random_range(0.2, 0.5)
-            mode = 1
+}else{
+    repeat(4){
+        with(instance_create(x+random_range(-6,6),y+random_range(-6,6),oBrownParticle)){
+            scale = random_range(.2,.5);
+            mode = 1;
         }
     }
 }
@@ -612,20 +713,17 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-copyState = 2
-copyDraw = 0
-copyAlpha = 0
-copyTimer = 0
-for (ix = 0; ix &lt; 2; ix += 1)
-{
-    for (iy = 0; iy &lt; 2; iy += 1)
-    {
-        with (instance_create(((x + (16 * ix)) - 16), ((y + (16 * iy)) - 16), oDebris3))
-        {
-            c1 = other.c1
-            c2 = other.c2
-            c3 = other.c3
+            <string>///Copy debris
+copyState = 2;
+copyDraw = 0;
+copyAlpha = 0;
+copyTimer = 0;
+for(var ix = 0; ix&lt;2; ix+=1){
+    for(var iy = 0; iy&lt;2; iy+=1){
+        with(instance_create(x+16*ix-16,y+16*iy-16,oDebris3)){
+            c1 = other.c1;
+            c2 = other.c2;
+            c3 = other.c3;
         }
     }
 }
@@ -651,21 +749,18 @@ for (ix = 0; ix &lt; 2; ix += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-copyState = 1
-copySound = scrPlaySoundExt(sndMasterUnlock2, 1, 1, false)
-copyPitch = 1
-copyAlpha = 1
-copyTimer = 0
-for (ix = 0; ix &lt; 2; ix += 1)
-{
-    for (iy = 0; iy &lt; 2; iy += 1)
-    {
-        with (instance_create(((x + (16 * ix)) - 16), ((y + (16 * iy)) - 16), oDebris2))
-        {
-            c1 = other.c1
-            c2 = other.c2
-            c3 = other.c3
+            <string>///Anti-debris
+copyState = 1;
+copySound = scrPlaySoundExt(sndMasterUnlock2,1,1,false);
+copyPitch = 1;
+copyAlpha = 1;
+copyTimer = 0;
+for(var ix = 0; ix&lt;2; ix+=1){
+    for(var iy = 0; iy&lt;2; iy+=1){
+        with(instance_create(x+16*ix-16,y+16*iy-16,oDebris2)){
+            c1 = other.c1;
+            c2 = other.c2;
+            c3 = other.c3;
         }
     }
 }
@@ -691,16 +786,13 @@ for (ix = 0; ix &lt; 2; ix += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-for (ix = 0; ix &lt; 2; ix += 1)
-{
-    for (iy = 0; iy &lt; 2; iy += 1)
-    {
-        with (instance_create(((x + (16 * ix)) - 16), ((y + (16 * iy)) - 16), oDebris))
-        {
-            c1 = other.c1
-            c2 = other.c2
-            c3 = other.c3
+            <string>///Make debris
+for(var ix = 0; ix&lt;2; ix+=1){
+    for(var iy = 0; iy&lt;2; iy+=1){
+        with(instance_create(x+16*ix-16,y+16*iy-16,oDebris)){
+            c1 = other.c1;
+            c2 = other.c2;
+            c3 = other.c3;
         }
     }
 }
@@ -726,48 +818,52 @@ for (ix = 0; ix &lt; 2; ix += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var copiesString;
-y += floatY
-draw_set_alpha(1)
-if (copyState == 1)
-{
-    draw_set_blend_mode_ext(10, 6)
-    draw_sprite_ext(sprKinaLockBrown, 1, x, (y + 4), 1, 1, 0, make_color_hsv(0, 0, (255 * copyAlpha)), copyAlpha)
-    draw_set_blend_mode(0)
+            <string>///Door copies
+y += floatY;
+draw_set_alpha(1);
+if copyState == 1{
+    draw_set_blend_mode_ext(bm_inv_dest_color,bm_inv_src_alpha);
+    draw_sprite_ext(sprKinaLockBrown,1,x,y+4,1,1,0,make_color_hsv(0,0,255*copyAlpha),copyAlpha);
+    draw_set_blend_mode(bm_normal);
 }
-if (copyState == 2)
-    draw_sprite_ext(sprKinaLockBrown, 1, x, (y + 4), 1, 1, 0, c_white, copyAlpha)
-if (((copies != 1) || (icopies != 0)) &amp;&amp; (!((copies == 0) &amp;&amp; (icopies == 0))))
-{
-    draw_set_font(fKeyX)
-    draw_set_halign(fa_center)
-    draw_set_valign(fa_bottom)
-    draw_set_color(make_color_rgb(62, 45, 28))
-    copiesString = "×"
-    if (icopies == 0)
-        copiesString += string(copies)
-    else if (copies == 0)
-        copiesString += (string(icopies) + "i")
-    else
-    {
-        copiesString += string(copies)
-        if (icopies &gt; 0)
-            copiesString = (((copiesString + "+") + string(icopies)) + "i")
-        else
-            copiesString = ((copiesString + string(icopies)) + "i")
+if copyState == 2{
+    draw_sprite_ext(sprKinaLockBrown,1,x,y+4,1,1,0,c_white,copyAlpha);
+}
+if (copies != 1 || icopies != 0) &amp;&amp; !(copies == 0 &amp;&amp; icopies == 0){
+    draw_set_font(fKeyX);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_bottom);
+    draw_set_color(make_color_rgb(62,45,28));
+    var copiesString = "×";
+    if icopies == 0{//Real numbers
+        copiesString += string(copies);
+    }else{//Complex numbers
+        if copies == 0{//Imaginary numbers
+            copiesString += string(icopies)+"i";
+        }else{//Complex numbers
+            copiesString += string(copies);
+            if icopies &gt; 0{
+                copiesString = copiesString+"+"+string(icopies)+"i";
+            }else{
+                copiesString = copiesString+string(icopies)+"i";
+            }
+        }
     }
-    draw_text((x + 1), (y - 9), copiesString)
-    draw_text((x - 1), (y - 9), copiesString)
-    draw_text((x + 1), (y - 7), copiesString)
-    draw_text((x - 1), (y - 7), copiesString)
-    draw_text((x + 1), (y - 8), copiesString)
-    draw_text((x - 1), (y - 8), copiesString)
-    draw_text(x, (y - 9), copiesString)
-    draw_text(x, (y - 7), copiesString)
-    draw_set_color(make_color_rgb(237, 234, 231))
-    draw_text(x, (y - 8), copiesString)
+    //outline corners
+    draw_text(x+1,y-9,copiesString);
+    draw_text(x-1,y-9,copiesString);
+    draw_text(x+1,y-7,copiesString);
+    draw_text(x-1,y-7,copiesString);
+    //outline edges
+    draw_text(x+1,y-8,copiesString);
+    draw_text(x-1,y-8,copiesString);
+    draw_text(x,y-9,copiesString);
+    draw_text(x,y-7,copiesString);
+    //actual text
+    draw_set_color(make_color_rgb(237,234,231));
+    draw_text(x,y-8,copiesString);
 }
-y -= floatY
+y -= floatY;
 </string>
           </argument>
         </arguments>
@@ -790,105 +886,140 @@ y -= floatY
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, dy, dx, _unread, _selected, _ctrlStr;
-y += floatY
-draw_sprite_ext(sprKinaHead, 0, (x + 3), ((y - 23) + 3), headXsc, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprKinaDress, 1, (x + 3), (y + 3), 1, 1, 0, c_black, 0.35)
-draw_sprite_ext(sprKinaDress, 2, (x - 1), y, 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 2, (x + 1), y, 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 2, x, (y - 1), 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 2, x, (y + 1), 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaHead, 1, (x - 1), (y - 23), headXsc, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaHead, 1, (x + 1), (y - 23), headXsc, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaHead, 1, x, ((y - 23) - 1), headXsc, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaHead, 1, x, ((y - 23) + 1), headXsc, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 3, (x - 1), y, 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 3, (x + 1), y, 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 3, x, (y - 1), 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 3, x, (y + 1), 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 0, x, y, 1, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaHead, 0, x, (y - 23), headXsc, 1, 0, c_white, 1)
-draw_sprite_ext(sprKinaDress, 1, x, y, 1, 1, 0, c_white, 1)
-if active
-{
-    if (!browned)
-        draw_sprite_ext(sprKinaLock, floor(image_index), x, (y + 4), 1, 1, 0, c_white, 1)
-    else
-        draw_sprite_ext(sprKinaLockBrown, 0, x, (y + 4), 1, 1, 0, c_white, 1)
-}
-y -= floatY
-if (showArrow &amp;&amp; (state == 0))
-    draw_sprite(sprUpArrowDoor, arrowInd, x, (y - 8))
-if (doJingle &amp;&amp; (active &amp;&amp; (!browned)))
-{
-    draw_sprite(sprConvoNotif, 0, (x + 16), (y - 48))
-    if (unrCircL &lt; 0.99)
-    {
-        draw_set_alpha((1 - unrCircL))
-        draw_circle((x + 16), (y - 48), (unrCircL * 50), 1)
-        draw_set_alpha(1)
+            <string>///Sprite
+y += floatY;
+//Shadow
+draw_sprite_ext(sprKinaHead,0,x+3,y-23+3,headXsc,1,0,c_black,.35);
+draw_sprite_ext(sprKinaDress,1,x+3,y+3,1,1,0,c_black,.35);
+//Outline
+draw_sprite_ext(sprKinaDress,2,x-1,y,1,1,0,c_white,1);
+draw_sprite_ext(sprKinaDress,2,x+1,y,1,1,0,c_white,1);
+draw_sprite_ext(sprKinaDress,2,x,y-1,1,1,0,c_white,1);
+draw_sprite_ext(sprKinaDress,2,x,y+1,1,1,0,c_white,1);
+draw_sprite_ext(sprKinaHead,1,x-1,y-23,headXsc,1,0,c_white,1);
+draw_sprite_ext(sprKinaHead,1,x+1,y-23,headXsc,1,0,c_white,1);
+draw_sprite_ext(sprKinaHead,1,x,y-23-1,headXsc,1,0,c_white,1);
+draw_sprite_ext(sprKinaHead,1,x,y-23+1,headXsc,1,0,c_white,1);
+draw_sprite_ext(sprKinaDress,3,x-1,y,1,1,0,c_white,1);
+draw_sprite_ext(sprKinaDress,3,x+1,y,1,1,0,c_white,1);
+draw_sprite_ext(sprKinaDress,3,x,y-1,1,1,0,c_white,1);
+draw_sprite_ext(sprKinaDress,3,x,y+1,1,1,0,c_white,1);
+//Back
+draw_sprite_ext(sprKinaDress,0,x,y,1,1,0,c_white,1);
+//Head
+draw_sprite_ext(sprKinaHead,0,x,y-23,headXsc,1,0,c_white,1);
+//Front
+draw_sprite_ext(sprKinaDress,1,x,y,1,1,0,c_white,1);
+//Lock
+if active{
+    if !browned{
+        if (global.complexMode == 0 &amp;&amp; copies == 0) || (global.complexMode == 1 &amp;&amp; icopies == 0){
+            draw_sprite_ext(sprKinaLockIm,floor(image_index),x,y+4,1,1,0,c_white,1);
+            scrKinaDrawIm();
+        }else{
+            draw_sprite_ext(sprKinaLock,floor(image_index),x,y+4,1,1,0,c_white,1);
+        }
+    }else{
+        if (global.complexMode == 0 &amp;&amp; copies == 0) || (global.complexMode == 1 &amp;&amp; icopies == 0){
+            draw_sprite_ext(sprKinaLockBrownIm,0,x,y+4,1,1,0,c_white,1);
+            scrKinaDrawIm();
+        }else{
+            draw_sprite_ext(sprKinaLockBrown,0,x,y+4,1,1,0,c_white,1);
+        }
     }
 }
-if (state != 0)
-{
-    draw_set_alpha(boxLerp)
-    for (i = 0; i &lt; 5; i += 1)
-    {
-        dy = (boxY + (boxH * i))
-        dx = (x - 96)
-        draw_set_color(c_white)
-        _unread = 0
-        _selected = 0
-        if (((centerConvo + i) - 2) &lt; numConvoVis)
-        {
-            if (!global.convoRead[convoID[convoRef[((centerConvo + i) - 2)]]])
-            {
-                _unread = 1
-                draw_set_color(make_color_rgb(255, 220, 200))
+y -= floatY;
+//Arrow
+if showArrow &amp;&amp; state == 0{
+    draw_sprite(sprUpArrowDoor,arrowInd,x,y-8);
+}
+//Unread Notif
+if doJingle &amp;&amp; active &amp;&amp; !browned{
+    draw_sprite(sprConvoNotif,0,x+16,y-48);
+    if unrCircL &lt; .99{
+        draw_set_alpha(1-unrCircL);
+        draw_circle(x+16,y-48,unrCircL*50,1);
+        draw_set_alpha(1);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Dialog selector
+if state != 0{
+    draw_set_alpha(boxLerp);
+    for(var i = 0; i &lt; 5; i += 1){
+        var dy = boxY + boxH * i;
+        var dx = x - 96;
+        draw_set_color(c_white);
+        var _unread = 0;
+        var _selected = 0;
+        if (centerConvo+i-2) &lt; numConvoVis{//Unread
+            if !global.convoRead[convoID[convoRef[centerConvo+i-2]]]{
+                _unread = 1;
+                draw_set_color(make_color_rgb(255,220,200));
             }
+        }else{//Invalid conversation
+            draw_set_color(make_color_rgb(100,100,100));
         }
-        else
-            draw_set_color(make_color_rgb(100, 100, 100))
-        if (scrollIndex == ((centerConvo + i) - 2))
-        {
-            _selected = 1
-            if (!_unread)
-                draw_set_color(make_color_rgb(220, 200, 255))
+        if scrollIndex == (centerConvo+i-2){//Current selected
+            _selected = 1;
+            if !_unread{draw_set_color(make_color_rgb(220,200,255))};
         }
-        draw_rectangle((dx - boxW), dy, (dx + boxW), (dy + 32), 0)
-        if (scrollIndex == ((centerConvo + i) - 2))
-        {
-            draw_set_color(make_color_rgb(170, 150, 200))
-            draw_rectangle(((dx - boxW) + 4), (dy + 4), ((dx + boxW) - 4), ((dy + 32) - 4), 0)
+        draw_rectangle(dx-boxW,dy,dx+boxW,dy+32,0);
+        if scrollIndex == (centerConvo+i-2){//Flair rectangle
+            draw_set_color(make_color_rgb(170,150,200));
+            draw_rectangle(dx-boxW+4,dy+4,dx+boxW-4,dy+32-4,0);
         }
-        draw_set_color(c_black)
-        draw_rectangle((dx - boxW), dy, (dx + boxW), (dy + 32), 1)
-        draw_set_font(fMiniID)
-        draw_set_halign(fa_left)
-        draw_set_valign(fa_middle)
-        draw_set_alpha((boxLerp * 0.35))
-        draw_text((((dx - boxW) + 8) + 1), ((dy + (boxH * 0.5)) + 1), scrollStr[i])
-        draw_set_alpha(boxLerp)
-        draw_text(((dx - boxW) + 8), (dy + (boxH * 0.5)), scrollStr[i])
-        draw_set_color(c_white)
-        if _unread
-            draw_sprite_ext(sprConvoNotif, 0, ((dx + boxW) - 8), (dy + (boxH * 0.5)), 1, 1, 0, c_white, boxLerp)
+        //text
+        draw_set_color(c_black);
+        draw_rectangle(dx-boxW,dy,dx+boxW,dy+32,1);
+        draw_set_font(fMiniID);
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_center);
+        draw_set_alpha(boxLerp*.35);
+        draw_text(dx-boxW+8+1,dy+boxH*.5+1,scrollStr[i]);
+        draw_set_alpha(boxLerp);
+        draw_text(dx-boxW+8,dy+boxH*.5,scrollStr[i]);
+        draw_set_color(c_white);
+        //Unread indicator
+        if _unread{
+            draw_sprite_ext(sprConvoNotif,0,dx+boxW-8,dy+boxH*.5,1,1,0,c_white,boxLerp);
+        }
     }
-    draw_set_alpha(1)
+    draw_set_alpha(1);
 }
-dy = (boxY + (boxH * 5))
-dx = (x - 96)
-_ctrlStr = (((((((getBindStr(global.upButton, 2) + "/") + getBindStr(global.downButton, 2)) + ": Move, ") + getBindStr(global.selButton, 2)) + ": Select, ") + getBindStr(global.shootButton, 2)) + ": Cancel")
-draw_set_color(c_white)
-draw_set_font(fMiniID)
-draw_set_halign(fa_left)
-draw_set_valign(fa_middle)
-draw_set_alpha((boxLerp * 0.35))
-draw_text((((dx - boxW) + 8) + 1), ((dy + (boxH * 0.5)) + 1), _ctrlStr)
-draw_set_alpha(boxLerp)
-draw_text(((dx - boxW) + 8), (dy + (boxH * 0.5)), _ctrlStr)
-draw_set_alpha(1)
-draw_set_color(c_white)
+//control text
+var dy = boxY + boxH * 5;
+var dx = x - 96;
+var _ctrlStr = getBindStr(global.upButton,2)+"/"+getBindStr(global.downButton,2)+": Move, "+getBindStr(global.selButton,2)+": Select, "+getBindStr(global.shootButton,2)+": Cancel";
+draw_set_color(c_white);
+draw_set_font(fMiniID);
+draw_set_halign(fa_left);
+draw_set_valign(fa_center);
+draw_set_alpha(boxLerp*.35);
+draw_text(dx-boxW+8+1,dy+boxH*.5+1,_ctrlStr);
+draw_set_alpha(boxLerp);
+draw_text(dx-boxW+8,dy+boxH*.5,_ctrlStr);
+draw_set_alpha(1);
+draw_set_color(c_white);
 </string>
           </argument>
         </arguments>

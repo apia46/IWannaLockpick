@@ -25,9 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>angle = random(360)
-spd = 0.1
-boundary = 0
+            <string>angle = random(360);
+spd = .1;
+boundary = 0;
 </string>
           </argument>
         </arguments>
@@ -50,9 +50,8 @@ boundary = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>angle -= spd
-if (x &lt; (-boundary))
-    x += (800 + (boundary * 2))
+            <string>angle -= spd;
+if x &lt; (-boundary){x += 800+boundary*2;}
 </string>
           </argument>
         </arguments>

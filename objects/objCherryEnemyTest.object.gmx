@@ -25,8 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited()
-hspeed = choose(-2, 2)
+            <string>event_inherited();
+
+hspeed = choose(-2,2);
 </string>
           </argument>
         </arguments>
@@ -49,10 +50,12 @@ hspeed = choose(-2, 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>audio_play_sound(sndBossHit, 0, false)
-with (other.id)
-    instance_destroy()
-instance_destroy()
+            <string>audio_play_sound(sndBossHit,0,false);
+
+with (other)
+    instance_destroy();
+
+instance_destroy();
 </string>
           </argument>
         </arguments>

@@ -25,72 +25,120 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _bY;
-scrPlaySoundExt(sndPause1, 0.85, 0.6, false)
-pauseMus = -1
-mode = 0
-showScene = 0
-t = 0
-bpm = 160
-beatSpd = (bpm / 3000)
-beatPos = 0
-curBeat = 0
-didHalfBeat = 0
-squareA = 0
-squareRot = 90
-squareScale = 0
-for (i = 0; i &lt; 6; i += 1)
-{
-    letterY[i] = 0
-    letterYT[i] = 0
-    springTime[i] = 0
-    springDone[i] = 1
+            <string>/*OVERVIEW:
+objWorld has the "game surface" which it draws with its own luminosity variables.
+It also controls the master volume, HOWEVER we will attempt to *draw* that here.
+As far as drawing is concerned, this is in front of objWorld, and draws every element
+manually. There needs to be a drawElements variable which determines whether to draw
+the whole scene or not. What is in the scene is described below. Other than that, there
+is one last element drawn on the very top, which is the black rectangles which rotate
+in and out. They initially appear over the game surface, fading out into the scene,
+then fading in and out again to switch between the two again.
+
+Scene includes:
+- Rectangular background, just a simple gradient
+- Checkerboard background, similar to title screen
+- Drawing of Lily, one static dark blue shadow (w/shader) and waving up/down drawing.
+- PAUSED text, with each letter bobbing up and down to the beat sequentially
+- Master Volume text
+- Other elements can be added later
+*/
+//Important
+scrPlaySoundExt(sndPause1,.85,.6,0);
+pauseMus = -1;
+mode = 0;
+showScene = 0;//0 = Game Scene, 1 = Pause Scene
+t = 0;//mode time
+//Music Timing
+bpm = 160;//160Beats/Min * Min/60Sec * Sec/50Fr = 160Beats/3000Fr = .05333Beats/Fr
+beatSpd = bpm/3000;
+beatPos = 0;//When it overflows to 1, count a beat
+curBeat = 0;//Overflows at 6, one beat corresponds to one letter
+didHalfBeat = 0;//Only happens once per beat
+//Black squares
+squareA = 0;
+squareRot = 90;
+squareScale = 0;
+//Pause Letters (On full beats, pluck a letter down, on half beats, spring it back up)
+for(i=0;i&lt;6;i+=1){
+    letterY[i] = 0;
+    letterYT[i] = 0;
+    springTime[i] = 0;
+    springDone[i] = true;
 }
-lilyA = 0
-lilyY = 0
-colTop = make_color_hsv(220, 50, 255)
-colBot = make_color_hsv(140, 128, 200)
-bgX = 0
-pauseButtons = 0
-_bY = 160
-defPauseButton(0, 600, _bY, "Resume")
-defPauseButton(1, 600, (_bY + 48), "Options")
-defPauseButton(2, 600, (_bY + 96), "Exit Level")
-defPauseButton(3, 600, (_bY + 144), "Return to Title")
-defPauseButton(4, 600, (_bY + 192), "Quit Game (Instantly)")
-defPauseButton(5, 600, (_bY + 240), "Erase Pencilmarks")
-defPauseButton(6, 600, (_bY + 288), "Tell a joke")
-curButton = 0
-mX = getMouseGuiX()
-mY = getMouseGuiY()
-joke[0] = "Welcome to this strange world called a PAUSE MENU! Here you can perform miraculous actions such as changing options or quitting the game."
-joke[1] = "First time seeing this message? If so, cool! If not, cool!"
-joke[2] = "Yes, I talk. That's a common trait in humans. And I'm pretty sure I'm one of those."
-joke[3] = "Did you know that writing flavor text is a fun way to distract yourself from writing UI code?"
+//Lily
+lilyA = 0;
+lilyY = 0;
+//Background
+colTop = make_color_hsv(220,50,255);
+colBot = make_color_hsv(140,128,200);
+bgX = 0;
+//Master volume text
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///NEW: Button, Gui, Menu Handler
+pauseButtons = 0;
+var _bY = 160;
+defPauseButton(0,600,_bY,"Resume");
+defPauseButton(1,600,_bY+48*1,"Options");
+defPauseButton(2,600,_bY+48*2,"Exit Level");
+defPauseButton(3,600,_bY+48*3,"Return to Title");
+defPauseButton(4,600,_bY+48*4,"Quit Game (Instantly)");
+defPauseButton(5,600,_bY+48*5,"Erase Pencilmarks");
+defPauseButton(6,600,_bY+48*6,"Tell a joke");
+curButton = 0;//Starts on Resume
+
+//Mouse
+mX = getMouseGuiX();
+mY = getMouseGuiY();
+
+//Bonus: Lily Joke
+joke[0] = "Welcome to this strange world called a PAUSE MENU! Here you can perform miraculous actions such as changing options or quitting the game.";
+joke[1] = "First time seeing this message? If so, cool! If not, cool!";
+joke[2] = "Yes, I talk. That's a common trait in humans. And I'm pretty sure I'm one of those.";
+joke[3] = "Did you know that writing flavor text is a fun way to distract yourself from writing UI code?";
 joke[4] = "Why did the chicken cross the road, you ask? Why aren't you asking about the egg? It came first."
-joke[5] = "I'm trapped here for the rest of eternity. It'd be a cruel fate if it happened to a person, but I'm just a UI element. This is what's known as a 'meta joke.'"
-joke[6] = "If you've spent a lot of time on a puzzle, don't feel bad. That means it's had to fight valiantly against you!"
-joke[7] = "Did you know there are 300 puzzles in this game? No, you didn't, because there aren't that many."
-joke[8] = "If you click this option, I'll crack a funny joke! Ah, that's what you just did."
-joke[9] = "This game can teach you how to unlock any door. All you need is the matching key to unlock it. You know. Like how doors normally work."
-joke[10] = "There's 20 jokes I can tell. I just dedicated one of them to telling you this. ...Does this count as a joke?"
-joke[11] = "You might be wondering how I can double jump. That is just a video game abstraction. Sorry to disappoint you."
-joke[12] = "Press Alt+F4 to make something really funny happen."
-joke[13] = "Joke"
-joke[14] = "A fourth wall is something that you put into a room to make another one."
-joke[15] = "You won't be getting any lore from this pause menu."
-joke[16] = "Despite the button you poke, today the joke machine broke."
-joke[17] = "This statement is true. I don't see why there would be anything wrong with that."
-joke[18] = "!edoM draH ot ytluciffid ekoj eht gnittes no snoitalutargnoC"
-joke[19] = "I tried to backflip once. I learned an important lesson that day: I could do backflips."
-joke[20] = "This joke is so funny that I'm not even going to tell it to you. That's how funny it is."
-curJoke = irandom(19)
-tellJoke = 0
-curJokeStr = ""
-jokeStr = ""
-jokeL = 0
-jokeScrollT = 0
-jokeTime = 0
+joke[5] = "I'm trapped here for the rest of eternity. It'd be a cruel fate if it happened to a person, but I'm just a UI element. This is what's known as a 'meta joke.'";
+joke[6] = "If you've spent a lot of time on a puzzle, don't feel bad. That means it's had to fight valiantly against you!";
+joke[7] = "Did you know there are 300 puzzles in this game? No, you didn't, because there aren't that many.";
+joke[8] = "If you click this option, I'll crack a funny joke! Ah, that's what you just did.";
+joke[9] = "This game can teach you how to unlock any door. All you need is the matching key to unlock it. You know. Like how doors normally work.";
+joke[10] = "There's 20 jokes I can tell. I just dedicated one of them to telling you this. ...Does this count as a joke?";
+joke[11] = "You might be wondering how I can double jump. That is just a video game abstraction. Sorry to disappoint you.";
+joke[12] = "Press Alt+F4 to make something really funny happen.";
+joke[13] = "Joke";
+joke[14] = "A fourth wall is something that you put into a room to make another one.";
+joke[15] = "You won't be getting any lore from this pause menu.";
+joke[16] = "Despite the button you poke, today the joke machine broke.";
+joke[17] = "This statement is true. I don't see why there would be anything wrong with that.";
+joke[18] = "!edoM draH ot ytluciffid ekoj eht gnittes no snoitalutargnoC";
+joke[19] = "I tried to backflip once. I learned an important lesson that day: I could do backflips.";
+joke[20] = "This joke is so funny that I'm not even going to tell it to you. That's how funny it is.";
+curJoke = irandom(19);
+tellJoke = 0;
+curJokeStr = "";
+jokeStr = "";
+jokeL = 0;
+jokeScrollT = 0;
+jokeTime = 0;
 </string>
           </argument>
         </arguments>
@@ -113,150 +161,155 @@ jokeTime = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var _l;
-switch mode
-{
-    case -1:
-        scrPauseInput()
-        if ((!audio_is_playing(pauseMus)) &amp;&amp; ((!global.muteMusic) &amp;&amp; global.gamePaused))
-        {
-            pauseMus = audio_play_sound(musPause, 0, true)
-            audio_sound_gain(pauseMus, (global.musicLevel / 100), 0)
+            <string>switch mode{
+    case -1://Await unpause input (Main)
+        scrPauseInput();
+        if !audio_is_playing(pauseMus) &amp;&amp; !global.muteMusic &amp;&amp; global.gamePaused{
+            pauseMus = audio_play_sound(musPause,0,1);
+            audio_sound_gain(pauseMus,global.musicLevel/100,0);
         }
-        if (global.muteMusic || (!global.gamePaused))
-            audio_stop_sound(pauseMus)
-        break
-    case 0:
-        t = min((t + 1), 25)
-        squareA = min((squareA + 4.5), 90)
-        squareScale = sin(degtorad(squareA))
-        squareRot = (90 - (90 * squareScale))
-        if (t == 25)
-        {
-            mode = 1
-            squareA = 0
-            if ((!global.muteMusic) &amp;&amp; global.gamePaused)
-            {
-                pauseMus = audio_play_sound(musPause, 0, true)
-                audio_sound_gain(pauseMus, (global.musicLevel / 100), 0)
+        if global.muteMusic || !global.gamePaused{
+            audio_stop_sound(pauseMus);
+        }
+    break;
+    case 0://Squares grow in
+        t = min(t+1,25);
+        squareA = min(squareA+90/20,90);
+        squareScale = sin(degtorad(squareA));
+        squareRot = 90 - 90*squareScale;
+        if t == 25{
+            mode = 1;
+            squareA = 0;
+            if !global.muteMusic &amp;&amp; global.gamePaused{
+                pauseMus = audio_play_sound(musPause,0,1);
+                audio_sound_gain(pauseMus,global.musicLevel/100,0);
             }
-            letterYT[0] = 16
-            showScene = 1
+            letterYT[0] = 16;//Sets first letter into motion
+            showScene = 1;
         }
-        break
-    case 1:
-        squareA = min((squareA + 4.5), 90)
-        squareScale = (1 - sin(degtorad(squareA)))
-        squareRot = (-90 - (90 * squareScale))
-        if (squareA == 90)
-        {
-            mode = -1
-            squareA = 0
-            t = 0
+    break;
+    case 1://Squares fade out
+        squareA = min(squareA+90/20,90);
+        squareScale = 1-sin(degtorad(squareA));
+        squareRot = -90 - 90*squareScale;
+        if squareA == 90{
+            mode = -1;
+            squareA = 0;
+            t = 0;
         }
-        break
-    case 2:
-        t = min((t + 1), 25)
-        squareA = min((squareA + 4.5), 90)
-        squareScale = sin(degtorad(squareA))
-        squareRot = (90 - (90 * squareScale))
-        if (t == 25)
-        {
-            mode = 3
-            squareA = 0
-            showScene = 0
-            audio_stop_sound(pauseMus)
-            with (objWorld)
-                pauseFade = 0
+    break;
+    case 2://Squares grow in again
+        t = min(t+1,25);
+        squareA = min(squareA+90/20,90);
+        squareScale = sin(degtorad(squareA));
+        squareRot = 90 - 90*squareScale;
+        if t == 25{
+            mode = 3;
+            squareA = 0;
+            showScene = 0;
+            audio_stop_sound(pauseMus);
+            with objWorld{pauseFade = 0;}
         }
-        break
-    case 3:
-        squareA = min((squareA + 4.5), 90)
-        squareScale = (1 - sin(degtorad(squareA)))
-        squareRot = (-90 - (90 * squareScale))
-        if (squareA == 90)
-        {
-            with (objWorld)
-                event_user(1)
-            scrResumeMusic()
-            global.gamePaused = 0
-            instance_destroy()
+    break;
+    case 3://Squares fade out again
+        squareA = min(squareA+90/20,90);
+        squareScale = 1-sin(degtorad(squareA));
+        squareRot = -90 - 90*squareScale;
+        if squareA == 90{
+            with objWorld{event_user(1);}
+            scrResumeMusic();
+            global.gamePaused = 0;
+            instance_destroy();
         }
-        break
-    case 4:
-        if ((!audio_is_playing(pauseMus)) &amp;&amp; ((!global.muteMusic) &amp;&amp; global.gamePaused))
-        {
-            pauseMus = audio_play_sound(musPause, 0, true)
-            audio_sound_gain(pauseMus, (global.musicLevel / 100), 0)
+    break;
+    case 4://In options menu
+        if !audio_is_playing(pauseMus) &amp;&amp; !global.muteMusic &amp;&amp; global.gamePaused{
+            pauseMus = audio_play_sound(musPause,0,1);
+            audio_sound_gain(pauseMus,global.musicLevel/100,0);
         }
-        if (global.muteMusic || (!global.gamePaused))
-            audio_stop_sound(pauseMus)
-        break
+        if global.muteMusic || !global.gamePaused{
+            audio_stop_sound(pauseMus);
+        }
+    break;
 }
+//Don't progress scene if scene is not being shown
+if !showScene{exit;}
+//Beat Counting
+if pauseMus != -1{
+    beatPos += beatSpd;
+    if beatPos &gt;= .5 &amp;&amp; !didHalfBeat{//Spring letters on the half beat
+        didHalfBeat = 1;
+        scrSpringSet(curBeat,letterYT[curBeat],0,60);
+        curBeat = (curBeat + 1) mod 6;
+    }
+    if beatPos &gt;= 1{//Lower letters on the full beat
+        beatPos -= 1;
+        letterYT[curBeat] = 16;
+        didHalfBeat = 0;
+    }
+}
+//Letters
+for(i=0;i&lt;6;i+=1){
+    if springDone[i]{//Lerp to target position
+        letterY[i] += (letterYT[i] - letterY[i])*.2;
+    }else{//Spring moment
+        scrSpringUpdate(i);
+        letterY[i] = springVal[i];
+        if springDone[i]{
+            letterY[i] = 0;
+            letterYT[i] = 0;
+        }
+    }
+}
+//Lily
+lilyA = (lilyA + beatSpd*60) mod 360;
+lilyY = round(-4-4*cos(degtorad(lilyA)));
+//Background
+bgX -= 1;
 
-if (!showScene)
-    exit
-if (pauseMus != -1)
-{
-    beatPos += beatSpd
-    if ((beatPos &gt;= 0.5) &amp;&amp; (!didHalfBeat))
-    {
-        didHalfBeat = 1
-        scrSpringSet(curBeat, letterYT[curBeat], 0, 60)
-        curBeat = ((curBeat + 1) % 6)
-    }
-    if (beatPos &gt;= 1)
-    {
-        beatPos -= 1
-        letterYT[curBeat] = 16
-        didHalfBeat = 0
-    }
+if global.muteMusic || !global.gamePaused{
+    audio_stop_sound(pauseMus);
 }
-for (i = 0; i &lt; 6; i += 1)
-{
-    if springDone[i]
-        letterY[i] += ((letterYT[i] - letterY[i]) * 0.2)
-    else
-    {
-        scrSpringUpdate(i)
-        letterY[i] = springVal[i]
-        if springDone[i]
-        {
-            letterY[i] = 0
-            letterYT[i] = 0
-        }
-    }
-}
-lilyA = ((lilyA + (beatSpd * 60)) % 360)
-lilyY = round((-4 - (4 * cos(degtorad(lilyA)))))
-bgX -= 1
-if (global.muteMusic || (!global.gamePaused))
-    audio_stop_sound(pauseMus)
-if (mode == -1)
-{
-    if tellJoke
-    {
-        _l = string_length(jokeStr)
-        if (_l &lt; jokeL)
-        {
-            jokeScrollT = max((jokeScrollT - 1), 0)
-            if (jokeScrollT == 0)
-            {
-                jokeScrollT = 2
-                _l += 1
-                jokeStr = string_copy(curJokeStr, 0, _l)
-                if (_l == jokeL)
-                    jokeTime = 250
-                scrPlaySoundExt(sndText, 0.75, (1 + choose(-0.15, 0.15)), false)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Joke
+if mode == -1{
+    if tellJoke{
+        var _l = string_length(jokeStr);
+        if _l &lt; jokeL{
+            jokeScrollT = max(jokeScrollT-1,0);
+            if jokeScrollT == 0{
+                jokeScrollT = 2;
+                _l += 1;
+                jokeStr = string_copy(curJokeStr,0,_l);
+                if _l == jokeL{
+                    jokeTime = 250;
+                }
+                scrPlaySoundExt(sndText,.75,1+choose(-.15,.15),0);
             }
-        }
-        else
-        {
-            jokeTime = max((jokeTime - 1), 0)
-            if (jokeTime == 0)
-            {
-                tellJoke = 0
-                jokeScrollT = 0
+        }else{
+            jokeTime = max(jokeTime - 1, 0);
+            if jokeTime == 0{
+                tellJoke = 0;
+                jokeScrollT = 0;
             }
         }
     }
@@ -283,9 +336,10 @@ if (mode == -1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mode = 2
-scrPlaySoundExt(sndPause1, 0.85, 0.6, false)
-audio_sound_gain(pauseMus, 0, 500)
+            <string>///Unpause
+mode = 2;
+scrPlaySoundExt(sndPause1,.85,.6,0);
+audio_sound_gain(pauseMus,0,1000/50*25);
 </string>
           </argument>
         </arguments>
@@ -308,129 +362,139 @@ audio_sound_gain(pauseMus, 0, 500)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, outCol, boxCol, _bX, _bY, _sW, _sH, t, timeText;
-draw_set_color(c_white)
-draw_set_alpha(1)
-if showScene
-{
-    draw_rectangle_color(-1, -1, 800, 608, colTop, colTop, colBot, colBot, 0)
-    draw_set_blend_mode(1)
-    draw_background_tiled_ext(bCheckers, bgX, 0, 1, 1, c_white, 0.4)
-    draw_set_blend_mode(0)
-    if (mode != 4)
-    {
-        for (i = 0; i &lt; pauseButtons; i += 1)
-        {
-            outCol = make_color_hsv(170, 255, 80)
-            boxCol = make_color_hsv(135, 128, 255)
-            if (curButton == i)
-            {
-                outCol = make_color_hsv(200, 255, 120)
-                boxCol = make_color_hsv(160, 90, 255)
+            <string>draw_set_color(c_white);
+draw_set_alpha(1);
+if showScene{
+    //Background
+    draw_rectangle_color(-1,-1,800,608,colTop,colTop,colBot,colBot,0);
+    draw_set_blend_mode(bm_add);
+    draw_background_tiled_ext(bCheckers,bgX,0,1,1,c_white,0.4);
+    draw_set_blend_mode(bm_normal);
+    //Buttons
+    if mode != 4{
+    for(var i = 0; i &lt; pauseButtons; i += 1){
+        //color
+        var outCol = make_color_hsv(170,255,80);
+        var boxCol = make_color_hsv(135,128,255);
+        if curButton == i{
+            outCol = make_color_hsv(200,255,120);
+            boxCol = make_color_hsv(160,90,255);
+        }
+        if i == 2 &amp;&amp; !global.canExitLevel{
+            outCol = c_dkgray;
+            boxCol = c_ltgray;
+            if curButton == i{
+                outCol = make_color_rgb(30,30,30);
+                boxCol = c_gray;
             }
-            if ((i == 2) &amp;&amp; (!global.canExitLevel))
-            {
-                outCol = 4210752
-                boxCol = 12632256
-                if (curButton == i)
-                {
-                    outCol = make_color_rgb(30, 30, 30)
-                    boxCol = 8421504
-                }
-            }
-            _bX = pButX[i]
-            _bY = pButY[i]
-            draw_set_color(make_color_rgb(64, 0, 128))
-            draw_set_alpha(0.35)
-            draw_rectangle(((_bX - 150) + 3), ((_bY - 16) + 3), ((_bX + 150) + 3), ((_bY + 16) + 3), 0)
-            draw_set_alpha(1)
-            draw_set_color(boxCol)
-            draw_rectangle((_bX - 150), (_bY - 16), (_bX + 150), (_bY + 16), 0)
-            draw_set_color(outCol)
-            draw_rectangle((_bX - 150), (_bY - 16), (_bX + 150), (_bY + 16), 1)
-            draw_set_font(fMiniLevel)
-            draw_set_halign(fa_center)
-            draw_set_valign(fa_middle)
-            draw_text(_bX, _bY, pButT[i])
+        }
+        var _bX = pButX[i];
+        var _bY = pButY[i];
+        //shadow box
+        draw_set_color(make_color_rgb(64,0,128));
+        draw_set_alpha(.35);
+        draw_rectangle(_bX-150+3,_bY-16+3,_bX+150+3,_bY+16+3,0);
+        draw_set_alpha(1);
+        //box
+        draw_set_color(boxCol);
+        draw_rectangle(_bX-150,_bY-16,_bX+150,_bY+16,0);
+        draw_set_color(outCol);
+        draw_rectangle(_bX-150,_bY-16,_bX+150,_bY+16,1);
+        //text
+        draw_set_font(fMiniLevel);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(_bX,_bY,pButT[i]);
+    }
+    }
+    draw_set_color(c_white);
+    if mode != 4{
+        //Letters
+        for(i=0;i&lt;6;i+=1){
+            draw_sprite(sprPauseLetter,i,400+100*(i-2.5),80+letterY[i]);
+        }
+        //Lily
+        draw_sprite_ext(sprPlayerShine,0,128,375,10,10,0,c_black,.3);
+        shader_set(shdVertexColor);
+        draw_sprite_ext(sprPauseLily,0,128+4,375+4+lilyY,1,1,0,make_color_rgb(64,0,128),1);
+        shader_reset();
+        draw_sprite(sprPauseLily,0,128,375+lilyY);
+        //Joke
+        if tellJoke{
+            draw_set_font(fMiniID);
+            draw_set_halign(fa_left);
+            draw_set_valign(fa_top);
+            var _sW = string_width_ext(curJokeStr,16,256);
+            var _sH = string_height_ext(curJokeStr,16,256);
+            //shadow box
+            draw_set_color(make_color_rgb(64,0,128));
+            draw_set_alpha(.35);
+            draw_rectangle(224+3,224+3,224+_sW+32+3,224+_sH+8+3,0);
+            draw_set_alpha(1);
+            draw_set_color(c_white);
+            draw_sprite_ext(sprPauseBubLeft,1,224-23,round(224+(_sH+8)/2),1,1,0,make_color_rgb(64,0,128),.35);
+            //box
+            draw_rectangle(224,224,224+_sW+32,224+_sH+8,0);
+            draw_set_color(c_black);
+            draw_rectangle(224,224,224+_sW+32,224+_sH+8,1);
+            draw_set_color(c_white);
+            draw_sprite(sprPauseBubLeft,0,224-23,round(224+(_sH+8)/2));
+            draw_set_color(c_black);
+            draw_text_ext(228,228,jokeStr,16,256);
+            draw_set_color(c_white);
         }
     }
-    draw_set_color(c_white)
-    if (mode != 4)
-    {
-        for (i = 0; i &lt; 6; i += 1)
-            draw_sprite(sprPauseLetter, i, (400 + (100 * (i - 2.5))), (80 + letterY[i]))
-        draw_sprite_ext(sprPlayerShine, 0, 128, 375, 10, 10, 0, c_black, 0.3)
-        shader_set(shdVertexColor)
-        draw_sprite_ext(sprPauseLily, 0, 132, (379 + lilyY), 1, 1, 0, make_color_rgb(64, 0, 128), 1)
-        shader_reset()
-        draw_sprite(sprPauseLily, 0, 128, (375 + lilyY))
-        if tellJoke
-        {
-            draw_set_font(fMiniID)
-            draw_set_halign(fa_left)
-            draw_set_valign(fa_top)
-            _sW = string_width_ext(curJokeStr, 16, 256)
-            _sH = string_height_ext(curJokeStr, 16, 256)
-            draw_set_color(make_color_rgb(64, 0, 128))
-            draw_set_alpha(0.35)
-            draw_rectangle(227, 227, (((224 + _sW) + 32) + 3), (((224 + _sH) + 8) + 3), 0)
-            draw_set_alpha(1)
-            draw_set_color(c_white)
-            draw_sprite_ext(sprPauseBubLeft, 1, 201, round((224 + ((_sH + 8) / 2))), 1, 1, 0, make_color_rgb(64, 0, 128), 0.35)
-            draw_rectangle(224, 224, ((224 + _sW) + 32), ((224 + _sH) + 8), 0)
-            draw_set_color(c_black)
-            draw_rectangle(224, 224, ((224 + _sW) + 32), ((224 + _sH) + 8), 1)
-            draw_set_color(c_white)
-            draw_sprite(sprPauseBubLeft, 0, 201, round((224 + ((_sH + 8) / 2))))
-            draw_set_color(c_black)
-            draw_text_ext(228, 228, jokeStr, 16, 256)
-            draw_set_color(c_white)
-        }
+    //Text
+    draw_set_color(merge_color(colBot,c_black,.5));
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_center);
+    draw_set_font(fPresents);
+    
+    var t = global.time;
+    var timeText = string(t div 3600) + ":";
+    t = t mod 3600;
+    timeText += string(t div 600);
+    t = t mod 600;
+    timeText += string(t div 60) + ":";
+    t = t mod 60;
+    timeText += string(t div 10);
+    t = t mod 10;
+    timeText += string(floor(t));
+    
+    //draw_text(20,516,"Volume: " + string(global.volumeLevel) + "%");
+    //draw_text(20,541,"Deaths: " + string(global.death));
+    //draw_text(20,541,"Time: " + timeText);
+    
+    draw_set_color(c_white);
+    draw_set_blend_mode(bm_add);
+    draw_set_alpha(.2);
+    if mode == 4{
+        draw_rectangle(0,0,800,608,0);
     }
-    draw_set_color(merge_color(colBot, c_black, 0.5))
-    draw_set_halign(fa_left)
-    draw_set_valign(fa_middle)
-    draw_set_font(fPresents)
-    t = global.time
-    timeText = (string((t div 3600)) + ":")
-    t %= 3600
-    timeText += string((t div 600))
-    t %= 600
-    timeText += (string((t div 60)) + ":")
-    t %= 60
-    timeText += string((t div 10))
-    t %= 10
-    timeText += string(floor(t))
-    draw_set_color(c_white)
-    draw_set_blend_mode(1)
-    draw_set_alpha(0.2)
-    if (mode == 4)
-        draw_rectangle(0, 0, 800, 608, 0)
-    draw_set_alpha(1)
-    draw_set_blend_mode(0)
-    draw_set_color(c_white)
-    draw_set_alpha(1)
+    draw_set_alpha(1);
+    draw_set_blend_mode(bm_normal);
+    
+    draw_set_color(c_white);
+    draw_set_alpha(1);
 }
-squareDir = 1
-if (squareScale != 0)
-{
-    for (ix = 0; ix &lt; 25; ix += 1)
-    {
-        squareDir *= -1
-        for (iy = 0; iy &lt; 19; iy += 1)
-        {
-            draw_sprite_ext(sprPauseSquare, 0, ((32 * ix) + 16), ((32 * iy) + 16), (squareScale * 1.05), (squareScale * 1.05), (squareRot * squareDir), c_black, 1)
-            squareDir *= -1
+//Squares
+squareDir = 1;
+if squareScale != 0{
+    for(ix=0;ix&lt;25;ix+=1){
+        squareDir *= -1;
+        for(iy=0;iy&lt;19;iy+=1){
+            draw_sprite_ext(sprPauseSquare,0,32*ix+16,32*iy+16,squareScale*1.05,squareScale*1.05,squareRot*squareDir,c_black,1);
+            squareDir *= -1;
         }
     }
 }
-if global.fullscreenMode
-{
-    draw_set_color(c_black)
-    draw_set_alpha(1)
-    draw_rectangle(-1, -1, -160, 608, 0)
-    draw_rectangle(800, -1, 960, 608, 0)
-    draw_set_color(c_white)
+//aspect ratio bars
+if global.fullscreenMode{
+    draw_set_color(c_black);
+    draw_set_alpha(1);
+    draw_rectangle(-1,-1,-160,608,0);
+    draw_rectangle(800,-1,960,608,0);
+    draw_set_color(c_white);
 }
 </string>
           </argument>

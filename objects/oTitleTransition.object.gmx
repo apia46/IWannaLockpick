@@ -25,11 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>color = make_color_rgb(60, 130, 60)
-alpha = 0
-state = 0
-timer = 0
-action = 0
+            <string>color = make_color_rgb(60,130,60);
+alpha = 0;
+state = 0;
+timer = 0;
+
+action = 0;//0 = New Game, 1 = Load Game
 </string>
           </argument>
         </arguments>
@@ -52,49 +53,43 @@ action = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch state
-{
-    case 0:
-        timer = min((timer + 1), 25)
-        alpha = (timer / 25)
-        if (timer == 25)
-        {
-            timer = 0
-            state = 1
+            <string>switch state{
+    case 0://fade in
+        timer = min(timer+1,25);
+        alpha = timer/25;
+        if timer == 25{
+            timer = 0;
+            state = 1;
         }
-        break
-    case 1:
-        timer = min((timer + 1), 25)
-        if (timer == 25)
-        {
-            timer = 0
-            state = 2
-            switch action
-            {
-                case 0:
-                    global.gameStarted = 1
-                    global.autosave = 1
-                    global.difficulty = 0
-                    global.newSavefile = 1
-                    instance_create(0, 0, oRmMessage)
-                    room_goto(rIntro)
-                    break
-                case 1:
-                    scrLoadGame(1)
-                    instance_create(0, 0, oRmMessage)
-                    break
+    break;
+    case 1://stay
+        timer = min(timer+1, 25);
+        if timer == 25{
+            timer = 0;
+            state = 2;
+            switch action{
+                case 0://New game
+                    global.gameStarted = true; //sets game in progress (enables saving, restarting, etc.)
+                    global.autosave = true;
+                    global.difficulty = 0;
+                    global.newSavefile = 1;
+                    instance_create(0,0,oRmMessage);
+                    room_goto(rIntro);
+                break;
+                case 1://Load game
+                    //show_debug_message("TitleTransition chose to load");
+                    scrLoadGame(true);
+                    instance_create(0,0,oRmMessage);
+                break;
             }
-            
         }
-        break
-    case 2:
-        timer = min((timer + 1), 25)
-        alpha = (1 - (timer / 25))
-        if (timer == 25)
-            instance_destroy()
-        break
+    break;
+    case 2://fade out
+        timer = min(timer+1, 25);
+        alpha = 1 - (timer/25);
+        if timer == 25{instance_destroy();}
+    break;
 }
-
 </string>
           </argument>
         </arguments>
@@ -117,11 +112,11 @@ action = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(color)
-draw_set_alpha(alpha)
-draw_rectangle(view_xview[0], view_yview[0], (view_xview[0] + 799), (view_yview[0] + 607), 0)
-draw_set_color(c_white)
-draw_set_alpha(1)
+            <string>draw_set_color(color);
+draw_set_alpha(alpha);
+draw_rectangle(view_xview,view_yview,view_xview+799,view_yview+607,0);
+draw_set_color(c_white);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

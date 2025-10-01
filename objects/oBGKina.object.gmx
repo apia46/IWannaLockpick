@@ -25,29 +25,32 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var sOld, sNew, _ox, _oy;
-style = 0
-heartCount = 0
-heartX[0] = 0
-heartY[0] = 0
-heartS[0] = 1
-heartA[0] = 0
-sOld = random_get_seed()
-sNew = room
-random_set_seed(sNew)
-for (i = 0; i &lt;= (room_width / 32); i += 1)
-{
-    _ox = ((25 * i) + random_range(-8, 8))
-    _ox *= 2
-    _oy = ((200 * (i % 3)) + random(200))
-    _oy *= 1
-    heartCount += 1
-    heartX[i] = lerp((room_width / 2), _ox, 1.1)
-    heartY[i] = lerp((room_height / 2), _oy, 1.1)
-    heartS[i] = random_range(0.25, 1)
-    heartA[i] = random(360)
+            <string>style = 0;//0 = Heart, 1 = Museum
+
+heartCount = 0;
+heartX[0] = 0;
+heartY[0] = 0;
+heartS[0] = 1;
+heartA[0] = 0;
+
+//Unique room-based seed
+var sOld, sNew;
+sOld = random_get_seed();
+sNew = room;
+random_set_seed(sNew);
+//Add background hearts
+for(i=0;i&lt;=(room_width/32);i+=1){
+    var _ox = 800/32*i+random_range(-8,8);
+    _ox *= 2;
+    var _oy = 200*(i mod 3)+random(200);
+    _oy *= 1;
+    heartCount += 1;
+    heartX[i] = lerp(room_width/2,_ox,1.1);
+    heartY[i] = lerp(room_height/2,_oy,1.1);
+    heartS[i] = random_range(.25,1);
+    heartA[i] = random(360);
 }
-random_set_seed(sOld)
+random_set_seed(sOld);
 </string>
           </argument>
         </arguments>
@@ -70,9 +73,9 @@ random_set_seed(sOld)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i;
-for (i = 0; i &lt; heartCount; i += 1)
-    heartA[i] = ((heartA[i] + 1) % 360)
+            <string>for(var i = 0 ; i &lt; heartCount; i += 1){
+    heartA[i] = (heartA[i] + 1) mod 360;
+}
 </string>
           </argument>
         </arguments>
@@ -95,18 +98,21 @@ for (i = 0; i &lt; heartCount; i += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var tiles, i;
-if (style == 0)
-    color = make_color_rgb(255, 0, 128)
-else
-    color = make_color_rgb(0, 128, 255)
-background_index[0] = bGradient
-background_blend[0] = merge_color(color, c_black, 0.8)
-background_visible[0] = 1
-background_color = 0
-tiles = tile_get_ids_at_depth(9999)
-for (i = 0; i &lt; array_length_1d(tiles); i++)
-    tile_set_blend(tiles[i], color)
+            <string>//Tile coloration
+if style == 0{
+    color = make_color_rgb(255,0,128);
+}else{
+    color = make_color_rgb(0,128,255);
+}
+background_index[0] = bGradient;
+background_blend[0] = merge_color(color,c_black,.8);
+background_visible[0] = true;
+background_color = c_black;
+
+var tiles = tile_get_ids_at_depth(9999);
+for (var i = 0; i &lt; array_length_1d(tiles); i++;){
+    tile_set_blend(tiles[i], color);
+}
 </string>
           </argument>
         </arguments>
@@ -129,24 +135,21 @@ for (i = 0; i &lt; array_length_1d(tiles); i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i, _pth, _pnum, ii, _lx, _ly, _lx2, _ly2;
-draw_set_color(color)
-for (i = 0; i &lt; heartCount; i += 1)
-{
-    draw_set_alpha(heartS[i])
-    _pth = pthKH0
-    _pnum = path_get_number(_pth)
-    for (ii = 0; ii &lt; (_pnum - 1); ii += 1)
-    {
-        _lx = (heartX[i] + (path_get_point_x(_pth, ii) * heartS[i]))
-        _ly = (heartY[i] + ((path_get_point_y(_pth, ii) + (16 * sin(degtorad(heartA[i])))) * heartS[i]))
-        _lx2 = (heartX[i] + (path_get_point_x(_pth, (ii + 1)) * heartS[i]))
-        _ly2 = (heartY[i] + ((path_get_point_y(_pth, (ii + 1)) + (16 * sin(degtorad(heartA[i])))) * heartS[i]))
-        draw_line(_lx, _ly, _lx2, _ly2)
+            <string>draw_set_color(color);
+for(var i = 0 ; i &lt; heartCount; i += 1){
+    draw_set_alpha(heartS[i]);
+    var _pth = pthKH0;
+    var _pnum = path_get_number(_pth);
+    for(var ii = 0; ii &lt; _pnum-1; ii += 1){
+        var _lx = heartX[i] + path_get_point_x(_pth,ii) * heartS[i];
+        var _ly = heartY[i] + (path_get_point_y(_pth,ii) + 16*sin(degtorad(heartA[i]))) * heartS[i];
+        var _lx2 = heartX[i] + path_get_point_x(_pth,ii+1) * heartS[i];
+        var _ly2 = heartY[i] + (path_get_point_y(_pth,ii+1) + 16*sin(degtorad(heartA[i]))) * heartS[i];
+        draw_line(_lx,_ly,_lx2,_ly2);
     }
 }
-draw_set_alpha(1)
-draw_set_color(c_white)
+draw_set_alpha(1);
+draw_set_color(c_white);
 </string>
           </argument>
         </arguments>

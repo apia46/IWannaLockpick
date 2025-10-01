@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrComboInit()
+            <string>scrComboInit();
 </string>
           </argument>
         </arguments>
@@ -48,10 +48,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (myLight != self)
-{
-    with (myLight)
-        instance_destroy()
+            <string>///destroys child object aka lights
+if myLight != -1{
+    with myLight{
+        instance_destroy();
+    }
 }
 </string>
           </argument>
@@ -75,16 +76,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-if browned
-{
-    alarm[0] = 120
-    for (ix = 0; ix &lt; (2 * w); ix += 1)
-    {
-        for (iy = 0; iy &lt; (2 * h); iy += 1)
-        {
-            with (instance_create(((x + random_range(4, 12)) + (16 * ix)), ((y + random_range(4, 12)) + (16 * iy)), oBrownParticle))
-            {
+            <string>///Brown particles
+if browned{
+    alarm[0] = 120;
+    for(var ix = 0; ix&lt;(2*w); ix+=1){
+        for(var iy = 0; iy&lt;(2*h); iy+=1){
+            with(instance_create(x+random_range(4,12)+16*ix,y+random_range(4,12)+16*iy,oBrownParticle)){
+                
             }
         }
     }
@@ -111,7 +109,8 @@ if browned
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>undoReposition()
+            <string>///Reposition
+undoReposition();
 </string>
           </argument>
         </arguments>
@@ -134,70 +133,109 @@ if browned
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.complexMode == 0)
-{
-    if (copies &gt; 0)
-        iPow = 0
-    if (copies &lt; 0)
-        iPow = 2
-    if (copies == 0)
-    {
-        if (icopies &gt; 0)
-            iPow = 1
-        if (icopies &lt; 0)
-            iPow = 3
+            <string>///Door-Copy Code
+//iPow stuff
+if global.complexMode == 0{//Real view
+    if copies &gt; 0{iPow = 0;}
+    if copies &lt; 0{iPow = 2;}
+    if copies == 0{
+        if icopies &gt; 0{iPow = 1;}
+        if icopies &lt; 0{iPow = 3;}
     }
-}
-else
-{
-    if (icopies &gt; 0)
-        iPow = 1
-    if (icopies &lt; 0)
-        iPow = 3
-    if (icopies == 0)
-    {
-        if (copies &gt; 0)
-            iPow = 0
-        if (copies &lt; 0)
-            iPow = 2
+}else{//Imaginary view
+    if icopies &gt; 0{iPow = 1;}
+    if icopies &lt; 0{iPow = 3;}
+    if icopies == 0{
+        if copies &gt; 0{iPow = 0;}
+        if copies &lt; 0{iPow = 2;}
     }
-}
-switch copyState
-{
-    case 0:
-        break
-    case 1:
-        copyPitch += 0.015
-        audio_sound_pitch(copySound, copyPitch)
-        copyTimer = min((copyTimer + 1), 50)
-        copyAlpha = max((copyAlpha - 0.02), 0)
-        if (copyTimer == 50)
-            copyState = 0
-        break
-    case 2:
-        copyTimer = min((copyTimer + 1), 60)
-        if (copyTimer == 25)
-            scrPlaySoundExt(sndCopy1, 1, 1, false)
-        if (copyTimer == 40)
-            scrPlaySoundExt(sndMasterRelock, 1, 1, false)
-        if (copyTimer == 50)
-        {
-            copyDraw = 1
-            copyAlpha = 1
-        }
-        if (copyTimer &gt; 50)
-            copyAlpha = max((copyAlpha - 0.1), 0)
-        if (copyTimer == 60)
-            copyState = 0
-        break
-    default:
-    
 }
 
-scrComboStep()
-visible = active
-if (!active)
-    brownNearPlayer = 0
+switch copyState{
+    case 0://Nothing really
+        
+    break;
+    case 1://Adding a copy!
+        copyPitch += 0.015;
+        audio_sound_pitch(copySound,copyPitch);
+        var _copyLength = lerp(50,10,global.fAnimSpd);
+        copyTimer = min(copyTimer + 1, _copyLength);
+        copyAlpha = 1-copyTimer/_copyLength;
+        if copyTimer == _copyLength{
+            copyState = 0;
+        }
+        //Use blend mode: bm_inv_dest_color, bm_inv_src_alpha, start at 1 and go to 0
+    break;
+    case 2://Destroying a copy!
+        var _copyLength = round(lerp(60,12,global.fAnimSpd));
+        var _timeev1 = round(lerp(25,5,global.fAnimSpd));
+        var _timeev2 = round(lerp(40,8,global.fAnimSpd));
+        var _timeev3 = round(lerp(50,10,global.fAnimSpd));
+        copyTimer = min(copyTimer + 1, _copyLength);
+        if copyTimer == _timeev1{
+            scrPlaySoundExt(sndCopy1,1,1,false);
+        }
+        if copyTimer == _timeev2{
+            scrPlaySoundExt(sndMasterRelock,1,1,false);
+        }
+        if copyTimer == _timeev3{
+            copyDraw = 1;
+            copyAlpha = 1;
+        }
+        if copyTimer &gt; _timeev3{
+            copyAlpha = max(copyAlpha - 0.1, 0);
+            copyDraw = 1;
+        }
+        if copyTimer == _copyLength{
+            copyState = 0; copyAlpha = 0;
+        }
+    break;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///MAIN STEP
+scrComboStep();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///post-stuff
+visible = active;
+if !active{brownNearPlayer = 0;}
 </string>
           </argument>
         </arguments>
@@ -220,29 +258,24 @@ if (!active)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-scrSalvageCutscene()
-global.inCutscene = 1
-with (oSalvageIn)
-{
-    if active
-    {
-        other.xT = (x - 8)
-        other.yT = (y - 24)
-        alarm[0] = 25
+            <string>///Salvage debris
+scrSalvageCutscene();
+global.inCutscene = 1;
+with oSalvageIn{
+    if active{
+        other.xT = x-8;
+        other.yT = y-24;
+        alarm[0] = 25;
     }
 }
-for (ix = 0; ix &lt; (2 * w); ix += 1)
-{
-    for (iy = 0; iy &lt; (2 * h); iy += 1)
-    {
-        with (instance_create((x + (16 * ix)), (y + (16 * iy)), oDebrisS))
-        {
-            c1 = other.c[0]
-            c2 = other.c[1]
-            c3 = other.c[2]
-            xT = other.xT
-            yT = other.yT
+for(var ix = 0; ix&lt;(2*w); ix+=1){
+    for(var iy = 0; iy&lt;(2*h); iy+=1){
+        with(instance_create(x+16*ix,y+16*iy,oDebrisS)){
+            c1 = other.c[0];
+            c2 = other.c[1];
+            c3 = other.c[2];
+            xT = other.xT;
+            yT = other.yT;
         }
     }
 }
@@ -268,17 +301,19 @@ for (ix = 0; ix &lt; (2 * w); ix += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrComboCFunc()
-image_xscale = w
-image_yscale = h
-myLight = self
-if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exists(oBGW7) || (instance_exists(oLightsW9) || instance_exists(oBGW12)))))
-{
-    myLight = instance_create((x + (16 * w)), (y + (16 * h)), oLight)
-    myLight.parent = id
-    myLight.image_xscale = (0.2 * max(w, h))
-    myLight.image_yscale = myLight.image_xscale
-    myLight.image_blend = c_white
+            <string>///Room start code
+scrComboCFunc();
+
+image_xscale = w;
+image_yscale = h;
+
+myLight = -1;
+if instance_exists(oLightsW5) || instance_exists(oLightsW4) || instance_exists(oBGW7) || instance_exists(oLightsW9) || instance_exists(oBGW12){
+    myLight = instance_create(x+16*w,y+16*h,oLight);
+    myLight.parent = id;
+    myLight.image_xscale = .2 * max(w,h);
+    myLight.image_yscale = myLight.image_xscale;
+    myLight.image_blend = c_white;
 }
 </string>
           </argument>
@@ -302,29 +337,23 @@ if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exist
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-if browned
-{
-    alarm[0] = 120
-    for (ix = 0; ix &lt; (2 * w); ix += 1)
-    {
-        for (iy = 0; iy &lt; (2 * h); iy += 1)
-        {
-            with (instance_create(((x + random_range(4, 12)) + (16 * ix)), ((y + random_range(4, 12)) + (16 * iy)), oBrownParticle))
-                scale = random_range(0.2, 0.5)
+            <string>///Brown particle burst
+var _bp;
+if browned{
+    alarm[0] = 120;
+    for(var ix = 0; ix&lt;(2*w); ix+=1){
+        for(var iy = 0; iy&lt;(2*h); iy+=1){
+            with(instance_create(x+random_range(4,12)+16*ix,y+random_range(4,12)+16*iy,oBrownParticle)){
+                scale = random_range(.2,.5);
+            }
         }
     }
-}
-else
-{
-    for (ix = 0; ix &lt; (2 * w); ix += 1)
-    {
-        for (iy = 0; iy &lt; (2 * h); iy += 1)
-        {
-            with (instance_create(((x + random_range(4, 12)) + (16 * ix)), ((y + random_range(4, 12)) + (16 * iy)), oBrownParticle))
-            {
-                scale = random_range(0.2, 0.5)
-                mode = 1
+}else{
+    for(var ix = 0; ix&lt;(2*w); ix+=1){
+        for(var iy = 0; iy&lt;(2*h); iy+=1){
+            with(instance_create(x+random_range(4,12)+16*ix,y+random_range(4,12)+16*iy,oBrownParticle)){
+                scale = random_range(.2,.5);
+                mode = 1;
             }
         }
     }
@@ -351,20 +380,18 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-copyState = 2
-copyDraw = 0
-copyAlpha = 0
-copyTimer = 0
-for (ix = 0; ix &lt; (2 * w); ix += 1)
-{
-    for (iy = 0; iy &lt; (2 * h); iy += 1)
-    {
-        with (instance_create((x + (16 * ix)), (y + (16 * iy)), oDebris3))
-        {
-            c1 = other.c[0]
-            c2 = other.c[1]
-            c3 = other.c[2]
+            <string>///Copy debris
+copyState = 2;
+scrSpeedUpAnims();
+copyDraw = 0;
+copyAlpha = 0;
+copyTimer = 0;
+for(var ix = 0; ix&lt;(2*w); ix+=1){
+    for(var iy = 0; iy&lt;(2*h); iy+=1){
+        with(instance_create(x+16*ix,y+16*iy,oDebris3)){
+            c1 = other.c[0];
+            c2 = other.c[1];
+            c3 = other.c[2];
         }
     }
 }
@@ -390,21 +417,19 @@ for (ix = 0; ix &lt; (2 * w); ix += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-copyState = 1
-copySound = scrPlaySoundExt(sndMasterUnlock2, 1, 1, false)
-copyPitch = 1
-copyAlpha = 1
-copyTimer = 0
-for (ix = 0; ix &lt; (2 * w); ix += 1)
-{
-    for (iy = 0; iy &lt; (2 * h); iy += 1)
-    {
-        with (instance_create((x + (16 * ix)), (y + (16 * iy)), oDebris2))
-        {
-            c1 = other.c[0]
-            c2 = other.c[1]
-            c3 = other.c[2]
+            <string>///Anti-debris
+copyState = 1;
+scrSpeedUpAnims();
+copySound = scrPlaySoundExt(sndMasterUnlock2,1,1,false);
+copyPitch = 1;
+copyAlpha = 1;
+copyTimer = 0;
+for(var ix = 0; ix&lt;(2*w); ix+=1){
+    for(var iy = 0; iy&lt;(2*h); iy+=1){
+        with(instance_create(x+16*ix,y+16*iy,oDebris2)){
+            c1 = other.c[0];
+            c2 = other.c[1];
+            c3 = other.c[2];
         }
     }
 }
@@ -430,16 +455,13 @@ for (ix = 0; ix &lt; (2 * w); ix += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ix, iy;
-for (ix = 0; ix &lt; (2 * w); ix += 1)
-{
-    for (iy = 0; iy &lt; (2 * h); iy += 1)
-    {
-        with (instance_create((x + (16 * ix)), (y + (16 * iy)), oDebris))
-        {
-            c1 = other.c[0]
-            c2 = other.c[1]
-            c3 = other.c[2]
+            <string>///Make debris
+for(var ix = 0; ix&lt;(2*w); ix+=1){
+    for(var iy = 0; iy&lt;(2*h); iy+=1){
+        with(instance_create(x+16*ix,y+16*iy,oDebris)){
+            c1 = other.c[0];
+            c2 = other.c[1];
+            c3 = other.c[2];
         }
     }
 }
@@ -465,18 +487,21 @@ for (ix = 0; ix &lt; (2 * w); ix += 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrComboCFunc()
-image_xscale = w
-image_yscale = h
-myLight = self
-if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exists(oBGW7) || (instance_exists(oLightsW9) || instance_exists(oBGW12)))))
-{
-    myLight = instance_create((x + (16 * w)), (y + (16 * h)), oLight)
-    myLight.parent = id
-    myLight.image_xscale = (0.2 * max(w, h))
-    myLight.image_yscale = myLight.image_xscale
-    myLight.image_blend = c_white
+            <string>scrComboCFunc();
+
+image_xscale = w;
+image_yscale = h;
+
+myLight = -1;
+if instance_exists(oLightsW5) || instance_exists(oLightsW4) || instance_exists(oBGW7) || instance_exists(oLightsW9) || instance_exists(oBGW12){
+    myLight = instance_create(x+16*w,y+16*h,oLight);
+    myLight.parent = id;
+    myLight.image_xscale = .2 * max(w,h);
+    myLight.image_yscale = myLight.image_xscale;
+    myLight.image_blend = c_white;
 }
+
+if salvageID != -1{depth -= 1;}
 </string>
           </argument>
         </arguments>
@@ -499,8 +524,9 @@ if (instance_exists(oLightsW5) || (instance_exists(oLightsW4) || (instance_exist
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1)
-scrComboDrawInvert()
+            <string>///Copy drawing
+draw_set_alpha(1);
+scrComboDrawInvert();
 </string>
           </argument>
         </arguments>
@@ -523,7 +549,35 @@ scrComboDrawInvert()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrComboDrawMain()
+            <string>///salvage outline
+if salvageID != -1 &amp;&amp; active{
+    draw_set_color(global.salvageCol);
+    draw_set_alpha(1);
+    draw_rectangle(x-2,y-2,x+32*w+1,y+32*h+1,0);
+    draw_set_color(c_white);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Yay for nested scripts
+scrComboDrawMain();
 </string>
           </argument>
         </arguments>

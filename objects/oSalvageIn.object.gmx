@@ -25,14 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>active = 0
-ID = -1
-image_speed = 0
-image_index = 0
-colA = 0
-colHue = 190
-isHubRoom = 0
-touched = 0
+            <string>active = 0;
+ID = -1;
+
+image_speed = 0;
+image_index = 0;
+colA = 0;
+//colHue = 140;
+colHue = 190;
+
+isHubRoom = 0;//For salvages that'll return you to the same room after use
+touched = 0;//To prevent hell sirens when touching 2 Inputs simultaneously
 </string>
           </argument>
         </arguments>
@@ -55,16 +58,14 @@ touched = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>t = instance_create(0, 0, oLevelWinS)
-t.roomTo = global.roomOuter
-if isHubRoom
-    t.roomTo = room
-if global.outerLevelTele
-{
-    t.telePlayer = 1
-    t.teleX = global.levelEnteredX
-    t.teleY = global.levelEnteredY
-    global.outerLevelTele = 0
+            <string>t = instance_create(0,0,oLevelWinS);
+t.roomTo = global.roomOuter;
+if isHubRoom{t.roomTo = room;}
+if global.outerLevelTele{
+    t.telePlayer = 1;
+    t.teleX = global.levelEnteredX;
+    t.teleY = global.levelEnteredY;
+    global.outerLevelTele = 0;
 }
 </string>
           </argument>
@@ -88,8 +89,9 @@ if global.outerLevelTele
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!place_meeting(x, y, objPlayer))
-    touched = 0
+            <string>if !place_meeting(x,y,objPlayer){
+    touched = 0;
+}
 </string>
           </argument>
         </arguments>
@@ -112,12 +114,14 @@ if global.outerLevelTele
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if active
-    colHue = 85
-else
-    colHue = 190
-colA = ((colA + 2) % 360)
-image_blend = make_color_hsv(colHue, (150 + (105 * sin(degtorad(colA)))), 255)
+            <string>if active{
+    colHue = 85;
+}else{
+    colHue = 190;
+}
+
+colA = (colA + 2) mod 360;
+image_blend = make_color_hsv(colHue,150+105*sin(degtorad(colA)),255);
 </string>
           </argument>
         </arguments>
@@ -140,25 +144,21 @@ image_blend = make_color_hsv(colHue, (150 + (105 * sin(degtorad(colA)))), 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (touched == 0)
-{
-    touched = 1
-    if (!active)
-    {
-        with (oSalvageIn)
-            active = 0
-        active = 1
-        scrPlaySoundExt(sndSalvagePrep, 0.9, 1.4, false)
+            <string>//if ID == -1{exit;}
+if touched == 0{
+    touched = 1;
+    if !active{
+        with oSalvageIn{active = 0;}
+        active = 1;
+        scrPlaySoundExt(sndSalvagePrep,.9,1.4,0);
     }
-    if (global.salvageID != ID)
-    {
-        global.salvageActive = 1
-        global.salvageID = ID
+    if global.salvageID != ID{
+        global.salvageActive = 1;
+        global.salvageID = ID;
     }
-    if (ID == -1)
-    {
-        global.salvageActive = 1
-        global.salvageID = -1
+    if ID == -1{
+        global.salvageActive = 1;
+        global.salvageID = -1;
     }
 }
 </string>
@@ -183,28 +183,38 @@ image_blend = make_color_hsv(colHue, (150 + (105 * sin(degtorad(colA)))), 255)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, image_index, (x + 1), (y + 1), 1, 1, 0, merge_color(image_blend, c_black, 0.5), 1)
-draw_self()
-draw_set_font(fMiniID)
-draw_set_alpha(1)
-draw_set_halign(fa_left)
-draw_set_valign(fa_bottom)
-outCol = make_color_rgb(40, 100, 200)
-inCol = make_color_rgb(221, 227, 235)
-s = string(ID)
-draw_set_alpha(0.35)
-draw_set_color(c_black)
-draw_text((((x + 1) - 16) + 1), ((y + 3) + 1), s)
-draw_text((((x + 1) - 16) + 2), ((y + 3) + 2), s)
-draw_set_color(outCol)
-draw_set_alpha(1)
-draw_text(((x + 2) - 16), (y + 3), s)
-draw_text((x - 16), (y + 3), s)
-draw_text(((x + 1) - 16), (y + 2), s)
-draw_text(((x + 1) - 16), (y + 4), s)
-draw_set_color(inCol)
-draw_text_color(((x + 1) - 16), (y + 3), s, c_white, c_white, inCol, inCol, 1)
-draw_set_color(c_white)
+            <string>draw_sprite_ext(sprite_index,image_index,x+1,y+1,1,1,0,merge_color(image_blend,c_black,.5),1);
+draw_self();
+
+//Text for ID
+draw_set_font(fMiniID);
+draw_set_alpha(1);
+draw_set_halign(fa_left);
+draw_set_valign(fa_bottom);
+outCol = make_color_rgb(40,100,200);
+inCol = make_color_rgb(221,227,235);
+s = string(ID);
+draw_set_alpha(.35);
+draw_set_color(c_black);
+draw_text(x+1-16+1,y+3+1,s);
+draw_text(x+1-16+2,y+3+2,s);
+draw_set_color(outCol);
+draw_set_alpha(1);
+/*draw_text(x-1-16,y+2,s);
+draw_text(x-16,y+1,s);
+draw_text(x+3-16,y+2,s);
+draw_text(x+2-16,y+1,s);
+draw_text(x-1-16,y+4,s);
+draw_text(x-16,y+5,s);
+draw_text(x+3-16,y+4,s);
+draw_text(x+2-16,y+5,s);*/
+draw_text(x+2-16,y+3,s);
+draw_text(x-16,y+3,s);
+draw_text(x+1-16,y+2,s);
+draw_text(x+1-16,y+4,s);
+draw_set_color(inCol);
+draw_text_color(x+1-16,y+3,s,c_white,c_white,inCol,inCol,1);
+draw_set_color(c_white);
 </string>
           </argument>
         </arguments>

@@ -25,17 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>direction = 180
-scale = 1
-image_xscale = scale
-image_yscale = (scale * 0.75)
-speed = (1.5 - (y / 2000))
-image_alpha = 0.3
-image_index = 1
-image_speed = 0
-col1 = make_color_hsv(32, 10, 255)
-col2 = make_color_hsv(220, 20, 255)
-image_blend = merge_color(col1, col2, (y / 2000))
+            <string>direction = 180;
+scale = 1;
+image_xscale = scale;
+image_yscale = scale*.75;
+speed = 1.5 - y/2000;
+image_alpha = .3;
+image_index = 1;
+image_speed = 0;
+col1 = make_color_hsv(32,10,255);
+col2 = make_color_hsv(220,20,255);
+image_blend = merge_color(col1,col2,y/2000);
 </string>
           </argument>
         </arguments>
@@ -58,8 +58,7 @@ image_blend = merge_color(col1, col2, (y / 2000))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (x &lt; -600)
-    instance_destroy()
+            <string>if x&lt;-600{instance_destroy();}
 </string>
           </argument>
         </arguments>

@@ -25,9 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_alpha *= 0.85
-if (image_alpha &lt; 0.005)
-    instance_destroy()
+            <string>image_alpha *= .85;
+if image_alpha &lt; .005{instance_destroy();}
 </string>
           </argument>
         </arguments>
@@ -50,9 +49,9 @@ if (image_alpha &lt; 0.005)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(1)
-draw_self()
-draw_set_blend_mode(0)
+            <string>draw_set_blend_mode(bm_add);
+draw_self();
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

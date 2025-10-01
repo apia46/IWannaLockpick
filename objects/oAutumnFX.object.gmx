@@ -25,36 +25,32 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>colFade = 1
-colDark = make_color_rgb(80, 13, 131)
-colBright = make_color_rgb(238, 175, 97)
-fade = 0
-alarm[0] = 250
-alarm[1] = 10
-screenbound = max(room_width, room_height)
-secondFlower = 1
-for (t = 0; t &lt; 500; t += 10)
-{
-    if secondFlower
-    {
-        p = instance_create(random(screenbound), -24, oWayOutFlower)
-        p.x += (p.hspeed * t)
-        p.y += (p.vspeed * t)
-        p.sprite_index = sprFlower8Green
-        p = instance_create(-24, random(screenbound), oWayOutFlower)
-        p.x += (p.hspeed * t)
-        p.y += (p.vspeed * t)
-        p.sprite_index = sprFlower8Green
+            <string>colFade = 1;
+colDark = make_color_rgb(80,13,131);
+colBright = make_color_rgb(238,175,97);
+fade = 0;
+alarm[0] = 250;
+alarm[1] = 10;
+
+//Flowers
+screenbound = max(room_width,room_height);
+secondFlower = 1;
+for(t=0;t&lt;50*10;t+=10){
+    if secondFlower{
+        p = instance_create(random(screenbound),-24,oWayOutFlower);
+        p.x += p.hspeed * t; p.y += p.vspeed * t;
+        p.sprite_index = sprFlower8Green;
+        p = instance_create(-24,random(screenbound),oWayOutFlower);
+        p.x += p.hspeed * t; p.y += p.vspeed * t;
+        p.sprite_index = sprFlower8Green;
     }
-    secondFlower = (!secondFlower)
-    p = instance_create(random(screenbound), -24, oWayOutFlower1)
-    p.x += (p.hspeed * t)
-    p.y += (p.vspeed * t)
-    p.sprite_index = sprFlower8Green
-    p = instance_create(-24, random(screenbound), oWayOutFlower1)
-    p.x += (p.hspeed * t)
-    p.y += (p.vspeed * t)
-    p.sprite_index = sprFlower8Green
+    secondFlower = !secondFlower;
+    p = instance_create(random(screenbound),-24,oWayOutFlower1);
+    p.x += p.hspeed * t; p.y += p.vspeed * t;
+    p.sprite_index = sprFlower8Green;
+    p = instance_create(-24,random(screenbound),oWayOutFlower1);
+    p.x += p.hspeed * t; p.y += p.vspeed * t;
+    p.sprite_index = sprFlower8Green;
 }
 </string>
           </argument>
@@ -78,19 +74,18 @@ for (t = 0; t &lt; 500; t += 10)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[1] = 10
-secondFlower = (!secondFlower)
-if secondFlower
-{
-    p = instance_create(random(screenbound), -24, oWayOutFlower)
-    p.sprite_index = sprFlower8Green
-    p = instance_create(-24, random(screenbound), oWayOutFlower)
-    p.sprite_index = sprFlower8Green
+            <string>alarm[1] = 10;
+secondFlower = !secondFlower;
+if secondFlower{
+    p = instance_create(random(screenbound),-24,oWayOutFlower);
+    p.sprite_index = sprFlower8Green;
+    p = instance_create(-24,random(screenbound),oWayOutFlower);
+    p.sprite_index = sprFlower8Green;
 }
-p = instance_create(random(screenbound), -24, oWayOutFlower1)
-p.sprite_index = sprFlower8Green
-p = instance_create(-24, random(screenbound), oWayOutFlower1)
-p.sprite_index = sprFlower8Green
+p = instance_create(random(screenbound),-24,oWayOutFlower1);
+p.sprite_index = sprFlower8Green;
+p = instance_create(-24,random(screenbound),oWayOutFlower1);
+p.sprite_index = sprFlower8Green;
 </string>
           </argument>
         </arguments>
@@ -113,8 +108,8 @@ p.sprite_index = sprFlower8Green
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = irandom_range(300, 500)
-fade = (!fade)
+            <string>alarm[0] = irandom_range(300,500);
+fade = !fade;
 </string>
           </argument>
         </arguments>
@@ -137,10 +132,11 @@ fade = (!fade)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (fade == 0)
-    colFade = min((colFade + 0.007), 1)
-else
-    colFade = max((colFade - 0.007), 0.1)
+            <string>if fade == 0{
+    colFade = min(colFade + 0.007, 1);
+}else{
+    colFade = max(colFade - 0.007, 0.1);
+}
 </string>
           </argument>
         </arguments>
@@ -163,18 +159,19 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.lowFX
-    exit
-draw_set_alpha(((1 - colFade) * 0.075))
-draw_set_color(colDark)
-draw_rectangle(0, 0, 800, 608, 0)
-draw_set_alpha((colFade * 0.1))
-draw_set_color(colBright)
-draw_set_blend_mode(1)
-draw_rectangle(0, 0, 800, 608, 0)
-draw_set_color(c_white)
-draw_set_blend_mode(0)
-draw_set_alpha(1)
+            <string>if global.lowFX{exit;}
+draw_set_alpha((1 - colFade) * 0.075);
+draw_set_color(colDark);
+draw_rectangle(0,0,800,608,0);
+
+draw_set_alpha(colFade * 0.1);
+draw_set_color(colBright);
+draw_set_blend_mode(bm_add);
+draw_rectangle(0,0,800,608,0);
+
+draw_set_color(c_white);
+draw_set_blend_mode(bm_normal);
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>
@@ -197,39 +194,42 @@ draw_set_alpha(1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if global.lowFX
-    exit
-shadowCol = make_color_rgb(100, 60, 30)
-with (oLevel)
-{
-    if (!isWorld)
-        draw_sprite_ext(sprite_index, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else if (rm == 17)
-        draw_sprite_ext(sprWorldEntry, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-    else
-        draw_sprite_ext(sprWorldEntry, (ID + 1), (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
-}
-with (objBlock)
-{
-    if (object_index == objBlock)
-        draw_sprite_ext(sprBlockWhite, 0, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, other.shadowCol, 0.35)
-    else if ((object_index == oDoorCombo) || ((object_index == oDoorSimple) || (object_get_parent(object_index) == 234)))
-    {
-        if copyDraw
-            draw_sprite_ext(sprBlockWhite, 0, (x + 3), (y + 3), w, h, image_angle, other.shadowCol, 0.35)
+            <string>if global.lowFX{exit;}
+shadowCol = make_color_rgb(100,60,30);//make_color_rgb(220,255,180);//make_color_rgb(255,180,220); Pink shadows
+with oLevel{
+    if !isWorld{
+        draw_sprite_ext(sprite_index,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        if rm == rMainHub{
+            draw_sprite_ext(sprWorldEntry,0,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+        }else{
+            draw_sprite_ext(sprWorldEntry,ID+1,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+        }
     }
-    else if ((object_index == objStairR) || (object_index == objStairL))
-        draw_sprite_ext(sprite_index, image_index, (x + 3), (y + 3), image_xscale, image_yscale, image_angle, c_black, (0.35 * image_alpha))
 }
-with (oKeyBulk)
-{
-    if (color == 0)
-        draw_sprite_ext(sprAllKeysWhite, (type + 8), (x + 3), (y + 3), 1, 1, 0, other.shadowCol, 0.35)
-    else
-        draw_sprite_ext(sprAllKeysWhite, type, (x + 3), (y + 3), 1, 1, 0, other.shadowCol, 0.35)
+with objBlock{
+    if object_index == objBlock{
+        draw_sprite_ext(sprBlockWhite,0,x+3,y+3,image_xscale,image_yscale,image_angle,other.shadowCol,0.35);
+    }else if (object_index == oDoorCombo || object_index == oDoorSimple || object_get_parent(object_index) == oDoorSimple){
+        if copyDraw{
+            draw_sprite_ext(sprBlockWhite,0,x+3,y+3,w,h,image_angle,other.shadowCol,0.35);
+        }
+    }else if (object_index == objStairR || object_index == objStairL){
+        draw_sprite_ext(sprite_index,image_index,x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }else{
+        //draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale,image_yscale,image_angle,c_black,0.35*image_alpha);
+    }
 }
-with (objPlayer)
-    draw_sprite_ext(sprite_index, floor(image_index), (x + 3), (y + 3), (image_xscale * xScale), image_yscale, image_angle, c_black, (0.35 * image_alpha))
+with oKeyBulk{
+    if color == key_MASTER{
+        draw_sprite_ext(sprAllKeysWhite,type+8,x+3,y+3,1,1,0,other.shadowCol,.35);
+    }else{
+        draw_sprite_ext(sprAllKeysWhite,type,x+3,y+3,1,1,0,other.shadowCol,.35);
+    }
+}
+with objPlayer{
+    draw_sprite_ext(sprite_index,floor(image_index),x+3,y+3,image_xscale*xScale,image_yscale,image_angle,c_black,0.35*image_alpha);
+}
 </string>
           </argument>
         </arguments>

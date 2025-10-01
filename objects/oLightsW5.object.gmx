@@ -25,81 +25,105 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var sOld, sNew, ix, tx, iy, ty;
-lightA = 0
-lightMult = 1
-sOld = random_get_seed()
-sNew = room
-random_set_seed(sNew)
-with (oBlockTile)
-{
-    for (ix = 0; ix &lt; image_xscale; ix += 1)
-    {
-        tx = (x + (32 * ix))
-        for (iy = 0; iy &lt; image_yscale; iy += 1)
-        {
-            ty = (y + (32 * iy))
-            tile_add(tileAttic, 0, (32 * choose(0, 1, 2, 3)), 32, 32, tx, ty, -5)
+            <string>///is also the bg object
+lightA = 0;
+lightMult = 1;
+
+//"generates" a unique tileset
+var sOld, sNew;
+sOld = random_get_seed();
+sNew = room;
+random_set_seed(sNew);
+//Put autotile shenanigans here
+with oBlockTile{
+    for(var ix = 0; ix &lt; image_xscale; ix += 1){
+        var tx = x + 32 * ix;
+        for(var iy = 0; iy &lt; image_yscale; iy += 1){
+            var ty = y + 32 * iy;
+            tile_add(tileAttic,0,32*choose(0,1,2,3),32,32,tx,ty,-5);
         }
     }
 }
-with (objBlock)
-{
-    if (object_index == objBlock)
-    {
-        for (ix = 0; ix &lt; image_xscale; ix += 1)
-        {
-            tx = (x + (32 * ix))
-            for (iy = 0; iy &lt; image_yscale; iy += 1)
-            {
-                ty = (y + (32 * iy))
-                tile_add(tileAttic, 0, (32 * choose(0, 1, 2, 3)), 32, 32, tx, ty, -5)
-                if ((instance_position(tx, (ty - 32), objBlock) == -4) &amp;&amp; (instance_position(tx, (ty - 32), oBlockTile) == -4))
-                    tile_add(tileAttic, 32, 0, 32, 32, tx, (ty - 32), -5)
-                if ((instance_position(tx, (ty + 32), objBlock) == -4) &amp;&amp; (instance_position(tx, (ty + 32), oBlockTile) == -4))
-                    tile_add(tileAttic, 32, 32, 32, 32, tx, (ty + 32), -5)
-                with (oDoorSimple)
-                {
-                    x = -4096
-                    y = -4096
+with objBlock{
+    if object_index == objBlock{
+        for(var ix = 0; ix &lt; image_xscale; ix += 1){
+            var tx = x + 32 * ix;
+            for(var iy = 0; iy &lt; image_yscale; iy += 1){
+                var ty = y + 32 * iy;
+                tile_add(tileAttic,0,32*choose(0,1,2,3),32,32,tx,ty,-5);
+                if instance_position(tx,ty-32,objBlock) == noone &amp;&amp; instance_position(tx,ty-32,oBlockTile) == noone{//up
+                    tile_add(tileAttic,32,0,32,32,tx,ty-32,-5);
                 }
-                with (oDoorCombo)
-                {
-                    x = -4096
-                    y = -4096
+                if instance_position(tx,ty+32,objBlock) == noone &amp;&amp; instance_position(tx,ty+32,oBlockTile) == noone{//down
+                    tile_add(tileAttic,32,32,32,32,tx,ty+32,-5);
                 }
-                if ((instance_position((tx - 32), ty, objBlock) == -4) &amp;&amp; (instance_position((tx - 32), ty, oBlockTile) == -4))
-                    tile_add(tileAttic, 96, 0, 32, 32, (tx - 32), ty, -5)
-                if ((instance_position((tx + 32), ty, objBlock) == -4) &amp;&amp; (instance_position((tx + 32), ty, oBlockTile) == -4))
-                    tile_add(tileAttic, 64, 0, 32, 32, (tx + 32), ty, -5)
-                with (oDoorSimple)
-                {
-                    x = xstart
-                    y = ystart
+                with oDoorSimple{x=-4096;y=-4096;}
+                with oDoorCombo{x=-4096;y=-4096;}
+                if instance_position(tx-32,ty,objBlock) == noone &amp;&amp; instance_position(tx-32,ty,oBlockTile) == noone{//left
+                    /*if place_free(tx-32,y) &amp;&amp; instance_position(tx-32,y,oKeyBulk) == noone{
+                        tile_add(tileAttic,96,32*choose(0,1,2,3),32,32,tx-32,ty,-5);
+                    }else{
+                        tile_add(tileAttic,96,0,32,32,tx-32,ty,-5);
+                    }*/
+                    tile_add(tileAttic,96,0,32,32,tx-32,ty,-5);
                 }
-                with (oDoorCombo)
-                {
-                    x = xstart
-                    y = ystart
+                if instance_position(tx+32,ty,objBlock) == noone &amp;&amp; instance_position(tx+32,ty,oBlockTile) == noone{//right
+                    /*if place_free(tx+32,y) &amp;&amp; instance_position(tx+32,y,oKeyBulk) == noone{
+                        tile_add(tileAttic,64,32*choose(0,1,2,3),32,32,tx+32,ty,-5);
+                    }else{
+                        tile_add(tileAttic,64,0,32,32,tx+32,ty,-5);
+                    }*/
+                    tile_add(tileAttic,64,0,32,32,tx+32,ty,-5);
                 }
+                with oDoorSimple{x=xstart;y=ystart;}
+                with oDoorCombo{x=xstart;y=ystart;}
             }
         }
     }
 }
-random_set_seed(sOld)
-background_visible[2] = 1
-background_index[2] = bMist
-background_hspeed[2] = 0.8
-background_blend[2] = make_color_rgb(150, 120, 0)
-background_alpha[2] = 0.75
-s = surface_create(800, 608)
-ambTop = make_color_rgb(100, 90, 70)
-ambBot = make_color_rgb(100, 90, 70)
-surface_set_target(s)
-draw_rectangle_color(0, 0, 799, 607, ambTop, ambTop, ambBot, ambBot, 0)
-surface_reset_target()
-myOutline = instance_create(0, 0, oW5SurfStorage)
-s2Pointer = myOutline.s2
+random_set_seed(sOld);
+
+background_visible[2] = true;
+background_index[2] = bMist;
+background_hspeed[2] = .8;
+background_blend[2] = make_color_rgb(150,120,0);
+background_alpha[2] = .75;
+
+/*background_visible[1] = true;
+background_index[1] = bGradient;
+background_blend[1] = make_color_rgb(80,40,20);
+background_alpha[1] = .6;*/
+
+//surface stuff
+s = surface_create(800,608);
+ambTop = make_color_rgb(100,90,70);
+ambBot = make_color_rgb(100,90,70);
+surface_set_target(s);
+draw_rectangle_color(0,0,799,607,ambTop,ambTop,ambBot,ambBot,0);
+surface_reset_target();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Handle light outline
+myOutline = instance_create(0,0,oW5SurfStorage);
+s2Pointer = myOutline.s2;
 </string>
           </argument>
         </arguments>
@@ -122,7 +146,7 @@ s2Pointer = myOutline.s2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s)
+            <string>surface_free(s);
 </string>
           </argument>
         </arguments>
@@ -145,87 +169,81 @@ s2Pointer = myOutline.s2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var tiles, i, tile, tLeft, tTop;
-lightA = ((lightA + 2) % 360)
-lightMult = (1.33 * ((1 + (0.15 * sin(degtorad(lightA)))) + (0.015 * random_range(-1, 1))))
-if surface_exists(s)
-{
-    surface_set_target(s)
-    draw_clear_alpha(c_black, 1)
-    draw_set_blend_mode(1)
-    with (oLight)
-    {
-        if draw
-            draw_sprite_ext(sprLightSpot, 0, (x - view_xview[0]), (y - view_yview[0]), (image_xscale * other.lightMult), (image_yscale * other.lightMult), 0, image_blend, image_alpha)
+            <string>//light surface stuff
+
+lightA = (lightA + 2) mod 360;
+lightMult = 1.33 * (1 + .15*sin(degtorad(lightA)) + .015 * random_range(-1,1));
+//Full-black surface for use with surface 2
+if surface_exists(s){
+    surface_set_target(s);
+    draw_clear_alpha(c_black,1);
+    draw_set_blend_mode(bm_add);
+    with oLight{
+        if draw{
+            draw_sprite_ext(sprLightSpot,0,x-view_xview,y-view_yview,image_xscale*other.lightMult,image_yscale*other.lightMult,0,image_blend,image_alpha);
+        }
     }
-    if instance_exists(objPlayer)
-    {
-        with (objPlayer)
-            draw_sprite_ext(sprLightSpot, 0, (x - view_xview[0]), (y - view_yview[0]), (0.24 * other.lightMult), (0.24 * other.lightMult), 0, c_white, 1)
+    if instance_exists(objPlayer){
+        with objPlayer{
+            draw_sprite_ext(sprLightSpot,0,x-view_xview,y-view_yview,.24*other.lightMult,.24*other.lightMult,0,c_white,1);
+        }
     }
-    draw_set_blend_mode(0)
-    surface_reset_target()
+    draw_set_blend_mode(bm_normal);
+    surface_reset_target();
+}else{
+    s = surface_create(800,608);
+    surface_set_target(s);
+    draw_rectangle_color(0,0,799,607,ambTop,ambTop,ambBot,ambBot,0);
+    surface_reset_target();
 }
-else
-{
-    s = surface_create(800, 608)
-    surface_set_target(s)
-    draw_rectangle_color(0, 0, 799, 607, ambTop, ambTop, ambBot, ambBot, 0)
-    surface_reset_target()
-}
-if surface_exists(s2Pointer)
-{
-    surface_set_target(s2Pointer)
-    draw_clear_alpha(c_black, 0)
-    tiles = tile_get_ids_at_depth(-5)
-    for (i = 0; i &lt; array_length_1d(tiles); i++)
-    {
-        tile = tiles[i]
-        tLeft = tile_get_left(tile)
-        tTop = tile_get_top(tile)
-        draw_sprite_part_ext(sprW5Bright, 0, tLeft, tTop, 32, 32, tile_get_x(tile), tile_get_y(tile), 1, 1, c_white, 1)
+
+if surface_exists(s2Pointer){
+    surface_set_target(s2Pointer);
+    draw_clear_alpha(c_black,0);
+    var tiles = tile_get_ids_at_depth(-5);
+    for (var i = 0; i &lt; array_length_1d(tiles); i++;){
+       var tile = tiles[i];
+       var tLeft = tile_get_left(tile);
+       var tTop = tile_get_top(tile);
+       draw_sprite_part_ext(sprW5Bright,0,tLeft,tTop,32,32,tile_get_x(tile),tile_get_y(tile),1,1,c_white,1);
     }
-    draw_set_blend_mode_ext(9, 1)
-    if surface_exists(s)
-        draw_surface(s, 0, 0)
-    draw_set_blend_mode(0)
-    surface_reset_target()
-}
-else
-{
-    with (myOutline)
-    {
-        s2 = surface_create(800, 608)
-        surface_set_target(s2)
-        draw_clear_alpha(c_black, 0)
-        surface_reset_target()
-        other.s2Pointer = s2
+    draw_set_blend_mode_ext(bm_dest_color,bm_zero);
+    if surface_exists(s){
+        draw_surface(s,0,0);
+    }
+    draw_set_blend_mode(bm_normal);
+    surface_reset_target();
+}else{
+    with myOutline{
+        s2 = surface_create(800,608);
+        surface_set_target(s2);
+        draw_clear_alpha(c_black,0);
+        surface_reset_target();
+        other.s2Pointer = s2;
     }
 }
-if surface_exists(s)
-{
-    surface_set_target(s)
-    draw_rectangle_color(0, 0, 799, 607, ambTop, ambTop, ambBot, ambBot, 0)
-    draw_set_blend_mode(1)
-    with (oLight)
-    {
-        if draw
-            draw_sprite_ext(sprLightSpot, 0, (x - view_xview[0]), (y - view_yview[0]), (image_xscale * other.lightMult), (image_yscale * other.lightMult), 0, image_blend, image_alpha)
+//Actual ambient lighting surface for use with application surface
+if surface_exists(s){
+    surface_set_target(s);
+    draw_rectangle_color(0,0,799,607,ambTop,ambTop,ambBot,ambBot,0);
+    draw_set_blend_mode(bm_add);
+    with oLight{
+        if draw{
+            draw_sprite_ext(sprLightSpot,0,x-view_xview,y-view_yview,image_xscale*other.lightMult,image_yscale*other.lightMult,0,image_blend,image_alpha);
+        }
     }
-    if instance_exists(objPlayer)
-    {
-        with (objPlayer)
-            draw_sprite_ext(sprLightSpot, 0, (x - view_xview[0]), (y - view_yview[0]), (0.24 * other.lightMult), (0.24 * other.lightMult), 0, c_white, 1)
+    if instance_exists(objPlayer){
+        with objPlayer{
+            draw_sprite_ext(sprLightSpot,0,x-view_xview,y-view_yview,.24*other.lightMult,.24*other.lightMult,0,c_white,1);
+        }
     }
-    draw_set_blend_mode(0)
-    surface_reset_target()
-}
-else
-{
-    s = surface_create(800, 608)
-    surface_set_target(s)
-    draw_rectangle_color(0, 0, 799, 607, ambTop, ambTop, ambBot, ambBot, 0)
-    surface_reset_target()
+    draw_set_blend_mode(bm_normal);
+    surface_reset_target();
+}else{
+    s = surface_create(800,608);
+    surface_set_target(s);
+    draw_rectangle_color(0,0,799,607,ambTop,ambTop,ambBot,ambBot,0);
+    surface_reset_target();
 }
 </string>
           </argument>
@@ -249,7 +267,7 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(s)
+            <string>surface_free(s);
 </string>
           </argument>
         </arguments>
@@ -272,11 +290,10 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if surface_exists(s)
-{
-    draw_set_blend_mode_ext(9, 1)
-    draw_surface(s, 0, 0)
-    draw_set_blend_mode(0)
+            <string>if surface_exists(s){
+    draw_set_blend_mode_ext(bm_dest_color,bm_zero);
+    draw_surface(s,0,0);
+    draw_set_blend_mode(bm_normal);
 }
 </string>
           </argument>

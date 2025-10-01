@@ -25,8 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dif = 4
-difName = "Load Game"
+            <string>//initialize this in creation code
+dif = 4;
+difName = "Load Game";
 </string>
           </argument>
         </arguments>
@@ -49,23 +50,27 @@ difName = "Load Game"
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (dif == 4)
+            <string>if (dif == 4)   //load game
 {
-    if file_exists(("Data\save" + string(global.savenum)))
-        scrLoadGame(1)
+    if (file_exists("Data\save"+string(global.savenum)))
+        scrLoadGame(true);
     else
-        scrKillPlayer()
+        scrKillPlayer();
 }
-else
+else    //start new game
 {
-    global.gameStarted = 1
-    global.autosave = 1
-    global.difficulty = dif
-    if file_exists(("Data\save" + string(global.savenum)))
-        file_delete(("Data\save" + string(global.savenum)))
+    global.gameStarted = true; //sets game in progress (enables saving, restarting, etc.)
+    global.autosave = true;
+    
+    global.difficulty = dif;
+    
+    if(file_exists("Data\save"+string(global.savenum)))
+        file_delete("Data\save"+string(global.savenum));
+    
     with (objPlayer)
-        instance_destroy()
-    room_goto(global.startRoom)
+        instance_destroy();
+
+    room_goto(global.startRoom);
 }
 </string>
           </argument>
@@ -89,11 +94,13 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self()
+            <string>draw_self();
+
 draw_set_color(c_black)
-draw_set_font(fDefault12)
-draw_set_halign(fa_center)
-draw_text((x + 16), (y - 16), difName)
+draw_set_font(fDefault12);
+draw_set_halign(fa_center);
+
+draw_text(x+16,y-16,difName);
 </string>
           </argument>
         </arguments>

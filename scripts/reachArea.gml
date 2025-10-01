@@ -1,3 +1,4 @@
-global.curArea = argument0
-global.areaReached[argument0] = 1
-scrSaveGame(0)
+///reachArea(areaID);
+global.curArea = argument0;
+global.areaReached[argument0] = true;
+scrSaveGame(false);

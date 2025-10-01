@@ -1,14 +1,23 @@
-convoTitle[0] = "Greetings"
-convoID[0] = 83
+///scrDefineWatsConvos();
+//Defines all Connection conversation IDs and initiating phrases.
+
+convoTitle[0] = "Greetings";
+convoID[0] = 83;
+
 convoTitle[1] = "The Beginning"
-convoID[1] = 84
+convoID[1] = 84;
+
 convoTitle[2] = "Design"
-convoID[2] = 85
+convoID[2] = 85;
+
 convoTitle[3] = "Part 2 Nightmares"
-convoID[3] = 86
+convoID[3] = 86;
+
 convoTitle[4] = "The Story"
-convoID[4] = 87
+convoID[4] = 87;
+
 convoTitle[5] = "Everyone Else"
-convoID[5] = 88
+convoID[5] = 88;
+
 convoTitle[6] = "The Future"
-convoID[6] = 89
+convoID[6] = 89;

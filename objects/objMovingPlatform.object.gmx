@@ -25,8 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited()
-bounce = 1
+            <string>event_inherited();
+
+bounce = true;  //set the platform to bounce against walls
 </string>
           </argument>
         </arguments>
@@ -49,42 +50,44 @@ bounce = 1
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if ((speed != 0) || (yspeed != 0))
+            <string>if (speed != 0 || yspeed != 0)  //make sure the platform is moving before doing collision checks
 {
-    if bounce
+    if (bounce)
     {
-        if (!place_free((x + hspeed), y))
-            hspeed = (-hspeed)
-        if (!place_free(x, ((y + vspeed) + yspeed)))
+        if (!place_free(x+hspeed,y)) {hspeed = -hspeed;}
+        
+        if (!place_free(x,y+vspeed+yspeed)) 
         {
-            if (vspeed != 0)
+            if (vspeed != 0) 
             {
-                yspeed = (-vspeed)
-                vspeed = 0
+                yspeed = -vspeed;
+                vspeed = 0;
             }
-            else
+            else 
             {
-                vspeed = (-yspeed)
-                yspeed = 0
+                vspeed = -yspeed;
+                yspeed = 0;
             }
         }
     }
-    with (instance_place(x, (y - (2 * global.grav)), objPlayer))
+    
+    with (instance_place(x,y-(2*global.grav),objPlayer))
     {
-        y += (other.vspeed + other.yspeed)
-        if place_free((x + other.hspeed), y)
-            x += other.hspeed
+        y += other.vspeed + other.yspeed;
+        if (place_free(x+other.hspeed,y)) x += other.hspeed;
     }
-    y += yspeed
+    
+    y += yspeed;
+    
     if (vspeed &lt; 0)
     {
-        yspeed = vspeed
-        vspeed = 0
+        yspeed = vspeed;
+        vspeed = 0;
     }
-    if (yspeed &gt; 0)
+    if (yspeed &gt; 0) 
     {
-        vspeed = yspeed
-        yspeed = 0
+        vspeed = yspeed;
+        yspeed = 0;
     }
 }
 </string>

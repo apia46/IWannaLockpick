@@ -1,40 +1,62 @@
-convoTitle[0] = "Had an Idea"
-convoID[0] = 60
+///scrDefineDiaryConvos();
+//Defines all Diary conversation IDs and initiating phrases.
+
+convoTitle[0] = "Had an Idea";
+convoID[0] = 60;
+
 convoTitle[1] = "Finding Friends"
-convoID[1] = 61
+convoID[1] = 61;
+
 convoTitle[2] = "The First Key"
-convoID[2] = 62
+convoID[2] = 62;
+
 convoTitle[3] = "Systems and Stuff"
-convoID[3] = 63
+convoID[3] = 63;
+
 convoTitle[4] = "Nothing but Puzzles"
-convoID[4] = 64
+convoID[4] = 64;
+
 convoTitle[5] = "Expanding Things"
-convoID[5] = 65
+convoID[5] = 65;
+
 convoTitle[6] = "Tea Time"
-convoID[6] = 66
+convoID[6] = 66;
+
 convoTitle[7] = "It Keeps Going"
-convoID[7] = 67
+convoID[7] = 67;
+
 convoTitle[8] = "Big Puzzle"
-convoID[8] = 68
+convoID[8] = 68;
+
 convoTitle[9] = "Abstractions"
-convoID[9] = 69
+convoID[9] = 69;
+
 convoTitle[10] = "Another Layer?"
-convoID[10] = 70
+convoID[10] = 70;
+
 convoTitle[11] = "Maybe Too Much"
-convoID[11] = 71
+convoID[11] = 71;
+
 convoTitle[12] = "Feedback"
-convoID[12] = 72
+convoID[12] = 72;
+
 convoTitle[13] = "Fresh Start"
-convoID[13] = 73
+convoID[13] = 73;
+
 convoTitle[14] = "Quirky Meta Things"
-convoID[14] = 74
+convoID[14] = 74;
+
 convoTitle[15] = "Coming to Fruition"
-convoID[15] = 75
+convoID[15] = 75;
+
 convoTitle[16] = "Party"
-convoID[16] = 76
+convoID[16] = 76;
+
 convoTitle[17] = "End Approaching"
-convoID[17] = 77
+convoID[17] = 77;
+
 convoTitle[18] = "Making Things Presentable"
-convoID[18] = 78
+convoID[18] = 78;
+
 convoTitle[19] = "Enrichment Program"
-convoID[19] = 79
+convoID[19] = 79;
