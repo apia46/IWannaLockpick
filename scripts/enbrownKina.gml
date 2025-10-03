@@ -1,10 +1,10 @@
 var auraPlayNoise = 0;
-if objPlayer.brownMode == 1 && browned == 0 && !(color == key_BROWN && colorSpend == key_BROWN){
+if objPlayer.brownMode == 1 && browned == 0 && !(color == color_BROWN && colorSpend == color_BROWN){
     browned = 1;
     var colorOld = color;
     var colorOld2 = colorSpend;
-    color = key_BROWN;
-    colorSpend = key_BROWN;
+    color = color_BROWN;
+    colorSpend = color_BROWN;
     scrColorDoor();
     scrColorDoor2();
     color = colorOld;
@@ -24,8 +24,8 @@ if objPlayer.brownMode == 1 && browned == 0 && !(color == key_BROWN && colorSpen
 }
 
 if browned{
-    tempColor = key_BROWN;
-    tempSpend = key_BROWN;
+    tempColor = color_BROWN;
+    tempSpend = color_BROWN;
 }else{
     tempColor = color;
     tempSpend = colorSpend;

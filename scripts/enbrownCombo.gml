@@ -1,15 +1,15 @@
 //Before the rest of this code is run, first:
-if colorSpend == key_PURE {exit;}
-if colorGlitch == key_PURE {exit;}
+if colorSpend == color_PURE {exit;}
+if glitchMimic == color_PURE {exit;}
 for(var i = 0; i < lockCount; i += 1){
-    if lock[i,0] == key_PURE{
+    if lock[i,0] == color_PURE{
         exit;
     }
 }
 var brownRedundant = 1;
-if colorSpend == key_BROWN{
+if colorSpend == color_BROWN{
     for(var i = 0; i < lockCount; i += 1){
-        if lock[i,0] != key_BROWN{
+        if lock[i,0] != color_BROWN{
             brownRedundant = 0;
         }
     }
@@ -20,7 +20,7 @@ var auraPlayNoise = 0;
 if objPlayer.brownMode == 1 && browned == 0 && !brownRedundant{//Add redundancy heuristic if everything is already brown
     browned = 1;
     var colorOld = colorSpend;
-    colorSpend = key_BROWN;
+    colorSpend = color_BROWN;
     scrComboCFunc();
     colorSpend = colorOld;
     scrPlaySoundExt(sndCopy1,1,1,false);

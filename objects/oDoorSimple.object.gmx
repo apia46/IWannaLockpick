@@ -36,7 +36,7 @@ salvageID = -1;//For mouseover purposes
 active = 1;//Whether or not it can be opened. Inactive means it goes far out of bounds.
 color = 0;
 colorSpend = 0;//Can spend a key type other than the required one
-colorGlitch = key_GLITCH;//For glitch doors
+glitchMimic = color_GLITCH;//For glitch doors
 tempColor = 0;
 tempSpend = 0;//These mostly have to do with the brown key gimmick
 count = 1;
@@ -274,7 +274,7 @@ brownNearPlayer=0;
     if distance_to_object(objPlayer) &lt;= 23{
         removeAuras();
         if objPlayer.brownMode != 0{
-            if color != key_PURE &amp;&amp; colorSpend != key_PURE{
+            if color != color_PURE &amp;&amp; colorSpend != color_PURE{
                 enbrownDoor();
             }
         }
@@ -282,20 +282,20 @@ brownNearPlayer=0;
     exit;
 }
 if objPlayer.brownMode != 0{
-    if color != key_PURE &amp;&amp; colorSpend != key_PURE{
+    if color != color_PURE &amp;&amp; colorSpend != color_PURE{
         if distance_to_object(objPlayer) &lt;= 23{
             enbrownDoor();
         }
     }
 }*/
 if browned{
-    tempColor = key_BROWN;
-    tempSpend = key_BROWN;
+    tempColor = color_BROWN;
+    tempSpend = color_BROWN;
 }else{
     tempColor = color;
     tempSpend = colorSpend;
 }
-canChangeBrowned = browned || (color != key_PURE &amp;&amp; colorSpend != key_PURE &amp;&amp; colorGlitch != key_PURE);
+canChangeBrowned = browned || (color != color_PURE &amp;&amp; colorSpend != color_PURE &amp;&amp; glitchMimic != color_PURE);
 if aura[0] == 1 || aura[1] == 1 || aura[2] == 1{
     if distToP &lt;= 23{
         removeAuras();
@@ -322,8 +322,8 @@ if distToP &gt; 23{
     brownNearPlayer = 0;
 }
 if browned{
-    tempColor = key_BROWN;
-    tempSpend = key_BROWN;
+    tempColor = color_BROWN;
+    tempSpend = color_BROWN;
 }else{
     tempColor = color;
     tempSpend = colorSpend;
@@ -344,7 +344,7 @@ if global.complexMode == 0{//Real view
         if copies &lt; 0{iPow = 2;}
     }
 }
-var canGoldOpen = !(tempColor == key_MASTER || tempColor == key_PURE || tempSpend == key_MASTER || tempSpend == key_PURE || ((colorGlitch == key_MASTER || colorGlitch == key_PURE) &amp;&amp; browned == 0));
+var canGoldOpen = !(tempColor == color_MASTER || tempColor == color_PURE || tempSpend == color_MASTER || tempSpend == color_PURE || ((glitchMimic == color_MASTER || glitchMimic == color_PURE) &amp;&amp; browned == 0));
 if distToP &lt;= 1{
     if (canGoldOpen) &amp;&amp; objPlayer.masterMode != 0{//SPEND MASTER KEYS
         scrNormalMasterOpen();
@@ -353,40 +353,40 @@ if distToP &lt;= 1{
     }else if objPlayer.masterMode == 0 || !canGoldOpen{//SPEND NORMAL KEYS
         if type == 0{//Normal
             if canOpen(tempColor,iPow){
-                if !isStar(tempSpend,colorGlitch){
-                    addComplexKeys(tempSpend,colorGlitch,-count,-icount,iPow);
+                if !isStar(tempSpend,glitchMimic){
+                    addComplexKeys(tempSpend,glitchMimic,-count,-icount,iPow);
                 }
                 //global.key[tempSpend] -= count;
                 scrOpenOrCopy();
-                scrBroadcastCopy(tempSpend,colorGlitch);
+                scrBroadcastCopy(tempSpend,glitchMimic);
             }
         }
         if type == 1{//Zero
             if canOpen(tempColor,iPow){
                 scrOpenOrCopy();
-                scrBroadcastCopy(tempSpend,colorGlitch);
+                scrBroadcastCopy(tempSpend,glitchMimic);
             }
         }
         if type == 2{//Blast
             if canOpen(tempColor,iPow){
-                if !isStar(tempSpend,colorGlitch){
+                if !isStar(tempSpend,glitchMimic){
                     if iPow == 0 || iPow == 2{//This is such a dumb bug I had to fix... Luckily combo doors don't have the same problem
-                        addComplexKeys(tempSpend,colorGlitch,-getCountGlitch(tempColor,colorGlitch)*abs(sign(count)),-getICountGlitch(tempColor,colorGlitch)*abs(sign(icount)),0); 
+                        addComplexKeys(tempSpend,glitchMimic,-getCountGlitch(tempColor,glitchMimic)*abs(sign(count)),-getICountGlitch(tempColor,glitchMimic)*abs(sign(icount)),0); 
                     }else{
-                        addComplexKeys(tempSpend,colorGlitch,-getCountGlitch(tempColor,colorGlitch)*abs(sign(icount)),-getICountGlitch(tempColor,colorGlitch)*abs(sign(count)),0);
+                        addComplexKeys(tempSpend,glitchMimic,-getCountGlitch(tempColor,glitchMimic)*abs(sign(icount)),-getICountGlitch(tempColor,glitchMimic)*abs(sign(count)),0);
                     }
                 }
                 scrOpenOrCopy();
-                scrBroadcastCopy(tempSpend,colorGlitch);
+                scrBroadcastCopy(tempSpend,glitchMimic);
             }
         }
         if type == 3{//Equal
             if canOpen(tempColor,iPow){
-                if !isStar(tempSpend,colorGlitch){
-                    addComplexKeys(tempSpend,colorGlitch,-getCountGlitch(tempColor,colorGlitch),-getICountGlitch(tempColor,colorGlitch),0);
+                if !isStar(tempSpend,glitchMimic){
+                    addComplexKeys(tempSpend,glitchMimic,-getCountGlitch(tempColor,glitchMimic),-getICountGlitch(tempColor,glitchMimic),0);
                 }
                 scrOpenOrCopy();
-                scrBroadcastCopy(tempSpend,colorGlitch);
+                scrBroadcastCopy(tempSpend,glitchMimic);
             }
         }
     }
@@ -839,18 +839,18 @@ if copyDraw == 1{
 
 //- - - - - COLOR FILL - - - - -//
 goldIndex = (goldIndex + goldSpd) mod 4;
-if tempSpend == key_MASTER{
+if tempSpend == color_MASTER{
     draw_sprite_ext(sprDGoldGrad,floor(goldIndex),x,y,w*.5,h*.5,0,c_white,1);
-}else if tempSpend == key_PURE{
+}else if tempSpend == color_PURE{
     draw_sprite_ext(sprDPureGrad,floor(goldIndex),x,y,w*.5,h*.5,0,c_white,1);
-}else if tempSpend == key_STONE{
+}else if tempSpend == color_STONE{
     draw_sprite_ext(sprDStoneTexture,0,x,y,w*.5,h*.5,0,c_white,1);
-}else if tempSpend == key_GLITCH{
-    scrColorDoorArg(key_GLITCH);
+}else if tempSpend == color_GLITCH{
+    scrColorDoorArg(color_GLITCH);
     shader_set(shdRainbowStripe2);
     scrDrawDoorSpend();
     shader_reset();
-    if colorGlitch != key_GLITCH{
+    if glitchMimic != color_GLITCH{
         scrDrawDoorGlitch(true);
     }
     scrColorDoor();
@@ -867,18 +867,18 @@ var tempW = 32*w - 14;
 var tempH = 32*h - 14;
 var tempX = x+7;
 var tempY = y+7;
-if tempColor == key_MASTER{
+if tempColor == color_MASTER{
     draw_sprite_ext(sprDGoldGrad,floor(goldIndex),tempX,tempY,tempW/64,tempH/64,0,c_white,1);
-}else if tempColor == key_PURE{
+}else if tempColor == color_PURE{
     draw_sprite_ext(sprDPureGrad,floor(goldIndex),tempX,tempY,tempW/64,tempH/64,0,c_white,1);
-}else if tempColor == key_STONE{
+}else if tempColor == color_STONE{
     draw_sprite_ext(sprDStoneTexture,0,tempX,tempY,tempW/64,tempH/64,0,c_white,1);
-}else if tempColor == key_GLITCH{
-    scrColorDoorArg(key_GLITCH);
+}else if tempColor == color_GLITCH{
+    scrColorDoorArg(color_GLITCH);
     shader_set(shdRainbowStripe2);
     scrDrawDoorRequire();
     shader_reset();
-    if colorGlitch != key_GLITCH{
+    if glitchMimic != color_GLITCH{
         scrDrawDoorGlitch(false);
     }
     scrColorDoor();

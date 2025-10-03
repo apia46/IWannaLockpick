@@ -14,16 +14,16 @@ if !global.roomClear[165] && !global.areaReached[19]{//Just solve puzzles like n
     convoID[2] = 14;
 }else if !global.areaReached[21]{//Solve World 0
     convoID[2] = 13;
-}else if !global.omegaKey[key_WHITE]{//Get the White Omega Key
+}else if !global.omegaKey[color_WHITE]{//Get the White Omega Key
     convoID[2] = 15;
-}else if !global.omegaKey[key_ORANGE]{//Get the Orange Omega Key
+}else if !global.omegaKey[color_ORANGE]{//Get the Orange Omega Key
     convoID[2] = 25;
-}else if !global.omegaKey[key_PURPLE]{//Get the Purple Omega Key
+}else if !global.omegaKey[color_PURPLE]{//Get the Purple Omega Key
     convoID[2] = 26;
-}else if !global.omegaKey[key_BLACK]{//Get more Omega Keys
-    if !global.omegaKey[key_CYAN]{
+}else if !global.omegaKey[color_BLACK]{//Get more Omega Keys
+    if !global.omegaKey[color_CYAN]{
         convoID[2] = 16;
-    }else if !global.omegaKey[key_BROWN]{
+    }else if !global.omegaKey[color_BROWN]{
         convoID[2] = 19;
     }else{
         convoID[2] = 16;

@@ -3,7 +3,7 @@ if objPlayer.aura[0] == 1 && aura[0] == 1{
     aura[0] = 0;
     auraPlayNoise = 1;
     var colorOld = colorSpend;
-    colorSpend = key_WHITE;
+    colorSpend = color_WHITE;
     scrComboCFunc();
     event_user(0);
     colorSpend = colorOld;
@@ -15,7 +15,7 @@ if objPlayer.aura[1] == 1 && aura[1] == 1{
     aura[1] = 0;
     auraPlayNoise = 1;
     var colorOld = colorSpend;
-    colorSpend = key_BROWN;
+    colorSpend = color_BROWN;
     scrComboCFunc();
     event_user(0);
     colorSpend = colorOld;
@@ -27,7 +27,7 @@ if objPlayer.aura[2] == 1 && aura[2] == 1{
     aura[2] = 0;
     auraPlayNoise = 1;
     var colorOld = colorSpend;
-    colorSpend = key_ORANGE;
+    colorSpend = color_ORANGE;
     scrComboCFunc();
     event_user(0);
     colorSpend = colorOld;

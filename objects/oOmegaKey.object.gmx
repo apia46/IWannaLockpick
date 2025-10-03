@@ -169,15 +169,15 @@ drawScale = sin(degtorad(imgA));
             <kind>1</kind>
             <string>///Set color (doubles as ID) and check if obtained
 scrColorKey();
-if color == key_MASTER{
+if color == color_MASTER{
     sprite_index = sprKMasterOrd;
     image_speed = .1;
 }
-if color == key_PURE{
+if color == color_PURE{
     sprite_index = sprKPureOrd;
     image_speed = .1;
 }
-if color == key_STONE{
+if color == color_STONE{
     sprite_index = sprKStoneOrd;
 }
 //glitch TBD
@@ -226,12 +226,12 @@ draw_set_blend_mode(bm_normal);
 //The actual thing
 //Frame
 switch color{
-    case key_MASTER:
-    case key_PURE:
-    case key_STONE:
+    case color_MASTER:
+    case color_PURE:
+    case color_STONE:
         draw_sprite_ext(sprite_index,0,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha);
     break;
-    case key_GLITCH:
+    case color_GLITCH:
         draw_sprite_ext(sprite_index,0,x,y+3*waveS+upAmt,drawScale*scale,scale,0,c_white,image_alpha);
         shader_set(shdRainbowStripe2);
         draw_sprite_ext(sprite_index,1,x,y+3*waveS+upAmt,drawScale*scale,scale,0,blend,image_alpha);

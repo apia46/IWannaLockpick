@@ -53,7 +53,7 @@ global.msg = "";</code>
   </views>
   <instances>
     <instance objName="objPlayerStart" x="608" y="544" name="inst_3211EC11" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyHandle" x="32" y="32" name="inst_452E516F" locked="0" code="show[0] = key_WHITE;&#xA;show[1] = key_BLUE;&#xA;show[2] = key_BLACK;&#xA;show[3] = key_MASTER;&#xA;show[4] = key_RED;&#xA;show[5] = key_ORANGE;&#xA;show[6] = key_GREEN;&#xA;long = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyHandle" x="32" y="32" name="inst_452E516F" locked="0" code="show[0] = color_WHITE;&#xA;show[1] = color_BLUE;&#xA;show[2] = color_BLACK;&#xA;show[3] = color_MASTER;&#xA;show[4] = color_RED;&#xA;show[5] = color_ORANGE;&#xA;show[6] = color_GREEN;&#xA;long = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oNewCamera" x="64" y="544" name="inst_4AE4B540" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oBGOmega" x="96" y="384" name="inst_0603F799" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="768" y="0" name="inst_0341A0DC" locked="0" code="" scaleX="1" scaleY="18" colour="4294967295" rotation="0"/>
@@ -105,20 +105,20 @@ global.msg = "";</code>
     <instance objName="oDoorBlack" x="320" y="256" name="inst_F3F4F99F" locked="0" code="w=2;h=2;count=5;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oDoorBlack" x="224" y="448" name="inst_25181FEC" locked="0" code="w=2;h=2;count=20;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oDoorOrange" x="544" y="352" name="inst_A3BA476F" locked="0" code="w=2;h=2;count=6;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorCombo" x="448" y="448" name="inst_82FF90CF" locked="0" code="h=2;colorSpend=key_ORANGE;&#xA;scrComboAdd(key_ORANGE,-1,0,2,0,0,sprLockAny);&#xA;scrComboAdd(key_ORANGE,-1,0,2,0,32,sprLockAny);&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorCombo" x="384" y="448" name="inst_433ED635" locked="0" code="h=2;colorSpend=key_GREEN;&#xA;scrComboAdd(key_GREEN,1,0,2,0,0,sprLockAny);&#xA;scrComboAdd(key_GREEN,1,0,2,0,32,sprLockAny);&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorCombo" x="448" y="448" name="inst_82FF90CF" locked="0" code="h=2;colorSpend=color_ORANGE;&#xA;scrComboAdd(color_ORANGE,-1,0,2,0,0,sprLockAny);&#xA;scrComboAdd(color_ORANGE,-1,0,2,0,32,sprLockAny);&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorCombo" x="384" y="448" name="inst_433ED635" locked="0" code="h=2;colorSpend=color_GREEN;&#xA;scrComboAdd(color_GREEN,1,0,2,0,0,sprLockAny);&#xA;scrComboAdd(color_GREEN,1,0,2,0,32,sprLockAny);&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oDoorGreen" x="352" y="352" name="inst_DEFF9C42" locked="0" code="h=2; count = 3;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oDoorWhite" x="352" y="448" name="inst_E360837E" locked="0" code="h=2;type=1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="192" y="448" name="inst_2CD1F2CF" locked="0" code="h=2; colorSpend = key_GREEN; color = key_ORANGE; count = -2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="288" y="448" name="inst_75E367B1" locked="0" code="w=2;h=2; colorSpend = key_BLUE; color = key_ORANGE; count = -12;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="224" y="352" name="inst_674675E7" locked="0" code="w=2;h=2; colorSpend = key_WHITE; color = key_ORANGE; count = -6;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="256" y="256" name="inst_736BBC18" locked="0" code="w=2;h=2; colorSpend = key_BLUE; color = key_ORANGE; count = -8;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="384" y="256" name="inst_C9A378D1" locked="0" code="w=2;h=2; colorSpend = key_WHITE; color = key_ORANGE; count = -12;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="448" y="256" name="inst_B4631491" locked="0" code="h=2; colorSpend = key_GREEN; color = key_ORANGE; count = -3;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="480" y="352" name="inst_CD980B59" locked="0" code="w=2;h=2; colorSpend = key_WHITE; color = key_ORANGE; count = -9;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="416" y="448" name="inst_F7554DC9" locked="0" code="h=2; colorSpend = key_WHITE; color = key_ORANGE; count = -3;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="544" y="448" name="inst_07E90932" locked="0" code="w=2;h=2; colorSpend = key_WHITE; color = key_ORANGE; count = -6;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="480" y="448" name="inst_66974B73" locked="0" code="h=2; colorSpend = key_GREEN; color = key_ORANGE; count = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="192" y="448" name="inst_2CD1F2CF" locked="0" code="h=2; colorSpend = color_GREEN; color = color_ORANGE; count = -2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="288" y="448" name="inst_75E367B1" locked="0" code="w=2;h=2; colorSpend = color_BLUE; color = color_ORANGE; count = -12;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="224" y="352" name="inst_674675E7" locked="0" code="w=2;h=2; colorSpend = color_WHITE; color = color_ORANGE; count = -6;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="256" y="256" name="inst_736BBC18" locked="0" code="w=2;h=2; colorSpend = color_BLUE; color = color_ORANGE; count = -8;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="384" y="256" name="inst_C9A378D1" locked="0" code="w=2;h=2; colorSpend = color_WHITE; color = color_ORANGE; count = -12;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="448" y="256" name="inst_B4631491" locked="0" code="h=2; colorSpend = color_GREEN; color = color_ORANGE; count = -3;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="480" y="352" name="inst_CD980B59" locked="0" code="w=2;h=2; colorSpend = color_WHITE; color = color_ORANGE; count = -9;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="416" y="448" name="inst_F7554DC9" locked="0" code="h=2; colorSpend = color_WHITE; color = color_ORANGE; count = -3;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="544" y="448" name="inst_07E90932" locked="0" code="w=2;h=2; colorSpend = color_WHITE; color = color_ORANGE; count = -6;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="480" y="448" name="inst_66974B73" locked="0" code="h=2; colorSpend = color_GREEN; color = color_ORANGE; count = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bAllTiles2" x="32" y="576" w="32" h="32" xo="0" yo="160" id="10120162" name="inst_44BA895D" depth="-12" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

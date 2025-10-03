@@ -1,5 +1,5 @@
 x += 112; y += 32; w = 2; h = 2;
-color = key_BLACK; colorSpend = key_BLACK;
+color = color_BLACK; colorSpend = color_BLACK;
 scrColorDoor(); scrColorDoor2();
 c4 = c_gray;
 c5 = c_dkgray;

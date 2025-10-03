@@ -135,8 +135,8 @@ showArrow = 0;
             <string>///KeyPick vars
 
 //iPow
-color = key_MASTER;
-colorSpend = key_MASTER;
+color = color_MASTER;
+colorSpend = color_MASTER;
 iPow = 0;
 tempColor = color;
 tempSpend = colorSpend;
@@ -265,7 +265,7 @@ showArrow = 0;
 switch state{
     case 0://Inert
         if inRange{
-            if (objPlayer.masterMode != 0 || global.key[key_BROWN] != 0 || browned){//Key stuff
+            if (objPlayer.masterMode != 0 || global.key[color_BROWN] != 0 || browned){//Key stuff
                 
             }else{//Talking
                 showArrow = 1;
@@ -496,8 +496,8 @@ switch copyState{
 if instance_exists(objPlayer) &amp;&amp; active &amp;&amp; copyState == 0{
     distToP = distance_to_object(objPlayer);
     if browned{
-        tempColor = key_BROWN;
-        tempSpend = key_BROWN;
+        tempColor = color_BROWN;
+        tempSpend = color_BROWN;
     }else{
         tempColor = color;
         tempSpend = colorSpend;
@@ -526,7 +526,7 @@ if instance_exists(objPlayer) &amp;&amp; active &amp;&amp; copyState == 0{
         }
     }
     
-    var canGoldOpen = !(tempColor == key_MASTER || tempColor == key_PURE || tempSpend == key_MASTER || tempSpend == key_PURE);
+    var canGoldOpen = !(tempColor == color_MASTER || tempColor == color_PURE || tempSpend == color_MASTER || tempSpend == color_PURE);
     if distToP &lt;= 1{
         if (canGoldOpen) &amp;&amp; objPlayer.masterMode != 0{//SPEND MASTER KEYS
             scrKinaMasterOpen();

@@ -1,7 +1,7 @@
 ///Sets the colors of the combo door
 var _cdrawc = colorSpend;
-/*if colorSpend == key_GLITCH{
-    _cdrawc = colorGlitch;
+/*if colorSpend == color_GLITCH{
+    _cdrawc = glitchMimic;
 }*/
 c[0] = global.highTone[_cdrawc];
 c[1] = global.mainTone[_cdrawc];

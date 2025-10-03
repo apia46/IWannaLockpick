@@ -1,12 +1,12 @@
 ///Draws the spend fill of the door, and nothing else.
-if colorSpend == key_MASTER{
+if colorSpend == color_MASTER{
     draw_sprite_ext(sprDGoldGrad,floor(goldIndex),salDX,salDY,salW*.5,salH*.5,0,c_white,1);
-}else if colorSpend == key_PURE{
+}else if colorSpend == color_PURE{
     draw_sprite_ext(sprDPureGrad,floor(goldIndex),salDX,salDY,salW*.5,salH*.5,0,c_white,1);
-}else if colorSpend == key_STONE{
+}else if colorSpend == color_STONE{
     draw_sprite_ext(sprDStoneTexture,0,salDX,salDY,salW*.5,salH*.5,0,c_white,1);
-}else if colorSpend == key_GLITCH{
-    scrColorDoorArg(key_GLITCH);
+}else if colorSpend == color_GLITCH{
+    scrColorDoorArg(color_GLITCH);
     shader_set(shdRainbowStripe2);
     
     //Edges

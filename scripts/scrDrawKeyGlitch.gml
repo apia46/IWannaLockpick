@@ -1,4 +1,4 @@
-if colorGlitch == key_MASTER{
+if glitchMimic == color_MASTER{
     //Change these in I Wanna Lockpick because the types are shifted
     if type == 0 || type == 5 || type == 6 || type == 7{//Normal
         draw_sprite(sprKMasterGlitch,0,x,y);
@@ -9,7 +9,7 @@ if colorGlitch == key_MASTER{
     }else{//Unstar
         draw_sprite(sprKMasterGlitch,3,x,y);
     }
-}else if colorGlitch == key_PURE{
+}else if glitchMimic == color_PURE{
     //Change these in I Wanna Lockpick because the types are shifted
     if type == 0 || type == 5 || type == 6 || type == 7{//Normal
         draw_sprite(sprKPureGlitch,0,x,y);
@@ -20,7 +20,7 @@ if colorGlitch == key_MASTER{
     }else{//Unstar
         draw_sprite(sprKPureGlitch,3,x,y);
     }
-}else if colorGlitch == key_STONE{
+}else if glitchMimic == color_STONE{
     //Change these in I Wanna Lockpick because the types are shifted
     if type == 0 || type == 5 || type == 6 || type == 7{//Normal
         draw_sprite(sprKStoneGlitch,0,x,y);
@@ -31,10 +31,10 @@ if colorGlitch == key_MASTER{
     }else{//Unstar
         draw_sprite(sprKStoneGlitch,3,x,y);
     }
-	// @addcolor if key image/animation
+    // @addcolor if key image/animation
 }else{//Normal keys
     var _cstored = color;
-    color = colorGlitch;
+    color = glitchMimic;
     scrColorKey();
     draw_sprite_ext(sprite_index,4,x,y,1,1,0,blend,1);
     color = _cstored;

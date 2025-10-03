@@ -1,5 +1,5 @@
 x -= 32; y -= 176; w = 5; h = 5;
-color = key_BLACK; colorSpend = key_BLACK;
+color = color_BLACK; colorSpend = color_BLACK;
 scrColorDoor(); scrColorDoor2();
 c4 = make_color_hsv(hue,180,255);
 c5 = make_color_hsv(hue,230,200);

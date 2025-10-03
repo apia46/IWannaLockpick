@@ -4,43 +4,43 @@
 
 switch argument0{
     case 0:
-        markCol = global.mainTone[key_WHITE];
+        markCol = global.mainTone[color_WHITE];
         markOut = getMarkOutColor(markCol);
     break;
     case 1:
-        markCol = global.mainTone[key_ORANGE];
+        markCol = global.mainTone[color_ORANGE];
         markOut = getMarkOutColor(markCol);
     break;
     case 2:
-        markCol = global.mainTone[key_PURPLE];
+        markCol = global.mainTone[color_PURPLE];
         markOut = getMarkOutColor(markCol);
     break;
     case 3:
-        markCol = global.mainTone[key_PINK];
+        markCol = global.mainTone[color_PINK];
         markOut = getMarkOutColor(markCol);
     break;
     case 4:
-        markCol = global.mainTone[key_CYAN];
+        markCol = global.mainTone[color_CYAN];
         markOut = getMarkOutColor(markCol);
     break;
     case 5:
-        markCol = global.mainTone[key_BLACK];
+        markCol = global.mainTone[color_BLACK];
         markOut = getMarkOutColor(markCol);
     break;
     case 6:
-        markCol = global.mainTone[key_RED];
+        markCol = global.mainTone[color_RED];
         markOut = getMarkOutColor(markCol);
     break;
     case 7:
-        markCol = global.mainTone[key_GREEN];
+        markCol = global.mainTone[color_GREEN];
         markOut = getMarkOutColor(markCol);
     break;
     case 8:
-        markCol = global.mainTone[key_BLUE];
+        markCol = global.mainTone[color_BLUE];
         markOut = getMarkOutColor(markCol);
     break;
     case 9:
-        markCol = global.mainTone[key_BROWN];
+        markCol = global.mainTone[color_BROWN];
         markOut = getMarkOutColor(markCol);
     break;
     //Preset colors: RGBCMY,W,B
@@ -75,7 +75,7 @@ switch argument0{
     case 17:
         markCol = c_black;
         markOut = c_white;
-		// @addcolor pencilmark color
+        // @addcolor pencilmark color
     break;
     default:
         markCol = c_white;

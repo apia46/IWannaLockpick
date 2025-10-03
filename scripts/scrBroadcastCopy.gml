@@ -1,58 +1,58 @@
-///scrBroadcastCopy(colorSpend,colorGlitch);
-if argument0 != key_GLITCH{
+///scrBroadcastCopy(colorSpend,glitchMimic);
+if argument0 != color_GLITCH{
     with oKeyGlitch{
-        if color == key_GLITCH{
-            colorGlitch = argument0;
+        if color == color_GLITCH{
+            glitchMimic = argument0;
         }
     }
     with oDoorSimple{
         if !browned{
-            if color == key_GLITCH || colorSpend == key_GLITCH{
-                colorGlitch = argument0;
+            if color == color_GLITCH || colorSpend == color_GLITCH{
+                glitchMimic = argument0;
             }
         }
     }
     with oDoorCombo{
         if !browned{
-            if colorSpend == key_GLITCH{
-                colorGlitch = argument0;
+            if colorSpend == color_GLITCH{
+                glitchMimic = argument0;
             }
             for(var i = 0; i < lockCount; i += 1){
-                if lock[i,0] == key_GLITCH{
-                    colorGlitch = argument0;
+                if lock[i,0] == color_GLITCH{
+                    glitchMimic = argument0;
                 }
             }
         }
     }
     with oGate{
-        colorGlitch = argument0;
+        glitchMimic = argument0;
     }
 }else{
     with oKeyGlitch{
-        if color == key_GLITCH{
-            colorGlitch = argument1;
+        if color == color_GLITCH{
+            glitchMimic = argument1;
         }
     }
     with oDoorSimple{
         if !browned{
-            if color == key_GLITCH || colorSpend == key_GLITCH{
-                colorGlitch = argument1;
+            if color == color_GLITCH || colorSpend == color_GLITCH{
+                glitchMimic = argument1;
             }
         }
     }
     with oDoorCombo{
         if !browned{
-            if colorSpend == key_GLITCH{
-                colorGlitch = argument1;
+            if colorSpend == color_GLITCH{
+                glitchMimic = argument1;
             }
             for(var i = 0; i < lockCount; i += 1){
-                if lock[i,0] == key_GLITCH{
-                    colorGlitch = argument1;
+                if lock[i,0] == color_GLITCH{
+                    glitchMimic = argument1;
                 }
             }
         }
     }
     with oGate{
-        colorGlitch = argument1;
+        glitchMimic = argument1;
     }
 }

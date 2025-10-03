@@ -114,16 +114,16 @@ global.stoneKeys = 0;
 for(var i=0;i&lt;14;i+=1){
     if global.areaClear[i] == 1{
         global.stoneKeys += 1;
-        global.key[key_STONE] = global.stoneKeys;
+        global.key[color_STONE] = global.stoneKeys;
     }
 }
-if global.allUnlock{global.stoneKeys = 14; global.key[key_STONE] = 14;}
+if global.allUnlock{global.stoneKeys = 14; global.key[color_STONE] = 14;}
 if stone{
     global.stoneKeys = 0;
     for(var i=0;i&lt;12;i+=1){
         if global.areaClear[i] == 1{
             global.stoneKeys += 1;
-            global.key[key_STONE] = global.stoneKeys;
+            global.key[color_STONE] = global.stoneKeys;
         }
     }
     depth = 100;
@@ -183,23 +183,23 @@ if size &gt;= 1{
             }
             draw_set_alpha(1);
             draw_set_color(c_white);
-            if show[i] != key_MASTER &amp;&amp; show[i] != key_PURE &amp;&amp; show[i] != key_GLITCH &amp;&amp; show[i] != key_STONE{//Not master key or TBD key
+            if show[i] != color_MASTER &amp;&amp; show[i] != color_PURE &amp;&amp; show[i] != color_GLITCH &amp;&amp; show[i] != color_STONE{//Not master key or TBD key
                 color = show[i];
                 scrColorKey();
                 draw_sprite(sprKey,0,x-4,drawY-4);
                 draw_sprite_ext(sprKey,1,x-4,drawY-4,1,1,0,blend,1);
-            }else if show[i] == key_MASTER{
+            }else if show[i] == color_MASTER{
                 draw_sprite(sprKMaster,floor(goldIndex),x-4,drawY-4);
-            }else if show[i] == key_PURE{
+            }else if show[i] == color_PURE{
                 draw_sprite(sprKPure,floor(goldIndex),x-4,drawY-4);
-            }else if show[i] == key_GLITCH{
+            }else if show[i] == color_GLITCH{
                 color = show[i];
                 scrColorKey();
                 shader_set(shdRainbowStripe2);
                 draw_sprite(sprKey,3,x-4,drawY-4);
                 draw_sprite_ext(sprKey,1,x-4,drawY-4,1,1,0,blend,1);
                 shader_reset();
-            }else if show[i] == key_STONE{
+            }else if show[i] == color_STONE{
                 draw_sprite(sprKStone,0,x-4,drawY-4);
             }
             draw_set_color(make_color_rgb(44,34,28));

@@ -38,7 +38,7 @@ salvageID = -1;//For mouseover purposes
 active = 1;//Whether or not it can be opened. Inactive means it goes far out of bounds.
 color = 4;
 colorSpend = 12;//Can spend a key type other than the required one
-colorGlitch = 12;//For copy doors
+glitchMimic = 12;//For copy doors
 tempColor = 0;
 tempSpend = 0;//These mostly have to do with the brown key gimmick
 count = 1;
@@ -59,36 +59,36 @@ goldIndex = 0;
 goldSpd = .1;
 
 //Omega key colors
-oCol[0] = key_RED;//Inner ring
-oCol[1] = key_GREEN;
-oCol[2] = key_BLUE;
-oCol[3] = key_MASTER;//Middle ring
-oCol[4] = key_BROWN;
-oCol[5] = key_PURE;
-oCol[6] = key_GLITCH;
-oCol[7] = key_STONE;
-oCol[8] = key_WHITE;//Outer ring
-oCol[9] = key_ORANGE;
-oCol[10] = key_PURPLE;
-oCol[11] = key_PINK;
-oCol[12] = key_CYAN;
-oCol[13] = key_BLACK;
+oCol[0] = color_RED;//Inner ring
+oCol[1] = color_GREEN;
+oCol[2] = color_BLUE;
+oCol[3] = color_MASTER;//Middle ring
+oCol[4] = color_BROWN;
+oCol[5] = color_PURE;
+oCol[6] = color_GLITCH;
+oCol[7] = color_STONE;
+oCol[8] = color_WHITE;//Outer ring
+oCol[9] = color_ORANGE;
+oCol[10] = color_PURPLE;
+oCol[11] = color_PINK;
+oCol[12] = color_CYAN;
+oCol[13] = color_BLACK;
 
 //Salvage color selector colors (6x3 cropped selection)
-sCol[0] = key_WHITE;
-sCol[1] = key_ORANGE;
-sCol[2] = key_PURPLE;
-sCol[3] = key_PINK;
-sCol[4] = key_CYAN;
-sCol[5] = key_BLACK;
-sCol[6] = key_RED;
-sCol[7] = key_GREEN;
-sCol[8] = key_BLUE;
-sCol[9] = key_BROWN;
-sCol[10] = key_GLITCH;
-sCol[11] = key_STONE;
-sCol[12] = key_MASTER;
-sCol[13] = key_PURE;
+sCol[0] = color_WHITE;
+sCol[1] = color_ORANGE;
+sCol[2] = color_PURPLE;
+sCol[3] = color_PINK;
+sCol[4] = color_CYAN;
+sCol[5] = color_BLACK;
+sCol[6] = color_RED;
+sCol[7] = color_GREEN;
+sCol[8] = color_BLUE;
+sCol[9] = color_BROWN;
+sCol[10] = color_GLITCH;
+sCol[11] = color_STONE;
+sCol[12] = color_MASTER;
+sCol[13] = color_PURE;
 
 cName[0] = "Master";
 cName[1] = "White";
@@ -233,7 +233,7 @@ c3 = c_black;
 c4 = make_color_hsv(hue,100,110);
 c5 = make_color_hsv(hue,180,70);
 c6 = make_color_hsv(hue,255,30);
-colorSpend = key_CYAN;
+colorSpend = color_CYAN;
 scrColorDoor2();
 
 omegaA = (omegaA + 2) mod 360;
@@ -698,13 +698,13 @@ switch state{
                     var tempCol = sCol[tempID];
                     var tempDrawCol = scrGetLockColor(tempCol); 
                     //Actual color fills
-                    if tempCol == key_MASTER{
+                    if tempCol == color_MASTER{
                         draw_sprite_ext(sprDGoldGrad,floor(goldIndex),tempX,tempY,.25,.25,0,c_white,1);
-                    }else if tempCol == key_PURE{
+                    }else if tempCol == color_PURE{
                         draw_sprite_ext(sprDPureGrad,floor(goldIndex),tempX,tempY,.25,.25,0,c_white,1);
-                    }else if tempCol == key_STONE{
+                    }else if tempCol == color_STONE{
                         draw_sprite_ext(sprDStoneTexture,0,tempX,tempY,.25,.25,0,c_white,1);
-                    }else if tempCol == key_GLITCH{
+                    }else if tempCol == color_GLITCH{
                         shader_set(shdRainbowStripe2);
                         draw_sprite_ext(sprTerminalColor,1,tempX,tempY,1,1,0,tempDrawCol,1);
                         shader_reset();
@@ -835,7 +835,7 @@ y = ystart + floatY;
 //scrDrawDoorSpend();
 draw_sprite_ext(sprDPureGrad,floor(goldIndex),x,y,w*.5,h*.5,0,c_white,1);
 
-scrColorDoorArg(key_GLITCH);
+scrColorDoorArg(color_GLITCH);
 shader_set(shdRainbowStripe2);
 scrDrawDoorRequire();
 shader_reset();

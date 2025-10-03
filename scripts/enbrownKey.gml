@@ -1,9 +1,9 @@
 var auraPlayNoise = 0;
-if objPlayer.brownMode == 1 && browned == 0 && color != key_BROWN{
+if objPlayer.brownMode == 1 && browned == 0 && color != color_BROWN{
     browned = 1;
     auraPlayNoise = 1;
     var colorOld = color;
-    color = key_BROWN;
+    color = color_BROWN;
     scrColorKey();
     color = colorOld;
     if type == 1 || type == 3{
@@ -23,7 +23,7 @@ if objPlayer.brownMode == 1 && browned == 0 && color != key_BROWN{
     auraPlayNoise = 1;
     scrColorKey();
     image_speed = 0; image_index = 0;
-    if color == key_MASTER{
+    if color == color_MASTER{
         if type == 0 || type == 2{
             sprite_index = sprKMaster;
         }else{

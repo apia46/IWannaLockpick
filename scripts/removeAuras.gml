@@ -3,7 +3,7 @@ if objPlayer.aura[0] == 1 && aura[0] == 1{
     aura[0] = 0;
     auraPlayNoise = 1;
     var colorOld = color;
-    color = key_WHITE;
+    color = color_WHITE;
     scrColorDoor();
     event_user(0);
     color = colorOld;
@@ -15,7 +15,7 @@ if objPlayer.aura[1] == 1 && aura[1] == 1{
     aura[1] = 0;
     auraPlayNoise = 1;
     var colorOld = color;
-    color = key_BROWN;
+    color = color_BROWN;
     scrColorDoor();
     event_user(0);
     color = colorOld;
@@ -27,7 +27,7 @@ if objPlayer.aura[2] == 1 && aura[2] == 1{
     aura[2] = 0;
     auraPlayNoise = 1;
     var colorOld = color;
-    color = key_ORANGE;
+    color = color_ORANGE;
     scrColorDoor();
     event_user(0);
     color = colorOld;

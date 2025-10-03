@@ -53,7 +53,7 @@ global.msg = "Alright! Uhh. That number down there is three digits long. I guess
   </views>
   <instances>
     <instance objName="objPlayerStart" x="192" y="256" name="inst_6DC82D36" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oKeyHandle" x="32" y="32" name="inst_BC6B6836" locked="0" code="show[0] = key_PURPLE;&#xA;show[1] = key_CYAN;&#xA;long = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oKeyHandle" x="32" y="32" name="inst_BC6B6836" locked="0" code="show[0] = color_PURPLE;&#xA;show[1] = color_CYAN;&#xA;long = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oBGW7" x="192" y="224" name="inst_7C102342" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="64" y="416" name="inst_4CEDEEB6" locked="0" code="" scaleX="10" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="64" y="384" name="inst_E52B1F77" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -105,19 +105,19 @@ global.msg = "Alright! Uhh. That number down there is three digits long. I guess
     <instance objName="oDoorCyan" x="672" y="320" name="inst_A7207070" locked="0" code="h=2;count=-2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oDoorCyan" x="640" y="64" name="inst_F92A31B4" locked="0" code="count=-1;type=2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oDoorPurple" x="512" y="64" name="inst_53C6720A" locked="0" code="type=2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="128" y="256" name="inst_2D8A7FF4" locked="0" code="type=2;count=-1;&#xA;color = key_CYAN; colorSpend = key_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="96" y="256" name="inst_BC039CAA" locked="0" code="type=2;&#xA;color = key_PURPLE; colorSpend = key_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="128" y="160" name="inst_EAAFE39C" locked="0" code="type=2;count=-1;&#xA;color = key_CYAN; colorSpend = key_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="96" y="160" name="inst_EC15114D" locked="0" code="type=2;count=-1;&#xA;color = key_CYAN; colorSpend = key_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="384" y="96" name="inst_6CE58447" locked="0" code="type=2;count=-1;&#xA;color = key_CYAN; colorSpend = key_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="512" y="256" name="inst_BC948AD9" locked="0" code="type=2;&#xA;color = key_PURPLE; colorSpend = key_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="544" y="256" name="inst_2CFF013D" locked="0" code="type=2;count=-1;&#xA;color = key_CYAN; colorSpend = key_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="576" y="256" name="inst_72B454D3" locked="0" code="type=2;&#xA;color = key_PURPLE; colorSpend = key_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="448" y="320" name="inst_CEABFA8F" locked="0" code="type=2;&#xA;color = key_PURPLE; colorSpend = key_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="416" y="416" name="inst_73999D95" locked="0" code="type=2;&#xA;color = key_PURPLE; colorSpend = key_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="640" y="352" name="inst_DDB551AC" locked="0" code="type=2;count=-1;&#xA;color = key_CYAN; colorSpend = key_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="608" y="64" name="inst_DD1EACD9" locked="0" code="type=2;&#xA;color = key_PURPLE; colorSpend = key_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oDoorSimple" x="544" y="64" name="inst_33D5BA22" locked="0" code="type=2;count=-1;&#xA;color = key_CYAN; colorSpend = key_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="128" y="256" name="inst_2D8A7FF4" locked="0" code="type=2;count=-1;&#xA;color = color_CYAN; colorSpend = color_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="96" y="256" name="inst_BC039CAA" locked="0" code="type=2;&#xA;color = color_PURPLE; colorSpend = color_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="128" y="160" name="inst_EAAFE39C" locked="0" code="type=2;count=-1;&#xA;color = color_CYAN; colorSpend = color_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="96" y="160" name="inst_EC15114D" locked="0" code="type=2;count=-1;&#xA;color = color_CYAN; colorSpend = color_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="384" y="96" name="inst_6CE58447" locked="0" code="type=2;count=-1;&#xA;color = color_CYAN; colorSpend = color_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="512" y="256" name="inst_BC948AD9" locked="0" code="type=2;&#xA;color = color_PURPLE; colorSpend = color_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="544" y="256" name="inst_2CFF013D" locked="0" code="type=2;count=-1;&#xA;color = color_CYAN; colorSpend = color_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="576" y="256" name="inst_72B454D3" locked="0" code="type=2;&#xA;color = color_PURPLE; colorSpend = color_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="448" y="320" name="inst_CEABFA8F" locked="0" code="type=2;&#xA;color = color_PURPLE; colorSpend = color_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="416" y="416" name="inst_73999D95" locked="0" code="type=2;&#xA;color = color_PURPLE; colorSpend = color_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="640" y="352" name="inst_DDB551AC" locked="0" code="type=2;count=-1;&#xA;color = color_CYAN; colorSpend = color_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="608" y="64" name="inst_DD1EACD9" locked="0" code="type=2;&#xA;color = color_PURPLE; colorSpend = color_CYAN;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oDoorSimple" x="544" y="64" name="inst_33D5BA22" locked="0" code="type=2;count=-1;&#xA;color = color_CYAN; colorSpend = color_PURPLE;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oGoal" x="112" y="368" name="inst_AB760892" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>

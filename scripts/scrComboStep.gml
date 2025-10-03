@@ -6,7 +6,7 @@ the Requirement Heuristic runs, including a master key check. Also note that the
 won't run if the door is in a certain part of the Adding/Removing Copy Animation.
 
 Requirement Heuristic: First, if the door is not browned and either colorSpend or a
-list function on all the locks returns at least one key_MASTER (0), then the door is NOT
+list function on all the locks returns at least one color_MASTER (0), then the door is NOT
 gold-openable. The gold-openable code takes precedence over the normal open code.
 If the door has a gold key applied to it within that code, then the normal code won't run
 for this frame.
@@ -65,7 +65,7 @@ if aura[0] == 1 || aura[1] == 1 || aura[2] == 1{
 
 var tempSpend;
 if browned{
-    tempSpend = key_BROWN;
+    tempSpend = color_BROWN;
 }else{
     tempSpend = colorSpend;
 }
@@ -89,21 +89,21 @@ if global.complexMode == 0{//Real view
 
 //Now, the first big calculation is the Gold Eligibility.
 var goldEligible = 0;//0 = Don't use gold, 1 = Use gold, -1 = Use negative gold.
-if objPlayer.masterMode == 1 && global.key[key_MASTER] > 0{
+if objPlayer.masterMode == 1 && global.key[color_MASTER] > 0{
     goldEligible = 1;
-}else if objPlayer.masterMode == -1 && global.key[key_MASTER] < 0{
+}else if objPlayer.masterMode == -1 && global.key[color_MASTER] < 0{
     goldEligible = -1;
-}else if objPlayer.masterMode == 2 && global.ikey[key_MASTER] > 0{
+}else if objPlayer.masterMode == 2 && global.ikey[color_MASTER] > 0{
     goldEligible = 2;
-}else if objPlayer.masterMode == -2 && global.ikey[key_MASTER] < 0{
+}else if objPlayer.masterMode == -2 && global.ikey[color_MASTER] < 0{
     goldEligible = -2;
 }
 if !browned && goldEligible != 0{
-    if colorSpend == key_MASTER || colorSpend == key_PURE || ((colorGlitch == key_MASTER || colorGlitch == key_PURE) && browned == 0){
+    if colorSpend == color_MASTER || colorSpend == color_PURE || ((glitchMimic == color_MASTER || glitchMimic == color_PURE) && browned == 0){
         goldEligible = 0;
     }
     for(var i = 0; i < lockCount; i += 1){
-        if lock[i,0] == key_MASTER || lock[i,0] == key_PURE{
+        if lock[i,0] == color_MASTER || lock[i,0] == color_PURE{
             goldEligible = 0;
         }
     }
@@ -116,7 +116,7 @@ if distance_to_object(objPlayer) <= 1{
             var metRequirement = 1;//Whether the requirement for every lock has been met
             if browned{//Brown version
                 for(var i = 0; i < lockCount; i += 1){
-                    if !scrCanOpenFeed(key_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow){
+                    if !scrCanOpenFeed(color_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow){
                         metRequirement = 0;
                     }
                 }
@@ -133,30 +133,30 @@ if distance_to_object(objPlayer) <= 1{
                 spendITotal = 0;
                 if browned{//Door is brown, different spend amount can result from Blast Locks
                     for(var i = 0; i < lockCount; i += 1){
-                        scrAddSpendAmt(key_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow);
+                        scrAddSpendAmt(color_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow);
                     }
                 }else{//Normal lock spend summation
                     for(var i = 0; i < lockCount; i += 1){
                         scrAddSpendAmt(lock[i,0],lock[i,1],lock[i,2],lock[i,3],iPow);
                     }
                 }
-                if !isStar(tempSpend,colorGlitch){
-                    addComplexKeys(tempSpend,colorGlitch,spendTotal,spendITotal,0);
+                if !isStar(tempSpend,glitchMimic){
+                    addComplexKeys(tempSpend,glitchMimic,spendTotal,spendITotal,0);
                 }
                 //Opening a door normally always means getting it closer to 0 and "opening" normally
-                scrBroadcastCopy(tempSpend,colorGlitch);
+                scrBroadcastCopy(tempSpend,glitchMimic);
                 scrOpenCombo();
             }
         break;
         case 1://Lose a copy
             objPlayer.masterMode = 0;
-            if !global.star[key_MASTER]{
-                addComplexKeys(key_MASTER,0,-1,0,0);
+            if !global.star[color_MASTER]{
+                addComplexKeys(color_MASTER,0,-1,0,0);
             }
             copies -= 1;
             if copies == 0 && icopies == 0{
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 if global.salvageActive{
                     event_user(5);
                     scrSaveSalvage(global.salvageID,id);
@@ -166,7 +166,7 @@ if distance_to_object(objPlayer) <= 1{
                 solid = 0; visible = 0; active = 0;
             }else if copies >= 0{
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 event_user(2);
             }else{
                 scrPlaySoundExt(sndMasterRelock,1,1,false);
@@ -176,13 +176,13 @@ if distance_to_object(objPlayer) <= 1{
         break;
         case -1://Gain a copy
             objPlayer.masterMode = 0;
-            if !global.star[key_MASTER]{
-                addComplexKeys(key_MASTER,0,1,0,0);
+            if !global.star[color_MASTER]{
+                addComplexKeys(color_MASTER,0,1,0,0);
             }
             copies += 1;
             if copies == 0 && icopies == 0{
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 if global.salvageActive{
                     event_user(5);
                     scrSaveSalvage(global.salvageID,id);
@@ -192,7 +192,7 @@ if distance_to_object(objPlayer) <= 1{
                 solid = 0; visible = 0; active = 0;
             }else if copies <= 0{
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 event_user(2);
             }else{
                 scrPlaySoundExt(sndMasterRelock,1,1,false);
@@ -202,13 +202,13 @@ if distance_to_object(objPlayer) <= 1{
         break;
         case 2://Lose an icopy
             objPlayer.masterMode = 0;
-            if !global.star[key_MASTER]{
-                addComplexKeys(key_MASTER,0,0,-1,0);
+            if !global.star[color_MASTER]{
+                addComplexKeys(color_MASTER,0,0,-1,0);
             }
             icopies -= 1;
             if copies == 0 && icopies == 0{
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 if global.salvageActive{
                     event_user(5);
                     scrSaveSalvage(global.salvageID,id);
@@ -218,7 +218,7 @@ if distance_to_object(objPlayer) <= 1{
                 visible=0;solid=0;active=0;
             }else if icopies >= 0{//Still has + icopies or 0 and real copies
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 event_user(2);
             }else{//(Now) has negative icopies
                 scrPlaySoundExt(sndMasterRelock,1,1,false);
@@ -228,13 +228,13 @@ if distance_to_object(objPlayer) <= 1{
         break;
         case -2://Gain an icopy
             objPlayer.masterMode = 0;
-            if !global.star[key_MASTER]{
-                addComplexKeys(key_MASTER,0,0,1,0);
+            if !global.star[color_MASTER]{
+                addComplexKeys(color_MASTER,0,0,1,0);
             }
             icopies += 1;
             if copies == 0 && icopies == 0{
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 if global.salvageActive{
                     event_user(5);
                     scrSaveSalvage(global.salvageID,id);
@@ -244,7 +244,7 @@ if distance_to_object(objPlayer) <= 1{
                 visible=0;solid=0;active=0;
             }else if icopies <= 0{//Still has - icopies or 0 and real copies
                 scrPlaySoundExt(sndMasterUnlock,1,1,false);
-                //scrBroadcastCopy(tempSpend,colorGlitch);
+                //scrBroadcastCopy(tempSpend,glitchMimic);
                 event_user(2);
             }else{//(Now) has positive icopies
                 scrPlaySoundExt(sndMasterRelock,1,1,false);

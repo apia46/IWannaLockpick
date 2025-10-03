@@ -1,14 +1,14 @@
 //TODO: Add Stone glitch lock sprites and draw code
 //Main body fill
 var tempColor = colorSpend;
-if colorSpend == key_MASTER{
+if colorSpend == color_MASTER{
     draw_sprite_ext(sprDGoldGrad,floor(goldIndex),salDX,salDY,salW/2,salH/2,0,c_white,1);
-}else if colorSpend == key_PURE{
+}else if colorSpend == color_PURE{
     draw_sprite_ext(sprDPureGrad,floor(goldIndex),salDX,salDY,salW/2,salH/2,0,c_white,1);
-}else if colorSpend == key_STONE{
+}else if colorSpend == color_STONE{
     draw_sprite_ext(sprDStoneTexture,0,salDX,salDY,salW*.5,salH*.5,0,c_white,1);
 }else{
-    if colorSpend == key_GLITCH{
+    if colorSpend == color_GLITCH{
         shader_set(shdRainbowStripe2);
     }
     //Corner Fills
@@ -36,25 +36,25 @@ if colorSpend == key_MASTER{
     draw_sprite_part_ext(sprDoorBig,2,48,48,16,16,salDX+32*salW-16,salDY+32*salH-16,1,1,c5,1);
     draw_sprite_part_ext(sprDoorBig,3,0,48,16,16,salDX,salDY+32*salH-16,1,1,c6,1);
     draw_sprite_part_ext(sprDoorBig,3,48,48,16,16,salDX+32*salW-16,salDY+32*salH-16,1,1,c6,1);
-    if colorSpend == key_GLITCH{
+    if colorSpend == color_GLITCH{
         shader_reset();
     }
 }
 //For Copy Doors, draw an extra part
-if colorSpend == key_GLITCH && colorGlitch != key_GLITCH{
+if colorSpend == color_GLITCH && glitchMimic != color_GLITCH{
     var _gSprite;
-    if colorGlitch == key_MASTER{
+    if glitchMimic == color_MASTER{
         _gSprite = sprDoorGlitchGold;
         c4 = c_white;c5 = c_white;c6 = c_white;
-    }else if colorGlitch == key_PURE{
+    }else if glitchMimic == color_PURE{
         _gSprite = sprDoorGlitchPure;
         c4 = c_white;c5 = c_white;c6 = c_white;
-    }else if colorGlitch == key_STONE{
+    }else if glitchMimic == color_STONE{
         _gSprite = sprDoorGlitchStone;
         c4 = c_white;c5 = c_white;c6 = c_white;
     }else{//Flat color door
         _gSprite = sprDoorGlitch;
-        colorSpend = colorGlitch;
+        colorSpend = glitchMimic;
         scrColorDoor2();
     }
     //Now the fun stuff.
@@ -107,35 +107,35 @@ if (state == 5 || state == 6) && salvageLock = -1{
 }
 //Individual Lock Fills
 for(var i = 0; i < salvageLockCount; i += 1){
-    if lock[i,0] == key_MASTER{//Holy crap, cropping the lock sprites came in clutch
+    if lock[i,0] == color_MASTER{//Holy crap, cropping the lock sprites came in clutch
         var tempW = sprite_get_width(lock[i,6]);
         var tempH = sprite_get_height(lock[i,6]);
         var tempX = salDX+lock[i,4]-sprite_get_xoffset(lock[i,6]);
         var tempY = salDY+lock[i,5]-sprite_get_yoffset(lock[i,6]);
         draw_sprite_ext(sprDGoldGrad,floor(goldIndex),tempX,tempY,tempW/64,tempH/64,0,c_white,1);
-    }else if lock[i,0] == key_PURE{
+    }else if lock[i,0] == color_PURE{
         var tempW = sprite_get_width(lock[i,6]);
         var tempH = sprite_get_height(lock[i,6]);
         var tempX = salDX+lock[i,4]-sprite_get_xoffset(lock[i,6]);
         var tempY = salDY+lock[i,5]-sprite_get_yoffset(lock[i,6]);
         draw_sprite_ext(sprDPureGrad,floor(goldIndex),tempX,tempY,tempW/64,tempH/64,0,c_white,1);
-    }else if lock[i,0] == key_STONE{
+    }else if lock[i,0] == color_STONE{
         var tempW = sprite_get_width(lock[i,6]);
         var tempH = sprite_get_height(lock[i,6]);
         var tempX = salDX+lock[i,4]-sprite_get_xoffset(lock[i,6]);
         var tempY = salDY+lock[i,5]-sprite_get_yoffset(lock[i,6]);
         draw_sprite_ext(sprDStoneTexture,0,tempX,tempY,tempW/64,tempH/64,0,c_white,1);
-    }else if lock[i,0] == key_GLITCH{
+    }else if lock[i,0] == color_GLITCH{
         shader_set(shdRainbowStripe2);
         draw_sprite_ext(lock[i,6],2,salDX+lock[i,4],salDY+lock[i,5],1,1,0,make_color_rgb(180,150,0),1);
         shader_reset();
-        if colorGlitch == key_MASTER{
+        if glitchMimic == color_MASTER{
             draw_sprite_ext(lock[i,6],4,salDX+lock[i,4],salDY+lock[i,5],1,1,0,c_white,1);
-        }else if colorGlitch == key_PURE{
+        }else if glitchMimic == color_PURE{
             draw_sprite_ext(lock[i,6],5,salDX+lock[i,4],salDY+lock[i,5],1,1,0,c_white,1);
-        }else if colorGlitch == key_STONE{
+        }else if glitchMimic == color_STONE{
             draw_sprite_ext(lock[i,6],6,salDX+lock[i,4],salDY+lock[i,5],1,1,0,c_white,1);
-        }else if colorGlitch != key_GLITCH{
+        }else if glitchMimic != color_GLITCH{
             draw_sprite_ext(lock[i,6],3,salDX+lock[i,4],salDY+lock[i,5],1,1,0,scrGetLockColor(lock[i,0]),1);
         }
     }else{
