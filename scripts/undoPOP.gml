@@ -151,10 +151,10 @@ for(var i = instSize-1; i >= 0; i -= 1){
 
 //Key Counts, Ordinals, and Stars
 _bin = ds_stack_pop(undoStack);
-for(var i = 16-1; i >= 0; i -= 1){
+for(var i = COLORS-1; i >= 0; i -= 1){
     global.star[i] = numBinDigit(_bin,i);
 }
-for(var i = 16-1; i >= 0; i -= 1){
+for(var i = COLORS-1; i >= 0; i -= 1){
     global.ikey[i] = ds_stack_pop(undoStack);
     global.key[i] = ds_stack_pop(undoStack);
 }

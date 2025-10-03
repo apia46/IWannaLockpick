@@ -850,7 +850,7 @@ if pdaMode == 1{
     /*KEY ORGANIZATION:
     Left Column: White, Orange, Purple, Pink, Cyan, Black, Stone
     Right Column: Master, Pure, Brown, Red, Green, Blue, Glitch*/
-    for(var i = 0; i &lt; color_TYPES; i += 1){ // (TODO::FIX PDA)
+    for(var i = 0; i &lt; COLORS; i += 1){ // (TODO::FIX PDA)
         drawX = pdaX+20+184*(i&gt;6); drawY = pdaY+20+48*(i mod 7);
         draw_set_alpha(1);
         draw_set_color(c_white);
