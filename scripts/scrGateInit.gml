@@ -3,7 +3,7 @@
 lockCount = 0;
 lock[0,0] = 0;//Left = index, right = attribute
 
-colorCopy = 12;//For copy doors
+colorGlitch = 12;//For copy doors
 
 w = 1;
 h = 1;

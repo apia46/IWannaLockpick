@@ -54,14 +54,14 @@ for(var i = instSize-1; i >= 0; i -= 1){
         }
     }else if _inst.object_index == oGate{
         _bin = ds_stack_pop(undoStack);
-        _inst.colorCopy = _bin;
+        _inst.colorGlitch = _bin;
     }else if _inst.object_index == oDoorCombo{
         _bin = ds_stack_pop(undoStack);
         _tmp += _digit*numBinDigit(_bin,8); _digit *= 2;
         _tmp += _digit*numBinDigit(_bin,7); _digit *= 2;
         _tmp += _digit*numBinDigit(_bin,6); _digit *= 2;
         _tmp += _digit*numBinDigit(_bin,5); _digit *= 2;
-        _inst.colorCopy = _tmp;
+        _inst.colorGlitch = _tmp;
         _inst.browned = numBinDigit(_bin,4);
         _inst.aura[2] = numBinDigit(_bin,3);
         _inst.aura[1] = numBinDigit(_bin,2);
@@ -97,7 +97,7 @@ for(var i = instSize-1; i >= 0; i -= 1){
         _tmp += _digit*numBinDigit(_bin,3); _digit *= 2;
         _tmp += _digit*numBinDigit(_bin,2); _digit *= 2;
         _tmp += _digit*numBinDigit(_bin,1); _digit *= 2;
-        _inst.colorCopy = _tmp;
+        _inst.colorGlitch = _tmp;
         _inst.active = numBinDigit(_bin,0);
         _inst.visible = _inst.active;
         with _inst{
@@ -111,7 +111,7 @@ for(var i = instSize-1; i >= 0; i -= 1){
         _tmp += _digit*numBinDigit(_bin,7); _digit *= 2;
         _tmp += _digit*numBinDigit(_bin,6); _digit *= 2;
         _tmp += _digit*numBinDigit(_bin,5); _digit *= 2;
-        _inst.colorCopy = _tmp;
+        _inst.colorGlitch = _tmp;
         _inst.browned = numBinDigit(_bin,4);
         _inst.aura[2] = numBinDigit(_bin,3);
         _inst.aura[1] = numBinDigit(_bin,2);

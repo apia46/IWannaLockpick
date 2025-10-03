@@ -71,7 +71,7 @@ starCol = make_color_rgb(255,255,180);
 9 = Black Key
 10 = Brown Key
 11 = Pure Key
-12 = Copy Key
+12 = Glitch Key
 13 = Stone Key
 */
 </string>
@@ -183,7 +183,7 @@ if size &gt;= 1{
             }
             draw_set_alpha(1);
             draw_set_color(c_white);
-            if show[i] != key_MASTER &amp;&amp; show[i] != key_PURE &amp;&amp; show[i] != key_COPY &amp;&amp; show[i] != key_STONE{//Not master key or TBD key
+            if show[i] != key_MASTER &amp;&amp; show[i] != key_PURE &amp;&amp; show[i] != key_GLITCH &amp;&amp; show[i] != key_STONE{//Not master key or TBD key
                 color = show[i];
                 scrColorKey();
                 draw_sprite(sprKey,0,x-4,drawY-4);
@@ -192,7 +192,7 @@ if size &gt;= 1{
                 draw_sprite(sprKMaster,floor(goldIndex),x-4,drawY-4);
             }else if show[i] == key_PURE{
                 draw_sprite(sprKPure,floor(goldIndex),x-4,drawY-4);
-            }else if show[i] == key_COPY{
+            }else if show[i] == key_GLITCH{
                 color = show[i];
                 scrColorKey();
                 shader_set(shdRainbowStripe2);
