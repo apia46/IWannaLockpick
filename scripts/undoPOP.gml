@@ -2,9 +2,9 @@
 /* Things to pop: RIGHT TO LEFT, BOTTOM TO TOP
 5. Player x/y
 4. Key Counts, Ordinals, and Stars for every key color (Excluding stone keys)
-3. Keys: Collected, Copy Color
-2. Doors: Opened, 3 Auras, Browned, Copies, Copy Color
-1. Combo Doors: Opened, 3 Auras, Browned, Copies, Copy Color*/
+3. Keys: Collected, Glitch Color
+2. Doors: Opened, 3 Auras, Browned, Copies, Glitch Color
+1. Combo Doors: Opened, 3 Auras, Browned, Copies, Glitch Color*/
 var _inst, _bin, _tmp, _digit;
 
 saveBuffered = 0;

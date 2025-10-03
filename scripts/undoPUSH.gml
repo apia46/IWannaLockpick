@@ -2,9 +2,9 @@
 /* Things to save:
 1. Player x/y
 2. Key Counts, Ordinals, and Stars for every key color (Excluding stone keys)
-3. Keys: Collected, Copy Color
-4. Doors: Opened, 3 Auras, Browned, Copies, Copy Color
-5. Combo Doors: Opened, 3 Auras, Browned, Copies, Copy Color*/
+3. Keys: Collected, Glitch Color
+4. Doors: Opened, 3 Auras, Browned, Copies, Glitch Color
+5. Combo Doors: Opened, 3 Auras, Browned, Copies, Glitch Color*/
 
 undoPos += 1;
 recentPush = 1;//Indicates a push was done recently
