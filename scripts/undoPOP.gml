@@ -10,8 +10,8 @@
     e) Salvage point: Interacted
 4. Which salvage point is interacted */
 
-// For each change in the stack, iterate through the array to find the value to change.
-// We also have to make sure to update the undoData for it, so that it gets checked correctly for future pushes.
+// For each change in the stack, find the value to change by going through values in the same order as undoPUSH, and change it.
+// We also have to make sure to update the value for it in the array, so that it gets checked correctly for future pushes.
 // Slow? Maybe. There's not much to do about it though. Gamemaker can't pass around references to variables :/
 
 undoPos -= 1;
@@ -34,7 +34,7 @@ while true {
     iter += 2;
 
     // 2. Key Counts and Stars
-    var willContinue = false;
+    var willContinue = false; // we want to continue the outer loop, so we break out of the inner one and set this variable to true when we find something
     for (var i = 0; i < COLORS; i+=1) {
         if index == iter { global.key[i] = value; undoData[index] = value; willContinue = true; break; }
         else if index == iter+1 { global.ikey[i] = value; undoData[index] = value; willContinue = true; break; }
