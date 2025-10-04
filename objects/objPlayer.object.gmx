@@ -640,7 +640,9 @@ if instance_exists(oNewCamera){
     if oNewCamera.freeCam{exit;}
 }
 if scrButtonCheckPressed(global.masButton) &amp;&amp; global.pmState == 0{
-    scrPlayerEquipMaster();
+    if oMouseover.pdaPages == 1 || oMouseover.pdaMode == 0 {
+        scrPlayerEquipMaster();
+    }
 }else if scrButtonCheckPressed(global.skipButton) &amp;&amp; !frozen &amp;&amp; global.pmState == 0{
     scrComplexSwitch();
 }else if scrButtonCheckPressed(global.camButton) &amp;&amp; global.pmState == 0{
