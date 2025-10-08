@@ -20,25 +20,31 @@ var offsetY = sprite_get_yoffset(sprite);
 // get lock size
 var fillSprite = sprite;
 var isPredefinedSprite = false;
+var verticalText = false;
 switch sprite {
     case sprLock1A:
-        isPredefinedSprite = true;
+        if global.simpleLock { sprite = sprLockAnyS; }
+        else { isPredefinedSprite = true; }
         fillSprite = sprLockAnyS;
     break;
     case sprLock2V:
     case sprLock3V:
-        isPredefinedSprite = true;
+        if global.simpleLock { sprite = sprLockAnyV; }
+        else { isPredefinedSprite = true; }
         fillSprite = sprLockAnyV;
+        verticalText = true;
     break;
     case sprLock2H:
     case sprLock3H:
-        isPredefinedSprite = true;
+        if global.simpleLock { sprite = sprLockAnyH; }
+        else { isPredefinedSprite = true; }
         fillSprite = sprLockAnyH;
     break;
     case sprLock4A:
     case sprLock5A:
     case sprLock6A:
-        isPredefinedSprite = true;
+        if global.simpleLock { sprite = sprLockAnyM; }
+        else { isPredefinedSprite = true; }
         fillSprite = sprLockAnyM;
     break;
     case sprLock4B:
@@ -46,24 +52,26 @@ switch sprite {
     case sprLock6B:
     case sprLock8A:
     case sprLock12A:
-        isPredefinedSprite = true;
+        if global.simpleLock { sprite = sprLockAnyL; }
+        else { isPredefinedSprite = true; }
         fillSprite = sprLockAnyL;
     break;
     case sprLock24A:
-        isPredefinedSprite = true;
+        if global.simpleLock { sprite = sprLockAnyXL; }
+        else { isPredefinedSprite = true; }
         fillSprite = sprLockAnyXL;
     break;
 }
 
 switch color {
     case color_MASTER:
-        draw_sprite_ext(sprDGoldGrad,floor(goldIndex),xRel+offsetX,yRel+offsetY,width/64,height/64,0,c_white,1);
+        draw_sprite_ext(sprDGoldGrad,floor(goldIndex),xRel-offsetX,yRel-offsetY,width/64,height/64,0,c_white,1);
     break;
     case color_PURE:
-        draw_sprite_ext(sprDPureGrad,floor(goldIndex),xRel+offsetX,yRel+offsetY,width/64,height/64,0,c_white,1);
+        draw_sprite_ext(sprDPureGrad,floor(goldIndex),xRel-offsetX,yRel-offsetY,width/64,height/64,0,c_white,1);
     break;
     case color_STONE:
-        draw_sprite_ext(sprDStoneTexture,0,xRel+offsetX,yRel+offsetY,width/64,height/64,0,c_white,1);
+        draw_sprite_ext(sprDStoneTexture,0,xRel-offsetX,yRel-offsetY,width/64,height/64,0,c_white,1);
     break;
     case color_GLITCH:
         shader_set(shdRainbowStripe2);
@@ -99,8 +107,45 @@ draw_sprite(sprite,index,xRel,yRel);
 
 switch type {
     case lock_NORMAL:
-        if !isPredefinedSprite {
-            // numbres
+        if !isPredefinedSprite { // draw numbers
+            index = 0;
+            draw_set_color(make_color_rgb(44,32,20));
+            if count < 0 || icount < 0 {
+                index = 5;
+                draw_set_color(make_color_rgb(235,223,211));    
+            }
+
+            draw_set_font(fTalk);
+            var numbers = string(abs(count) + abs(icount));
+            if numbers == "1" { numbers = ""; }
+            var lockOffsetX = 0;
+            var lockOffsetY = 0;
+            if count != 0 {
+                if verticalText { lockOffsetY = -16; } // offset text start for lock symbol
+                else { lockOffsetX = 12; }
+            } else if icount != 0 {
+                numbers += "i";
+            }
+
+            var startX = floor((width - string_width(numbers) - lockOffsetX)/2) + xRel - offsetX; // i have no idea why this 4 is needed
+            var startY = floor((height - lockOffsetY)/2) + yRel - offsetY;
+            // number
+            draw_set_halign(fa_left);
+            draw_set_valign(fa_center);
+            //draw_rectangle(startX+lockOffsetX,startY+lockOffsetY-8,startX+lockOffsetX+string_width(numbers),startY+lockOffsetY+8,false)
+            //draw_set_color(make_color_rgb(255,0,0));
+            draw_text(startX+lockOffsetX+1,startY+lockOffsetY-1,numbers);
+            draw_set_color(c_white);
+
+            // lock symbol
+            if verticalText { // calculate lock startX seperately;
+                lockOffsetX = 12;
+                startX = floor((width - lockOffsetX)/2) + xRel - offsetX;
+                startY += 3; // basegame consistency
+            }
+            if count != 0 {
+                draw_sprite(sprSymbols,index,startX-10,startY-16);
+            }
         }
     break;
     case lock_BLAST:
