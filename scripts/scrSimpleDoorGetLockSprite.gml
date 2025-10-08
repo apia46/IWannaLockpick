@@ -18,9 +18,10 @@ switch type {
             }
         } else if icount != 0 {
             switch abs(count) {
-                case 1: return sprLock1i;
-                case 2: return sprLock2i;
-                case 3: return sprLock3i;
+                case 1: return sprLock1A;
+                case 2: return sprLock2V;
+                case 3: return sprLock3V;
+                // you can add more if you want; yes, these are really the only ones in vanilla
             }
         }
     break;

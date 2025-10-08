@@ -41,7 +41,7 @@ if _drawFrames == true{
 }
 
 //AURAS TBD
-scrComboDrawAura();
+scrDrawDoorAura();
 
 //INVERT + COPY TEXT
 //scrComboDrawInvert();

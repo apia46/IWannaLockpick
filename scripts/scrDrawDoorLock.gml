@@ -120,9 +120,13 @@ switch type {
             if numbers == "1" { numbers = ""; }
             var lockOffsetX = 0;
             var lockOffsetY = 0;
+            var lockSymbol = false;
             if count != 0 {
-                if verticalText { lockOffsetY = -16; } // offset text start for lock symbol
-                else { lockOffsetX = 12; }
+                if abs(count) == 1 || sprite != sprLockAnyS {
+                    lockSymbol = true;
+                    if verticalText { lockOffsetY = -16; } // offset text start for lock symbol
+                    else { lockOffsetX = 12; }
+                }
             } else if icount != 0 {
                 numbers += "i";
             }
@@ -132,18 +136,20 @@ switch type {
             // number
             draw_set_halign(fa_left);
             draw_set_valign(fa_center);
-            //draw_rectangle(startX+lockOffsetX,startY+lockOffsetY-8,startX+lockOffsetX+string_width(numbers),startY+lockOffsetY+8,false)
-            //draw_set_color(make_color_rgb(255,0,0));
-            draw_text(startX+lockOffsetX+1,startY+lockOffsetY-1,numbers);
+            if icount != 0 { // offset the number to the right one more pixel if it isnt imaginary, because of inaccurate text widths or something
+                draw_text(startX+lockOffsetX+1,startY+lockOffsetY-1,numbers);
+            } else {
+                draw_text(startX+lockOffsetX,startY+lockOffsetY-1,numbers);
+            }
             draw_set_color(c_white);
 
             // lock symbol
-            if verticalText { // calculate lock startX seperately;
-                lockOffsetX = 12;
-                startX = floor((width - lockOffsetX)/2) + xRel - offsetX;
-                startY += 3; // basegame consistency
-            }
-            if count != 0 {
+            if lockSymbol {
+                if verticalText { // calculate lock startX seperately;
+                    lockOffsetX = 12;
+                    startX = floor((width - lockOffsetX)/2) + xRel - offsetX;
+                    startY += 3; // basegame consistency
+                }
                 draw_sprite(sprSymbols,index,startX-10,startY-16);
             }
         }
