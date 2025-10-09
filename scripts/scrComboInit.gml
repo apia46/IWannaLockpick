@@ -30,9 +30,6 @@ brownNearPlayer = 0;
 w = 1;
 h = 1;
 
-c[0] = c_white;
-c[1] = c_white;
-c[2] = c_white;
 goldIndex = 0;
 goldSpd = .1;
 brownAngle = 0;

@@ -271,9 +271,9 @@ with oSalvageIn{
 for(var ix = 0; ix&lt;(2*w); ix+=1){
     for(var iy = 0; iy&lt;(2*h); iy+=1){
         with(instance_create(x+16*ix,y+16*iy,oDebrisS)){
-            c1 = other.c[0];
-            c2 = other.c[1];
-            c3 = other.c[2];
+            c1 = global.highTone[other.baseColorSpend];
+            c2 = global.mainTone[other.baseColorSpend];
+            c3 = global.darkTone[other.baseColorSpend];
             xT = other.xT;
             yT = other.yT;
         }
@@ -302,8 +302,6 @@ for(var ix = 0; ix&lt;(2*w); ix+=1){
           <argument>
             <kind>1</kind>
             <string>///Room start code
-scrComboCFunc();
-
 image_xscale = w;
 image_yscale = h;
 
@@ -389,9 +387,9 @@ copyTimer = 0;
 for(var ix = 0; ix&lt;(2*w); ix+=1){
     for(var iy = 0; iy&lt;(2*h); iy+=1){
         with(instance_create(x+16*ix,y+16*iy,oDebris3)){
-            c1 = other.c[0];
-            c2 = other.c[1];
-            c3 = other.c[2];
+            c1 = global.highTone[other.baseColorSpend];
+            c2 = global.mainTone[other.baseColorSpend];
+            c3 = global.darkTone[other.baseColorSpend];
         }
     }
 }
@@ -427,9 +425,9 @@ copyTimer = 0;
 for(var ix = 0; ix&lt;(2*w); ix+=1){
     for(var iy = 0; iy&lt;(2*h); iy+=1){
         with(instance_create(x+16*ix,y+16*iy,oDebris2)){
-            c1 = other.c[0];
-            c2 = other.c[1];
-            c3 = other.c[2];
+            c1 = global.highTone[other.baseColorSpend];
+            c2 = global.mainTone[other.baseColorSpend];
+            c3 = global.darkTone[other.baseColorSpend];
         }
     }
 }
@@ -459,9 +457,9 @@ for(var ix = 0; ix&lt;(2*w); ix+=1){
 for(var ix = 0; ix&lt;(2*w); ix+=1){
     for(var iy = 0; iy&lt;(2*h); iy+=1){
         with(instance_create(x+16*ix,y+16*iy,oDebris)){
-            c1 = other.c[0];
-            c2 = other.c[1];
-            c3 = other.c[2];
+            c1 = global.highTone[other.baseColorSpend];
+            c2 = global.mainTone[other.baseColorSpend];
+            c3 = global.darkTone[other.baseColorSpend];
         }
     }
 }
@@ -487,7 +485,7 @@ for(var ix = 0; ix&lt;(2*w); ix+=1){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scrComboCFunc();
+            <string>
 
 image_xscale = w;
 image_yscale = h;

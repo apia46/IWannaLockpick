@@ -139,12 +139,8 @@ for (var i = 0; i < instancesCount; i += 1) {
     } else if instance.object_index == oDoorCombo {
         instance.visible = instance.active;
         with instance {
-            scrComboCFunc(); undoReposition();
+            undoReposition();
             if browned {
-                var colorOld = colorSpend;
-                colorSpend = color_BROWN;
-                scrComboCFunc();
-                colorSpend = colorOld;
                 event_user(3);
             }
         }
