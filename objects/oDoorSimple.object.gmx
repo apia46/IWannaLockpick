@@ -796,7 +796,7 @@ if global.complexMode == 0 &amp;&amp; copies == 0
     // draw the rainbow outline if there aren't copies in this direction
     scrComboDrawIm();
 } else {
-    scrDrawDoorFrame((count &lt; 0 || icount &lt; 0) != (global.complexMode == 0 &amp;&amp; copies &lt; 0 || global.complexMode == 1 &amp;&amp; icopies &lt; 0));
+    scrDrawDoorFrame((count &lt; 0 || icount &lt; 0) != ((global.complexMode == 0 &amp;&amp; copies &lt; 0) || (global.complexMode == 1 &amp;&amp; icopies &lt; 0)));
     scrDrawDoorLock(baseColor,count,icount,type,0,0,scrSimpleDoorGetLockSprite());
 }
 scrDrawDoorAura();
