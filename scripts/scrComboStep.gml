@@ -108,13 +108,13 @@ if distance_to_object(objPlayer) <= 1{
         var metRequirement = 1;//Whether the requirement for every lock has been met
         if browned {//Brown version
             for(var i = 0; i < lockCount; i += 1){
-                if !scrCanOpenFeed(color_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow){
+                if !canOpen(color_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow){
                     metRequirement = 0;
                 }
             }
         }else{//Normal
             for(var i = 0; i < lockCount; i += 1){
-                if !scrCanOpenFeed(lock[i,0],lock[i,1],lock[i,2],lock[i,3],iPow){
+                if !canOpen(lock[i,0],lock[i,1],lock[i,2],lock[i,3],iPow){
                     metRequirement = 0;
                 }
             }
@@ -132,7 +132,7 @@ if distance_to_object(objPlayer) <= 1{
                     scrAddSpendAmt(lock[i,0],lock[i,1],lock[i,2],lock[i,3],iPow);
                 }
             }
-            addComplexKeys(effectiveColorSpend,spendTotal,spendITotal);
+            addComplexKeys(effectiveColorSpend,-spendTotal,-spendITotal);
             //Opening a door normally always means getting it closer to 0 and "opening" normally
             scrBroadcastCopy(effectiveColorSpend);
             scrOpenCombo();

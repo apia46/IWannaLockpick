@@ -330,11 +330,11 @@ if distToP &lt;= 1{
         scrNormalMasterOpen();
         undoBUFFER();
         scrPlayerDownStop();
-    } else if canOpen(effectiveColor,iPow) {//SPEND NORMAL KEYS
+    } else if canOpen(effectiveColor,count,icount,type,iPow) {//SPEND NORMAL KEYS
         spendTotal = 0;
         spendITotal = 0;
         scrAddSpendAmt(effectiveColor,count,icount,type,iPow);
-        addComplexKeys(effectiveColorSpend,spendTotal,spendITotal);
+        addComplexKeys(effectiveColorSpend,-spendTotal,-spendITotal);
         scrOpenOrCopy();
         scrBroadcastCopy(effectiveColorSpend);
     }
