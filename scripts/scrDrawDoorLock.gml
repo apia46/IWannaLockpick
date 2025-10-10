@@ -4,23 +4,45 @@
 
 var color = argument0;
 var mainTone = global.mainTone[color];
-var count = argument1;
-var icount = argument2;
+var count;
+var icount
 var type = argument3;
 var xRel = argument4 + x;
 var yRel = argument5 + y;
 var sprite = argument6;
 
-// draw lock fill
-var width = sprite_get_width(sprite);
-var height  = sprite_get_height(sprite);
-var offsetX = sprite_get_xoffset(sprite);
-var offsetY = sprite_get_yoffset(sprite);
+if object_index == oGate {
+    count = argument1;
+    icount = argument2;
+} else if global.complexMode == 0 {
+    if copies > 0 {count = argument1; icount = argument2;}
+    else {count = -argument1; icount = -argument2;}
+} else {
+    if icopies > 0 {count = -argument2; icount = argument1;}
+    else {count = argument2; icount = -argument1;}
+}
 
-// get lock size
+var width = sprite_get_width(sprite);
+var height = sprite_get_height(sprite);
+
 var fillSprite = sprite;
 var isPredefinedSprite = false;
 var verticalText = false;
+
+var offsetX = sprite_get_xoffset(sprite);
+var offsetY = sprite_get_yoffset(sprite);
+
+if sprite == sprLockAny {
+    width = w*32-14;
+    height = h*32-14;
+    if w == 1 {
+        verticalText = true;
+    }
+    offsetX = -7;
+    offsetY = -7;
+}
+
+// get lock size
 switch sprite {
     case sprLock1A:
         if global.simpleLock { sprite = sprLockAnyS; }
@@ -63,6 +85,7 @@ switch sprite {
     break;
 }
 
+// draw lock fill
 switch color {
     case color_MASTER:
         draw_sprite_ext(sprDGoldGrad,floor(goldIndex),xRel-offsetX,yRel-offsetY,width/64,height/64,0,c_white,1);
@@ -72,6 +95,7 @@ switch color {
     break;
     case color_STONE:
         draw_sprite_ext(sprDStoneTexture,0,xRel-offsetX,yRel-offsetY,width/64,height/64,0,c_white,1);
+        // @addcolor if door image/animation
     break;
     case color_GLITCH:
         shader_set(shdRainbowStripe2);
@@ -84,6 +108,7 @@ switch color {
                 case color_MASTER: index = 4; break;
                 case color_PURE: index = 5; break;
                 case color_STONE: index = 6; break;
+                // @addcolor if door image/animation
                 default:
                     mainTone = global.mainTone[glitchMimic];
                 break;
@@ -92,10 +117,16 @@ switch color {
         }
     break;
     default:
-        draw_sprite_ext(fillSprite,2,xRel,yRel,1,1,0,mainTone,1);
+        if sprite == sprLockAny {
+            // arbitrary size lock fill
+            draw_sprite_ext(fillSprite,2,xRel-offsetX+1,yRel-offsetY+1,(width-2)/64,(height-2)/64,0,mainTone,1);
+        } else {
+            draw_sprite_ext(fillSprite,2,xRel,yRel,1,1,0,mainTone,1);
+        }
     break;
 }
 
+// draw lock frame
 var index = 0;
 if count < 0 || icount < 0 {index = 1}
 if isPredefinedSprite {
@@ -103,7 +134,24 @@ if isPredefinedSprite {
     if icount > 0 {index = 2}
     else if icount < 0 {index = 3}
 }
-draw_sprite(sprite,index,xRel,yRel);
+if sprite == sprLockAny { // arbitrary size lock
+    // corners
+    draw_sprite_part(sprite,index,0,0,16,16,xRel,yRel);
+    draw_sprite_part(sprite,index,48,0,16,16,xRel+width-2,yRel);
+    draw_sprite_part(sprite,index,0,48,16,16,xRel,yRel+height-2);
+    draw_sprite_part(sprite,index,48,48,16,16,xRel+width-2,yRel+height-2);
+    // edges
+    if w > 1 {
+        draw_sprite_part_ext(sprite,index,16,0,32,16,xRel+16,yRel,(width-18)/32,1,c_white,1);
+        draw_sprite_part_ext(sprite,index,16,48,32,16,xRel+16,yRel+height-2,(width-18)/32,1,c_white,1);
+    }
+    if h > 1 {
+        draw_sprite_part_ext(sprite,index,0,16,16,32,xRel,yRel+16,1,(height-18)/32,c_white,1);
+        draw_sprite_part_ext(sprite,index,48,16,16,32,xRel+width-2,yRel+16,1,(height-18)/32,c_white,1);
+    }
+} else {
+    draw_sprite(sprite,index,xRel,yRel);
+}
 
 switch type {
     case lock_NORMAL:
@@ -136,7 +184,7 @@ switch type {
             // number
             draw_set_halign(fa_left);
             draw_set_valign(fa_center);
-            if icount != 0 { // offset the number to the right one more pixel if it isnt imaginary, because of inaccurate text widths or something
+            if icount == 0 { // offset the number to the right one more pixel if it isnt imaginary, because of inaccurate text widths or something
                 draw_text(startX+lockOffsetX+1,startY+lockOffsetY-1,numbers);
             } else {
                 draw_text(startX+lockOffsetX,startY+lockOffsetY-1,numbers);

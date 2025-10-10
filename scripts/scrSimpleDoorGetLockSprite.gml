@@ -17,7 +17,7 @@ switch type {
                 case 24: return sprLock24A;
             }
         } else if icount != 0 {
-            switch abs(count) {
+            switch abs(icount) {
                 case 1: return sprLock1A;
                 case 2: return sprLock2V;
                 case 3: return sprLock3V;
@@ -34,6 +34,6 @@ else if w == 2 && h == 1 { return sprLockAnyH }
 else if w == 2 && h == 2 { return sprLockAnyL }
 else if w == 3 && h == 3 { return sprLockAnyXL }
 else {
-    // if youre triggering this you should probably make it a combo door
-    return sprLockAnyS;
+    // note: doesnt work with glitch
+    return sprLockAny;
 }
