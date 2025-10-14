@@ -152,10 +152,10 @@ if backSprite == sprLockAny { // arbitrary size lock
 // draw predefined lock sprite
 if isPredefinedSprite {
     index = 0;
-    if count < 0 {index = 1}
-    if icount > 0 {index = 2}
-    else if icount < 0 {index = 3}
-    draw_sprite(sprite,index,xRel,yRel);
+    var lockColor = make_color_rgb(44,32,20);
+    if count < 0 || icount < 0 { lockColor = make_color_rgb(235,223,211); }
+    if icount != 0 { index = 1; }
+    draw_sprite_ext(sprite,index,xRel,yRel,1,1,0,lockColor,1);
 }
 
 switch type {
