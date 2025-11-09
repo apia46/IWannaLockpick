@@ -1,8 +1,5 @@
 ///canOpen(color,lock_count,lock_icount,lock_type,power_of_i);
 var open_check = argument0;
-if open_check == color_GLITCH{
-    open_check = glitchMimic;
-}
 switch argument4{
     case 0://i^0 = Multiply by 1
         var open_needR = argument1;

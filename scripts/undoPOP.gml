@@ -122,17 +122,9 @@ for (var i = 0; i < instancesCount; i += 1) {
     || instance.object_index == oDoorSimple {
         instance.visible = instance.active;
         with instance {
-            scrColorDoor(); scrColorDoor2(); undoReposition();
+            undoReposition();
             copyTimer = 0; copyState = 0; copyAlpha = 0; copyDraw = 1;
             if browned {
-                var colorOld = color;
-                var colorOld2 = colorSpend;
-                color = color_BROWN;
-                colorSpend = color_BROWN;
-                scrColorDoor();
-                scrColorDoor2();
-                color = colorOld;
-                colorSpend = colorOld2;
                 event_user(3);
             }
         }

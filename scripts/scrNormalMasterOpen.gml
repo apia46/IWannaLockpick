@@ -42,3 +42,4 @@ if copies == 0 && icopies == 0{
         event_user(1);
     }
 }
+useMasterCheck();

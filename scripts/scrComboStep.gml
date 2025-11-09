@@ -63,14 +63,6 @@ if aura[0] == 1 || aura[1] == 1 || aura[2] == 1{
     }
 }
 
-var effectiveColorSpend = colorSpend;
-if browned{
-    effectiveColorSpend = color_BROWN;
-}
-if effectiveColorSpend == color_GLITCH {
-    effectiveColorSpend = glitchMimic;
-}
-
 //iPow stuff
 if global.complexMode == 0{//Real view
     if copies > 0{iPow = 0;}
@@ -89,58 +81,28 @@ if global.complexMode == 0{//Real view
 }
 
 //Now, the first big calculation is the Gold Eligibility.
-var goldEligible = objPlayer.masterMode;//0 = Don't use gold, 1 = Use gold, -1 = Use negative gold, 2 = Use imaginary gold, -2 = Use negative imaginary gold
-
-if !browned && goldEligible != 0{
-    if effectiveColorSpend == color_MASTER || effectiveColorSpend == color_PURE {
-        goldEligible = 0;
-    }
-    for(var i = 0; i < lockCount; i += 1){
-        if lock[i,0] == color_MASTER || lock[i,0] == color_PURE {
-            goldEligible = 0;
-        }
-    }
-}
+var goldEligible = objPlayer.masterMode != 0 && !(hasColor(color_MASTER) || hasColor(color_PURE));//0 = Don't use gold, 1 = Use gold, -1 = Use negative gold, 2 = Use imaginary gold, -2 = Use negative imaginary gold
 
 //Now, check nearness to player, and house all the main code in different cases depending on gold eligibility.
 if distance_to_object(objPlayer) <= 1{
-    if goldEligible == 0 {
-        var metRequirement = 1;//Whether the requirement for every lock has been met
-        if browned {//Brown version
-            for(var i = 0; i < lockCount; i += 1){
-                if !canOpen(color_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow){
-                    metRequirement = 0;
-                }
-            }
-        }else{//Normal
-            for(var i = 0; i < lockCount; i += 1){
-                if !canOpen(lock[i,0],lock[i,1],lock[i,2],lock[i,3],iPow){
-                    metRequirement = 0;
-                }
+    if goldEligible {
+        scrNormalMasterOpen();
+        undoBUFFER();
+    } else {
+        for(var i = 0; i < lockCount; i += 1){
+            if !canOpen(scrLockEffectiveColor(i),lock[i,1],lock[i,2],lock[i,3],iPow){
+                exit;
             }
         }
         
-        if metRequirement{//NEXT PHASE OF CODE
-            spendTotal = 0;//Integer part of cost
-            spendITotal = 0;
-            if browned {//Door is brown, different spend amount can result from Blast Locks
-                for(var i = 0; i < lockCount; i += 1){
-                    scrAddSpendAmt(color_BROWN,lock[i,1],lock[i,2],lock[i,3],iPow);
-                }
-            }else{//Normal lock spend summation
-                for(var i = 0; i < lockCount; i += 1){
-                    scrAddSpendAmt(lock[i,0],lock[i,1],lock[i,2],lock[i,3],iPow);
-                }
-            }
-            addComplexKeys(effectiveColorSpend,-spendTotal,-spendITotal);
-            //Opening a door normally always means getting it closer to 0 and "opening" normally
-            scrBroadcastCopy(effectiveColorSpend);
-            scrOpenCombo();
+        spendTotal = 0;//Real part of cost
+        spendITotal = 0;
+        for(var i = 0; i < lockCount; i += 1){
+            scrAddSpendAmt(scrLockEffectiveColor(i),lock[i,1],lock[i,2],lock[i,3],iPow);
         }
-    } else {
-        scrNormalMasterOpen();
-        undoBUFFER();
+        addComplexKeys(scrEffectiveColor(colorSpend),-spendTotal,-spendITotal);
+        //Opening a door normally always means getting it closer to 0 and "opening" normally
+        scrBroadcastCopy(scrEffectiveColor(colorSpend));
+        scrOpenCombo();
     }
 }
-
-useMasterCheck();

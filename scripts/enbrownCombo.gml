@@ -1,11 +1,4 @@
-//Before the rest of this code is run, first:
-if colorSpend == color_PURE {exit;}
-if glitchMimic == color_PURE {exit;}
-for(var i = 0; i < lockCount; i += 1){
-    if lock[i,0] == color_PURE{
-        exit;
-    }
-}
+if hasColor(color_PURE) {exit;}
 var brownRedundant = 1;
 if colorSpend == color_BROWN{
     for(var i = 0; i < lockCount; i += 1){

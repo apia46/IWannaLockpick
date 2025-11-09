@@ -1087,7 +1087,7 @@ if mouseType == 0{//Keys
         }else{
             str += "[All -i]";
         }
-    }else if getType == lock_EXACT{
+    }else if getType == lock_ALL{
         str += "[ALL]";
     }
     if getCol != getSpend{
@@ -1185,7 +1185,7 @@ if mouseType == 0{//Keys
                 }else{
                     str += "[All -i]";
                 }
-            }else if lockType[i] == lock_EXACT{
+            }else if lockType[i] == lock_ALL{
                 str += "[ALL]";
             }
             str += "#";
