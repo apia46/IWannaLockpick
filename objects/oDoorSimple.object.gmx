@@ -732,7 +732,7 @@ if noCopies {
 } else {
     scrDrawDoorFrame((count &lt; 0 || icount &lt; 0) != ((global.complexMode == 0 &amp;&amp; copies &lt; 0) || (global.complexMode == 1 &amp;&amp; icopies &lt; 0)));
 }
-scrDrawDoorLock(baseColor,count,icount,type,0,0,scrSimpleDoorGetLockSprite(),noCopies);
+scrDrawDoorLock(baseColor,count,icount,type,0,0,scrSimpleDoorGetLockSprite(),iPow,noCopies);
 scrDrawDoorAura(aura[0],aura[1],aura[2],x,y,w*32,h*32);
 </string>
           </argument>

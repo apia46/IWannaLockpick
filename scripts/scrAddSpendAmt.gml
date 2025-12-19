@@ -1,26 +1,7 @@
 ///scrAddSpendAmt(color,count,icount,type,power_of_i);
 var open_check = argument0;
-if open_check == color_GLITCH{
-    open_check = glitchMimic;
-}
-switch argument4{
-    case 0://i^0 = Multiply by 1
-        var open_needR = argument1;
-        var open_needI = argument2;
-    break;
-    case 1://i^1 = Multiply by i
-        var open_needR = -argument2;
-        var open_needI = argument1;
-    break;
-    case 2://i^2 = Multiply by -1
-        var open_needR = -argument1;
-        var open_needI = -argument2;
-    break;
-    case 3://i^3 = Multiply by -i
-        var open_needR = argument2;
-        var open_needI = -argument1;
-    break;
-}
+var open_needR = rotateR(argument1,argument2,argument4);
+var open_needI = rotateI(argument1,argument2,argument4);
 switch argument3 {
     case lock_NORMAL ://normal (can accept complex numbers)
         spendTotal += open_needR;

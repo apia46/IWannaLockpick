@@ -1,11 +1,13 @@
-///scrSimpleDoorGetLockSprite();
+///scrSimpleDoorGetLockSprite(ipow);
 // gets the lock sprite to use for simple door
 
 // predefined sprites
+var r = rotateR(count,icount,iPow);
+var i = rotateI(count,icount,iPow);
 switch type {
     case lock_NORMAL:
-        if count != 0 && icount == 0 {
-            switch abs(count) {
+        if r != 0 && i == 0 {
+            switch abs(r) {
                 case 1: return sprLock1A;
                 case 2: return sprLock2V;
                 case 3: return sprLock3V;
@@ -16,8 +18,8 @@ switch type {
                 case 12: return sprLock12A;
                 case 24: return sprLock24A;
             }
-        } else if icount != 0 {
-            switch abs(icount) {
+        } else if i != 0 {
+            switch abs(i) {
                 case 1: return sprLock1A;
                 case 2: return sprLock2V;
                 case 3: return sprLock3V;

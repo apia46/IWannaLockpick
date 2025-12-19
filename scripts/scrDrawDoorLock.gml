@@ -1,26 +1,15 @@
-///scrDrawDoorLock(color,count,icount,type,xRel,yRel,sprite,onlyFill); 
+///scrDrawDoorLock(color,count,icount,type,xRel,yRel,sprite,ipow,onlyFill); 
 // rewritten to work with both simple doors and combo doors
 // we use the sprLockAnys for borders (for nonpredefined) and for fills
 
 var color = argument0;
 var mainTone = global.mainTone[color];
-var count;
-var icount
+var count = rotateR(argument1,argument2,argument7);
+var icount = rotateI(argument1,argument2,argument7);
 var type = argument3;
 var xRel = argument4 + x;
 var yRel = argument5 + y;
 var sprite = argument6;
-
-if object_index == oGate {
-    count = argument1;
-    icount = argument2;
-} else if global.complexMode == 0 {
-    if copies > 0 {count = argument1; icount = argument2;}
-    else {count = -argument1; icount = -argument2;}
-} else {
-    if icopies > 0 {count = -argument2; icount = argument1;}
-    else {count = argument2; icount = -argument1;}
-}
 
 var width = sprite_get_width(sprite);
 var height = sprite_get_height(sprite);
@@ -85,6 +74,10 @@ switch sprite {
     break;
 }
 
+if argument7 != 0 && object_index == oDoorCombo {
+    sprite = backSprite;
+}
+
 // draw lock fill
 switch color {
     case color_MASTER:
@@ -122,7 +115,7 @@ switch color {
     break;
 }
 
-if argument7 {return 0;}
+if argument8 {return 0;}
 
 // draw lock frame
 var index = 0;
