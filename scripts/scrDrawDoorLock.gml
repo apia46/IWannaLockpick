@@ -98,7 +98,8 @@ switch color {
         // @addcolor if door image/animation
     break;
     case color_GLITCH:
-        shader_set(shdRainbowStripe2);
+        shader_set(shdEffects);
+        shader_set_uniform_f(global.shaderMode,color_GLITCH);
         draw_sprite_ext(backSprite,2,xRel,yRel,1,1,0,mainTone,1);
         shader_reset();
         if glitchMimic != color_GLITCH {

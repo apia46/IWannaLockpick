@@ -9,7 +9,8 @@ if colorSpend == color_MASTER{
     draw_sprite_ext(sprDStoneTexture,0,salDX,salDY,salW*.5,salH*.5,0,c_white,1);
 }else{
     if colorSpend == color_GLITCH{
-        shader_set(shdRainbowStripe2);
+        shader_set(shdEffects);
+        shader_set_uniform_f(global.shaderMode,color_GLITCH);
     }
     //Corner Fills
     draw_sprite_part_ext(sprDoorSpend,3,0,0,16,16,salDX,salDY,1,1,c5,1);
@@ -125,7 +126,8 @@ for(var i = 0; i < salvageLockCount; i += 1){
         var tempY = salDY+lock[i,5]-sprite_get_yoffset(lock[i,6]);
         draw_sprite_ext(sprDStoneTexture,0,tempX,tempY,tempW/64,tempH/64,0,c_white,1);
     }else if lock[i,0] == color_GLITCH{
-        shader_set(shdRainbowStripe2);
+        shader_set(shdEffects);
+        shader_set_uniform_f(global.shaderMode,color_GLITCH);
         draw_sprite_ext(lock[i,6],2,salDX+lock[i,4],salDY+lock[i,5],1,1,0,make_color_rgb(180,150,0),1);
         shader_reset();
         if glitchMimic == color_MASTER{

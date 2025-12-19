@@ -706,7 +706,8 @@ switch state{
                         draw_sprite_ext(sprDStoneTexture,0,tempX,tempY,.25,.25,0,c_white,1);
                         // @addcolor if omega key
                     }else if tempCol == color_GLITCH{
-                        shader_set(shdRainbowStripe2);
+                        shader_set(shdEffects);
+                        shader_set_uniform_f(global.shaderMode,color_GLITCH);
                         draw_sprite_ext(sprTerminalColor,1,tempX,tempY,1,1,0,tempDrawCol,1);
                         shader_reset();
                     }else{
@@ -837,7 +838,8 @@ y = ystart + floatY;
 draw_sprite_ext(sprDPureGrad,floor(goldIndex),x,y,w*.5,h*.5,0,c_white,1);
 
 scrColorDoorArg(color_GLITCH);
-shader_set(shdRainbowStripe2);
+shader_set(shdEffects);
+shader_set_uniform_f(global.shaderMode,color_GLITCH);
 scrDrawDoorRequire();
 shader_reset();
 c2 = make_color_rgb(180,150,0);

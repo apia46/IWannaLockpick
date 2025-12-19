@@ -7,7 +7,8 @@ if colorSpend == color_MASTER{
     draw_sprite_ext(sprDStoneTexture,0,salDX,salDY,salW*.5,salH*.5,0,c_white,1);
 }else if colorSpend == color_GLITCH{
     scrColorDoorArg(color_GLITCH);
-    shader_set(shdRainbowStripe2);
+    shader_set(shdEffects);
+    shader_set_uniform_f(global.shaderMode,color_GLITCH);
     
     //Edges
     if salW>1{
