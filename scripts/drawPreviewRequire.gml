@@ -10,8 +10,7 @@ if color == color_MASTER{
     draw_sprite_ext(sprDStoneTexture,0,tempX,tempY,tempW/64,tempH/64,0,c_white,1);
 }else if color == color_GLITCH{
     scrColorDoorArg(color_GLITCH);
-    shader_set(shdEffects);
-    shader_set_uniform_f(global.shaderMode,color_GLITCH);
+    setShdEffects(color_GLITCH);
     draw_sprite_part_ext(sprDoorSpend,3,16,16,16,16,salDX+8,salDY+8,salW*2-1,salH*2-1,c2,1);
     shader_reset();
     scrColorDoor();
