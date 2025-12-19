@@ -1,4 +1,4 @@
-///scrDrawDoorLock(color,count,icount,type,xRel,yRel,sprite); 
+///scrDrawDoorLock(color,count,icount,type,xRel,yRel,sprite,onlyFill); 
 // rewritten to work with both simple doors and combo doors
 // we use the sprLockAnys for borders (for nonpredefined) and for fills
 
@@ -100,15 +100,15 @@ switch color {
     case color_GLITCH:
         shader_set(shdEffects);
         shader_set_uniform_f(global.shaderMode,color_GLITCH);
-        draw_sprite_ext(backSprite,2,xRel,yRel,1,1,0,mainTone,1);
+        draw_rectangle_colour(xRel-offsetX+2,yRel-offsetY+2,xRel-offsetX+width-4,yRel-offsetY+height-4,mainTone,mainTone,mainTone,mainTone,false);
         shader_reset();
         if glitchMimic != color_GLITCH {
-            var index = 3;
+            var index = 0;
             mainTone = c_white;
             switch glitchMimic {
-                case color_MASTER: index = 4; break;
-                case color_PURE: index = 5; break;
-                case color_STONE: index = 6; break;
+                case color_MASTER: index = 1; break;
+                case color_PURE: index = 2; break;
+                case color_STONE: index = 3; break;
                 // @addcolor if door image/animation
                 default:
                     mainTone = global.mainTone[glitchMimic];
@@ -118,37 +118,26 @@ switch color {
         }
     break;
     default:
-        if sprite == sprLockAny {
-            // arbitrary size lock fill
-            draw_sprite_ext(backSprite,2,xRel-offsetX+1,yRel-offsetY+1,(width-2)/64,(height-2)/64,0,mainTone,1);
-        } else {
-            draw_sprite_ext(backSprite,2,xRel,yRel,1,1,0,mainTone,1);
-        }
+        draw_rectangle_colour(xRel-offsetX+2,yRel-offsetY+2,xRel-offsetX+width-4,yRel-offsetY+height-4,mainTone,mainTone,mainTone,mainTone,false);
     break;
 }
+
+if argument7 {return 0;}
 
 // draw lock frame
 var index = 0;
 if count < 0 || icount < 0 {index = 1}
 
-if backSprite == sprLockAny { // arbitrary size lock
-    // corners
-    draw_sprite_part(backSprite,index,0,0,16,16,xRel,yRel);
-    draw_sprite_part(backSprite,index,48,0,16,16,xRel+width-2,yRel);
-    draw_sprite_part(backSprite,index,0,48,16,16,xRel,yRel+height-2);
-    draw_sprite_part(backSprite,index,48,48,16,16,xRel+width-2,yRel+height-2);
-    // edges
-    if w > 1 {
-        draw_sprite_part_ext(backSprite,index,16,0,32,16,xRel+16,yRel,(width-18)/32,1,c_white,1);
-        draw_sprite_part_ext(backSprite,index,16,48,32,16,xRel+16,yRel+height-2,(width-18)/32,1,c_white,1);
-    }
-    if h > 1 {
-        draw_sprite_part_ext(backSprite,index,0,16,16,32,xRel,yRel+16,1,(height-18)/32,c_white,1);
-        draw_sprite_part_ext(backSprite,index,48,16,16,32,xRel+width-2,yRel+16,1,(height-18)/32,c_white,1);
-    }
-} else {
-    draw_sprite(backSprite,index,xRel,yRel);
-}
+// corners
+draw_sprite_part(sprLockFrame,index,0,0,2,2,xRel-offsetX,yRel-offsetY);
+draw_sprite_part(sprLockFrame,index,62,0,2,2,xRel+width-2-offsetX,yRel-offsetY);
+draw_sprite_part(sprLockFrame,index,0,62,2,2,xRel-offsetX,yRel+height-2-offsetY);
+draw_sprite_part(sprLockFrame,index,62,62,2,2,xRel+width-2-offsetX,yRel+height-2-offsetY);
+// edges
+draw_sprite_part_ext(sprLockFrame,index,2,0,60,2,xRel+2-offsetX,yRel-offsetY,(width-4)/60,1,c_white,1);
+draw_sprite_part_ext(sprLockFrame,index,2,62,60,2,xRel+2-offsetX,yRel+height-2-offsetY,(width-4)/60,1,c_white,1);
+draw_sprite_part_ext(sprLockFrame,index,0,2,2,60,xRel-offsetX,yRel+2-offsetY,1,(height-4)/60,c_white,1);
+draw_sprite_part_ext(sprLockFrame,index,62,2,2,60,xRel+width-2-offsetX,yRel+2-offsetY,1,(height-4)/60,c_white,1);
 
 // draw predefined lock sprite
 if isPredefinedSprite {
