@@ -10,5 +10,6 @@ Changes:
 * The PDA can now have multiple pages.
 * The door drawing system has been improved (new scripts in scripts/doorDraw).
   * Auras can now be of arbitrary size, and you can manually specify aura parameters to draw (see scrDrawDoorAura).
-* The mouseover system has been improved (new scripts in scripts/mouseover).<br>
+* The mouseover system has been improved (new scripts in scripts/mouseover).
+
 **Note! The omega terminal currently crashes the game; we haven't gotten around to fixing it yet; salvage drawing is also messed up, similarily**
